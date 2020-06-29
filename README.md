@@ -120,14 +120,14 @@ This command will create various resources on the Kubernetes cluster. With the m
 
 ```
 kubectl get pods -n spark-jobs -o wide
-NAME                          READY   STATUS    RESTARTS   AGE   IP             NODE                    NOMINATED NODE   READINESS GATES
-openeo-1593097546965-exec-1   1/1     Running   0          22h   10.233.103.2   cf2-k8s-k8s-node-nf-2   <none>           <none>
-openeo-driver                 1/1     Running   0          22h   10.233.80.1    cf2-k8s-k8s-node-nf-4   <none>           <none>
+NAME                                     READY   STATUS    RESTARTS   AGE   IP             NODE                    NOMINATED NODE   READINESS GATES
+openeo-geotrellis-1593097546965-exec-1   1/1     Running   0          22h   10.233.103.2   cf2-k8s-k8s-node-nf-2   <none>           <none>
+openeo-geotrellis-driver                 1/1     Running   0          22h   10.233.80.1    cf2-k8s-k8s-node-nf-4   <none>           <none>
 ```
 
 Keep in mind that the driver is started first and then the executor, so they don't show up both from the start. When they both have the `STATUS=Running`, everything works as expected. We should now be able to access the endpoint of the Spark application from within our cluster. Exposing it to the outside world is for the next section.
 
-The previous command showed us an IP where the `openeo-driver` is running. It's using this IP that we can reach the application's endpoint.
+The previous command showed us an IP where the `openeo-geotrellis-driver` is running. It's using this IP that we can reach the application's endpoint.
 
 To be able to reach the endpoint, we need to SSH into one of the Kubernetes cluster hosts, as the Kubernetes overlay network is not reachable from our bastion host.
 
@@ -162,7 +162,7 @@ ssh -L 4040:localhost:4040 eouser@<bastion_ip>
 and in that connected terminal you execute:
 
 ```
-kubectl port-forward openeo-driver --namespace spark-jobs 4040
+kubectl port-forward openeo-geotrellis-driver --namespace spark-jobs 4040
 ```
 
 Now open up your browser and navigate to `localhost:4040` and you should see the Spark UI.
@@ -185,10 +185,10 @@ and you should see the service coming up:
 
 ```
 kubectl get svc -n spark-jobs
-NAME                              TYPE           CLUSTER-IP      EXTERNAL-IP    PORT(S)             AGE
-external-openeo-service           LoadBalancer   10.233.7.55     <EXTERNAL_IP>  80:30807/TCP        5h29m
-openeo-1593097546965-driver-svc   ClusterIP      None            <none>         7078/TCP,7079/TCP   22h
-openeo-ui-svc                     ClusterIP      10.233.17.191   <none>         4040/TCP            22h
+NAME                                         TYPE           CLUSTER-IP      EXTERNAL-IP    PORT(S)             AGE
+external-openeo-geotrellis-service           LoadBalancer   10.233.7.55     <EXTERNAL_IP>  80:30807/TCP        5h29m
+openeo-geotrellis-1593097546965-driver-svc   ClusterIP      None            <none>         7078/TCP,7079/TCP   22h
+openeo-geotrellis-ui-svc                     ClusterIP      10.233.17.191   <none>         4040/TCP            22h
 ```
 
 The `EXTERNAL-IP` should be filled in with an IP from your external network (this can take a few minutes).
