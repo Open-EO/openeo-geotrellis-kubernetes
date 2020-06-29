@@ -1,0 +1,1407 @@
+[
+  {
+    "id":"BIOPAR_FAPAR_V1_GLOBAL",
+    "name":"BIOPAR_FAPAR_V1_GLOBAL",
+    "product_id":"BIOPAR_FAPAR_V1_GLOBAL",
+    "title": "Copernicus Global Land FAPAR product V1, 1km resolution, 10-daily",
+    "description": "Global FAPAR at 1km resolution, 10-daily. The FAPAR quantifies the fraction of the solar radiation absorbed by live leaves for the photosynthesis activity. Then, it refers only to the green and alive elements of the canopy. The FAPAR depends on the canopy structure, vegetation element optical properties, atmospheric conditions, and angular configuration. To overcome this latter dependency, a daily integrated FAPAR value is assessed.\n\nFAPAR is recognized as an Essential Climate Variable (ECV) by the Global Climate Observing System (GCOS).",
+    "_vito": {
+      "data_source": {
+        "type": "Accumulo",
+        "data_id": "BIOPAR_FAPAR_V1_GLOBAL"
+      }
+    },
+    "license": "free",
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": [
+          "fapar"
+        ]
+      }
+    },
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["1999-01-01", null]]}
+    },
+    "links": [
+      {
+        "rel": "alternate",
+        "href": "https://land.copernicus.eu/global/products/fapar",
+        "title": "Product web page."
+      }
+    ]
+
+  },
+    {
+    "id":"CGLS_FAPAR_V2_GLOBAL",
+    "name":"CGLS_FAPAR_V2_GLOBAL",
+    "product_id":"CGLS_FAPAR_V2_GLOBAL",
+    "title": "Copernicus Global Land FAPAR product V2, 1km resolution, 10-daily",
+    "description": "Global FAPAR at 1km resolution, 10-daily. The FAPAR quantifies the fraction of the solar radiation absorbed by live leaves for the photosynthesis activity. Then, it refers only to the green and alive elements of the canopy. The FAPAR depends on the canopy structure, vegetation element optical properties, atmospheric conditions, and angular configuration. To overcome this latter dependency, a daily integrated FAPAR value is assessed.\n\nFAPAR is recognized as an Essential Climate Variable (ECV) by the Global Climate Observing System (GCOS).",
+    "_vito": {
+      "data_source": {
+        "type": "Accumulo",
+        "data_id": "BIOPAR_FAPAR_V2_GLOBAL"
+      }
+    },
+    "license": "free",
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": [
+          "fapar"
+        ]
+      }
+    },
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["1999-01-01", null]]}
+    },
+    "links": [
+      {
+        "rel": "alternate",
+        "href": "https://land.copernicus.eu/global/products/fapar",
+        "title": "Product web page."
+      }
+    ]
+
+  },
+  {
+    "id":"CGLS_LAI_V2_GLOBAL",
+    "name":"CGLS_LAI_V2_GLOBAL",
+    "product_id":"CGLS_LAI_V2_GLOBAL",
+    "title": "Copernicus Global Land LAI product V2, 1km resolution, 10-daily",
+    "description": "Global LAI at 1km resolution, 10-daily. The Leaf Area Index is defined as half the total area of green elements of the canopy per unit horizontal ground area. The satellite-derived value corresponds to the total green LAI of all the canopy layers, including the understory which may represent a very significant contribution, particularly for forests. Practically, the LAI quantifies the thickness of the vegetation cover.",
+    "_vito": {
+      "data_source": {
+        "type": "Accumulo",
+        "data_id": "BIOPAR_LAI_V2_GLOBAL"
+      }
+    },
+    "license": "free",
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": [
+          "fapar"
+        ]
+      }
+    },
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["1999-01-01", null]]}
+    },
+    "links": [
+      {
+        "rel": "alternate",
+        "href": "https://land.copernicus.eu/global/products/lai",
+        "title": "Product web page."
+      }
+    ]
+
+  },
+  {
+    "id":"CGLS_LAI300_V1_GLOBAL",
+    "name":"CGLS_LAI300_V1_GLOBAL",
+    "product_id":"CGLS_LAI300_V1_GLOBAL",
+    "title": "Copernicus Global Land LAI product V2, 300m resolution, 10-daily",
+    "description": "Global LAI at 300m resolution, 10-daily. The Leaf Area Index is defined as half the total area of green elements of the canopy per unit horizontal ground area. The satellite-derived value corresponds to the total green LAI of all the canopy layers, including the understory which may represent a very significant contribution, particularly for forests. Practically, the LAI quantifies the thickness of the vegetation cover.",
+    "_vito": {
+      "data_source": {
+        "type": "Accumulo",
+        "data_id": "BIOPAR_LAI300_V1_GLOBAL"
+      }
+    },
+    "license": "free",
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": [
+          "lai"
+        ]
+      }
+    },
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2014-01-01", null]]}
+    },
+    "links": [
+      {
+        "rel": "alternate",
+        "href": "https://land.copernicus.eu/global/products/lai",
+        "title": "Product web page."
+      }
+    ]
+
+  },
+  {
+    "id":"CGLS_NDVI300_V1_GLOBAL",
+    "name":"CGLS_NDVI300_V1_GLOBAL",
+    "product_id":"CGLS_NDVI300_V1_GLOBAL",
+    "title": "Copernicus Global Land NDVI product V1, 300m resolution, 10-daily",
+    "description": "Global NDVI at 300m resolution, 10-daily. The Normalized Difference Vegetation Index (NDVI) is an indicator of the greenness of the biomes. As such, it is closely linked to the FAPAR.",
+    "_vito": {
+      "data_source": {
+        "type": "Accumulo",
+        "data_id": "BIOPAR_NDVI300_V1_GLOBAL"
+      }
+    },
+    "license": "free",
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": [
+          "ndvi"
+        ]
+      }
+    },
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2014-01-01", null]]}
+    },
+    "links": [
+      {
+        "rel": "alternate",
+        "href": "https://land.copernicus.eu/global/products/ndvi",
+        "title": "Product web page."
+      }
+    ]
+
+  },
+  {
+    "id":"CGLS_NDVI_V2_GLOBAL",
+    "name":"CGLS_NDVI_V2_GLOBAL",
+    "product_id":"CGLS_NDVI_V2_GLOBAL",
+    "title": "Copernicus Global Land NDVI product V2, 1km resolution, 10-daily",
+    "description": "Global NDVI at 1km resolution, 10-daily. The Normalized Difference Vegetation Index (NDVI) is an indicator of the greenness of the biomes. As such, it is closely linked to the FAPAR.",
+    "_vito": {
+      "data_source": {
+        "type": "Accumulo",
+        "data_id": "BIOPAR_NDVI_V2_GLOBAL"
+      }
+    },
+    "license": "free",
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": [
+          "ndvi"
+        ]
+      }
+    },
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["1999-01-01", null]]}
+    },
+    "links": [
+      {
+        "rel": "alternate",
+        "href": "https://land.copernicus.eu/global/products/ndvi",
+        "title": "Product web page."
+      }
+    ]
+
+  },
+   {
+    "id":"CGLS_BA300_V1_GLOBAL",
+    "name":"CGLS_BA300_V1_GLOBAL",
+    "product_id":"CGLS_BA300_V1_GLOBAL",
+    "title": "Copernicus Global Land burnt area product V1, 300m resolution, 10-daily",
+    "description": "Global burnt area at 300m resolution, 10-daily. The Burnt Area product maps the burnt scars, and gives temporal information on the fire season. ",
+    "_vito": {
+      "data_source": {
+        "type": "Accumulo",
+        "data_id": "BIOPAR_BA300_V1_GLOBAL"
+      }
+    },
+    "license": "free",
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": [
+          "ba"
+        ]
+      }
+    },
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2014-01-01", null]]}
+    },
+    "links": [
+      {
+        "rel": "alternate",
+        "href": "https://land.copernicus.eu/global/products/ba",
+        "title": "Product web page."
+      }
+    ]
+
+  },
+  {
+    "id": "S1_GRD_SIGMA0_ASCENDING",
+    "name": "S1_GRD_SIGMA0_ASCENDING",
+    "product_id": "S1_GRD_SIGMA0_ASCENDING",
+    "title": "Sentinel 1 GRD Sigma0 product, VH, VV and angle.",
+    "_vito": {
+      "data_source": {
+        "type": "Accumulo",
+        "data_id": "S1_GRD_SIGMA0_ASCENDING_PYRAMID",
+        "split":true
+      }
+    },
+    "description": "Sentinel 1 GRD Sigma0, mosaic of all ascending relative orbits. Provided by Terrascope.",
+    "providers": [{"name": "Terrascope/VITO"}],
+    "license": "free",
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2015-07-06", null]]}
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": ["VH", "VV", "angle"]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {
+          "name": "VH",
+          "type": "float",
+          "unit": "1"
+        },
+        {
+          "name": "VV",
+          "type": "float",
+          "unit": "1"
+        },
+        {
+          "name": "angle",
+          "type": "int16",
+          "unit": "1"
+        }
+      ]
+    },
+    "links": [
+      {
+        "rel": "alternate",
+        "href": "https://terrascope.be/en/products",
+        "title": "Product web page."
+      }
+    ]
+  },
+  {
+    "id": "S1_GRD_SIGMA0_DESCENDING",
+    "name": "S1_GRD_SIGMA0_DESCENDING",
+    "product_id": "S1_GRD_SIGMA0_DESCENDING",
+    "title": "Sentinel 1 GRD Sigma0 product, VH, VV and angle.",
+    "_vito": {
+      "data_source": {
+        "type": "Accumulo",
+        "data_id": "S1_GRD_SIGMA0_DESCENDING_PYRAMID",
+        "split":true
+      }
+    },
+    "description": "Sentinel 1 GRD Sigma0, mosaic of all descending relative orbits. Provided by Terrascope.",
+    "providers": [{"name": "Terrascope/VITO"}],
+    "license": "free",
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2015-07-06", null]]}
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": ["VH", "VV", "angle"]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {
+          "name": "VH",
+          "type": "float",
+          "unit": "1"
+        },
+        {
+          "name": "VV",
+          "type": "float",
+          "unit": "1"
+        },
+        {
+          "name": "angle",
+          "type": "int16",
+          "unit": "1"
+        }
+      ]
+    },
+    "links": [
+      {
+        "rel": "alternate",
+        "href": "https://terrascope.be/en/products",
+        "title": "Product web page."
+      }
+    ]
+  },
+   {
+    "id": "TERRASCOPE_S1_GAMMA0_V1",
+    "name": "TERRASCOPE_S1_GAMMA0_V1",
+    "product_id": "TERRASCOPE_S1_GAMMA0_V1",
+    "title": "Sentinel 1 GRD Gamma0 product, VH and VV.",
+    "_vito": {
+      "data_source": {
+        "type": "Accumulo",
+        "data_id": "S1_GRD_GAMMA0_PYRAMID_V2",
+        "split":true
+      },
+      "postprocessing_bands": {
+                "multiply1": {
+                    "process_id": "multiply",
+                    "arguments": {
+                        "x": {
+                            "from_parameter": "data"
+                        },
+                        "y": 0.001
+                    },
+                  "result": false
+                },
+                "subtract1": {
+                    "process_id": "add",
+                    "arguments": {
+                        "x": {
+                            "from_node": "multiply1"
+                        },
+                        "y": -45.0
+                    }
+                },
+                "divide1": {
+                  "comment" : "have to use multiply here: https://github.com/locationtech/geotrellis/issues/3257",
+                    "process_id": "multiply",
+                    "arguments": {
+                        "x": {
+                            "from_node": "subtract1"
+                        },
+                        "y": 0.1
+                    }
+                },
+                "power1": {
+                    "process_id": "power",
+                    "arguments": {
+                        "base": 10,
+                        "p": {
+                            "from_node": "divide1"
+                        }
+                    },
+                    "result": true
+                }
+            }
+   },
+    "description": "Sentinel 1 GRD Gamma0 combined descending and ascending orbits. Provided by Terrascope.",
+    "providers": [{"name": "Terrascope/VITO"}],
+    "license": "free",
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2015-07-06", null]]}
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": ["VH", "VV"]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {
+          "name": "VH",
+          "type": "float",
+          "unit": "1"
+        },
+        {
+          "name": "VV",
+          "type": "float",
+          "unit": "1"
+        }
+      ]
+    },
+    "links": [
+      {
+        "rel": "alternate",
+        "href": "https://terrascope.be/en/products",
+        "title": "Product web page."
+      }
+    ]
+  },
+  {
+    "id": "CGS_SENTINEL2_RADIOMETRY_V102_001",
+    "name": "CGS_SENTINEL2_RADIOMETRY_V102_001",
+    "product_id": "CGS_SENTINEL2_RADIOMETRY_V102_001",
+    "title": "Sentinel 2 Bottom-of-atmosphere reflectances, deprecated.",
+    "_vito": {
+      "data_source": {
+        "type": "Accumulo",
+        "data_id": "CGS_SENTINEL2_RADIOMETRY_V102_EARLY"
+      }
+    },
+    "description": "DEPRECATED, use TERRASCOPE_S2_TOC_V2, Sentinel 2 Level-2: Bottom-of-atmosphere reflectances in cartographic geometry, provided by Terrascope. These are the V102 Terrascope products, please use the new V200 layer.",
+    "providers": [{"name": "Terrascope/VITO"}],
+    "license": "free",
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2015-07-06", null]]}
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": ["2", "3", "4", "8"]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {
+          "name": "2",
+          "common_name": "blue",
+          "center_wavelength": 0.4966,
+          "wavelength_nm": 496.6,
+          "res_m": 10,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
+        },
+        {
+          "name": "3",
+          "common_name": "green",
+          "center_wavelength": 0.560,
+          "wavelength_nm": 560,
+          "res_m": 10,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
+        },
+        {
+          "name": "4",
+          "common_name": "red",
+          "center_wavelength": 0.6645,
+          "wavelength_nm": 664.5,
+          "res_m": 10,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
+        },
+        {
+          "name": "8",
+          "common_name": "nir",
+          "center_wavelength": 0.8351,
+          "wavelength_nm": 835.1,
+          "res_m": 10,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
+        }
+      ]
+    },
+    "links": [
+      {
+        "rel": "alternate",
+        "href": "https://terrascope.be/en/products",
+        "title": "Product web page."
+      }
+    ]
+  },
+  {
+    "id":"S2_FAPAR_V102_WEBMERCATOR2",
+    "name":"S2_FAPAR_V102_WEBMERCATOR2",
+    "product_id":"S2_FAPAR_V102_WEBMERCATOR2",
+    "title": "Deprecated 10m fAPAR product based on Sentinel-2",
+    "description": "DEPRECATED, use TERRASCOPE_S2_FAPAR_V2. Sentinel 2 Level-3: fAPAR in Web Mercator projection, with overviews. Deprecated: use the new V200 layers. (TERRASCOPE_S2_FAPAR_V2)",
+    "_vito": {
+      "data_source": {
+        "type": "Accumulo",
+        "data_id": "S2_FAPAR_PYRAMID_20200408",
+        "split": true
+      }
+    },
+    "providers": [{"name": "Terrascope/VITO"}],
+    "license": "free",
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2015-07-06", null]]}
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": [
+          "fapar"
+        ]
+      }
+    },
+     "links": [
+      {
+        "rel": "alternate",
+        "href": "https://terrascope.be/en/products",
+        "title": "Product web page."
+      }
+    ]
+  },
+  {
+    "id":"SENTINEL2_FCOVER_TERRASCOPE",
+    "name":"SENTINEL2_FCOVER_TERRASCOPE",
+    "product_id":"SENTINEL2_FCOVER_TERRASCOPE",
+    "title": "Sentinel 2 based fCover",
+    "description": "DEPRECATED, use TERRASCOPE_S2_FCOVER_V2. Sentinel 2 Level-3: fCOVER, web mercator projection, with overviews.",
+    "_vito": {
+      "data_source": {
+        "type": "Accumulo",
+        "data_id": "S2_FCOVER_PYRAMID_EARLY"
+      }
+    },
+    "providers": [{"name": "Terrascope/VITO"}],
+    "license": "free",
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2015-07-06", null]]}
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": [
+          "fcover"
+        ]
+      }
+    },
+    "links":[]
+  },
+  {
+    "id": "SENTINEL2_NDVI_TERRASCOPE",
+    "name": "SENTINEL2_NDVI_TERRASCOPE",
+    "description": "DEPRECATED, use TERRASCOPE_S2_NDVI_V2",
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": ["NDVI_10M"]
+      }
+    },
+    "_vito": {
+      "data_source": {
+        "type": "Accumulo",
+        "data_id": "S2_NDVI_PYRAMID_EARLY"
+      }
+    },
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2015-07-06", null]]}
+    }
+  },
+  {
+    "id": "SENTINEL2_LAI_TERRASCOPE",
+    "name": "SENTINEL2_LAI_TERRASCOPE",
+    "description": "DEPRECATED, use TERRASCOPE_S2_LAI_V2",
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": ["LAI_10M"]
+      }
+    },
+    "_vito": {
+      "data_source": {
+        "type": "Accumulo",
+        "data_id": "S2_LAI_PYRAMID_20190625"
+      }
+    },
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2015-07-06", null]]}
+    }
+  },
+
+  {
+    "id":"PROBAV_L3_S10_TOC_NDVI_333M",
+    "name":"PROBAV_L3_S10_TOC_NDVI_333M",
+    "product_id":"PROBAV_L3_S10_TOC_NDVI_333M",
+    "title": "300m NDVI, 10-daily cloud-free composite",
+    "description": "300m NDVI, 10-daily cloud-free composite derived from PROBA-V data.",
+    "_vito": {
+      "data_source": {
+        "type": "Accumulo",
+        "data_id": "PROBAV_L3_S10_TOC_NDVI_333M_V3"
+      }
+    },
+    "license": "free",
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2014-01-01", null]]}
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": [
+          "ndvi"
+        ]
+      }
+    },
+    "links": [
+      {
+        "rel": "alternate",
+        "href": "http://proba-v.vgt.vito.be/en/product-types",
+        "title": "Product web page."
+      },
+      {
+        "rel": "alternate",
+        "href": "http://proba-v.vgt.vito.be/en/data-policy",
+        "title": "Data policy"
+      }
+    ]
+  },
+  {
+    "id": "S2_FAPAR_SCENECLASSIFICATION_V102_PYRAMID",
+    "name":"S2_FAPAR_SCENECLASSIFICATION_V102_PYRAMID",
+    "product_id": "S2_FAPAR_SCENECLASSIFICATION_V102_PYRAMID",
+    "title": "Sen2Cor Scene Classification layer",
+    "description": "Sen2Cor Scene Classification layer, from Sentinel 2 data.",
+    "_vito": {
+      "data_source": {
+        "type": "Accumulo",
+        "data_id": "S2_SCENECLASSIFICATION_PYRAMID_20200407",
+        "split":true
+      }
+    },
+    "providers": [{"name": "Terrascope/VITO"}],
+    "license": "free",
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2015-07-06", null]]}
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": [
+          "classification"
+        ]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {
+          "name": "classification",
+          "band_id": "classification",
+          "res_m": 20,
+          "type": "int8",
+          "unit": "1"
+        }
+      ]
+    },
+    "links": [
+      {
+        "rel": "alternate",
+        "href": "https://terrascope.be/en/products",
+        "title": "Product web page."
+      }
+    ]
+  },
+  {
+    "id": "S2_NDVI_S3",
+    "name": "S2_NDVI_S3",
+    "title": "TerraScope test dataset on SoblooDias",
+    "description": "NDVI",
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": [
+          "ndvi"
+        ]
+      }
+    },
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2015-07-06", null]]}
+    },
+    "_vito": {
+      "data_source": {
+        "type": "S3",
+        "endpoint": "http://oss.eu-west-0.prod-cloud-ocb.orange-business.com",
+        "region": "eu-west-0",
+        "bucket_name": "s2-ndvi"
+      }
+    },
+    "product_id":"S2_NDVI_S3",
+    "license": "free"
+  },
+  {
+    "id": "TERRASCOPE_S2_FAPAR_V2",
+    "name": "TERRASCOPE_S2_FAPAR_V2",
+    "title": "Sentinel-2 FAPAR L3 V2",
+    "description": "FAPAR Level-3 product at 10m resolution. Covers selected areas globally. This FAPAR is derived directly from ESA L2A products. The FAPAR quantifies the fraction of the solar radiation absorbed by live leaves for the photosynthesis activity. Then, it refers only to the green and alive elements of the canopy. The FAPAR depends on the canopy structure, vegetation element optical properties, atmospheric conditions, and angular configuration. \n\nFAPAR is recognized as an Essential Climate Variable (ECV) by the Global Climate Observing System (GCOS).",
+    "license": "proprietary",
+    "providers": [
+      {
+          "name": "VITO, on behalf of the Belgian Science Policy Office (BELSPO).",
+          "roles":
+          [
+              "producer",
+              "licensor"
+          ],
+          "url": "https://terrascope.be"
+      }
+      ],
+     "links": [
+      {
+        "rel": "license",
+        "href": "https://sentinel.esa.int/documents/247904/690755/Sentinel_Data_Legal_Notice"
+      },
+      {
+          "rel": "alternate",
+          "href": "https://services.terrascope.be/catalogue/description?collection=urn:eop:VITO:TERRASCOPE_S2_FAPAR_V2"
+      },
+      {
+          "rel": "alternate",
+          "href": "https://viewer.terrascope.be/?language=nl&bbox=0.9339867511378304,50.14520994379217,6.207424251137831,51.77292299745045&overlay=false&bgLayer=MapBox&date=2019-02-25T03:17:15.000Z&layer=CGS_S2_FAPAR"
+      }],
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2015-07-06", null]]}
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": ["FAPAR_10M"]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {"name": "FAPAR_10M"}
+      ]
+    },
+    "_vito": {
+      "data_source": {
+        "type": "file-s2",
+        "oscars_collection_id": "urn:eop:VITO:TERRASCOPE_S2_FAPAR_V2",
+        "root_path": "/data/MTDA/TERRASCOPE_Sentinel2/FAPAR_V2"
+      }
+    }
+  },
+  {
+    "id": "TERRASCOPE_S2_NDVI_V2",
+    "name": "TERRASCOPE_S2_NDVI_V2",
+    "title": "Sentinel-2 NDVI L3 V2",
+    "description": "NDVI Level-3 product at 10m resolution. Covers selected areas globally. This NDVI is derived directly from ESA L2A products.",
+    "license": "proprietary",
+    "providers": [
+      {
+          "name": "VITO, on behalf of the Belgian Science Policy Office (BELSPO).",
+          "roles":
+          [
+              "producer",
+              "licensor"
+          ],
+          "url": "https://terrascope.be"
+      }
+      ],
+     "links": [
+      {
+        "rel": "license",
+        "href": "https://sentinel.esa.int/documents/247904/690755/Sentinel_Data_Legal_Notice"
+      },
+      {
+          "rel": "alternate",
+          "href": "https://services.terrascope.be/catalogue/description?collection=urn:eop:VITO:TERRASCOPE_S2_NDVI_V2"
+      },
+      {
+          "rel": "alternate",
+          "href": "https://viewer.terrascope.be/?language=nl&bbox=0.9339867511378304,50.14520994379217,6.207424251137831,51.77292299745045&overlay=false&bgLayer=MapBox&date=2019-02-25T03:17:15.000Z&layer=CGS_S2_NDVI"
+      }],
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2015-07-06", null]]}
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": ["NDVI_10M"]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {"name": "NDVI_10M"}
+      ]
+    },
+    "_vito": {
+      "data_source": {
+        "type": "file-s2",
+        "oscars_collection_id": "urn:eop:VITO:TERRASCOPE_S2_NDVI_V2",
+        "root_path": "/data/MTDA/TERRASCOPE_Sentinel2/NDVI_V2"
+      }
+    }
+  },
+  {
+    "id": "TERRASCOPE_S2_LAI_V2",
+    "name": "TERRASCOPE_S2_LAI_V2",
+    "title": "Sentinel-2 LAI L3 V2",
+    "description": "Leaf area index Level-3 product at 10m resolution. Covers selected areas globally. This LAI is derived directly from ESA L2A products.",
+    "license": "proprietary",
+    "providers": [
+      {
+          "name": "VITO, on behalf of the Belgian Science Policy Office (BELSPO).",
+          "roles":
+          [
+              "producer",
+              "licensor"
+          ],
+          "url": "https://terrascope.be"
+      }
+      ],
+    "links": [
+      {
+        "rel": "license",
+        "href": "https://sentinel.esa.int/documents/247904/690755/Sentinel_Data_Legal_Notice"
+      },
+      {
+          "rel": "alternate",
+          "href": "https://services.terrascope.be/catalogue/description?collection=urn:eop:VITO:TERRASCOPE_S2_LAI_V2"
+      },
+      {
+          "rel": "alternate",
+          "href": "https://viewer.terrascope.be/?language=nl&bbox=0.9339867511378304,50.14520994379217,6.207424251137831,51.77292299745045&overlay=false&bgLayer=MapBox&date=2019-02-25T03:17:15.000Z&layer=CGS_S2_LAI"
+      }],
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2015-07-06", null]]}
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": ["LAI_10M"]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {"name": "LAI_10M"}
+      ]
+    },
+    "_vito": {
+      "data_source": {
+        "type": "file-s2",
+        "oscars_collection_id": "urn:eop:VITO:TERRASCOPE_S2_LAI_V2",
+        "root_path": "/data/MTDA/TERRASCOPE_Sentinel2/LAI_V2"
+      }
+    }
+  },
+  {
+    "id": "TERRASCOPE_S2_FCOVER_V2",
+    "name": "TERRASCOPE_S2_FCOVER_V2",
+    "title": "Sentinel-2 FCOVER L3 V2",
+    "description": "Fraction of canopy cover Level-3 product at 10m resolution. Covers selected areas globally. This FCOVER is derived directly from ESA L2A products.",
+    "license": "proprietary",
+    "providers": [
+      {
+          "name": "VITO, on behalf of the Belgian Science Policy Office (BELSPO).",
+          "roles":
+          [
+              "producer",
+              "licensor"
+          ],
+          "url": "https://terrascope.be"
+      }
+      ],
+    "links": [
+      {
+        "rel": "license",
+        "href": "https://sentinel.esa.int/documents/247904/690755/Sentinel_Data_Legal_Notice"
+      },
+      {
+          "rel": "alternate",
+          "href": "https://services.terrascope.be/catalogue/description?collection=urn:eop:VITO:TERRASCOPE_S2_FCOVER_V2"
+      },
+      {
+          "rel": "alternate",
+          "href": "https://viewer.terrascope.be/?language=nl&bbox=0.9339867511378304,50.14520994379217,6.207424251137831,51.77292299745045&overlay=false&bgLayer=MapBox&date=2019-02-25T03:17:15.000Z&layer=CGS_S2_FCOVER"
+      }],
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2015-07-06", null]]}
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": ["FCOVER_10M"]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {"name": "FCOVER_10M"}
+      ]
+    },
+    "_vito": {
+      "data_source": {
+        "type": "file-s2",
+        "oscars_collection_id": "urn:eop:VITO:TERRASCOPE_S2_FCOVER_V2",
+        "root_path": "/data/MTDA/TERRASCOPE_Sentinel2/FCOVER_V2"
+      }
+    }
+  },
+ {
+    "id": "TERRASCOPE_S2_TOC_V2",
+    "name": "TERRASCOPE_S2_TOC_V2",
+    "title": "Sentinel-2 L2A V2",
+    "description": "Sentinel-2 Level 2A product, processed from L1C by Sen2Cor.",
+    "license": "proprietary",
+    "providers": [
+      {
+          "name": "VITO, on behalf of the Belgian Science Policy Office (BELSPO).",
+          "roles":
+          [
+              "producer",
+              "licensor"
+          ],
+          "url": "https://terrascope.be"
+      }
+      ],
+   "links": [
+      {
+        "rel": "license",
+        "href": "https://sentinel.esa.int/documents/247904/690755/Sentinel_Data_Legal_Notice"
+      },
+      {
+          "rel": "alternate",
+          "href": "https://services.terrascope.be/catalogue/description?collection=urn:eop:VITO:TERRASCOPE_S2_TOC_V2"
+      },
+      {
+          "rel": "alternate",
+          "href": "https://viewer.terrascope.be/?language=nl&bbox=0.9339867511378304,50.14520994379217,6.207424251137831,51.77292299745045&overlay=false&bgLayer=MapBox&date=2019-02-25T03:17:15.000Z&layer=CGS_S2_RADIOMETRY"
+      }],
+     "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2015-07-06", null]]}
+    },
+   "summaries": {
+      "constellation": ["Sentinel-2"],
+      "platform": [
+        "Sentinel-2A",
+        "Sentinel-2B"
+      ],
+      "instruments": ["MSI"],
+      "eo:gsd": [
+        10,
+        20,
+        60
+      ],
+      "eo:bands": [
+        {"name": "TOC-B01_60M"},
+        {"name": "TOC-B02_10M"},
+        {"name": "TOC-B03_10M"},
+        {"name": "TOC-B04_10M"},
+        {"name": "TOC-B05_20M"},
+        {"name": "TOC-B06_20M"},
+        {"name": "TOC-B07_20M"},
+        {"name": "TOC-B08_10M"},
+        {"name": "TOC-B8A_20M"},
+        {"name": "TOC-B11_20M"},
+        {"name": "TOC-B12_20M"},
+        {"name": "SCENECLASSIFICATION_20M"},
+        {"name": "RAA_60M"},
+        {"name": "SZA_60M"},
+        {"name": "VZA_60M"}
+      ]
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": [
+          "TOC-B01_60M",
+          "TOC-B02_10M",
+          "TOC-B03_10M",
+          "TOC-B04_10M",
+          "TOC-B05_20M",
+          "TOC-B06_20M",
+          "TOC-B07_20M",
+          "TOC-B08_10M",
+          "TOC-B8A_20M",
+          "TOC-B11_20M",
+          "TOC-B12_20M",
+          "SCENECLASSIFICATION_20M",
+          "RAA_60M",
+          "SZA_60M",
+          "VZA_60M"
+        ]
+      }
+    },
+    "_vito": {
+      "data_source": {
+        "type": "file-s2",
+        "oscars_collection_id": "urn:eop:VITO:TERRASCOPE_S2_TOC_V2",
+        "root_path": "/data/MTDA/TERRASCOPE_Sentinel2/TOC_V2"
+      }
+    }
+  },
+  {
+    "id": "CGS_SENTINEL2_RADIOMETRY_V102_FILE",
+    "name": "CGS_SENTINEL2_RADIOMETRY_V102_FILE",
+    "description": "DEPRECATED, use TERRASCOPE_S2_TOC_V2",
+    "_vito": {
+      "data_source": {
+        "type": "file-s2-radiometry"
+      }
+    },
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2015-07-06", null]]}
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": ["1", "2", "3", "4", "5", "6", "7", "8", "11", "12", "8A"]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {"name": "1"},
+        {"name": "2"},
+        {"name": "3"},
+        {"name": "4"},
+        {"name": "5"},
+        {"name": "6"},
+        {"name": "7"},
+        {"name": "8"},
+        {"name": "11"},
+        {"name": "12"},
+        {"name": "8A"}
+      ]
+    }
+  },
+  {
+    "id": "TERRASCOPE_S1_SLC_COHERENCE_V1",
+    "name": "TERRASCOPE_S1_SLC_COHERENCE_V1",
+    "title": "Sentinel-1 Coherence",
+    "description": "The Interferometric Coherence product is the amplitude of the complex correlation coefficient between two images. In simple way, coherence describes similarity between two images in a range between zero to one. Zero means pixels were totally different where one means pixels were same exactly.The product algorithm starts from two ESA Level-1 SLC products which are from the same area, the same relative orbit number and preferably from within a short time interval (6 days is the shortest possible with S1A and S1B pairs). The original paired images go through a workflow of orbit correction, co-registration through back-geocoding, coherence calculation and terrain correction by making use of standard SNAP tools as part of the Sentinel-1 toolbox (S1TBX).The terrain correction step is intended to compensate for distortions due to topographical variations of the scene and the tilt of the satellite sensor, so that the geometric representation of the image will be as close as possible to the real world.",
+    "license": "proprietary",
+    "providers": [
+      {
+          "name": "VITO, on behalf of the Belgian Science Policy Office (BELSPO).",
+          "roles":
+          [
+              "producer",
+              "licensor"
+          ],
+          "url": "https://terrascope.be"
+      }
+      ],
+    "links": [
+      {
+        "rel": "license",
+        "href": "https://sentinel.esa.int/documents/247904/690755/Sentinel_Data_Legal_Notice"
+      },
+      {
+          "rel": "alternate",
+          "href": "https://services.terrascope.be/catalogue/description?collection=urn:eop:VITO:TERRASCOPE_S1_SLC_COHERENCE_V1"
+      }],
+    "_vito": {
+      "data_source": {
+        "type": "file-s1-coherence"
+      }
+    },
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2015-07-06", null]]}
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": ["VV", "VH"]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {"name": "VV"},
+        {"name": "VH"}
+      ]
+    }
+  },
+  {
+    "id": "SENTINEL1_GAMMA0_SENTINELHUB",
+    "name": "SENTINEL1_GAMMA0_SENTINELHUB",
+    "title": "Sentinel 1 Gamma0, 10m resolution, provided by SentinelHub",
+    "description": "Global Sentinel 1 Gamma0, provided by SentinelHub. IW mode, VV and VH bands.",
+    "_vito": {
+      "data_source": {
+        "type": "sentinel-hub-s1",
+         "uuid": "482b4783-9a62-4275-8728-63ee2baa2087"
+      }
+    },
+    "providers": [{"name": "SentinelHub"}],
+    "license": "free",
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2014-10-06", null]]}
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": ["VV", "VH", "VV_DB", "VH_DB"]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {"name": "VV"},
+        {"name": "VH"},
+        {"name": "VV_DB"},
+        {"name": "VH_DB"}
+      ]
+    },
+    "links": [
+      {
+        "rel": "alternate",
+        "href": "https://www.sentinel-hub.com/develop/documentation/eo_products/Sentinel1EOproducts",
+        "title": "Product web page."
+      }
+    ]
+  },
+  {
+    "id": "SENTINEL2_L1C_SENTINELHUB",
+    "name": "SENTINEL2_L1C_SENTINELHUB",
+    "title": "Sentinel 2 L1C, 10m resolution, provided by SentinelHub",
+    "description": "Global Sentinel 2 L1C, provided by SentinelHub.",
+    "_vito": {
+      "data_source": {
+        "type": "sentinel-hub-s2-l1c",
+         "uuid": "a318c5a9-8459-45f9-b91e-5fa5fd3e2ead"
+      }
+    },
+    "providers": [{"name": "SentinelHub"}],
+    "license": "free",
+    "extent": {
+      "spatial": {"bbox": [[-180, -90, 180, 90]]},
+      "temporal": {"interval": [["2014-10-06", null]]}
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B09", "B10", "B11", "B12", "B8A"]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {"name": "B01"},
+        {"name": "B02"},
+        {"name": "B03"},
+        {"name": "B04"},
+        {"name": "B05"},
+        {"name": "B06"},
+        {"name": "B07"},
+        {"name": "B08"},
+        {"name": "B09"},
+        {"name": "B10"},
+        {"name": "B11"},
+        {"name": "B12"},
+        {"name": "B8A"}
+      ]
+    },
+    "links": [
+      {
+        "rel": "alternate",
+        "href": "https://www.sentinel-hub.com/develop/documentation/eo_products/Sentinel2EOproducts",
+        "title": "Product web page."
+      }
+    ]
+  },
+  {
+    "id": "SENTINEL2_L2A_SENTINELHUB",
+    "name": "SENTINEL2_L2A_SENTINELHUB",
+    "title": "Sentinel 2 L2A, 10m resolution, provided by SentinelHub",
+    "description": "Global Sentinel 2 L2A, provided by SentinelHub.",
+    "_vito": {
+      "data_source": {
+        "type": "sentinel-hub-s2-l2a",
+         "uuid": "1002ba92-2b70-41e9-a840-8320d4646c21"
+      }
+    },
+    "providers": [{"name": "SentinelHub"}],
+    "license": "free",
+    "extent": {
+      "spatial": {"bbox": [[-180, -90, 180, 90]]},
+      "temporal": {"interval": [["2014-10-06", null]]}
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B09", "B11", "B12", "B8A"]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {"name": "B01"},
+        {"name": "B02"},
+        {"name": "B03"},
+        {"name": "B04"},
+        {"name": "B05"},
+        {"name": "B06"},
+        {"name": "B07"},
+        {"name": "B08"},
+        {"name": "B09"},
+        {"name": "B11"},
+        {"name": "B12"},
+        {"name": "B8A"}
+      ]
+    },
+    "links": [
+      {
+        "rel": "alternate",
+        "href": "https://www.sentinel-hub.com/develop/documentation/eo_products/Sentinel2EOproducts",
+        "title": "Product web page."
+      }
+    ]
+  },
+  {
+    "id": "LANDSAT8_L1C_SENTINELHUB",
+    "name": "LANDSAT8_L1C_SENTINELHUB",
+    "title": "Landsat 8 L1C, 30m resolution, provided by SentinelHub",
+    "description": "Global Landsat 8 L1C, provided by SentinelHub.",
+    "_vito": {
+      "data_source": {
+        "type": "sentinel-hub-l8",
+         "uuid": "c6e309de-e376-4dbb-adbc-ce6537cc34fa"
+      }
+    },
+    "providers": [{"name": "SentinelHub"}],
+    "license": "free",
+    "extent": {
+      "spatial": {"bbox": [[-180, -90, 180, 90]]},
+      "temporal": {"interval": [["2014-10-06", null]]}
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B09", "B10", "B11"]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {"name": "B01"},
+        {"name": "B02"},
+        {"name": "B03"},
+        {"name": "B04"},
+        {"name": "B05"},
+        {"name": "B06"},
+        {"name": "B07"},
+        {"name": "B08"},
+        {"name": "B09"},
+        {"name": "B10"},
+        {"name": "B11"}
+      ]
+    },
+    "links": [
+      {
+        "rel": "alternate",
+        "href": "https://www.sentinel-hub.com/develop/documentation/eo_products/Landsat8EOproducts",
+        "title": "Product web page."
+      }
+    ]
+  },
+  {
+    "id": "S2_RADIOMETRY_S3_JP2",
+    "name": "S2_RADIOMETRY_S3_JP2",
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x"},
+      "y": {"type": "spatial", "axis": "y"},
+      "t": {"type": "temporal"},
+      "bands": {"type": "bands", "values": ["B02", "B03", "B04", "B08"]}
+    },
+    "_vito": {
+      "data_source": {
+        "type": "s3-jp2",
+        "endpoint": "http://oss.eu-west-0.prod-cloud-ocb.orange-business.com",
+        "region": "eu-west-0"
+      }
+    },
+    "extent": {
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2015-07-06", null]]}
+    }
+  }
+]
