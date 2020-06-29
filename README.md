@@ -87,9 +87,9 @@ The Spark operator is now up and running in its own namespace.
 
 ## Deploy the OpenEO Spark job
 
-Now that we have the Spark operator running, it's time to deploy our application on the cluster. As Kubernetes is a container orchestrator, we of course need to package our application into a container image. Currently the Dockerfile is not completely ready to be built by everyone as there were some ad hoc changes to make it work on Kubernetes that were not included in the upstream projects yet. We did however provide a ready to use container image, available at `vito-docker.artifactory.vgt.vito.be/openeo:latest` and we will provide the Dockerfile as soon as possibe.
+Now that we have the Spark operator running, it's time to deploy our application on the cluster. As Kubernetes is a container orchestrator, we of course need to package our application into a container image. The necessary files to build this container image can be found in the [docker][8] directory. A prebuilt image is available at `vito-docker.artifactory.vgt.vito.be/openeo-geotrellis`.
 
-As we are using the Spark operator, we can now define our Spark job as a Kubernetes resource, rather than a `spark-submit` script. The Kubernetes manifest for the OpenEO Spark job can be found [here][8].
+As we are using the Spark operator, we can now define our Spark job as a Kubernetes resource, rather than a `spark-submit` script. The Kubernetes manifest for the OpenEO Spark job can be found [here][9].
 
 Some important parts of this resource definition:
 
@@ -171,9 +171,9 @@ Now open up your browser and navigate to `localhost:4040` and you should see the
 
 Now that we have a working application endpoint, we want it to be available to others as well, as it is now only available to the Kubernetes cluster itself, not even to our bastion host.
 
-To make this work, we're going to use [Openstack Octavia][9], a network load balancing tool, specific for Openstack. Via Kubespray, Kubernetes is configured to be able to create this load balancer on the fly.
+To make this work, we're going to use [Openstack Octavia][10], a network load balancing tool, specific for Openstack. Via Kubespray, Kubernetes is configured to be able to create this load balancer on the fly.
 
-We can create the loadbalancer by exposing our application with a `service` resource. The service manifest can be found [here][10]. Replace the `loadbalancer.openstack.org/floating-network-id` with the ID of one of your external networks.
+We can create the loadbalancer by exposing our application with a `service` resource. The service manifest can be found [here][11]. Replace the `loadbalancer.openstack.org/floating-network-id` with the ID of one of your external networks.
 
 Apply the service as follows:
 
@@ -207,6 +207,7 @@ curl <EXTERNAL_IP>/openeo/1.0/collections
 [5]: https://github.com/GoogleCloudPlatform/spark-on-k8s-operator
 [6]: https://github.com/helm/charts/tree/master/incubator/sparkoperator
 [7]: https://helm.sh/docs/intro/install
-[8]: https://github.com/Open-EO/openeo-geotrellis-kubernetes/blob/master/openeo.yaml
-[9]: https://docs.openstack.org/octavia/latest/
-[10]: https://github.com/Open-EO/openeo-geotrellis-kubernetes/blob/master/openeo_service.yaml
+[8]: https://github.com/Open-EO/openeo-geotrellis-kubernetes/blob/master/docker
+[9]: https://github.com/Open-EO/openeo-geotrellis-kubernetes/blob/master/kubernetes/openeo.yaml
+[10]: https://docs.openstack.org/octavia/latest/
+[11]: https://github.com/Open-EO/openeo-geotrellis-kubernetes/blob/master/kubernetes/openeo_service.yaml
