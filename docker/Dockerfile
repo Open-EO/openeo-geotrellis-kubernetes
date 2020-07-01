@@ -9,10 +9,7 @@ RUN yum install -y git && \
 
 FROM gcr.io/spark-operator/spark-py:v2.4.5
 
-LABEL maintainer=Vito
-
-COPY log4j.properties /opt
-COPY layercatalog.json /opt
+LABEL maintainer="VITO Remote Sensing"
 
 RUN printf '[global]\nindex = https://artifactory.vgt.vito.be/api/pypi/python-packages\nextra-index-url = https://artifactory.vgt.vito.be/api/pypi/python-packages/simple' > /etc/pip.conf
 
@@ -26,5 +23,3 @@ RUN python3 -m pip install -I --upgrade pip && \
     rm -rf /tmp/openeo && \
     rm -rf /root/.cache && \
     rm -rf /var/cache/apt/*
-
-COPY probav-mep.py /usr/local/lib/python3.7/dist-packages/openeogeotrellis/deploy/probav-mep.py
