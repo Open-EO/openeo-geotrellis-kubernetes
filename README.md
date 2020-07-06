@@ -200,6 +200,46 @@ curl <EXTERNAL_IP>/openeo/1.0/collections
 {"collections":[{"description":"fraction of the solar radiation absorbed by live leaves for the photosynthesis activity","extent":{"spatial":{"bbox":[[-180,-90,180,90]]},"temporal":{"interval":[["2019-01-02","2019-02-03"]]}},"id":"S2_FAPAR_CLOUDCOVER","license":"free","links":[],"stac_version":"0.9.0"},{"description":"S2_FOOBAR","extent":{"spatial":{"bbox":[[2.5,49.5,6.2,51.5]]},"temporal":{"interval":[["2019-01-01",null]]}},"id":"S2_FOOBAR","license":"free","links":[],"stac_version":"0.9.0"},{"description":"PROBAV_L3_S10_TOC_NDVI_333M_V2","extent":{"spatial":{"bbox":[[0,0,0,0]]},"temporal":{"interval":[[null,null]]}},"id":"PROBAV_L3_S10_TOC_NDVI_333M_V2","license":"proprietary","links":[],"stac_version":"0.9.0"}],"links":[]}
 ```
 
+## Monitoring
+
+The spark-operator also provides an easy way to monitor your Spark Applications that are submitted by the operator. In the `openeo.yaml` manifest, you can find the necessary configuration:
+
+```
+monitoring:
+  exposeDriverMetrics: true
+  exposeExecutorMetrics: true
+  prometheus:
+    jmxExporterJar: "/opt/jmx_prometheus_javaagent-0.13.0.jar"
+    port: 8090
+```
+
+You can also only expose the executor's metrics for example.
+
+This monitoring section uses a default configuration file for the [jmx_exporter][12]. The default configuration file can be found [here][13]. Of course, there is also a possibility to override this configuration. Via a Kubernetes [configMap][14], you can mount a different `prometheus.yaml` file in your driver and executor. First, a `configMap` should be created, containing the `prometheus.yaml` file:
+
+```
+kubectl create configmap prometheus-jmx-config --from-file=prometheus.yaml
+```
+
+This `configMap` can now be added to your pods:
+
+```
+driver:
+  configMaps:
+    - name: prometheus-jmx-config
+      path: /opt/prometheus_config
+```
+
+The path can then be used in the monitoring configuration:
+
+```
+monitoring:
+  prometheus:
+    configuration: /opt/prometheus_config
+```
+
+The new metrics should now be appearing in your Prometheus instance.
+
 [1]: https://creodias.eu/
 [2]: https://creodias.eu/faq-other/-/asset_publisher/SIs09LQL6Gct/content/how-to-configure-kubernetes
 [3]: https://github.com/kubernetes-sigs/kubespray
@@ -211,3 +251,6 @@ curl <EXTERNAL_IP>/openeo/1.0/collections
 [9]: https://github.com/Open-EO/openeo-geotrellis-kubernetes/blob/master/kubernetes/openeo.yaml
 [10]: https://docs.openstack.org/octavia/latest/
 [11]: https://github.com/Open-EO/openeo-geotrellis-kubernetes/blob/master/kubernetes/openeo_service.yaml
+[12]: https://github.com/prometheus/jmx_exporter
+[13]: https://github.com/GoogleCloudPlatform/spark-on-k8s-operator/blob/master/spark-docker/conf/prometheus.yaml
+[14]: https://kubernetes.io/docs/concepts/configuration/configmap/
