@@ -54,7 +54,7 @@ This makes all the incubator charts available to your Helm installation. With `h
 You can choose in which Kubernetes namespace the spark operator will be installed. In this guide. we'll create a separate namespace for the operator.
 
 ```
-helm install incubator/sparkoperator --generate-name --create-namespace --namespace spark-operator --set sparkJobNamespace=spark-jobs
+helm install incubator/sparkoperator --generate-name --create-namespace --namespace spark-operator --set sparkJobNamespace=spark-jobs --set enableWebhook=true --set operatorVersion=v1beta2-1.1.2-2.4.5
 ```
 
 Let's break down the different options passed to the `helm install` command:
@@ -66,6 +66,7 @@ Let's break down the different options passed to the `helm install` command:
 | --create-namespace      | Create the namespace if it doesn't exist yet (requires Helm 3.2+)              |
 | --namespace             | The namespace where the operator will be installed in                          |
 | --set sparkJobNamespace | The namespace where the Spark jobs will be deployed                            |
+| --set enableWebhook     | This enables the mutating admission webhook                                    |
 
 With the operator installed you should be able to get the following outputs:
 
@@ -217,6 +218,8 @@ You can also only expose the executor's metrics for example.
 
 This monitoring section uses a default configuration file for the [jmx_exporter][12]. The default configuration file can be found [here][13]. Of course, there is also a possibility to override this configuration. Via a Kubernetes [configMap][14], you can mount a different `prometheus.yaml` file in your driver and executor. First, a `configMap` should be created, containing the `prometheus.yaml` file:
 
+** To make the configMaps to work, you need to enable the [mutating admission webhook][15] for the spark-operator **
+
 ```
 kubectl create configmap prometheus-jmx-config --from-file=prometheus.yaml
 ```
@@ -254,3 +257,4 @@ The new metrics should now be appearing in your Prometheus instance.
 [12]: https://github.com/prometheus/jmx_exporter
 [13]: https://github.com/GoogleCloudPlatform/spark-on-k8s-operator/blob/master/spark-docker/conf/prometheus.yaml
 [14]: https://kubernetes.io/docs/concepts/configuration/configmap/
+[15]: https://github.com/GoogleCloudPlatform/spark-on-k8s-operator/blob/master/docs/quick-start-guide.md#about-the-mutating-admission-webhook
