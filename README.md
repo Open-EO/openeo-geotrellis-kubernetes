@@ -51,9 +51,10 @@ helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubato
 
 This makes all the incubator charts available to your Helm installation. With `helm search repo` you can see what charts are available.
 
-You can choose in which Kubernetes namespace the spark operator will be installed. In this guide. we'll create a separate namespace for the operator.
+You can choose in which Kubernetes namespace the spark operator will be installed. In this guide. we'll create a separate namespace for the operator and for the Spark jobs. The namespace for the Spark jobs should be created separately, as the Helm chart doesn't create it for us.
 
 ```
+kubectl create namespace spark-jobs
 helm install incubator/sparkoperator --generate-name --create-namespace --namespace spark-operator --set sparkJobNamespace=spark-jobs --set enableWebhook=true --set operatorVersion=v1beta2-1.1.2-2.4.5
 ```
 
