@@ -98,7 +98,7 @@ Some important parts of this resource definition:
 | Config               | Explanation                                                                                 |
 |----------------------|---------------------------------------------------------------------------------------------|
 | image                | Container image that contains the OpenEO application                                        |
-| mainApplicationFile: | How the application should be started                                                       |
+| mainApplicationFile  | How the application should be started                                                       |
 | sparkVersion         | The Spark version installed into the container image                                        |
 | serviceAccount(*)    | The service account that has permissions to create and delete pods in the SparkJobNamespace |
 | drivers.labels.name  | Important for exposing the service to the outside world later on                            |
