@@ -107,7 +107,7 @@ Some important parts of this resource definition:
 \* A note about the serviceAccount: This service account name is different for every installation and should be adapted in the manifest to match yours. You can get the serviceAccount name with following command:
 
 ```
-kubectl get serviceaccounts
+kubectl get serviceaccounts -n spark-jobs
 ```
 
 and look for the one starting with `sparkoperator`.
