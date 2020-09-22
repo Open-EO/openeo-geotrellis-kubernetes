@@ -14,6 +14,7 @@ spec:
   sparkConf:
     "spark.executorEnv.DRIVER_IMPLEMENTATION_PACKAGE": "openeogeotrellis"
     "spark.extraListeners": "org.openeo.sparklisteners.CancelRunawayJobListener"
+    "spark.appMasterEnv.DRIVER_IMPLEMENTATION_PACKAGE": "openeogeotrellis"
   sparkVersion: "2.4.5"
   restartPolicy:
     type: OnFailure
@@ -24,6 +25,9 @@ spec:
   driver:
     envVars:
       KUBE_OPENEO_API_PORT: "50001"
+      DRIVER_IMPLEMENTATION_PACKAGE: "openeogeotrellis"
+      TRAVIS: "1"
+      OPENEO_CATALOG_FILES: "/opt/layercatalog.json"
     cores: 1
     coreLimit: "1200m"
     memory: "512m"
