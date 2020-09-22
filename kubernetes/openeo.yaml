@@ -41,6 +41,8 @@ spec:
     jars:
       - 'local:///opt/geotrellis-extensions-1.3.0-SNAPSHOT.jar'
       - 'local:///opt/geotrellis-backend-assembly-0.4.5-openeo.jar'
+    files:
+      - 'local:///opt/layercatalog.json'
   monitoring:
     exposeDriverMetrics: true
     exposeExecutorMetrics: true
