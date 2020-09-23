@@ -22,6 +22,11 @@ spec:
     onFailureRetryInterval: 10
     onSubmissionFailureRetries: 5
     onSubmissionFailureRetryInterval: 20
+  volumes:
+    - name: "eodata"
+      hostPath:
+        path: "/eodata"
+        type: DirectoryOrCreate
   driver:
     envVars:
       KUBE_OPENEO_API_PORT: "50001"
@@ -35,12 +40,18 @@ spec:
       version: 2.4.5
       name: openeo-geotrellis-driver
     serviceAccount: sparkoperator-1593094592-spark
+    volumeMounts:
+      - name: "eodata"
+        mountPath: "/eodata"
   executor:
     cores: 1
     instances: 1
     memory: "512m"
     labels:
       version: 2.4.5
+    volumeMounts:
+      - name: "eodata"
+        mountPath: "/eodata"
   deps:
     jars:
       - 'local:///opt/geotrellis-extensions-1.4.0-SNAPSHOT.jar'
