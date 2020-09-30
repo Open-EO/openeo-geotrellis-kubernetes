@@ -1,12 +1,12 @@
 [
   {
-    "id": "CREO_S2_L2A",
-    "name": "CREO_S2_L2A",
-    "title": "Creo Sentinel-2 L2A",
-    "description": "",
+    "id": "SENTINEL2_L2A",
+    "name": "SENTINEL2_L2A",
+    "title": "Sentinel-2 L2A",
+    "description": "SENTINEL-2 is a wide-swath, high-resolution, multi-spectral imaging mission, supporting Copernicus Land Monitoring studies, including the monitoring of vegetation, soil and water cover, as well as observation of inland waterways and coastal areas. The SENTINEL-2 Multispectral Instrument (MSI) samples 13 spectral bands: four bands at 10 metres, six bands at 20 metres and three bands at 60 metres spatial resolution.\n The level 2A data is atmospherically corrected using Sen2Cor.",
     "license": "proprietary",
     "providers": [],
-    "links": [],
+    "links": ["https://earth.esa.int/web/sentinel/user-guides/sentinel-2-msi/product-types/level-2a","https://creodias.eu/data-offer"],
     "extent": {
       "spatial": {
         "bbox": [
