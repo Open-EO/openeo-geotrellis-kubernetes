@@ -33,7 +33,10 @@ COPY --from=downloader /opt/jmx_prometheus_javaagent-${JMX_PROMETHEUS_JAVAAGENT_
 
 COPY creo_layercatalog.json /opt/layercatalog.json
 
-RUN python3 -m pip install -I --upgrade pip && \
+RUN echo "deb [trusted=yes] https://artifactory.vgt.vito.be/GDAL-3.1.0 buster main" >> /etc/apt/sources.list && \
+    apt-get update && \
+    apt-get install -y libgdal27 gdal-bin gdal-data && \
+    python3 -m pip install -I --upgrade pip && \
     python3 -m pip install -r /tmp/openeo/requirements.txt && \
     python3 -m pip install kazoo==2.7.0 py4j && \
     rm -rf /tmp/openeo && \
