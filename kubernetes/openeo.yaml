@@ -8,7 +8,7 @@ spec:
   type: Python
   pythonVersion: "3"
   mode: cluster
-  image: "vito-docker.artifactory.vgt.vito.be/openeo-geotrellis"
+  image: "vito-docker.artifactory.vgt.vito.be/openeo-geotrellis:0.1.8"
   imagePullPolicy: Always
   mainApplicationFile: local:///usr/local/lib/python3.7/dist-packages/openeogeotrellis/deploy/kubernetes.py
   sparkConf:
@@ -33,9 +33,8 @@ spec:
       DRIVER_IMPLEMENTATION_PACKAGE: "openeogeotrellis"
       TRAVIS: "1"
       OPENEO_CATALOG_FILES: "/opt/layercatalog.json"
-    cores: 1
-    coreLimit: "1200m"
-    memory: "512m"
+    cores: 2
+    memory: "4096m"
     labels:
       version: 2.4.5
       name: openeo-geotrellis-driver
@@ -44,9 +43,9 @@ spec:
       - name: "eodata"
         mountPath: "/eodata"
   executor:
-    cores: 1
-    instances: 1
-    memory: "512m"
+    cores: 2
+    instances: 3
+    memory: "4096m"
     labels:
       version: 2.4.5
     volumeMounts:
