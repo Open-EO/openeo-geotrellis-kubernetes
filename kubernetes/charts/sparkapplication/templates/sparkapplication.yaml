@@ -12,7 +12,7 @@ metadata:
     version: {{ .Chart.Version | quote }}
 spec:
   type: "Python"
-  pythonVersion: {{ .Values.pythonVersion }}
+  pythonVersion: {{ .Values.pythonVersion | quote }}
   mode: "cluster"
   image: {{ required "Please provide an image" .Values.image }}:{{ required "Please provide an image version" .Values.imageVersion }}
   imagePullPolicy: {{ .Values.imagePullPolicy }}
@@ -61,7 +61,6 @@ spec:
       runAsUser: {{ .Values.userId }}
     {{- end }}
     cores: {{ .Values.driver.cores }}
-    coreLimit: {{ .Values.driver.coreLimit | default .Values.driver.cores }}
     memory: {{ .Values.driver.memory }}
     hostNetwork: {{ .Values.hostNetwork | default false}}
     labels:
@@ -82,7 +81,6 @@ spec:
     {{- end }}
     {{- end }}
     cores: {{ .Values.executor.cores }}
-    coreLimit: {{ .Values.executor.coreLimit | default .Values.executor.cores }}
     instances: {{ .Values.executor.instances }}
     memory: {{ .Values.executor.memory }}
     hostNetwork: {{ .Values.hostNetwork | default false}}
