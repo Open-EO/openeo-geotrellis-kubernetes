@@ -1,12 +1,12 @@
-executor:
-  cores: 2
-  memory: "4096m"
+---
 driver:
   cores: 2
   memory: "4096m"
-image: "vito-docker.artifactory.vgt.vito.be/openeo-geotrellis"
-imagePullPolicy: "always"
-imageVersion: "0.1.13"
-jmxExporterJar: "/opt/jmx_prometheus_javaagent-0.13.0.jar"
+executor:
+  cores: 2
+  instances: 1
+  memory: "4096m"
+imagePullPolicy: "IfNotPresent"
+jmxPort: 8090
 pythonVersion: 3
 sparkVersion: "2.4.5"
