@@ -14,7 +14,7 @@ spec:
   type: "Python"
   pythonVersion: {{ .Values.pythonVersion }}
   mode: "cluster"
-  image: {{ list .Values.image .Values.imageVersion | join ":" | quote }}
+  image: {{ required "Please provide an image" .Values.image }}:{{ required "Please provide an image version" .Values.imageVersion }}
   imagePullPolicy: {{ .Values.imagePullPolicy }}
   mainApplicationFile: {{ required "Please provide a main application file." .Values.mainApplicationFile | quote }}
   sparkVersion: {{ .Values.sparkVersion | quote }}
