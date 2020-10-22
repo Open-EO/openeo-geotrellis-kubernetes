@@ -50,14 +50,6 @@ spec:
     {{- end }}
   {{- end }}
   driver:
-    {{- if .Values.envSecretKeyRefs }}
-    envSecretKeyRefs:
-    {{- range $name, $value := .Values.envSecretKeyRefs }}
-      {{ $name }}:
-        name: {{ $value.name}}
-        key: {{ $value.key}}
-    {{- end }}
-    {{- end }}
     {{- if .Values.driver.envVars }}
     envVars:
     {{- range $name, $value := .Values.driver.envVars }}
