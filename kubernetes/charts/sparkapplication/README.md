@@ -53,3 +53,44 @@ There are 4 required parameters to be set:
 | `sparkVersion`        | The Spark version to use                            | `"2.4.5"`        |
 | `volumes`             | Volumes to be consumed by the application           |                  |
 | `volumeMounts`        | The volumes that should be mounted in the container |                  |
+
+### Sample values
+
+Following is an example `values.yaml` file:
+
+```yaml
+---
+image: "vito-docker.artifactory.vgt.vito.be/openeo-geotrellis"
+imageVersion: "0.1.13"
+jmxExporterJar: "/opt/jmx_prometheus_javaagent-0.13.0.jar"
+mainApplicationFile: "local:///usr/local/lib/python3.7/dist-packages/openeogeotrellis/deploy/kubernetes.py"
+serviceAccount: "spark-operator-spark"
+volumes:
+  - name: "eodata"
+    hostPath:
+      path: "/eodata"
+      type: "DirectoryOrCreate"
+volumeMounts:
+  - name: "eodata"
+    mountPath: "/eodata"
+executor:
+  memory: "512m"
+  cpu: 1
+driver:
+  memory: "512m"
+  cpu: 1
+  envVars:
+    KUBE_OPENEO_API_PORT: "50001"
+    DRIVER_IMPLEMENTATION_PACKAGE: "openeogeotrellis"
+    TRAVIS: "1"
+    OPENEO_CATALOG_FILES: "/opt/layercatalog.json"
+sparkConf:
+  "spark.executorEnv.DRIVER_IMPLEMENTATION_PACKAGE": "openeogeotrellis"
+  "spark.extraListeners": "org.openeo.sparklisteners.CancelRunawayJobListener"
+  "spark.appMasterEnv.DRIVER_IMPLEMENTATION_PACKAGE": "openeogeotrellis"
+jarDependencies:
+  - 'local:///opt/geotrellis-extensions-1.4.0-SNAPSHOT.jar'
+  - 'local:///opt/geotrellis-backend-assembly-0.4.5-openeo.jar'
+fileDependencies:
+  - 'local:///opt/layercatalog.json'
+```
