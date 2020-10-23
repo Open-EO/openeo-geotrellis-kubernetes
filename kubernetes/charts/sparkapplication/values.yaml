@@ -7,6 +7,11 @@ executor:
   instances: 1
   memory: "4096m"
 imagePullPolicy: "IfNotPresent"
+ingress:
+  enabled: false
 jmxPort: 8090
 pythonVersion: 3
+service:
+  enabled: false
+  type: "ClusterIP"
 sparkVersion: "2.4.5"

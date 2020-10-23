@@ -43,12 +43,19 @@ There are 4 required parameters to be set:
 | `image`               | Image for the Spark application                     |                  |
 | `imageVersion`        | Version for the Spark application image             |                  |
 | `imagePullPolicy`     | Docker image pull policy                            | `"IfNotPresent"` |
+| `ingress.annotations` | Annotations for the ingress resource                |                  |
+| `ingress.enabled`     | Enable ingress                                      | `false`          |
+| `ingress.hosts.[0]`   | host header for access                              |                  |
+| `ingress.tls`         | Utilize TLS backend in ingress                      | `false`          |
 | `jarDependencies`     | Jar dependencies for the application                |                  |
 | `jmxExporterJar`      | The Prometheus jar to use for monitoring            |                  |
 | `jmxPort`             | Port for serving the Prometheus metrics             | `8090`           |
 | `mainApplicationFile` | The start script of the Spark application           |                  |
 | `pythonVersion`       | The Python version                                  | `3`              |
 | `serviceAccount`      | Service account of the Spark Operator               |                  |
+| `service.enabled`     | Enable service                                      | `false`          |
+| `service.port`        | A port that point to your spark application         |                  |
+| `service.type`        | The type of the service                             |                  |
 | `sparkConf`           | Spark configuration settings                        |                  |
 | `sparkVersion`        | The Spark version to use                            | `"2.4.5"`        |
 | `volumes`             | Volumes to be consumed by the application           |                  |
@@ -93,4 +100,15 @@ jarDependencies:
   - 'local:///opt/geotrellis-backend-assembly-0.4.5-openeo.jar'
 fileDependencies:
   - 'local:///opt/layercatalog.json'
+service:
+  enabled: true
+  port: 50001
+ingress:
+  annotations:
+    kubernetes.io/ingress.class: traefik
+  enabled: true
+  hosts:
+  - host: openeo.example.com
+    paths:
+      - '/'
 ```
