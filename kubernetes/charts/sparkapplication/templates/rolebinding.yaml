@@ -1,8 +1,8 @@
-{{- if .Values.serviceAccount.create }}
+{{- if .Values.rbac.create }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ .Values.serviceAccount.name }}-role-binding
+  name: {{ .Values.rbac.serviceAccountName }}-role-binding
   namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/name: {{ .Release.Name }}
@@ -11,10 +11,10 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 subjects:
 - kind: ServiceAccount
-  name: {{ .Values.serviceAccount.name }}
+  name: {{ .Values.rbac.serviceAccountNname }}
   namespace: {{ .Release.Namespace }}
 roleRef:
   kind: Role
-  name: {{ .Values.serviceAccount.name }}-role
+  name: {{ .Values.rbac.serviceAccountName }}-role
   apiGroup: rbac.authorization.k8s.io
 {{- end }}

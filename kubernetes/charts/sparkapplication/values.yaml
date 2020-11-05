@@ -15,5 +15,6 @@ service:
   enabled: false
   type: "ClusterIP"
 sparkVersion: "2.4.5"
-serviceAccount:
+rbac:
   create: false
+  serviceAccountName:

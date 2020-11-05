@@ -1,8 +1,8 @@
-{{- if .Values.serviceAccount.create }}
+{{- if .Values.rbac.create }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ .Values.serviceAccount.name }}-role
+  name: {{ .Values.rbac.serviceAccountName }}-role
   namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/name: {{ .Release.Name }}
@@ -10,7 +10,7 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 rules:
-- apiGroups: [""] # "" indicates the core API group
+- apiGroups: [""]
   resources: ["pods", "sparkapplications", "secrets", "ingresses", "services"]
   verbs: ["get", "watch", "list", "create"]
 {{- end }}
