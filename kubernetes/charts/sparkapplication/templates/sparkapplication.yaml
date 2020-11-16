@@ -18,13 +18,13 @@ spec:
   imagePullPolicy: {{ .Values.imagePullPolicy }}
   mainApplicationFile: {{ required "Please provide a main application file." .Values.mainApplicationFile | quote }}
   sparkVersion: {{ .Values.sparkVersion | quote }}
-  {{- if .Values.sparkConf }}
   restartPolicy:
     type: OnFailure
     onFailureRetries: 3
     onFailureRetryInterval: 10
     onSubmissionFailureRetries: 5
     onSubmissionFailureRetryInterval: 20
+  {{- if .Values.sparkConf }}
   sparkConf:
   {{- range $conf, $value := .Values.sparkConf }}
     {{ $conf | quote }}: {{ $value | quote }}
