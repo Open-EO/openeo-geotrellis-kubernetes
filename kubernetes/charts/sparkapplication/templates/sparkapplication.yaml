@@ -50,8 +50,9 @@ spec:
     {{- end }}
   {{- end }}
   driver:
-    {{- if .Values.driver.envVars }}
     envVars:
+      IMAGE_NAME: {{ .Values.image }}:{{ .Values.imageVersion }}
+    {{- if .Values.driver.envVars }}
     {{- range $name, $value := .Values.driver.envVars }}
       {{ $name }}: {{ $value | quote }}
     {{- end }}
