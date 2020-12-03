@@ -3,7 +3,7 @@
 
 ARG ARTIFACTORY_USERNAME
 ARG ARTIFACTORY_PASSWORD
-ARG GEOTRELLIS_EXTENSIONS_VERSION=1.4.0-SNAPSHOT
+ARG GEOTRELLIS_EXTENSIONS_VERSION=2.0.0-SNAPSHOT
 ARG GEOTRELLIS_BACKEND_ASSEMBLY_VERSION=0.4.5
 ARG JMX_PROMETHEUS_JAVAAGENT_VERSION=0.13.0
 
@@ -31,7 +31,7 @@ ARG JMX_PROMETHEUS_JAVAAGENT_VERSION
 
 LABEL maintainer="VITO Remote Sensing"
 
-RUN printf '[global]\nindex = https://artifactory.vgt.vito.be/api/pypi/python-packages\nextra-index-url = https://artifactory.vgt.vito.be/api/pypi/python-packages/simple' > /etc/pip.conf
+RUN printf "[global]\nindex = https://artifactory.vgt.vito.be/api/pypi/python-packages\nextra-index-url = https://${ARTIFACTORY_USERNAME}:${ARTIFACTORY_PASSWORD}@artifactory.vgt.vito.be/api/pypi/python-packages/simple\n" > /etc/pip.conf
 
 COPY --from=downloader /opt/openeo /tmp/openeo
 COPY --from=downloader /opt/geotrellis-backend-assembly-${GEOTRELLIS_BACKEND_ASSEMBLY_VERSION}-openeo.jar /opt
@@ -39,14 +39,15 @@ COPY --from=downloader /opt/geotrellis-extensions-${GEOTRELLIS_EXTENSIONS_VERSIO
 COPY --from=downloader /opt/jmx_prometheus_javaagent-${JMX_PROMETHEUS_JAVAAGENT_VERSION}.jar /opt
 
 COPY creo_layercatalog.json /opt/layercatalog.json
+COPY log4j.properties /opt/log4j.properties
 
 RUN echo "deb [trusted=yes] https://artifactory.vgt.vito.be/GDAL-3.1.0 buster main" >> /etc/apt/sources.list && \
     echo "deb [trusted=yes] https://${ARTIFACTORY_USERNAME}:${ARTIFACTORY_PASSWORD}@artifactory.vgt.vito.be/vito-deb-buster-custom buster main" >> /etc/apt/sources.list && \
     apt-get update && \
-    apt-get install -y gdal-bin=3.1.0-kakadu~buster1 python3-gdal=3.1.0-kakadu~buster1 libgdal27=3.1.0-kakadu~buster1 proj-bin && \
-    python3 -m pip install -I --upgrade pip && \
+    apt-get install -y gdal-bin=3.1.0-kakadu~buster1 python3-gdal=3.1.0-kakadu~buster1 libgdal27=3.1.0-kakadu~buster1 proj-bin orfeo-toolbox && \
+    python3 -m pip install -I --upgrade pip==20.2.4 && \
     python3 -m pip install -r /tmp/openeo/requirements.txt && \
-    python3 -m pip install kazoo==2.7.0 py4j && \
+    python3 -m pip install kazoo==2.7.0 py4j boto3==1.16.25 kubernetes==12.0.1 PyYAML==5.3.1 Jinja2==2.11.2 spark_memlogger==0.6 && \
     rm -rf /tmp/openeo && \
     rm -rf /root/.cache && \
     rm -rf /var/cache/apt/*
