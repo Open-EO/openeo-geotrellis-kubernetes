@@ -32,7 +32,6 @@ COPY --from=downloader /opt/geotrellis-extensions-${GEOTRELLIS_EXTENSIONS_VERSIO
 COPY --from=downloader /opt/jmx_prometheus_javaagent-${JMX_PROMETHEUS_JAVAAGENT_VERSION}.jar /opt
 
 COPY creo_layercatalog.json /opt/layercatalog.json
-COPY log4j.properties /opt/log4j.properties
 
 RUN echo "deb [trusted=yes] https://artifactory.vgt.vito.be/GDAL-3.1.0 buster main" >> /etc/apt/sources.list && \
     apt-get update && \
