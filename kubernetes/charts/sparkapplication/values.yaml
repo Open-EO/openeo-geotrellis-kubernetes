@@ -18,3 +18,7 @@ sparkVersion: "2.4.5"
 rbac:
   create: false
   serviceAccountName:
+spark_ui:
+  port: 4040
+  ingress:
+    enabled: false
