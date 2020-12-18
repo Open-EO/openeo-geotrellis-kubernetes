@@ -41,7 +41,7 @@ COPY --from=downloader /opt/jmx_prometheus_javaagent-${JMX_PROMETHEUS_JAVAAGENT_
 COPY docker/creo_layercatalog.json /opt/layercatalog.json
 
 # Enable the PowerTools first
-RUN sed -i 's/enabled=0/enabled=1/' /etc/yum.repos.d/CentOS-PowerTools.repo && \
+RUN sed -i 's/enabled=0/enabled=1/' /etc/yum.repos.d/CentOS-PowerTools.repo || true && \
     yum install -y gdal-3.1.4 gdal-devel-3.1.4 python3-gdal-3.1.4 gdal-libs-3.1.4 && \
     python3.8 -m pip install -I --upgrade pip==20.2.4 && \
     python3.8 -m pip install -r /tmp/openeo/requirements.txt && \
