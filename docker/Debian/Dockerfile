@@ -34,6 +34,7 @@ COPY --from=downloader /opt/jmx_prometheus_javaagent-${JMX_PROMETHEUS_JAVAAGENT_
 COPY docker/creo_layercatalog.json /opt/layercatalog.json
 
 RUN echo "deb [trusted=yes] https://artifactory.vgt.vito.be/GDAL-3.1.0 buster main" >> /etc/apt/sources.list && \
+    echo "deb [trusted=yes] https://artifactory.vgt.vito.be/vito-deb-buster-public buster main" >> /etc/apt/sources.list && \
     apt-get update && \
     apt-get install -y libgdal27 gdal-bin gdal-data proj-bin orfeo-toolbox && \
     python3 -m pip install -I --upgrade pip==20.2.4 && \
