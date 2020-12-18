@@ -1,0 +1,12 @@
+#!/usr/bin/env groovy
+
+// This Jenkinsfile uses the internal VITO shared library
+
+@Library('lib')_
+
+containerImageBuildPipeline {
+  dockerfile           = 'docker/CentOS/Dockerfile.centos8-openeo'
+  docker_registry_prod = 'vito-docker.artifactory.vgt.vito.be'
+  image_name           = 'centos8-openeo'
+  run_tests            = false
+}
