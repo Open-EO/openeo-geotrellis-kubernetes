@@ -1,0 +1,8 @@
+#!/usr/bin/env groovy
+
+@Library('lib')_
+
+containerImageBuildPipeline {
+  image_name = 'openeo-geotrellis'
+  run_tests  = false
+}
