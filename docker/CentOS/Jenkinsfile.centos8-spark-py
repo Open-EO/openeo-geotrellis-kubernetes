@@ -8,4 +8,5 @@ containerImageBuildPipeline {
   image_name = 'centos8-spark-py'
   build_args = ['SPARK_VERSION=3.0.1']
   image_tag  = '3.0.1'
+  dockerfile = 'docker/CentOS/Dockerfile.centos8-spark-py'
 }

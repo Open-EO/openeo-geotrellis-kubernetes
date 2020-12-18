@@ -6,8 +6,8 @@ FROM vito-docker-private.artifactory.vgt.vito.be/centos8.2
 ARG TINI_VERSION
 ARG SPARK_VERSION
 
-COPY vito.repo /etc/yum.repos.d/vito.repo
-COPY entrypoint.sh /opt/entrypoint.sh
+COPY docker/CentOS/vito.repo /etc/yum.repos.d/vito.repo
+COPY docker/CentOS/entrypoint.sh /opt/entrypoint.sh
 
 WORKDIR /opt/spark/work-dir
 
