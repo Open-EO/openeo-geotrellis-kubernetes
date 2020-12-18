@@ -1,0 +1,45 @@
+ARG TINI_VERSION=v0.19.0
+ARG SPARK_VERSION
+
+FROM vito-docker-private.artifactory.vgt.vito.be/centos8.2
+
+ARG TINI_VERSION
+ARG SPARK_VERSION
+
+COPY vito.repo /etc/yum.repos.d/vito.repo
+COPY entrypoint.sh /opt/entrypoint.sh
+
+WORKDIR /opt/spark/work-dir
+
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc /tmp/tini.asc
+RUN gpg --batch --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7 && \
+    gpg --batch --verify /tmp/tini.asc /usr/bin/tini && \
+    chmod +x /usr/bin/tini && \
+    chmod +x /opt/entrypoint.sh && \
+    adduser -u 18585 -d /opt/spark/work-dir spark && \
+    chown 18585:18585 /opt/spark/work-dir
+
+RUN yum install -y epel-release && \
+    yum install -y spark-bin-${SPARK_VERSION} \
+    java-11-openjdk \
+    gcc \
+    krb5-workstation \
+    krb5-libs \
+    nss \
+    procps-ng \
+    python38 \
+    python38-devel \
+    python38-pip && \
+    pip3 install --upgrade pip setuptools && \
+    rm -r /root/.cache && \
+    yum clean all && \
+    rm -rf /var/cache/yum/*
+
+ENV SPARK_HOME /usr/local/spark
+ENV JAVA_HOME /usr/lib/jvm/jre
+ENV PYSPARK_PYTHON=python3.8
+
+ENTRYPOINT [ "/opt/entrypoint.sh" ]
+
+USER 18585

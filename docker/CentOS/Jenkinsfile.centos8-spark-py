@@ -1,0 +1,11 @@
+#!/usr/bin/env groovy
+
+// This Jenkinsfile uses the internal VITO shared library
+
+@Library('lib')_
+
+containerImageBuildPipeline {
+  image_name = 'centos8-spark-py'
+  build_args = ['SPARK_VERSION=3.0.1']
+  image_tag  = '3.0.1'
+}
