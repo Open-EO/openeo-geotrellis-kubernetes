@@ -13,6 +13,8 @@ spec:
   mainApplicationFile: local:///usr/local/lib/python3.7/dist-packages/openeogeotrellis/deploy/kubernetes.py
   sparkConf:
     "spark.executorEnv.DRIVER_IMPLEMENTATION_PACKAGE": "openeogeotrellis"
+    "spark.executorEnv.GDAL_NUM_THREADS": "4"
+    "spark.executorEnv.GDAL_DISABLE_READDIR_ON_OPEN": "EMPTY_DIR"
     "spark.extraListeners": "org.openeo.sparklisteners.CancelRunawayJobListener"
     "spark.appMasterEnv.DRIVER_IMPLEMENTATION_PACKAGE": "openeogeotrellis"
   sparkVersion: "2.4.5"
