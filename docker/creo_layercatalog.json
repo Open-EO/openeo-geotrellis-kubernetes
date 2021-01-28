@@ -196,5 +196,74 @@
         "level": "LEVEL2A"
       }
     }
+  },
+  {
+    "id": "SENTINEL1_GRD_BACKSCATTER_SIGMA0",
+    "name": "SENTINEL1_GRD_BACKSCATTER_SIGMA0",
+    "product_id": "SENTINEL1_GRD_BACKSCATTER_SIGMA0",
+    "title": "Sentinel 1 GRD Sigma0 product, VH, VV bands.",
+    "_vito": {
+      "data_source": {
+        "type": "creodias-s1-backscatter"
+      }
+    },
+    "description": "Sentinel 1 GRD Sigma0 backscatter.",
+    "providers": [],
+    "license": "free",
+    "extent": {
+      "spatial": {
+        "bbox": [
+          [
+            -180,
+            -56,
+            180,
+            83
+          ]
+        ]
+      },
+      "temporal": {
+        "interval": [
+          [
+            "2015-07-06",
+            null
+          ]
+        ]
+      }
+    },
+    "cube:dimensions": {
+      "x": {
+        "type": "spatial",
+        "axis": "x"
+      },
+      "y": {
+        "type": "spatial",
+        "axis": "y"
+      },
+      "t": {
+        "type": "temporal"
+      },
+      "bands": {
+        "type": "bands",
+        "values": [
+          "VH",
+          "VV"
+        ]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {
+          "name": "VH",
+          "type": "float",
+          "unit": "1"
+        },
+        {
+          "name": "VV",
+          "type": "float",
+          "unit": "1"
+        }
+      ]
+    },
+    "links": []
   }
 ]
