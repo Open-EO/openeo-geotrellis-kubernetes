@@ -6,5 +6,6 @@ containerImageBuildPipeline {
   dockerfile           = 'docker/Debian/Dockerfile'
   docker_registry_prod = 'vito-docker.artifactory.vgt.vito.be'
   image_name           = 'openeo-geotrellis'
+  promotion_job        = false
   run_tests            = false
 }
