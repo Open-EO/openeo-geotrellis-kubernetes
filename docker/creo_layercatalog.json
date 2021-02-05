@@ -201,8 +201,8 @@
       "data_source": {
         "type": "file-s2",
         "opensearch_collection_id": "Sentinel2",
-        "opensearch_endpoint": "https://finder.creodias.eu/resto/api/collections/",
-        "root_path": "/eodata"        
+        "opensearch_endpoint": "https://finder.creodias.eu/resto/api/",
+        "root_path": "/eodata"
       },
       "properties": {
         "productType": {
