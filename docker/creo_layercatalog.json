@@ -429,7 +429,8 @@
     "providers": [],
     "_vito": {
       "data_source": {
-        "type": "creodias-s1-backscatter"
+        "type": "creodias-s1-backscatter",
+        "sar_backscatter_compatible": true
       }
     },
     "license": "free",
