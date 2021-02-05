@@ -197,7 +197,7 @@
         }
       ]
     },
-    "_vito": {
+    "__vito": {
       "data_source": {
         "type": "file-s2",
         "opensearch_collection_id": "Sentinel2",
