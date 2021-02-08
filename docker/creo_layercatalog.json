@@ -197,11 +197,11 @@
         }
       ]
     },
-    "__vito": {
+    "_vito": {
       "data_source": {
         "type": "file-s2",
         "opensearch_collection_id": "Sentinel2",
-        "opensearch_endpoint": "https://finder.creodias.eu/resto/api/",
+        "opensearch_endpoint": "https://finder.creodias.eu",
         "root_path": "/eodata"
       },
       "properties": {
