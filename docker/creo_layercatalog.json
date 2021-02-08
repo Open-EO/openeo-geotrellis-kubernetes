@@ -43,7 +43,7 @@
         "type": "bands",
         "values": [
           "AOT_10m",
-          "B02_10m",
+          "IMG_DATA_Band_B02_10m_Tile1_Data",
           "B04_10m",
           "B03_10m",
           "B08_10m",
