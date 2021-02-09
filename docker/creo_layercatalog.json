@@ -44,22 +44,22 @@
         "values": [
           "AOT_10m",
           "IMG_DATA_Band_B02_10m_Tile1_Data",
-          "B04_10m",
-          "B03_10m",
-          "B08_10m",
-          "TCI_10m",
-          "WVP_10m",
-          "AOT_20m",
-          "B02_20m",
-          "B03_20m",
-          "B04_20m",
-          "B05_20m",
-          "B06_20m",
-          "B07_20m",
-          "B11_20m",
-          "B12_20m",
-          "B8A_20m",
-          "SCL_20m",
+          "IMG_DATA_Band_B04_10m_Tile1_Data",
+          "IMG_DATA_Band_B03_10m_Tile1_Data",
+          "IMG_DATA_Band_B08_10m_Tile1_Data",
+          "IMG_DATA_Band_TCI_10m_Tile1_Data",
+          "IMG_DATA_Band_WVP_10m_Tile1_Data",
+          "IMG_DATA_Band_AOT_20m_Tile1_Data",
+          "IMG_DATA_Band_B02_20m_Tile1_Data",
+          "IMG_DATA_Band_B03_20m_Tile1_Data",
+          "IMG_DATA_Band_B04_20m_Tile1_Data",
+          "IMG_DATA_Band_B05_20m_Tile1_Data",
+          "IMG_DATA_Band_B06_20m_Tile1_Data",
+          "IMG_DATA_Band_B07_20m_Tile1_Data",
+          "IMG_DATA_Band_B11_20m_Tile1_Data",
+          "IMG_DATA_Band_B12_20m_Tile1_Data",
+          "IMG_DATA_Band_B8A_20m_Tile1_Data",
+          "IMG_DATA_Band_SCL_20m_Tile1_Data",
           "TCI_20m",
           "WVP_20m",
           "AOT_60m",
@@ -97,52 +97,52 @@
           "unit": "1"
         },
         {
-          "name": "B04_10m"
+          "name": "IMG_DATA_Band_B04_10m_Tile1_Data"
         },
         {
-          "name": "B03_10m"
+          "name": "IMG_DATA_Band_B03_10m_Tile1_Data"
         },
         {
-          "name": "B08_10m"
+          "name": "IMG_DATA_Band_B08_10m_Tile1_Data"
         },
         {
-          "name": "TCI_10m"
+          "name": "IMG_DATA_Band_TCI_10m_Tile1_Data"
         },
         {
-          "name": "WVP_10m"
+          "name": "IMG_DATA_Band_WVP_10m_Tile1_Data"
         },
         {
-          "name": "AOT_20m"
+          "name": "IMG_DATA_Band_AOT_20m_Tile1_Data"
         },
         {
-          "name": "B02_20m"
+          "name": "IMG_DATA_Band_B02_20m_Tile1_Data"
         },
         {
-          "name": "B03_20m"
+          "name": "IMG_DATA_Band_B03_20m_Tile1_Data"
         },
         {
-          "name": "B04_20m"
+          "name": "IMG_DATA_Band_B04_20m_Tile1_Data"
         },
         {
-          "name": "B05_20m"
+          "name": "IMG_DATA_Band_B05_20m_Tile1_Data"
         },
         {
-          "name": "B06_20m"
+          "name": "IMG_DATA_Band_B06_20m_Tile1_Data"
         },
         {
-          "name": "B07_20m"
+          "name": "IMG_DATA_Band_B07_20m_Tile1_Data"
         },
         {
-          "name": "B11_20m"
+          "name": "IMG_DATA_Band_B11_20m_Tile1_Data"
         },
         {
-          "name": "B12_20m"
+          "name": "IMG_DATA_Band_B12_20m_Tile1_Data"
         },
         {
-          "name": "B8A_20m"
+          "name": "IMG_DATA_Band_B8A_20m_Tile1_Data"
         },
         {
-          "name": "SCL_20m"
+          "name": "IMG_DATA_Band_SCL_20m_Tile1_Data"
         },
         {
           "name": "TCI_20m"
