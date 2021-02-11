@@ -57,6 +57,9 @@ spec:
       {{ $name }}: {{ $value | quote }}
     {{- end }}
     {{- end }}
+    {{- if .Values.driver.javaOptions }}
+    javaOptions: {{ .Values.driver.javaOptions }}
+    {{- end }}
     {{- if .Values.userId }}
     securityContext:
       runAsUser: {{ .Values.userId }}
@@ -81,6 +84,9 @@ spec:
     {{- range $name, $value := .Values.executor.envVars }}
       {{ $name | quote }}: {{ $value | quote }}
     {{- end }}
+    {{- end }}
+    {{- if .Values.executor.javaOptions }}
+    javaOptions: {{ .Values.executor.javaOptions }}
     {{- end }}
     cores: {{ .Values.executor.cores }}
     instances: {{ .Values.executor.instances }}
