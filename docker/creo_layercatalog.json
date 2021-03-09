@@ -425,7 +425,7 @@
     "name": "SENTINEL1_GRD",
     "product_id": "SENTINEL1_GRD",
     "title": "Sentinel-1 SAR GRD: C-band Synthetic Aperture Radar Ground Range Detected.",
-    "description": "The Sentinel-1 mission provides data from a dual-polarization C-band Synthetic Aperture Radar (SAR) instrument. This collection includes the S1 Ground Range Detected (GRD) scenes, processed to a calibrated, ortho-corrected product.",
+    "description": "The Sentinel-1 mission provides data from a dual-polarization C-band Synthetic Aperture Radar (SAR) instrument. This collection includes the S1 Ground Range Detected (GRD) scenes, processed to a calibrated, ortho-corrected product. This collection is compatible with \"sar_backscatter\" and \"ard_normalized_radar_backscatter\" processes.",
     "providers": [],
     "_vito": {
       "data_source": {
