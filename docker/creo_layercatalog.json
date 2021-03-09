@@ -1,5 +1,184 @@
 [
   {
+    "id": "SENTINEL2_L1C",
+    "name": "SENTINEL2_L1C",
+    "title": "Sentinel-2 L1C",
+    "description": "SENTINEL-2 is a wide-swath, high-resolution, multi-spectral imaging mission, supporting Copernicus Land Monitoring studies, including the monitoring of vegetation, soil and water cover, as well as observation of inland waterways and coastal areas. The SENTINEL-2 Multispectral Instrument (MSI) samples 13 spectral bands: four bands at 10 metres, six bands at 20 metres and three bands at 60 metres spatial resolution.",
+    "license": "proprietary",
+    "providers": [],
+    "links": ["https://earth.esa.int/web/sentinel/user-guides/sentinel-2-msi/product-types/level-1c","https://creodias.eu/data-offer"],
+    "extent": {
+      "spatial": {
+        "bbox": [
+          [
+            -180,
+            -90,
+            180,
+            90
+          ]
+        ]
+      },
+      "temporal": {
+        "interval": [
+          [
+            "2015-07-04",
+            null
+          ]
+        ]
+      }
+    },
+    "cube:dimensions": {
+      "x": {
+        "type": "spatial",
+        "axis": "x"
+      },
+      "y": {
+        "type": "spatial",
+        "axis": "y"
+      },
+      "t": {
+        "type": "temporal"
+      },
+      "bands": {
+        "type": "bands",
+        "values": [
+          "IMG_DATA_Band_B02_10m_Tile1_Data",
+          "IMG_DATA_Band_B04_10m_Tile1_Data",
+          "IMG_DATA_Band_B03_10m_Tile1_Data",
+          "IMG_DATA_Band_B08_10m_Tile1_Data",
+          "IMG_DATA_Band_B02_20m_Tile1_Data",
+          "IMG_DATA_Band_B03_20m_Tile1_Data",
+          "IMG_DATA_Band_B04_20m_Tile1_Data",
+          "IMG_DATA_Band_B05_20m_Tile1_Data",
+          "IMG_DATA_Band_B06_20m_Tile1_Data",
+          "IMG_DATA_Band_B07_20m_Tile1_Data",
+          "IMG_DATA_Band_B11_20m_Tile1_Data",
+          "IMG_DATA_Band_B12_20m_Tile1_Data",
+          "IMG_DATA_Band_B8A_20m_Tile1_Data",
+          "B01_60m",
+          "B02_60m",
+          "B03_60m",
+          "B04_60m",
+          "B05_60m",
+          "B06_60m",
+          "B07_60m",
+          "B09_60m",
+          "B11_60m",
+          "B12_60m",
+          "B8A_60m"
+        ]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {
+          "name": "IMG_DATA_Band_B02_10m_Tile1_Data",
+          "common_name": "blue",
+          "center_wavelength": 0.4966,
+          "wavelength_nm": 496.6,
+          "gsd": 10,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
+        },
+        {
+          "name": "IMG_DATA_Band_B04_10m_Tile1_Data"
+        },
+        {
+          "name": "IMG_DATA_Band_B03_10m_Tile1_Data"
+        },
+        {
+          "name": "IMG_DATA_Band_B08_10m_Tile1_Data"
+        },
+        {
+          "name": "IMG_DATA_Band_B02_20m_Tile1_Data"
+        },
+        {
+          "name": "IMG_DATA_Band_B03_20m_Tile1_Data"
+        },
+        {
+          "name": "IMG_DATA_Band_B04_20m_Tile1_Data"
+        },
+        {
+          "name": "IMG_DATA_Band_B05_20m_Tile1_Data"
+        },
+        {
+          "name": "IMG_DATA_Band_B06_20m_Tile1_Data"
+        },
+        {
+          "name": "IMG_DATA_Band_B07_20m_Tile1_Data"
+        },
+        {
+          "name": "IMG_DATA_Band_B11_20m_Tile1_Data"
+        },
+        {
+          "name": "IMG_DATA_Band_B12_20m_Tile1_Data"
+        },
+        {
+          "name": "IMG_DATA_Band_B8A_20m_Tile1_Data"
+        },
+        {
+          "name": "B01_60m"
+        },
+        {
+          "name": "B02_60m"
+        },
+        {
+          "name": "B03_60m"
+        },
+        {
+          "name": "B04_60m"
+        },
+        {
+          "name": "B05_60m"
+        },
+        {
+          "name": "B06_60m"
+        },
+        {
+          "name": "B07_60m"
+        },
+        {
+          "name": "B09_60m"
+        },
+        {
+          "name": "B11_60m"
+        },
+        {
+          "name": "B12_60m"
+        },
+        {
+          "name": "B8A_60m"
+        }
+      ]
+    },
+    "_vito": {
+      "data_source": {
+        "type": "file-s2",
+        "opensearch_collection_id": "Sentinel2",
+        "opensearch_endpoint": "https://finder.creodias.eu",
+        "root_path": "/eodata"
+      },
+      "properties": {
+        "productType": {
+          "process_graph": {
+            "asc": {
+              "process_id": "eq",
+              "arguments": {
+                "x": {
+                  "from_parameter": "value"
+                },
+                "y": "L1C"
+              },
+              "result": true
+            }
+          }
+        }
+      }
+    }
+  },
+  {
     "id": "SENTINEL2_L2A",
     "name": "SENTINEL2_L2A",
     "title": "Sentinel-2 L2A",
