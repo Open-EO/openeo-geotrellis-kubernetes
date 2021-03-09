@@ -42,38 +42,30 @@
       "bands": {
         "type": "bands",
         "values": [
-          "IMG_DATA_Band_B02_10m_Tile1_Data",
-          "IMG_DATA_Band_B04_10m_Tile1_Data",
-          "IMG_DATA_Band_B03_10m_Tile1_Data",
-          "IMG_DATA_Band_B08_10m_Tile1_Data",
-          "IMG_DATA_Band_B02_20m_Tile1_Data",
-          "IMG_DATA_Band_B03_20m_Tile1_Data",
-          "IMG_DATA_Band_B04_20m_Tile1_Data",
-          "IMG_DATA_Band_B05_20m_Tile1_Data",
-          "IMG_DATA_Band_B06_20m_Tile1_Data",
-          "IMG_DATA_Band_B07_20m_Tile1_Data",
-          "IMG_DATA_Band_B11_20m_Tile1_Data",
-          "IMG_DATA_Band_B12_20m_Tile1_Data",
-          "IMG_DATA_Band_B8A_20m_Tile1_Data",
-          "B01_60m",
-          "B02_60m",
-          "B03_60m",
-          "B04_60m",
-          "B05_60m",
-          "B06_60m",
-          "B07_60m",
-          "B09_60m",
-          "B11_60m",
-          "B12_60m",
-          "B8A_60m",
-          "S2_Level-2A_Tile1_Metadata"
+          "IMG_DATA_Band_60m_1_Tile1_Data",
+          "IMG_DATA_Band_10m_1_Tile1_Data",
+          "IMG_DATA_Band_10m_2_Tile1_Data",
+          "IMG_DATA_Band_10m_3_Tile1_Data",
+          "IMG_DATA_Band_20m_1_Tile1_Data",
+          "IMG_DATA_Band_20m_2_Tile1_Data",
+          "IMG_DATA_Band_20m_3_Tile1_Data",
+          "IMG_DATA_Band_10m_4_Tile1_Data",
+          "IMG_DATA_Band_60m_2_Tile1_Data",
+          "IMG_DATA_Band_60m_3_Tile1_Data",
+          "IMG_DATA_Band_20m_5_Tile1_Data",
+          "IMG_DATA_Band_20m_6_Tile1_Data",
+          "IMG_DATA_Band_20m_4_Tile1_Data",
+          "IMG_DATA_Band_TCI_Tile1_Data",
+          "S2_Level-1C_Tile1_Metadata"
         ]
       }
     },
     "summaries": {
       "eo:bands": [
+        
+        {"name": "IMG_DATA_Band_60m_1_Tile1_Data"},
         {
-          "name": "IMG_DATA_Band_B02_10m_Tile1_Data",
+          "name": "IMG_DATA_Band_10m_1_Tile1_Data",
           "common_name": "blue",
           "center_wavelength": 0.4966,
           "wavelength_nm": 496.6,
@@ -83,78 +75,19 @@
           "type": "int16",
           "unit": "1"
         },
-        {
-          "name": "IMG_DATA_Band_B04_10m_Tile1_Data"
-        },
-        {
-          "name": "IMG_DATA_Band_B03_10m_Tile1_Data"
-        },
-        {
-          "name": "IMG_DATA_Band_B08_10m_Tile1_Data"
-        },
-        {
-          "name": "IMG_DATA_Band_B02_20m_Tile1_Data"
-        },
-        {
-          "name": "IMG_DATA_Band_B03_20m_Tile1_Data"
-        },
-        {
-          "name": "IMG_DATA_Band_B04_20m_Tile1_Data"
-        },
-        {
-          "name": "IMG_DATA_Band_B05_20m_Tile1_Data"
-        },
-        {
-          "name": "IMG_DATA_Band_B06_20m_Tile1_Data"
-        },
-        {
-          "name": "IMG_DATA_Band_B07_20m_Tile1_Data"
-        },
-        {
-          "name": "IMG_DATA_Band_B11_20m_Tile1_Data"
-        },
-        {
-          "name": "IMG_DATA_Band_B12_20m_Tile1_Data"
-        },
-        {
-          "name": "IMG_DATA_Band_B8A_20m_Tile1_Data"
-        },
-        {
-          "name": "B01_60m"
-        },
-        {
-          "name": "B02_60m"
-        },
-        {
-          "name": "B03_60m"
-        },
-        {
-          "name": "B04_60m"
-        },
-        {
-          "name": "B05_60m"
-        },
-        {
-          "name": "B06_60m"
-        },
-        {
-          "name": "B07_60m"
-        },
-        {
-          "name": "B09_60m"
-        },
-        {
-          "name": "B11_60m"
-        },
-        {
-          "name": "B12_60m"
-        },
-        {
-          "name": "B8A_60m"
-        },
-        {
-          "name": "S2_Level-2A_Tile1_Metadata"
-        }
+        {"name": "IMG_DATA_Band_10m_2_Tile1_Data"},
+        {"name": "IMG_DATA_Band_10m_3_Tile1_Data"},
+        {"name": "IMG_DATA_Band_20m_1_Tile1_Data"},
+        {"name": "IMG_DATA_Band_20m_2_Tile1_Data"},
+        {"name": "IMG_DATA_Band_20m_3_Tile1_Data"},
+        {"name": "IMG_DATA_Band_10m_4_Tile1_Data"},
+        {"name": "IMG_DATA_Band_60m_2_Tile1_Data"},
+        {"name": "IMG_DATA_Band_60m_3_Tile1_Data"},
+        {"name": "IMG_DATA_Band_20m_5_Tile1_Data"},
+        {"name": "IMG_DATA_Band_20m_6_Tile1_Data"},
+        {"name": "IMG_DATA_Band_20m_4_Tile1_Data"},
+        {"name": "IMG_DATA_Band_TCI_Tile1_Data"},
+        {"name": "S2_Level-1C_Tile1_Metadata"}
       ]
     },
     "_vito": {
