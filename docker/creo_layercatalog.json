@@ -65,7 +65,8 @@
           "B09_60m",
           "B11_60m",
           "B12_60m",
-          "B8A_60m"
+          "B8A_60m",
+          "S2_Level-2A_Tile1_Metadata"
         ]
       }
     },
@@ -150,6 +151,9 @@
         },
         {
           "name": "B8A_60m"
+        },
+        {
+          "name": "S2_Level-2A_Tile1_Metadata"
         }
       ]
     },
