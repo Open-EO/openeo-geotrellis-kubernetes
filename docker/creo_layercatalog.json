@@ -278,51 +278,42 @@
       "bands": {
         "type": "bands",
         "values": [
-          "AOT_10m",
-          "IMG_DATA_Band_B02_10m_Tile1_Data",
-          "IMG_DATA_Band_B04_10m_Tile1_Data",
-          "IMG_DATA_Band_B03_10m_Tile1_Data",
-          "IMG_DATA_Band_B08_10m_Tile1_Data",
-          "IMG_DATA_Band_TCI_10m_Tile1_Data",
-          "IMG_DATA_Band_WVP_10m_Tile1_Data",
-          "IMG_DATA_Band_AOT_20m_Tile1_Data",
-          "IMG_DATA_Band_B02_20m_Tile1_Data",
-          "IMG_DATA_Band_B03_20m_Tile1_Data",
-          "IMG_DATA_Band_B04_20m_Tile1_Data",
-          "IMG_DATA_Band_B05_20m_Tile1_Data",
-          "IMG_DATA_Band_B06_20m_Tile1_Data",
-          "IMG_DATA_Band_B07_20m_Tile1_Data",
-          "IMG_DATA_Band_B11_20m_Tile1_Data",
-          "IMG_DATA_Band_B12_20m_Tile1_Data",
-          "IMG_DATA_Band_B8A_20m_Tile1_Data",
-          "IMG_DATA_Band_SCL_20m_Tile1_Data",
-          "TCI_20m",
-          "WVP_20m",
-          "AOT_60m",
-          "B01_60m",
-          "B02_60m",
-          "B03_60m",
-          "B04_60m",
-          "B05_60m",
-          "B06_60m",
-          "B07_60m",
-          "B09_60m",
-          "B11_60m",
-          "B12_60m",
-          "B8A_60m",
-          "SCL_60m",
-          "TCI_60m",
-          "WVP_60m"
+          "B01",
+          "B02",
+          "B03",
+          "B04",
+          "B05",
+          "B06",
+          "B07",
+          "B08",
+          "B8A",
+          "B09",
+          "B10",
+          "B11",
+          "B12",
+          "SCL",
+          "AOT",
+          "WVP",
+          "TCI"          
         ]
       }
     },
     "summaries": {
       "eo:bands": [
         {
-          "name": "AOT_10m"
+          "name": "B01",
+          "aliases": ["IMG_DATA_Band_B01_60m_Tile1_Data"],
+          "common_name": "coastal aerosol",
+          "wavelength_nm": 442.7,
+          "gsd": 60,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
         },
         {
-          "name": "IMG_DATA_Band_B02_10m_Tile1_Data",
+          "name": "B02",
+          "aliases": ["IMG_DATA_Band_B02_10m_Tile1_Data"],
           "common_name": "blue",
           "center_wavelength": 0.4966,
           "wavelength_nm": 496.6,
@@ -333,104 +324,142 @@
           "unit": "1"
         },
         {
-          "name": "IMG_DATA_Band_B04_10m_Tile1_Data"
+          "name": "B03",
+          "aliases": ["IMG_DATA_Band_B03_10m_Tile1_Data"],
+          "common_name": "green",
+          "center_wavelength": 0.560,
+          "wavelength_nm": 560,
+          "gsd": 10,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
         },
         {
-          "name": "IMG_DATA_Band_B03_10m_Tile1_Data"
+          "name": "B04",
+          "aliases": ["IMG_DATA_Band_B04_10m_Tile1_Data"],
+          "common_name": "red",
+          "center_wavelength": 0.6645,
+          "wavelength_nm": 664.5,
+          "gsd": 10,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
         },
         {
-          "name": "IMG_DATA_Band_B08_10m_Tile1_Data"
+          "name": "B05",
+          "aliases": ["IMG_DATA_Band_B05_20m_Tile1_Data"],
+          "common_name": "nir",
+          "wavelength_nm": 704.1,
+          "gsd": 20,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
         },
         {
-          "name": "IMG_DATA_Band_TCI_10m_Tile1_Data"
+          "name": "B06",
+          "aliases": ["IMG_DATA_Band_B06_20m_Tile1_Data"],
+          "wavelength_nm": 740.5,
+          "gsd": 20,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
         },
         {
-          "name": "IMG_DATA_Band_WVP_10m_Tile1_Data"
+          "name": "B07",
+          "aliases": ["IMG_DATA_Band_B07_20m_Tile1_Data"],
+          "wavelength_nm": 782.8,
+          "gsd": 20,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
         },
         {
-          "name": "IMG_DATA_Band_AOT_20m_Tile1_Data"
+          "name": "B08",
+          "aliases": ["IMG_DATA_Band_B08_10m_Tile1_Data"],
+          "common_name": "nir",
+          "center_wavelength": 0.8351,
+          "wavelength_nm": 835.1,
+          "gsd": 10,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
         },
         {
-          "name": "IMG_DATA_Band_B02_20m_Tile1_Data"
+          "name": "B8A",
+          "aliases": ["IMG_DATA_Band_B8A_20m_Tile1_Data"],
+          "wavelength_nm": 864.7,
+          "gsd": 20,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
         },
         {
-          "name": "IMG_DATA_Band_B03_20m_Tile1_Data"
+          "name": "B09",
+          "aliases": ["IMG_DATA_Band_B09_60m_Tile1_Data"],
+          "wavelength_nm": 945.1,
+          "gsd": 60,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
         },
         {
-          "name": "IMG_DATA_Band_B04_20m_Tile1_Data"
+          "name": "B10",
+          "aliases": ["IMG_DATA_Band_B10_60m_Tile1_Data"],          
+          "wavelength_nm": 1373.5,
+          "gsd": 60,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
         },
         {
-          "name": "IMG_DATA_Band_B05_20m_Tile1_Data"
+          "name": "B11",
+          "aliases": ["IMG_DATA_Band_B11_20m_Tile1_Data"],
+          "common_name": "swir",
+          "wavelength_nm": 1613.7,
+          "gsd": 20,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
         },
         {
-          "name": "IMG_DATA_Band_B06_20m_Tile1_Data"
+          "name": "B12",
+          "aliases": ["IMG_DATA_Band_B12_20m_Tile1_Data"],
+          "common_name": "swir",
+          "wavelength_nm": 2202.4,
+          "gsd": 20,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
+        },              
+        {
+          "name": "TCI",
+          "aliases": ["IMG_DATA_Band_TCI_10m_Tile1_Data"]
         },
         {
-          "name": "IMG_DATA_Band_B07_20m_Tile1_Data"
+          "name": "WVP",
+          "aliases": ["IMG_DATA_Band_WVP_10m_Tile1_Data"]
         },
         {
-          "name": "IMG_DATA_Band_B11_20m_Tile1_Data"
+          "name": "AOT",
+          "aliases": ["IMG_DATA_Band_AOT_20m_Tile1_Data"]
         },
+       
         {
-          "name": "IMG_DATA_Band_B12_20m_Tile1_Data"
-        },
-        {
-          "name": "IMG_DATA_Band_B8A_20m_Tile1_Data"
-        },
-        {
-          "name": "IMG_DATA_Band_SCL_20m_Tile1_Data"
-        },
-        {
-          "name": "TCI_20m"
-        },
-        {
-          "name": "WVP_20m"
-        },
-        {
-          "name": "AOT_60m"
-        },
-        {
-          "name": "B01_60m"
-        },
-        {
-          "name": "B02_60m"
-        },
-        {
-          "name": "B03_60m"
-        },
-        {
-          "name": "B04_60m"
-        },
-        {
-          "name": "B05_60m"
-        },
-        {
-          "name": "B06_60m"
-        },
-        {
-          "name": "B07_60m"
-        },
-        {
-          "name": "B09_60m"
-        },
-        {
-          "name": "B11_60m"
-        },
-        {
-          "name": "B12_60m"
-        },
-        {
-          "name": "B8A_60m"
-        },
-        {
-          "name": "SCL_60m"
-        },
-        {
-          "name": "TCI_60m"
-        },
-        {
-          "name": "WVP_60m"
+          "name": "SCL",
+          "aliases": ["IMG_DATA_Band_SCL_20m_Tile1_Data"]
         }
+       
       ]
     },
     "_vito": {
