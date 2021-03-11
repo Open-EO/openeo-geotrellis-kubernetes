@@ -42,19 +42,19 @@
       "bands": {
         "type": "bands",
         "values": [
-          "IMG_DATA_Band_60m_1_Tile1_Data",
-          "IMG_DATA_Band_10m_1_Tile1_Data",
-          "IMG_DATA_Band_10m_2_Tile1_Data",
-          "IMG_DATA_Band_10m_3_Tile1_Data",
-          "IMG_DATA_Band_20m_1_Tile1_Data",
-          "IMG_DATA_Band_20m_2_Tile1_Data",
-          "IMG_DATA_Band_20m_3_Tile1_Data",
-          "IMG_DATA_Band_10m_4_Tile1_Data",
-          "IMG_DATA_Band_60m_2_Tile1_Data",
-          "IMG_DATA_Band_60m_3_Tile1_Data",
-          "IMG_DATA_Band_20m_5_Tile1_Data",
-          "IMG_DATA_Band_20m_6_Tile1_Data",
-          "IMG_DATA_Band_20m_4_Tile1_Data",
+          "B01",
+          "B02",
+          "B03",
+          "B04",
+          "B05",
+          "B06",
+          "B07",
+          "B08",
+          "B8A",
+          "B09",
+          "B10",
+          "B11",
+          "B12",
           "IMG_DATA_Band_TCI_Tile1_Data",
           "S2_Level-1C_Tile1_Metadata"
         ]
@@ -63,9 +63,20 @@
     "summaries": {
       "eo:bands": [
         
-        {"name": "IMG_DATA_Band_60m_1_Tile1_Data"},
         {
-          "name": "IMG_DATA_Band_10m_1_Tile1_Data",
+          "name": "B01",
+          "aliases": ["IMG_DATA_Band_60m_1_Tile1_Data"],
+          "common_name": "coastal aerosol",
+          "wavelength_nm": 442.7,
+          "gsd": 60,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
+        },
+        {
+          "name": "B02",
+          "aliases": ["IMG_DATA_Band_10m_1_Tile1_Data"],
           "common_name": "blue",
           "center_wavelength": 0.4966,
           "wavelength_nm": 496.6,
@@ -75,17 +86,126 @@
           "type": "int16",
           "unit": "1"
         },
-        {"name": "IMG_DATA_Band_10m_2_Tile1_Data"},
-        {"name": "IMG_DATA_Band_10m_3_Tile1_Data"},
-        {"name": "IMG_DATA_Band_20m_1_Tile1_Data"},
-        {"name": "IMG_DATA_Band_20m_2_Tile1_Data"},
-        {"name": "IMG_DATA_Band_20m_3_Tile1_Data"},
-        {"name": "IMG_DATA_Band_10m_4_Tile1_Data"},
-        {"name": "IMG_DATA_Band_60m_2_Tile1_Data"},
-        {"name": "IMG_DATA_Band_60m_3_Tile1_Data"},
-        {"name": "IMG_DATA_Band_20m_5_Tile1_Data"},
-        {"name": "IMG_DATA_Band_20m_6_Tile1_Data"},
-        {"name": "IMG_DATA_Band_20m_4_Tile1_Data"},
+        {
+          "name": "B03",
+          "aliases": ["IMG_DATA_Band_10m_2_Tile1_Data"],
+          "common_name": "green",
+          "center_wavelength": 0.560,
+          "wavelength_nm": 560,
+          "gsd": 10,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
+        },
+        {
+          "name": "B04",
+          "aliases": ["IMG_DATA_Band_10m_3_Tile1_Data"],
+          "common_name": "red",
+          "center_wavelength": 0.6645,
+          "wavelength_nm": 664.5,
+          "gsd": 10,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
+        },
+        {
+          "name": "B05",
+          "aliases": ["IMG_DATA_Band_20m_1_Tile1_Data"],
+          "common_name": "nir",
+          "wavelength_nm": 704.1,
+          "gsd": 20,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
+        },
+        {
+          "name": "B06",
+          "aliases": ["IMG_DATA_Band_20m_2_Tile1_Data"],
+          "wavelength_nm": 740.5,
+          "gsd": 20,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
+        },
+        {
+          "name": "B07",
+          "aliases": ["IMG_DATA_Band_20m_3_Tile1_Data"],
+          "wavelength_nm": 782.8,
+          "gsd": 20,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
+        },
+        {
+          "name": "B08",
+          "aliases": ["IMG_DATA_Band_10m_4_Tile1_Data"],
+          "common_name": "nir",
+          "center_wavelength": 0.8351,
+          "wavelength_nm": 835.1,
+          "gsd": 10,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
+        },
+        {
+          "name": "B8A",
+          "aliases": ["IMG_DATA_Band_20m_4_Tile1_Data"],
+          "wavelength_nm": 864.7,
+          "gsd": 20,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
+        },
+        {
+          "name": "B09",
+          "aliases": ["IMG_DATA_Band_60m_2_Tile1_Data"],
+          "wavelength_nm": 945.1,
+          "gsd": 60,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
+        },
+        {
+          "name": "B10",
+          "aliases": ["IMG_DATA_Band_60m_3_Tile1_Data"],          
+          "wavelength_nm": 1373.5,
+          "gsd": 60,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
+        },
+        {
+          "name": "B11",
+          "aliases": ["IMG_DATA_Band_20m_5_Tile1_Data"],
+          "common_name": "swir",
+          "wavelength_nm": 1613.7,
+          "gsd": 20,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
+        },
+        {
+          "name": "B12",
+          "aliases": ["IMG_DATA_Band_20m_6_Tile1_Data"],
+          "common_name": "swir",
+          "wavelength_nm": 2202.4,
+          "gsd": 20,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
+        },
+     
         {"name": "IMG_DATA_Band_TCI_Tile1_Data"},
         {"name": "S2_Level-1C_Tile1_Metadata"}
       ]
