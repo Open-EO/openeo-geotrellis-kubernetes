@@ -56,7 +56,10 @@
           "B11",
           "B12",
           "IMG_DATA_Band_TCI_Tile1_Data",
-          "S2_Level-1C_Tile1_Metadata"
+          "SAA",
+          "SZA",
+          "VAA",
+          "VZA"
         ]
       }
     },
@@ -205,9 +208,27 @@
           "type": "int16",
           "unit": "1"
         },
-     
         {"name": "IMG_DATA_Band_TCI_Tile1_Data"},
-        {"name": "S2_Level-1C_Tile1_Metadata"}
+        {
+          "name": "SAA",
+          "aliases":["S2_Level-1C_Tile1_Metadata##0"],
+          "unit":"deg"
+        },
+        {
+          "name": "SZA",
+          "aliases":["S2_Level-1C_Tile1_Metadata##1"],
+          "unit":"deg"
+        },
+        {
+          "name": "VAA",
+          "aliases":["S2_Level-1C_Tile1_Metadata##2"],
+          "unit":"deg"
+        },
+        {
+          "name": "VZA",
+          "aliases":["S2_Level-1C_Tile1_Metadata##3"],
+          "unit":"deg"
+        }
       ]
     },
     "_vito": {
