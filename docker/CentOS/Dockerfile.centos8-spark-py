@@ -1,10 +1,12 @@
 ARG TINI_VERSION=v0.19.0
 ARG SPARK_VERSION
+ARG PYTHON_PACKAGE
 
 FROM vito-docker-private.artifactory.vgt.vito.be/centos8.2
 
 ARG TINI_VERSION
 ARG SPARK_VERSION
+ARG PYTHON_PACKAGE
 
 COPY docker/CentOS/vito.repo /etc/yum.repos.d/vito.repo
 COPY docker/CentOS/entrypoint.sh /opt/entrypoint.sh
@@ -28,9 +30,7 @@ RUN yum install -y epel-release && \
     krb5-libs \
     nss \
     procps-ng \
-    python38 \
-    python38-devel \
-    python38-pip && \
+    ${PYTHON_PACKAGE} && \
     pip3 install --upgrade pip setuptools && \
     rm -r /root/.cache && \
     yum clean all && \
@@ -38,7 +38,7 @@ RUN yum install -y epel-release && \
 
 ENV SPARK_HOME /usr/local/spark
 ENV JAVA_HOME /usr/lib/jvm/jre
-ENV PYSPARK_PYTHON=python3.8
+ENV PYSPARK_PYTHON=python3
 
 ENTRYPOINT [ "/opt/entrypoint.sh" ]
 

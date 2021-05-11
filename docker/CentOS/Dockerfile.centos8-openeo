@@ -21,7 +21,7 @@ RUN yum install -y git && \
     curl -O https://artifactory.vgt.vito.be/auxdata-public/openeo/geotrellis-extensions-${GEOTRELLIS_EXTENSIONS_VERSION}.jar && \
     curl -O https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/${JMX_PROMETHEUS_JAVAAGENT_VERSION}/jmx_prometheus_javaagent-${JMX_PROMETHEUS_JAVAAGENT_VERSION}.jar
 
-FROM vito-docker.artifactory.vgt.vito.be/centos8-spark-py:3.0.1
+FROM vito-docker.artifactory.vgt.vito.be/centos8-spark-py:2.4.7
 
 ARG GEOTRELLIS_EXTENSIONS_VERSION
 ARG GEOTRELLIS_BACKEND_ASSEMBLY_VERSION
