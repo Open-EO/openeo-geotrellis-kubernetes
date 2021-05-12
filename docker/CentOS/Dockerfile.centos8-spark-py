@@ -14,10 +14,7 @@ COPY docker/CentOS/entrypoint.sh /opt/entrypoint.sh
 WORKDIR /opt/spark/work-dir
 
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini.asc /tmp/tini.asc
-RUN gpg --batch --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 595E85A6B1B4779EA4DAAEC70B588DFF0527A9B7 && \
-    gpg --batch --verify /tmp/tini.asc /usr/bin/tini && \
-    chmod +x /usr/bin/tini && \
+RUN chmod +x /usr/bin/tini && \
     chmod +x /opt/entrypoint.sh && \
     adduser -u 18585 -d /opt/spark/work-dir spark && \
     chown 18585:18585 /opt/spark/work-dir
