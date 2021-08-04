@@ -68,10 +68,10 @@ Following is an example `values.yaml` file:
 ```yaml
 ---
 image: "vito-docker.artifactory.vgt.vito.be/openeo-geotrellis"
-imageVersion: "0.1.13"
+imageVersion: "latest"
 jmxExporterJar: "/opt/jmx_prometheus_javaagent-0.13.0.jar"
 mainApplicationFile: "local:///usr/local/lib/python3.7/dist-packages/openeogeotrellis/deploy/kube.py"
-serviceAccount: "spark-operator-spark"
+serviceAccount: "openeo"
 volumes:
   - name: "eodata"
     hostPath:
@@ -83,21 +83,35 @@ volumeMounts:
 executor:
   memory: "512m"
   cpu: 1
+  envVars:
+    OPENEO_CATALOG_FILES: "/opt/layercatalog.json"
+    OPENEO_S1BACKSCATTER_ELEV_GEOID: "/opt/openeo-vito-aux-data/egm96.grd"
+    OTB_HOME: "/opt/orfeo-toolbox"
+    OTB_APPLICATION_PATH: "/opt/orfeo-toolbox/lib/otb/applications"
+    KUBE: "true"
+    GDAL_NUM_THREADS: "2"
+  javaOptions: "-Dlog4j.configuration=log4j.properties -Dscala.concurrent.context.numThreads=4 -Dscala.concurrent.context.maxThreads=4"
 driver:
   memory: "512m"
   cpu: 1
   envVars:
+    KUBE: "true"
     KUBE_OPENEO_API_PORT: "50001"
     DRIVER_IMPLEMENTATION_PACKAGE: "openeogeotrellis"
-    TRAVIS: "1"
     OPENEO_CATALOG_FILES: "/opt/layercatalog.json"
+    OPENEO_S1BACKSCATTER_ELEV_GEOID: "/opt/openeo-vito-aux-data/egm96.grd"
+    OTB_HOME: "/opt/orfeo-toolbox"
+    OTB_APPLICATION_PATH: "/opt/orfeo-toolbox/lib/otb/applications"
+  javaOptions: "-Dlog4j.configuration=log4j.properties -Dscala.concurrent.context.numThreads=6 -Dpixels.treshold=1000000"
 sparkConf:
   "spark.executorEnv.DRIVER_IMPLEMENTATION_PACKAGE": "openeogeotrellis"
   "spark.extraListeners": "org.openeo.sparklisteners.CancelRunawayJobListener"
   "spark.appMasterEnv.DRIVER_IMPLEMENTATION_PACKAGE": "openeogeotrellis"
+  "spark.executorEnv.GDAL_NUM_THREADS": "2"
+  "spark.executorEnv.GDAL_DISABLE_READDIR_ON_OPEN": "EMPTY_DIR"
 jarDependencies:
-  - 'local:///opt/geotrellis-extensions-1.4.0-SNAPSHOT.jar'
-  - 'local:///opt/geotrellis-backend-assembly-0.4.5-openeo.jar'
+  - 'local:///opt/geotrellis-extensions-2.2.0-SNAPSHOT.jar'
+  - 'local:///opt/geotrellis-backend-assembly-0.4.6-openeo.jar'
 fileDependencies:
   - 'local:///opt/layercatalog.json'
 service:
@@ -111,4 +125,17 @@ ingress:
   - host: openeo.example.com
     paths:
       - '/'
+rbac:
+  create: true
+  serviceAccountName: openeo
+spark_ui:
+  port: 4040
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: traefik
+    hosts:
+      - host: spark-ui.openeo.example.com
+        paths:
+          - '/'
 ```
