@@ -70,7 +70,7 @@ Following is an example `values.yaml` file:
 image: "vito-docker.artifactory.vgt.vito.be/openeo-geotrellis"
 imageVersion: "0.1.13"
 jmxExporterJar: "/opt/jmx_prometheus_javaagent-0.13.0.jar"
-mainApplicationFile: "local:///usr/local/lib/python3.7/dist-packages/openeogeotrellis/deploy/kubernetes.py"
+mainApplicationFile: "local:///usr/local/lib/python3.7/dist-packages/openeogeotrellis/deploy/kube.py"
 serviceAccount: "spark-operator-spark"
 volumes:
   - name: "eodata"
