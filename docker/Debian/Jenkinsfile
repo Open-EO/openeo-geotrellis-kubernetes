@@ -5,7 +5,7 @@
 containerImageBuildPipeline {
   dockerfile           = 'docker/Debian/Dockerfile'
   docker_registry_prod = 'vito-docker.artifactory.vgt.vito.be'
-  downstream_job       = 'bld.container_images/bld.openeo-geotrellis-kakadu'
+  downstream_job       = 'geo.openEO_all/geo.openeo_deploy_dias'
   image_name           = 'openeo-geotrellis'
   promotion_job        = false
   run_tests            = false
