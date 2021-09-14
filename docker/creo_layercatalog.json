@@ -577,5 +577,89 @@
       ]
     },
     "links": []
+  },
+  {
+    "id": "EEA_VEGETATION_INDICES",
+    "name": "EEA_VEGETATION_INDICES",
+    "title": "Sentinel-2 derived vegetation indices (NDVI, FAPAR, PPI and LAI) at 10m resolution over European mainland. These indices are provided by the High Resolution Vegetation Phenology and Productivity service, part of the Copernicus land monitoring service.",
+
+    "license": "proprietary",
+
+   "links": [
+
+      {
+          "rel": "alternate",
+          "href": "https://land.copernicus.eu/pan-european/biophysical-parameters/high-resolution-vegetation-phenology-and-productivity"
+      }],
+
+   "summaries": {
+      "constellation": ["Sentinel-2"],
+      "platform": [
+        "Sentinel-2A",
+        "Sentinel-2B"
+      ],
+      "eo:gsd": [
+        10
+      ],
+      "eo:bands": [
+
+        {
+          "name": "NDVI",
+          "gsd": 10,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
+        },
+        {
+          "name": "PPI",
+          "gsd": 10,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
+        },
+        {
+          "name": "LAI",
+          "gsd": 10,
+          "scale": 0.0005,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
+        },
+        {
+          "name": "FAPAR",
+          "gsd": 10,
+          "scale": 0.0001,
+          "offset": 0,
+          "type": "int16",
+          "unit": "1"
+        },
+        {
+          "name": "QFLAG2",
+          "gsd": 10,
+          "type": "uint8"
+        }
+      ]
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x", "step": 10},
+      "y": {"type": "spatial", "axis": "y", "step": 10},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": [
+          "NDVI","PPI","LAI","FAPAR","QFLAG2"
+        ]
+      }
+    },
+    "_vito": {
+      "data_source": {
+        "type": "file-s2",
+        "opensearch_collection_id": "copernicus_r_utm-wgs84_10_m_hrvpp-vi_p_2017-ongoing_v01_r01",
+        "opensearch_endpoint": "https://phenology.vgt.vito.be",
+        "root_path": "/eodata"
+      }
+    }
   }
 ]
