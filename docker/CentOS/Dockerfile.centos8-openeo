@@ -39,6 +39,7 @@ COPY --from=downloader /opt/geotrellis-extensions-${GEOTRELLIS_EXTENSIONS_VERSIO
 COPY --from=downloader /opt/jmx_prometheus_javaagent-${JMX_PROMETHEUS_JAVAAGENT_VERSION}.jar /opt
 
 COPY docker/creo_layercatalog.json /opt/layercatalog.json
+COPY docker/log4j.properties /opt/log4j.properties
 
 # Enable the PowerTools first
 RUN sed -i 's/enabled=0/enabled=1/' /etc/yum.repos.d/CentOS-PowerTools.repo || true && \

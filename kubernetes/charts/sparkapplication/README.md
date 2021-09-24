@@ -90,7 +90,7 @@ executor:
     OTB_APPLICATION_PATH: "/opt/orfeo-toolbox/lib/otb/applications"
     KUBE: "true"
     GDAL_NUM_THREADS: "2"
-  javaOptions: "-Dlog4j.configuration=log4j.properties -Dscala.concurrent.context.numThreads=4 -Dscala.concurrent.context.maxThreads=4"
+  javaOptions: "-Dlog4j.configuration=/opt/log4j.properties -Dscala.concurrent.context.numThreads=4 -Dscala.concurrent.context.maxThreads=4"
 driver:
   memory: "512m"
   cpu: 1
@@ -102,7 +102,7 @@ driver:
     OPENEO_S1BACKSCATTER_ELEV_GEOID: "/opt/openeo-vito-aux-data/egm96.grd"
     OTB_HOME: "/opt/orfeo-toolbox"
     OTB_APPLICATION_PATH: "/opt/orfeo-toolbox/lib/otb/applications"
-  javaOptions: "-Dlog4j.configuration=log4j.properties -Dscala.concurrent.context.numThreads=6 -Dpixels.treshold=1000000"
+  javaOptions: "-Dlog4j.configuration=/opt/log4j.properties -Dscala.concurrent.context.numThreads=6 -Dpixels.treshold=1000000"
 sparkConf:
   "spark.executorEnv.DRIVER_IMPLEMENTATION_PACKAGE": "openeogeotrellis"
   "spark.extraListeners": "org.openeo.sparklisteners.CancelRunawayJobListener"
