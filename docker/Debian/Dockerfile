@@ -29,7 +29,7 @@ COPY --from=downloader /opt/geotrellis-extensions-${GEOTRELLIS_EXTENSIONS_VERSIO
 COPY --from=downloader /opt/jmx_prometheus_javaagent-${JMX_PROMETHEUS_JAVAAGENT_VERSION}.jar /opt
 
 COPY docker/creo_layercatalog.json /opt/layercatalog.json
-COPY docker/log4j.properties /opt/spark/conf/log4j.properties
+COPY docker/log4j.properties /opt/log4j.properties
 
 RUN echo "deb [trusted=yes] https://artifactory.vgt.vito.be/GDAL-3.1.0 buster main" >> /etc/apt/sources.list && \
     echo "deb [trusted=yes] https://artifactory.vgt.vito.be/vito-deb-buster-public buster main" >> /etc/apt/sources.list && \
