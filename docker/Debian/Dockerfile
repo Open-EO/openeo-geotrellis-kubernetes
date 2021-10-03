@@ -34,7 +34,7 @@ COPY docker/log4j.properties /opt/log4j.properties
 RUN echo "deb [trusted=yes] https://artifactory.vgt.vito.be/GDAL-3.1.0 buster main" >> /etc/apt/sources.list && \
     echo "deb [trusted=yes] https://artifactory.vgt.vito.be/vito-deb-buster-public buster main" >> /etc/apt/sources.list && \
     apt-get --allow-releaseinfo-change update && \
-    apt-get install -y libgdal27 gdal-bin gdal-data proj-bin orfeo-toolbox openeo-vito-aux-data && \
+    apt-get install -y libgdal27 gdal-bin gdal-data proj-bin orfeo-toolbox==7.2.0 openeo-vito-aux-data && \
     python3 -m pip install -I --upgrade pip==20.2.4 && \
     python3 -m pip install 'openeo_geopyspark>=0.5.0a1.*' && \
     python3 -m pip install kazoo==2.7.0 py4j boto3==1.16.25 kubernetes==12.0.1 PyYAML==5.3.1 Jinja2==2.11.2 spark_memlogger==0.6 && \
