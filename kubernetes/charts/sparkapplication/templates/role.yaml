@@ -11,6 +11,6 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 rules:
 - apiGroups: ["sparkoperator.k8s.io", ""]
-  resources: ["pods", "sparkapplications", "ingresses", "services"]
+  resources: ["pods", "sparkapplications", "ingresses", "services", "configmap"]
   verbs: ["get", "watch", "list", "create", "delete", "deletecollection"]
 {{- end }}
