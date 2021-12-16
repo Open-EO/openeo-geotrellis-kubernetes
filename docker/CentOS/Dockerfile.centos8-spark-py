@@ -1,26 +1,25 @@
-ARG TINI_VERSION=v0.19.0
 ARG SPARK_VERSION
 ARG PYTHON_PACKAGE
 
 FROM vito-docker-private.artifactory.vgt.vito.be/centos8.2
 
-ARG TINI_VERSION
 ARG SPARK_VERSION
 ARG PYTHON_PACKAGE
 
 COPY docker/CentOS/vito.repo /etc/yum.repos.d/vito.repo
-COPY docker/CentOS/entrypoint.sh /opt/entrypoint.sh
 
 WORKDIR /opt/spark/work-dir
 
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
-RUN chmod +x /usr/bin/tini && \
-    chmod +x /opt/entrypoint.sh && \
-    adduser -u 18585 -d /opt/spark/work-dir spark && \
+RUN adduser -u 18585 -d /opt/spark/work-dir spark && \
     chown 18585:18585 /opt/spark/work-dir
 
 RUN yum install -y epel-release && \
     yum install -y spark-bin-${SPARK_VERSION} \
+    gdal-3.1.4 \
+    gdal-devel-3.1.4 \
+    python3-gdal-3.1.4 \
+    gdal-libs-3.1.4 \
+    unzip \
     java-11-openjdk \
     gcc \
     krb5-workstation \
@@ -36,7 +35,5 @@ RUN yum install -y epel-release && \
 ENV SPARK_HOME /usr/local/spark
 ENV JAVA_HOME /usr/lib/jvm/jre
 ENV PYSPARK_PYTHON=python3
-
-ENTRYPOINT [ "/opt/entrypoint.sh" ]
 
 USER 18585
