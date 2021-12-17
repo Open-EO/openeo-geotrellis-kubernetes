@@ -24,6 +24,7 @@ RUN yum install -y epel-release && \
     gcc \
     krb5-workstation \
     krb5-libs \
+    sssd-client \
     nss \
     procps-ng \
     ${PYTHON_PACKAGE} && \
