@@ -10,5 +10,6 @@ containerImageBuildPipeline {
   docker_registry_prod = 'vito-docker.artifactory.vgt.vito.be'
   image_name           = 'centos8-spark-py-openeo'
   image_tag            = '3.2.0'
+  promotion_job        = false
   run_tests            = false
 }
