@@ -1,55 +1,51 @@
 # This is a work in progress, to support Spark 3 in openEO-geotrellis
 
-ARG GEOTRELLIS_EXTENSIONS_VERSION=2.0.0_2.12-SNAPSHOT
+ARG GEOTRELLIS_EXTENSIONS_VERSION=2.3.0_2.12-SNAPSHOT
 ARG GEOTRELLIS_BACKEND_ASSEMBLY_VERSION=0.4.6-openeo_2.12
 ARG JMX_PROMETHEUS_JAVAAGENT_VERSION=0.13.0
+ARG TINI_VERSION=v0.19.0
+ARG OPENEO_ZIP
 
-FROM centos:8.2.2004 as downloader
+FROM vito-docker.artifactory.vgt.vito.be/centos8-spark-py-openeo:3.2.0
 
+ARG TINI_VERSION
 ARG GEOTRELLIS_EXTENSIONS_VERSION
 ARG GEOTRELLIS_BACKEND_ASSEMBLY_VERSION
 ARG JMX_PROMETHEUS_JAVAAGENT_VERSION
-
-WORKDIR /opt
-
-RUN yum install -y git && \
-    git clone https://github.com/Open-EO/openeo-geopyspark-integrationtests.git openeo && \
-    cd openeo && \
-    git checkout spark3 && \
-    cd /opt && \
-    curl -O https://artifactory.vgt.vito.be/auxdata-public/openeo/geotrellis-backend-assembly-${GEOTRELLIS_BACKEND_ASSEMBLY_VERSION}.jar && \
-    curl -O https://artifactory.vgt.vito.be/auxdata-public/openeo/geotrellis-extensions-${GEOTRELLIS_EXTENSIONS_VERSION}.jar && \
-    curl -O https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/${JMX_PROMETHEUS_JAVAAGENT_VERSION}/jmx_prometheus_javaagent-${JMX_PROMETHEUS_JAVAAGENT_VERSION}.jar
-
-FROM vito-docker.artifactory.vgt.vito.be/centos8-spark-py:2.4.7
-
-ARG GEOTRELLIS_EXTENSIONS_VERSION
-ARG GEOTRELLIS_BACKEND_ASSEMBLY_VERSION
-ARG JMX_PROMETHEUS_JAVAAGENT_VERSION
+ARG OPENEO_ZIP
 
 LABEL maintainer="VITO Remote Sensing"
 
 USER root
 
-RUN printf "[global]\nindex = https://artifactory.vgt.vito.be/api/pypi/python-packages\nextra-index-url = https://artifactory.vgt.vito.be/api/pypi/python-packages/simple\n" > /etc/pip.conf
 
-COPY --from=downloader /opt/openeo /tmp/openeo
-COPY --from=downloader /opt/geotrellis-backend-assembly-${GEOTRELLIS_BACKEND_ASSEMBLY_VERSION}.jar /opt
-COPY --from=downloader /opt/geotrellis-extensions-${GEOTRELLIS_EXTENSIONS_VERSION}.jar /opt
-COPY --from=downloader /opt/jmx_prometheus_javaagent-${JMX_PROMETHEUS_JAVAAGENT_VERSION}.jar /opt
-
+COPY docker/CentOS/entrypoint.sh /opt/entrypoint.sh
 COPY docker/creo_layercatalog.json /opt/layercatalog.json
 COPY docker/log4j.properties /opt/log4j.properties
 
-# Enable the PowerTools first
-RUN sed -i 's/enabled=0/enabled=1/' /etc/yum.repos.d/CentOS-PowerTools.repo || true && \
-    yum install -y gdal-3.1.4 gdal-devel-3.1.4 python3-gdal-3.1.4 gdal-libs-3.1.4 && \
-    python3.8 -m pip install -I --upgrade pip==20.2.4 && \
-    python3.8 -m pip install -r /tmp/openeo/requirements.txt && \
+# Download tini
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
+RUN printf "[global]\nindex = https://artifactory.vgt.vito.be/api/pypi/python-packages\nextra-index-url = https://artifactory.vgt.vito.be/api/pypi/python-packages/simple\n" > /etc/pip.conf && \
+    chmod +x /usr/bin/tini && \
+    chmod +x /opt/entrypoint.sh && \
+    python3.8 -m pip install -I --upgrade pip && \
     python3.8 -m pip install py4j boto3==1.16.25 kubernetes==12.0.1 PyYAML==5.3.1 Jinja2==2.11.2 spark_memlogger==0.6 && \
-    rm -rf /tmp/openeo && \
     rm -rf /root/.cache && \
     yum clean all && \
     rm -rf /var/cache/yum/*
+
+WORKDIR /opt
+
+RUN curl -O https://artifactory.vgt.vito.be/auxdata-public/openeo/geotrellis-backend-assembly-${GEOTRELLIS_BACKEND_ASSEMBLY_VERSION}.jar && \
+     curl -O https://artifactory.vgt.vito.be/libs-snapshot-public/org/openeo/geotrellis-extensions/${GEOTRELLIS_EXTENSIONS_VERSION}/geotrellis-extensions-${GEOTRELLIS_EXTENSIONS_VERSION}.jar && \
+    curl -O https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/${JMX_PROMETHEUS_JAVAAGENT_VERSION}/jmx_prometheus_javaagent-${JMX_PROMETHEUS_JAVAAGENT_VERSION}.jar
+
+RUN curl -O https://artifactory.vgt.vito.be/auxdata-public/openeo/dev/${OPENEO_ZIP} && \
+    mkdir /opt/openeo && \
+    unzip -o /opt/${OPENEO_ZIP} -d /opt/openeo && \
+    rm -rf /opt/${OPENEO_ZIP} && \
+    chown -R 18585:18585 /opt/openeo && \
+
+ENTRYPOINT [ "/opt/entrypoint.sh" ]
 
 USER 18585
