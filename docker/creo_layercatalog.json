@@ -230,7 +230,8 @@
         "type": "file-s2",
         "opensearch_collection_id": "Sentinel2",
         "opensearch_endpoint": "https://finder.creodias.eu",
-        "root_path": "/eodata"
+        "root_path": "/eodata",
+        "provider:backend": "creodias"
       },
       "properties": {
         "productType": {
@@ -483,7 +484,8 @@
             "mission": "Sentinel2",
             "product_type": "L2A"
           }
-        }
+        },
+        "provider:backend": "creodias"
       },
       "properties": {
         "productType": {
@@ -513,7 +515,8 @@
     "_vito": {
       "data_source": {
         "type": "creodias-s1-backscatter",
-        "sar_backscatter_compatible": true
+        "sar_backscatter_compatible": true,
+        "provider:backend": "creodias"
       }
     },
     "license": "free",
