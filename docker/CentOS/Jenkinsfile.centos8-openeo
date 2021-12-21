@@ -7,6 +7,8 @@
 containerImageBuildPipeline {
   dockerfile           = 'docker/CentOS/Dockerfile.centos8-openeo'
   docker_registry_prod = 'vito-docker.artifactory.vgt.vito.be'
-  image_name           = 'centos8-openeo'
+  downstream_job       = 'openEO/openeo-deploy-dias/'
+  image_name           = 'openeo-geotrellis'
+  promotion_job        = false
   run_tests            = false
 }
