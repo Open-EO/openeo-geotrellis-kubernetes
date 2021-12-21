@@ -26,8 +26,11 @@ RUN yum install -y epel-release && \
     krb5-libs \
     sssd-client \
     nss \
+    orfeo-toolbox-py38 \
     procps-ng \
-    ${PYTHON_PACKAGE} && \
+    ${PYTHON_PACKAGE} \
+    python38-pytz  \
+    python38-Cython && \
     pip3 install --upgrade pip setuptools && \
     rm -r /root/.cache && \
     yum clean all && \
@@ -39,6 +42,6 @@ ENV PYSPARK_PYTHON=python3
 ENV HADOOP_HOME=/usr/hdp/current/hadoop-client
 ENV HADOOP_CONF_DIR=/etc/hadoop/conf
 ENV YARN_CONF_DIR=/etc/hadoop/conf
-
+ENV ACCUMULO_CLIENT_CONF_PATH=client.conf
 
 USER 18585
