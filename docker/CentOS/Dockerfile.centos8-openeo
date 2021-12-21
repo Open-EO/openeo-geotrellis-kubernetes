@@ -44,7 +44,7 @@ RUN curl -O https://artifactory.vgt.vito.be/auxdata-public/openeo/dev/${OPENEO_Z
     mkdir /opt/openeo && \
     unzip -o /opt/${OPENEO_ZIP} -d /opt/openeo && \
     rm -rf /opt/${OPENEO_ZIP} && \
-    chown -R 18585:18585 /opt/openeo && \
+    chown -R 18585:18585 /opt/openeo
 
 ENTRYPOINT [ "/opt/entrypoint.sh" ]
 
