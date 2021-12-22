@@ -31,6 +31,7 @@ RUN yum install -y epel-release && \
     ${PYTHON_PACKAGE} \
     python38-pytz  \
     python38-Cython \
+    fftw-libs-double \
     tinyxml && \
     pip3 install --upgrade pip setuptools && \
     rm -r /root/.cache && \
