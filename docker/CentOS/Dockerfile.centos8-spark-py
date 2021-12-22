@@ -30,7 +30,8 @@ RUN yum install -y epel-release && \
     procps-ng \
     ${PYTHON_PACKAGE} \
     python38-pytz  \
-    python38-Cython && \
+    python38-Cython \
+    tinyxml && \
     pip3 install --upgrade pip setuptools && \
     rm -r /root/.cache && \
     yum clean all && \
