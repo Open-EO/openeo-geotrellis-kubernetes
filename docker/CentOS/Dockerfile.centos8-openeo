@@ -41,10 +41,10 @@ RUN curl -O https://artifactory.vgt.vito.be/auxdata-public/openeo/geotrellis-bac
     curl -O https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/${JMX_PROMETHEUS_JAVAAGENT_VERSION}/jmx_prometheus_javaagent-${JMX_PROMETHEUS_JAVAAGENT_VERSION}.jar
 
 RUN curl -O https://artifactory.vgt.vito.be/auxdata-public/openeo/dev/${OPENEO_ZIP} && \
-    mkdir /opt/openeo && \
+    mkdir /opt/openeo /batch_jobs && \
     unzip -o /opt/${OPENEO_ZIP} -d /opt/openeo && \
     rm -rf /opt/${OPENEO_ZIP} && \
-    chown -R 18585:18585 /opt/openeo
+    chown -R 18585:18585 /opt/openeo /batch_jobs
 
 ENTRYPOINT [ "/opt/entrypoint.sh" ]
 
