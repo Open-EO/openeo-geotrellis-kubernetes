@@ -669,5 +669,69 @@
         }
       }
     }
+  },
+   {
+    "id": "ESA_WORLDCOVER_10M_2020_V1",
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "providers": [
+      {
+          "name": "VITO",
+          "roles":
+          [
+              "producer"
+          ],
+          "url": "https://remotesensing.vito.be/"
+      }
+    ],
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x", "step": 0.000083333333333},
+      "y": {"type": "spatial", "axis": "y", "step": 0.000083333333333},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": ["MAP","INPUTQUALITY"]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {
+          "name": "MAP",
+          "gsd": 10,
+          "type": "uint8"
+        },
+        {
+          "name": "INPUTQUALITY",
+          "gsd": 10,
+          "type": "uint8"
+        }
+      ]
+    },
+     "links": [
+      {
+        "rel": "license",
+        "href": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      {
+          "rel": "alternate",
+          "title": "EO OpenSearch catalog",
+          "href": "https://services.terrascope.be/catalogue/description?collection=urn:eop:VITO:ESA_WorldCover_10m_2020_V1"
+      },
+      {
+          "rel": "alternate",
+          "title": "Product Viewer",
+          "href": "https://viewer.esa-worldcover.org/worldcover"
+      },
+      {
+        "href": "https://services.terrascope.be/wmts/v2",
+        "rel": "wmts",
+        "wmts:layer": "WORLDCOVER_2020_MAP"
+      }],
+    "_vito": {
+      "data_source": {
+        "type": "file-oscars",
+        "opensearch_collection_id": "urn:eop:VITO:ESA_WorldCover_10m_2020_V1",
+        "root_path": "/data/MTDA/WORLDCOVER/ESA_WORLDCOVER_10M_2020_V100/MAP"
+      }
+    }
   }
 ]
