@@ -15,10 +15,10 @@ RUN adduser -u 18585 -d /opt/spark/work-dir spark && \
 
 RUN yum install -y epel-release && \
     yum install -y spark-bin-${SPARK_VERSION} \
-    gdal-3.1.4 \
-    gdal-devel-3.1.4 \
-    python3-gdal-3.1.4 \
-    gdal-libs-3.1.4 \
+    gdal-3.0.4 \
+    gdal-devel-3.0.4 \
+    python3-gdal-3.0.4 \
+    gdal-libs-3.0.4 \
     unzip \
     java-11-openjdk \
     gcc \
