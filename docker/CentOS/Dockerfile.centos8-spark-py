@@ -34,7 +34,7 @@ RUN yum install -y epel-release && \
     fftw-libs-double \
     fftw-libs-single \
     tinyxml && \
-    pip3 install --upgrade pip setuptools && \
+    pip3 install --upgrade pip setuptools dataclasses && \
     rm -r /root/.cache && \
     yum clean all && \
     rm -rf /var/cache/yum/*
