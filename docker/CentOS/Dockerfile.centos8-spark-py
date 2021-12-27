@@ -33,8 +33,8 @@ RUN yum install -y epel-release && \
     python38-Cython \
     fftw-libs-double \
     fftw-libs-single \
+    openeo-vito-aux-data \
     tinyxml && \
-    openeo-vito-aux-data && \
     ln -s /usr/lib64/libgdal.so.30 /usr/lib64/libgdal.so.26 && \
     ln -s /usr/lib64/libgdal.so.30 /usr/lib64/libgdal.so.27 && \
     pip3 install --upgrade pip setuptools && \
