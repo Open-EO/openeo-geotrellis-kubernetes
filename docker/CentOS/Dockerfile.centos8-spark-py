@@ -48,6 +48,6 @@ ENV HADOOP_CONF_DIR=/etc/hadoop/conf
 ENV YARN_CONF_DIR=/etc/hadoop/conf
 ENV ACCUMULO_CLIENT_CONF_PATH=client.conf
 ENV OTB_HOME=/usr
-ENV OTB_APPLICATION_PATH=/usr/lib/otb/applications"
+ENV OTB_APPLICATION_PATH=/usr/lib/otb/applications
 
 USER 18585
