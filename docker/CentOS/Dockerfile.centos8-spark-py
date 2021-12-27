@@ -24,6 +24,7 @@ RUN yum install -y epel-release && \
     krb5-workstation \
     krb5-libs \
     sssd-client \
+    ipa-client \
     nss \
     orfeo-toolbox-py38 \
     procps-ng \
