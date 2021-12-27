@@ -35,6 +35,7 @@ RUN yum install -y epel-release && \
     fftw-libs-single \
     tinyxml && \
     ln -s /usr/lib64/libgdal.so.30 /usr/lib64/libgdal.so.26 && \
+    ln -s /usr/lib64/libgdal.so.30 /usr/lib64/libgdal.so.27 && \
     pip3 install --upgrade pip setuptools && \
     rm -r /root/.cache && \
     yum clean all && \
