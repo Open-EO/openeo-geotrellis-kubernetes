@@ -20,8 +20,7 @@ RUN yum install -y epel-release && \
     python38-gdal-3.4.0 \
     gdal-libs-3.4.0 \
     unzip \
-    java-11-openjdk \
-    gcc \
+    java-11-openjdk-headless \
     krb5-workstation \
     krb5-libs \
     sssd-client \
