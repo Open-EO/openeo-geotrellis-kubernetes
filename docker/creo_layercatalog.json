@@ -649,7 +649,7 @@
       "data_source": {
         "type": "file-s2",
         "opensearch_collection_id": "copernicus_r_utm-wgs84_10_m_hrvpp-vi_p_2017-ongoing_v01_r01",
-        "opensearch_endpoint": "https://phenology.vgt.vito.be",
+        "opensearch_endpoint": "https://phenology.hrvpp.vgt.vito.be",
         "root_path": "/eodata"
       },
       "properties": {
@@ -731,6 +731,22 @@
         "type": "file-oscars",
         "opensearch_collection_id": "urn:eop:VITO:ESA_WorldCover_10m_2020_V1",
         "root_path": "/data/MTDA/WORLDCOVER/ESA_WORLDCOVER_10M_2020_V100/MAP"
+      },
+      "properties": {
+        "accessedFrom": {
+          "process_graph": {
+            "asc": {
+              "process_id": "eq",
+              "arguments": {
+                "x": {
+                  "from_parameter": "value"
+                },
+                "y": "S3"
+              },
+              "result": true
+            }
+          }
+        }
       }
     }
   }
