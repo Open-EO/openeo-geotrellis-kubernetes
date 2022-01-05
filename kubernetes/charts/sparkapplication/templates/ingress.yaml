@@ -1,8 +1,12 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "sparkapplication.fullname" . -}}
 {{- $svcPort := .Values.service.port -}}
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
+{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1beta1
+{{- else -}}
+apiVersion: extensions/v1beta1
+{{- end }}
+kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
@@ -22,19 +26,16 @@ spec:
       secretName: {{ .secretName }}
     {{- end }}
   {{- end }}
-  entryPoints:
-    {{- range .Values.ingress.entryPoints }}
-    - {{ . }}
-    {{- end}}
-  routes:
-    {{- range .Values.ingress.routes }}
-    - match: {{ .match }}
-      kind: Rule
-      services:
-        {{- range .services}}
-        - name: {{ .name }}
-          port: {{ .port }}
-          kind: Service
-        {{- end}}
+  rules:
+    {{- range .Values.ingress.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          {{- range .paths }}
+          - path: {{ . }}
+            backend:
+              serviceName: {{ $fullName }}
+              servicePort: {{ $svcPort }}
+          {{- end }}
     {{- end }}
   {{- end }}
