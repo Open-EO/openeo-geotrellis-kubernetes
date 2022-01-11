@@ -18,7 +18,6 @@ LABEL maintainer="VITO Remote Sensing"
 
 USER root
 
-
 COPY docker/CentOS/entrypoint.sh /opt/entrypoint.sh
 COPY docker/creo_layercatalog.json /opt/layercatalog.json
 COPY docker/log4j.properties /opt/log4j.properties
@@ -28,6 +27,7 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/
 RUN printf "[global]\nindex = https://artifactory.vgt.vito.be/api/pypi/python-packages\nextra-index-url = https://artifactory.vgt.vito.be/api/pypi/python-packages/simple\n" > /etc/pip.conf && \
     chmod +x /usr/bin/tini && \
     chmod +x /opt/entrypoint.sh && \
+    yum install -y tensorflow-python38-2.3.0-22 && \
     python3.8 -m pip install -I --upgrade pip && \
     python3.8 -m pip install py4j boto3==1.16.25 kubernetes==12.0.1 PyYAML==5.3.1 Jinja2==2.11.2 spark_memlogger==0.6 && \
     rm -rf /root/.cache && \
@@ -44,6 +44,7 @@ RUN curl -O https://artifactory.vgt.vito.be/auxdata-public/openeo/dev/${OPENEO_Z
     mkdir /opt/openeo /opt/tmp /batch_jobs && \
     unzip -o /opt/${OPENEO_ZIP} -d /opt/openeo && \
     rm -rf /opt/${OPENEO_ZIP} && \
+    rm -rf /opt/openeo/lib/python3.8/site-packages/tensorflow/* && \
     chown -R 18585:18585 /opt/openeo /opt/tmp /batch_jobs
 
 ENTRYPOINT [ "/opt/entrypoint.sh" ]
