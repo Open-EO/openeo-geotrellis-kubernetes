@@ -1,0 +1,21 @@
+---
+replicaCount: 1
+
+image:
+  repository: vito-docker.artifactory.vgt.vito.be/spark-history-server
+  pullPolicy: Always
+  tag: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+
+service:
+  type: ClusterIP
+  port: 18080
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+resources: {}
