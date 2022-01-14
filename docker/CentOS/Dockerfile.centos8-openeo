@@ -31,6 +31,7 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/
 RUN printf "[global]\nindex = https://artifactory.vgt.vito.be/api/pypi/python-packages\nextra-index-url = https://artifactory.vgt.vito.be/api/pypi/python-packages/simple\n" > /etc/pip.conf && \
     chmod +x /usr/bin/tini && \
     chmod +x /opt/entrypoint.sh && \
+    chown -R 18585:18585 $SPARK_HOME/jars && \
     yum install -y tensorflow-python38-2.3.0 && \
     python3.8 -m pip install -I --upgrade pip && \
     python3.8 -m pip install py4j boto3==1.16.25 kubernetes==12.0.1 PyYAML==5.3.1 Jinja2==2.11.2 spark_memlogger==0.6 && \
