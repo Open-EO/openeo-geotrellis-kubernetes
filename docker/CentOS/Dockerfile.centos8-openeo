@@ -23,7 +23,7 @@ COPY docker/creo_layercatalog.json /opt/layercatalog.json
 COPY docker/log4j.properties /opt/log4j.properties
 
 # Add S3 dependencies
-ADD https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.1.1/hadoop-aws-3.1.1.jar $SPARK_HOME/jars
+ADD https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.2.0/hadoop-aws-3.2.0.jar $SPARK_HOME/jars
 ADD https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.11.199/aws-java-sdk-bundle-1.11.199.jar $SPARK_HOME/jars
 
 # Download tini
