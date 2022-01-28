@@ -5,7 +5,7 @@
 @Library('lib')_
 
 containerImageBuildPipeline {
-  dockerfile           = 'docker/CentOS/Dockerfile.centos8-openeo'
+  dockerfile           = 'docker/AlmaLinux/Dockerfile.almalinux8.5-openeo'
   docker_registry_prod = 'vito-docker.artifactory.vgt.vito.be'
   downstream_job       = 'openEO/openeo-deploy-dias/'
   image_name           = 'openeo-geotrellis'
