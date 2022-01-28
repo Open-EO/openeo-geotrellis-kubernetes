@@ -1,0 +1,14 @@
+#!/usr/bin/env groovy
+
+// This Jenkinsfile uses the internal VITO shared library
+
+@Library('lib')_
+
+containerImageBuildPipeline {
+  dockerfile           = 'docker/CentOS/Dockerfile.centos8-openeo'
+  docker_registry_prod = 'vito-docker.artifactory.vgt.vito.be'
+  downstream_job       = 'openEO/openeo-deploy-dias/'
+  image_name           = 'openeo-geotrellis'
+  promotion_job        = false
+  run_tests            = false
+}
