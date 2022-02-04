@@ -8,7 +8,7 @@ containerImageBuildPipeline {
   dockerfile           = 'docker/AlmaLinux/Dockerfile.almalinux8.5-openeo'
   docker_registry_prod = 'vito-docker.artifactory.vgt.vito.be'
   downstream_job       = 'openEO/openeo-deploy-dias/'
-  image_name           = 'openeo-geotrellis'
+  image_name           = 'openeo-geotrellis-kube'
   promotion_job        = false
   run_tests            = false
 }
