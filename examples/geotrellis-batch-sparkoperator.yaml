@@ -1,0 +1,149 @@
+---
+apiVersion: "sparkoperator.k8s.io/v1beta2"
+kind: SparkApplication
+metadata:
+  name: job-direct-batch-test
+  namespace: spark-jobs
+spec:
+  type: Python
+  pythonVersion: "3"
+  mode: cluster
+  image: vito-docker.artifactory.vgt.vito.be/openeo-geotrellis-kube:20220311-25
+  imagePullPolicy: Always
+  timeToLiveSeconds: 604800
+  mainApplicationFile: local:///opt/openeo/lib64/python3.8/site-packages/openeogeotrellis/deploy/batch_job.py
+  arguments:
+    - "/batch_jobs/6c454fc8-6d9a-4905-9005-c65a71344501/job_specification.json"
+    - "/batch_jobs/6c454fc8-6d9a-4905-9005-c65a71344501"
+    - "out_file"
+    - "log"
+    - "job_metadata.json"
+    - "1.0.0"
+    - "[]"
+    - "my_username"
+  sparkConf:
+    "spark.rpc.message.maxSize": "200"
+    "spark.rdd.compress": "true"
+    "spark.driver.maxResultSize": "5g"
+    "spark.blacklist.enabled": "true"
+    "spark.speculation": "true"
+    "spark.speculation.interval": "5000ms"
+    "spark.speculation.multiplier": "4"
+    "spark.kryoserializer.buffer.max": "1g"
+    "spark.kryo.classesToRegister": "org.openeo.geotrellis.layers.BandCompositeRasterSource,geotrellis.raster.RasterRegion,geotrellis.raster.geotiff.GeoTiffResampleRasterSource,geotrellis.raster.RasterSource,geotrellis.raster.SourceName,geotrellis.raster.geotiff.GeoTiffPath"
+    "spark.serializer": "org.apache.spark.serializer.KryoSerializer"
+    "spark.dynamicAllocation.enabled": "true"
+    "spark.dynamicAllocation.shuffleTracking.enabled": "true"
+    "spark.decommission.enabled": "true"
+    "spark.storage.decommission.shuffleBlocks.enabled": "true"
+    "spark.eventLog.dir": "s3a://spark-history/history_prod"
+    "spark.hadoop.fs.s3a.endpoint": "https://s3.waw2-1.cloudferro.com"
+    "spark.hadoop.fs.s3a.path.style.access": "true"
+    "spark.hadoop.fs.s3a.aws.credentials.provider": "com.amazonaws.auth.EnvironmentVariableCredentialsProvider"
+    "spark.eventLog.enabled": "true"
+    "spark.kubernetes.executor.volumes.persistentVolumeClaim.data.options.claimName": "OnDemand"
+    "spark.kubernetes.executor.volumes.persistentVolumeClaim.data.options.storageClass": "gp"
+    "spark.kubernetes.executor.volumes.persistentVolumeClaim.data.options.sizeLimit": "500Gi"
+    "spark.kubernetes.executor.volumes.persistentVolumeClaim.data.mount.path": "/data"
+    "spark.kubernetes.executor.volumes.persistentVolumeClaim.data.mount.readOnly": "false"
+  sparkVersion: "3.2.0"
+  restartPolicy:
+    type: OnFailure
+    onFailureRetries: 0
+    onFailureRetryInterval: 10
+    onSubmissionFailureRetries: 5
+    onSubmissionFailureRetryInterval: 20
+  volumes:
+    - name: "eodata"
+      hostPath:
+        path: "/eodata"
+        type: DirectoryOrCreate
+    - name: "shared-pod-volume"
+      hostPath:
+        path: "/shared_pod_volume"
+        type: "DirectoryOrCreate"
+    - name: "spark-local-dir-1"
+      hostPath:
+        path: "/opt/spark_tmp"
+        type: "DirectoryOrCreate"
+  driver:
+    envVars:
+      OPENEO_CATALOG_FILES: "/opt/layercatalog.json"
+      KUBE: "true"
+      AWS_ACCESS_KEY_ID: NO_KEY_SET
+      AWS_SECRET_ACCESS_KEY: NO_KEY_SET
+      AWS_VIRTUAL_HOSTING: "FALSE"
+      SWIFT_URL: "https://s3.waw2-1.cloudferro.com"
+      SWIFT_BUCKET: "OpenEO-data"
+      ZOOKEEPERNODES: "zookeeper.zookeeper.svc.cluster.local:2181"
+      OPENEO_S1BACKSCATTER_ELEV_GEOID: "/opt/openeo-vito-aux-data/egm96.grd"
+      OTB_HOME: "/usr"
+      OTB_APPLICATION_PATH: "/usr/lib/otb/applications"
+      GDAL_NUM_THREADS: "2"
+      GDAL_CACHEMAX: "200"
+      GDAL_DISABLE_READDIR_ON_OPEN: "EMPTY_DIR"
+      GDAL_HTTP_MERGE_CONSECUTIVE_RANGES: "YES"
+      PYTHONPATH: "$PYTHONPATH:/opt/tensorflow/python38/2.3.0/:/opt/openeo/lib/python3.8/site-packages/"
+      VSI_CACHE: "TRUE"
+    cores: 2
+    javaOptions: "-Dscala.concurrent.context.maxThreads=2 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/data/projects/OpenEO/test_mem_dump.hprof -Dlog4j.configuration=/opt/log4j.properties -Dlog4j.debug=true -Dpixels.treshold=1000000 -Dsoftware.amazon.awssdk.http.service.impl=software.amazon.awssdk.http.urlconnection.UrlConnectionSdkHttpService"
+    memory: "4G"
+    labels:
+      version: 3.2.0
+      name: test-job-driver
+    serviceAccount: openeo
+    volumeMounts:
+      - name: "eodata"
+        mountPath: "/eodata"
+      - name: "shared-pod-volume"
+        mountPath: "/shared_pod_volume"
+      - name: "spark-local-dir-1"
+        mountPath: "/spark_tmp"
+  executor:
+    envVars:
+      OPENEO_CATALOG_FILES: "/opt/layercatalog.json"
+      KUBE: "true"
+      AWS_ACCESS_KEY_ID: NO_KEY_SET
+      AWS_SECRET_ACCESS_KEY: NO_KEY_SET
+      AWS_VIRTUAL_HOSTING: "FALSE"
+      SWIFT_URL: "https://s3.waw2-1.cloudferro.com"
+      SWIFT_BUCKET: "OpenEO-data"
+      ZOOKEEPERNODES: "zookeeper.zookeeper.svc.cluster.local:2181"
+      OPENEO_S1BACKSCATTER_ELEV_GEOID: "/opt/openeo-vito-aux-data/egm96.grd"
+      OTB_HOME: "/usr"
+      OTB_APPLICATION_PATH: "/usr/lib/otb/applications"
+      GDAL_NUM_THREADS: "2"
+      GDAL_CACHEMAX: "200"
+      GDAL_DISABLE_READDIR_ON_OPEN: "EMPTY_DIR"
+      GDAL_HTTP_MERGE_CONSECUTIVE_RANGES: "YES"
+      PYTHON_MAX_MEMORY: "3657433088"
+      PYTHONPATH: "$PYTHONPATH:/opt/tensorflow/python38/2.3.0/:/opt/openeo/lib64/python3.8/site-packages/"
+      VSI_CACHE: "TRUE"
+      CPL_DEBUG: "ON"
+    cores: 4
+    coreRequest: 400m
+    instances: 40
+    memory: "2G"
+    memoryOverhead: "4000m"
+    javaOptions: "-Dlog4j.configuration=/opt/log4j.properties -Dscala.concurrent.context.numThreads=15 -Dscala.concurrent.context.maxThreads=15 -Dsoftware.amazon.awssdk.http.service.impl=software.amazon.awssdk.http.urlconnection.UrlConnectionSdkHttpService"
+    labels:
+      version: 3.2.0
+    volumeMounts:
+      - name: "eodata"
+        mountPath: "/eodata"
+      - name: "shared-pod-volume"
+        mountPath: "/shared_pod_volume"
+      - name: "spark-local-dir-1"
+        mountPath: "/spark_tmp"
+  deps:
+    jars:
+      - 'local:///opt/geotrellis-extensions-2.3.0_2.12-SNAPSHOT.jar'
+      - 'local:///opt/geotrellis-backend-assembly-0.4.6-openeo_2.12.jar'
+    files:
+      - 'local:///opt/layercatalog.json'
+  monitoring:
+    exposeDriverMetrics: true
+    exposeExecutorMetrics: true
+    prometheus:
+      jmxExporterJar: "/opt/jmx_prometheus_javaagent-0.13.0.jar"
+      port: 8090
