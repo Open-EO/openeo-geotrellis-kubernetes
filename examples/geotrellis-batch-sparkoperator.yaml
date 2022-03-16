@@ -20,7 +20,12 @@ spec:
     - "job_metadata.json"
     - "1.0.0"
     - "[]"
-    - "my_username"
+    - "spark"
+  dynamicAllocation:
+    enabled: true
+    initialExecutors: 2
+    minExecutors: 2
+    maxExecutors: 5
   sparkConf:
     "spark.rpc.message.maxSize": "200"
     "spark.rdd.compress": "true"
@@ -41,11 +46,16 @@ spec:
     "spark.hadoop.fs.s3a.path.style.access": "true"
     "spark.hadoop.fs.s3a.aws.credentials.provider": "com.amazonaws.auth.EnvironmentVariableCredentialsProvider"
     "spark.eventLog.enabled": "true"
-    "spark.kubernetes.executor.volumes.persistentVolumeClaim.data.options.claimName": "OnDemand"
-    "spark.kubernetes.executor.volumes.persistentVolumeClaim.data.options.storageClass": "gp"
-    "spark.kubernetes.executor.volumes.persistentVolumeClaim.data.options.sizeLimit": "500Gi"
-    "spark.kubernetes.executor.volumes.persistentVolumeClaim.data.mount.path": "/data"
-    "spark.kubernetes.executor.volumes.persistentVolumeClaim.data.mount.readOnly": "false"
+    "spark.kubernetes.executor.volumes.persistentVolumeClaim.spark-local-dir-1.options.claimName": "OnDemand"
+    "spark.kubernetes.executor.volumes.persistentVolumeClaim.spark-local-dir-1.options.storageClass": "default"
+    "spark.kubernetes.executor.volumes.persistentVolumeClaim.spark-local-dir-1.options.sizeLimit": "20Gi"
+    "spark.kubernetes.executor.volumes.persistentVolumeClaim.spark-local-dir-1.mount.path": "/spark_tmp"
+    "spark.kubernetes.executor.volumes.persistentVolumeClaim.spark-local-dir-1.mount.readOnly": "false"
+    "spark.kubernetes.allocation.batch.size": "1"
+    "spark.kubernetes.allocation.batch.delay": "30s"
+    "spark.kubernetes.driver.ownPersistentVolumeClaim": "true"
+    "spark.kubernetes.driver.reusePersistentVolumeClaim": "true"
+    "spark.kubernetes.allocation.maxPendingPods": "5"
   sparkVersion: "3.2.0"
   restartPolicy:
     type: OnFailure
@@ -68,6 +78,7 @@ spec:
         type: "DirectoryOrCreate"
   driver:
     envVars:
+      SPARK_USER: "spark"
       OPENEO_CATALOG_FILES: "/opt/layercatalog.json"
       KUBE: "true"
       AWS_ACCESS_KEY_ID: NO_KEY_SET
@@ -100,7 +111,10 @@ spec:
       - name: "spark-local-dir-1"
         mountPath: "/spark_tmp"
   executor:
+    podSecurityContext:
+      fsGroup: 18585
     envVars:
+      SPARK_USER: "spark"
       OPENEO_CATALOG_FILES: "/opt/layercatalog.json"
       KUBE: "true"
       AWS_ACCESS_KEY_ID: NO_KEY_SET
@@ -122,8 +136,7 @@ spec:
       CPL_DEBUG: "ON"
     cores: 4
     coreRequest: 400m
-    instances: 40
-    memory: "2G"
+    memory: "1500m"
     memoryOverhead: "4000m"
     javaOptions: "-Dlog4j.configuration=/opt/log4j.properties -Dscala.concurrent.context.numThreads=15 -Dscala.concurrent.context.maxThreads=15 -Dsoftware.amazon.awssdk.http.service.impl=software.amazon.awssdk.http.urlconnection.UrlConnectionSdkHttpService"
     labels:
@@ -133,8 +146,6 @@ spec:
         mountPath: "/eodata"
       - name: "shared-pod-volume"
         mountPath: "/shared_pod_volume"
-      - name: "spark-local-dir-1"
-        mountPath: "/spark_tmp"
   deps:
     jars:
       - 'local:///opt/geotrellis-extensions-2.3.0_2.12-SNAPSHOT.jar'

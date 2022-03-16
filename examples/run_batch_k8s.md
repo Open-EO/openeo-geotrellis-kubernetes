@@ -7,3 +7,7 @@ A clear use case is testing, but users without an intention to operate a web ser
 also benefit from a more simple approach.
 
 `kubectl apply -f geotrellis-batch-sparkoperator.yaml`
+
+Stopping and removing running job:
+
+`kubectl delete -n spark-jobs sparkapplications.sparkoperator.k8s.io job-direct-batch-test`
