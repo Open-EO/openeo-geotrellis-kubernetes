@@ -6,7 +6,7 @@
 
 containerImageBuildPipeline {
   build_args           = ['SPARK_VERSION=3.2.0','PYTHON_PACKAGE=python38-devel']
-  dockerfile           = 'docker/AlmaLinux/Dockerfile.almalinux8.5-spark-py'
+  dockerfile           = 'docker/AlmaLinux/Dockerfile.almalinux8.5-spark-py-openeo'
   docker_registry_prod = 'vito-docker.artifactory.vgt.vito.be'
   image_name           = 'almalinux8.5-spark-py-openeo'
   image_tag            = '3.2.0'
