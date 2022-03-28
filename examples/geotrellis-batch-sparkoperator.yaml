@@ -8,29 +8,31 @@ spec:
   type: Python
   pythonVersion: "3"
   mode: cluster
-  image: vito-docker.artifactory.vgt.vito.be/openeo-geotrellis-kube:20220311-25
+  image: vito-docker.artifactory.vgt.vito.be/openeo-geotrellis-kube:20220325-46
   imagePullPolicy: Always
   timeToLiveSeconds: 604800
   mainApplicationFile: local:///opt/openeo/lib64/python3.8/site-packages/openeogeotrellis/deploy/batch_job.py
   arguments:
-    - "/batch_jobs/6c454fc8-6d9a-4905-9005-c65a71344501/job_specification.json"
-    - "/batch_jobs/6c454fc8-6d9a-4905-9005-c65a71344501"
+    - "/batch_jobs/2847ac3d-b642-480c-8709-478bc3ec90fc/job_specification.json"
+    - "/batch_jobs/2847ac3d-b642-480c-8709-478bc3ec90fc"
     - "out_file"
     - "log"
     - "job_metadata.json"
     - "1.0.0"
     - "[]"
     - "spark"
+    - "false"
   dynamicAllocation:
     enabled: true
     initialExecutors: 2
     minExecutors: 2
-    maxExecutors: 5
+    maxExecutors: 10
   sparkConf:
     "spark.rpc.message.maxSize": "200"
     "spark.rdd.compress": "true"
     "spark.driver.maxResultSize": "5g"
-    "spark.blacklist.enabled": "true"
+    "spark.excludeOnFailure.enabled": "false"
+    "spark.excludeOnFailure.killExcludedExecutors": "true"
     "spark.speculation": "true"
     "spark.speculation.interval": "5000ms"
     "spark.speculation.multiplier": "4"
@@ -40,6 +42,8 @@ spec:
     "spark.dynamicAllocation.enabled": "true"
     "spark.dynamicAllocation.shuffleTracking.enabled": "true"
     "spark.decommission.enabled": "true"
+    "spark.storage.decommission.enabled": "true"
+    "spark.storage.decommission.rddBlocks.enabled": "true"
     "spark.storage.decommission.shuffleBlocks.enabled": "true"
     "spark.eventLog.dir": "s3a://spark-history/history_prod"
     "spark.hadoop.fs.s3a.endpoint": "https://s3.waw2-1.cloudferro.com"
@@ -111,6 +115,8 @@ spec:
       - name: "spark-local-dir-1"
         mountPath: "/spark_tmp"
   executor:
+    deleteOnTermination: false
+    terminationGracePeriodSeconds: 300
     podSecurityContext:
       fsGroup: 18585
     envVars:
