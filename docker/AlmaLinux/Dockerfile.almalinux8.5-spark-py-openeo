@@ -13,8 +13,8 @@ WORKDIR /opt/spark/work-dir
 RUN adduser -u 18585 -d /opt/spark/work-dir spark && \
     chown 18585:18585 /opt/spark/work-dir
 
-RUN yum install -y epel-release && \
-    yum install -y spark-bin-${SPARK_VERSION} \
+RUN dnf install -y epel-release && \
+    dnf --enablerepo=powertools install -y spark-bin-${SPARK_VERSION} \
     gdal-3.4.0 \
     gdal-devel-3.4.0 \
     python38-gdal-3.4.0 \
