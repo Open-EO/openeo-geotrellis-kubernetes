@@ -67,10 +67,10 @@ Following is an example `values.yaml` file:
 
 ```yaml
 ---
-image: "vito-docker.artifactory.vgt.vito.be/openeo-geotrellis"
+image: "vito-docker.artifactory.vgt.vito.be/openeo-geotrellis-kube"
 imageVersion: "latest"
 jmxExporterJar: "/opt/jmx_prometheus_javaagent-0.13.0.jar"
-mainApplicationFile: "local:///usr/local/lib/python3.7/dist-packages/openeogeotrellis/deploy/kube.py"
+mainApplicationFile: "local:///opt/openeo/lib64/python3.8/site-packages/openeogeotrellis/deploy/kube.py"
 serviceAccount: "openeo"
 volumes:
   - name: "eodata"
@@ -110,8 +110,8 @@ sparkConf:
   "spark.executorEnv.GDAL_NUM_THREADS": "2"
   "spark.executorEnv.GDAL_DISABLE_READDIR_ON_OPEN": "EMPTY_DIR"
 jarDependencies:
-  - 'local:///opt/geotrellis-extensions-2.2.0-SNAPSHOT.jar'
-  - 'local:///opt/geotrellis-backend-assembly-0.4.6-openeo.jar'
+  - 'local:///opt/geotrellis-extensions-2.3.0_2.12-SNAPSHOT.jar'
+  - 'local:///opt/geotrellis-backend-assembly-0.4.6-openeo_2.12.jar'
 fileDependencies:
   - 'local:///opt/layercatalog.json'
 service:
