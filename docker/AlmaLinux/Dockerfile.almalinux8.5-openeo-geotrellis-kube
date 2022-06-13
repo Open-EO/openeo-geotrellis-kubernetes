@@ -18,7 +18,7 @@ LABEL maintainer="VITO Remote Sensing"
 
 USER root
 
-COPY docker/CentOS/entrypoint.sh /opt/entrypoint.sh
+COPY docker/AlmaLinux/entrypoint.sh /opt/entrypoint.sh
 COPY docker/creo_layercatalog.json /opt/layercatalog.json
 COPY docker/log4j.properties /opt/log4j.properties
 
