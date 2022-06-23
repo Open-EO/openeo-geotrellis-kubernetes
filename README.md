@@ -77,9 +77,42 @@ sparkoperator-1593174963-556544cb66-v5v7f   1/1     Running   0          11m
 
 The Spark operator is now up and running in its own namespace.
 
+## Configuring collections
+For data access, openEO requires you to register the configuration of 'collections' in a file inside the docker image: '/opt/layercatalog.json'.
+The main format of this file follows the STAC collection metadata specification, but there's also a number of custom properties.
+Documentation of these properties is rather sparse, so for now, working from existing examples is the best approach. In the best case, when working from a properly configured STAC collection, the amount of additional configuration is limited.
+
+To update the configuration in the docker file, we would recommend rebuilding the image. Another approach might be to try and use a Kubernetes config map.
+
+An example of a layercatalog:
+https://github.com/Open-EO/openeo-geotrellis-kubernetes/blob/master/docker/creo_layercatalog.json
+
+
+See: 
+https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#define-the-key-to-use-when-creating-a-configmap-from-a-file
+
+For reference, this Python code actually works with the configuration in the layer catalog:
+https://github.com/Open-EO/openeo-geopyspark-driver/blob/master/openeogeotrellis/layercatalog.py
+
+### STAC based collection
+
+Custom config for STAC collection. Note that 'opensearch_XX' properties are used, but the backend tries to determine automatically what to use. 
+
+```
+ "_vito": {
+      "data_source": {
+        "type": "file-s2",
+        "opensearch_collection_id": "S2",
+        "opensearch_endpoint": "https://resto.c-scale.zcu.cz",
+        "provider:backend": "incd"
+      }
+    }
+```
+
 ## Deploy the OpenEO Spark job
 
 Now that we have the Spark operator running, it's time to deploy our application on the cluster. As Kubernetes is a container orchestrator, we of course need to package our application into a container image. The necessary files to build this container image can be found in the [docker][8] directory. A prebuilt image is available at `vito-docker.artifactory.vgt.vito.be/openeo-geotrellis-kube`.
+
 
 As we are using the Spark operator, we can now define our Spark job as a Kubernetes resource, rather than a `spark-submit` script.
 To have a fully functional application, we need more than a `SparkApplication` Kubernetes resource. We also need an Ingress, ServiceAccounts, RBAC, ... A [Helm chart][9] was written to help with all the parts we need. Instructions on how to use this chart, can be found in the `README.md` file.
