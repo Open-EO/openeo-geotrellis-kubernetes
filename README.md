@@ -78,7 +78,8 @@ sparkoperator-1593174963-556544cb66-v5v7f   1/1     Running   0          11m
 The Spark operator is now up and running in its own namespace.
 
 ## Configuring collections
-For data access, openEO requires you to register the configuration of 'collections' in a file inside the docker image: '/opt/layercatalog.json'.
+For data access, openEO requires you to register the configuration of 'collections' in a file inside the docker image. The default location is '/opt/layercatalog.json', but it can be set with an environment variable OPENEO_CATALOG_FILES.
+
 The main format of this file follows the STAC collection metadata specification, but there's also a number of custom properties.
 Documentation of these properties is rather sparse, so for now, working from existing examples is the best approach. In the best case, when working from a properly configured STAC collection, the amount of additional configuration is limited.
 
