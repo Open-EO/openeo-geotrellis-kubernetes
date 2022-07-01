@@ -35,6 +35,8 @@ RUN dnf install -y epel-release && \
     fftw-libs-single \
     openeo-vito-aux-data \
     tinyxml \
+    R-core \
+    udunits2 \
     compat-libgfortran-48-4.8.5-36.1.el8.x86_64 && \
     ln -s /usr/lib64/libgdal.so.30 /usr/lib64/libgdal.so.26 && \
     ln -s /usr/lib64/libgdal.so.30 /usr/lib64/libgdal.so.27 && \
