@@ -22,17 +22,18 @@ export SPARK_CONF_DIR=${WORK_DIR}/conf
 #export SPARK_MASTER_HOST=10.0.3.133
 
 
-singularity exec  openeo-yarn_latest.sif /opt/spark3.2.0/sbin/start-master.sh
+singularity exec  /project/cscale_test/Public/openeo/openeo-yarn_latest.sif /opt/spark3.2.0/sbin/start-master.sh
 sleep 5
 MASTER_URL=$(grep -Po '(?=spark://).*' $SPARK_LOG_DIR/spark-${SPARK_IDENT_STRING}-org.apache.spark.deploy.master*.out)
 
 NWORKERS=$((SLURM_NTASKS - 2))
-SPARK_NO_DAEMONIZE=1 srun -n ${NWORKERS} -N ${NWORKERS} --label --output=$SPARK_LOG_DIR/spark-%j-workers.out singularity exec openeo-yarn_latest.sif /opt/spark3.2.0/sbin/start-worker.sh -m ${SLURM_SPARK_MEM}M -c ${SLURM_CPUS_PER_TASK} -d ${SPARK_WORKER_DIR} ${MASTER_URL} &
+SPARK_NO_DAEMONIZE=1 srun -n ${NWORKERS} -N ${NWORKERS} --label --output=$SPARK_LOG_DIR/spark-%j-workers.out singularity exec /project/cscale_test/Public/openeo/openeo-yarn_latest.sif /opt/spark3.2.0/sbin/start-worker.sh -m ${SLURM_SPARK_MEM}M -c ${SLURM_CPUS_PER_TASK} -d ${SPARK_WORKER_DIR} ${MASTER_URL} &
 slaves_pid=$!
 
 export TRAVIS=1
-export PYTHONPATH=/opt/openeo/lib64/python3.8/site-packages
-srun -n 1 -N 1 singularity exec openeo-yarn_latest.sif /opt/spark3.2.0/bin/spark-submit --master ${MASTER_URL} --executor-memory ${SLURM_SPARK_MEM}M /opt/venv/lib64/python3.8/site-packages/openeogeotrellis/deploy/kube.py 
+export PYTHONPATH=/opt/venv/lib64/python3.8/site-packages
+export OPENEO_CATALOG_FILES=/opt/layercatalog.json
+srun -n 1 -N 1 singularity exec /project/cscale_test/Public/openeo/openeo-yarn_latest.sif /opt/spark3.2.0/bin/spark-submit --master ${MASTER_URL} --executor-memory ${SLURM_SPARK_MEM}M /opt/venv/lib64/python3.8/site-packages/openeogeotrellis/deploy/kube.py
 
 kill $slaves_pid
-singularity exec openeo-yarn_latest.sif /opt/spark3.2.0/sbin/stop-master.sh
+singularity exec /project/cscale_test/Public/openeo/openeo-yarn_latest.sif /opt/spark3.2.0/sbin/stop-master.sh
