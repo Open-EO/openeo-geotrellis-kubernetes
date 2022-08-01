@@ -41,6 +41,7 @@ RUN dnf install -y epel-release && \
     ln -s /usr/lib64/libgdal.so.30 /usr/lib64/libgdal.so.26 && \
     ln -s /usr/lib64/libgdal.so.30 /usr/lib64/libgdal.so.27 && \
     pip3 install --upgrade pip setuptools && \
+    pip3 install --upgrade rpy2 && \
     rm -r /root/.cache && \
     yum clean all && \
     rm -rf /var/cache/yum/*
