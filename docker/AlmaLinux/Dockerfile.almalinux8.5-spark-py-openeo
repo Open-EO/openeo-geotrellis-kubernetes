@@ -37,6 +37,15 @@ RUN dnf install -y epel-release && \
     tinyxml \
     udunits2 \
     R-minimal \
+    Rlib-sf \
+    Rlib-s2 \
+    Rlib-wk \
+    Rlib-curl \
+    Rlib-lubridate \
+    Rlib-units \
+    Rlib-rlang \
+    Rlib-classInt \
+    Rlib-magrittr \
     compat-libgfortran-48-4.8.5-36.1.el8.x86_64 && \
     ln -s /usr/lib64/libgdal.so.30 /usr/lib64/libgdal.so.26 && \
     ln -s /usr/lib64/libgdal.so.30 /usr/lib64/libgdal.so.27 && \
