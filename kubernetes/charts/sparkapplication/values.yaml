@@ -18,6 +18,9 @@ sparkVersion: "2.4.5"
 rbac:
   create: false
   serviceAccountName:
+  sparkOperator:
+    namespace: spark-operator
+    serviceAccount: spark-operator
 spark_ui:
   port: 4040
   ingress:
