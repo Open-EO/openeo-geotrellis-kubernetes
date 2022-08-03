@@ -51,8 +51,8 @@ RUN dnf install -y epel-release && \
     compat-libgfortran-48-4.8.5-36.1.el8.x86_64 && \
     ln -s /usr/lib64/libgdal.so.30 /usr/lib64/libgdal.so.26 && \
     ln -s /usr/lib64/libgdal.so.30 /usr/lib64/libgdal.so.27 && \
-    pip3 install --upgrade pip setuptools && \
-    pip3 install --upgrade rpy2 && \
+    python3.8 -m pip install --upgrade --target /usr/lib64/python3.8/site-packages/ pip setuptools wheel && \
+    python3.8 -m pip install --upgrade --target /usr/lib64/python3.8/site-packages/ rpy2 && \
     rm -r /root/.cache && \
     yum clean all && \
     rm -rf /var/cache/yum/*
