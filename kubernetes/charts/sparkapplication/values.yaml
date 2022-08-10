@@ -25,3 +25,4 @@ spark_ui:
   port: 4040
   ingress:
     enabled: false
+privileged: false

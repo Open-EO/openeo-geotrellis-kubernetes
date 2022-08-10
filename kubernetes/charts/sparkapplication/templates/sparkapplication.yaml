@@ -60,10 +60,8 @@ spec:
     {{- if .Values.driver.javaOptions }}
     javaOptions: {{ .Values.driver.javaOptions }}
     {{- end }}
-    {{- if .Values.userId }}
     securityContext:
-      runAsUser: {{ .Values.userId }}
-    {{- end }}
+      privileged: {{ .Values.privileged }}
     cores: {{ .Values.driver.cores }}
     memory: {{ .Values.driver.memory }}
     hostNetwork: {{ .Values.hostNetwork | default false}}
@@ -88,6 +86,8 @@ spec:
     {{- if .Values.executor.javaOptions }}
     javaOptions: {{ .Values.executor.javaOptions }}
     {{- end }}
+    securityContext:
+      privileged: {{ .Values.privileged }}
     cores: {{ .Values.executor.cores }}
     instances: {{ .Values.executor.instances }}
     memory: {{ .Values.executor.memory }}
