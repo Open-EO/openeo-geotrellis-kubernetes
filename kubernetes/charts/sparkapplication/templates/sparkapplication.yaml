@@ -103,6 +103,10 @@ spec:
 {{ toYaml .Values.volumeMounts | indent 6 }}
     {{- end }}
   {{- if .Values.jmxExporterJar }}
+  {{- if .Values.priorityClassName }}
+  batchSchedulerOptions:
+    priorityClassName: {{ .Values.priorityClassName }}
+  {{- end }}
   monitoring:
     exposeDriverMetrics: true
     exposeExecutorMetrics: true
