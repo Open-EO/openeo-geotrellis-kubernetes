@@ -1,5 +1,5 @@
 [vito-public-alma]
-name=vito-yum-centos-public
+name=vito-yum-almalinux8-public
 baseurl=https://artifactory.vgt.vito.be/vito-yum-almalinux8-public/
 gpgcheck=0
 
