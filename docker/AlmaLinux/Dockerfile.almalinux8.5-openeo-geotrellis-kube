@@ -47,10 +47,11 @@ RUN curl -O https://artifactory.vgt.vito.be/auxdata-public/openeo/geotrellis-bac
 
 RUN curl -O https://artifactory.vgt.vito.be/auxdata-public/openeo/dev/${OPENEO_ZIP} && \
     mkdir /opt/openeo /opt/tmp /batch_jobs /spark_tmp && \
+    touch /opt/openeo_python.log && \
     unzip -o /opt/${OPENEO_ZIP} -d /opt/openeo && \
     rm -rf /opt/${OPENEO_ZIP} && \
     rm -rf /opt/openeo/lib/python3.8/site-packages/tensorflow/* && \
-    chown -R 18585:18585 /opt/openeo /opt/tmp /batch_jobs /spark_tmp
+    chown -R 18585:18585 /opt/openeo /opt/tmp /batch_jobs /spark_tmp /opt/openeo_python.log
 
 ENTRYPOINT [ "/opt/entrypoint.sh" ]
 
