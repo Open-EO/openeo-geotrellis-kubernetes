@@ -760,6 +760,13 @@
       }],
 
    "summaries": {
+      "eo:bands": [
+      {
+        "bitPerValue": 8,
+        "name": "SOSD",
+        "resolution": 10,
+        "title": "SOSD"
+      }],
     "raster:bands": [
 
       {
