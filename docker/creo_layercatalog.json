@@ -949,7 +949,7 @@
                 "x": {
                   "from_parameter": "value"
                 },
-                "y": "S3-private"
+                "y": "S3"
               },
               "result": true
             }
