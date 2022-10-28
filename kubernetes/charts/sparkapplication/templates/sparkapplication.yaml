@@ -76,6 +76,10 @@ spec:
     volumeMounts:
 {{ toYaml .Values.volumeMounts | indent 6 }}
     {{- end }}
+    {{- if .Values.initContainers }}
+    initContainers:
+{{ toYaml .Values.initContainers | indent 6 }}
+    {{- end }}
   executor:
     {{- if .Values.executor.envVars }}
     envVars:
@@ -101,6 +105,10 @@ spec:
     {{- if .Values.volumeMounts }}
     volumeMounts:
 {{ toYaml .Values.volumeMounts | indent 6 }}
+    {{- end }}
+    {{- if .Values.initContainers }}
+    initContainers:
+{{ toYaml .Values.initContainers | indent 6 }}
     {{- end }}
   {{- if .Values.jmxExporterJar }}
   {{- if .Values.priorityClassName }}
