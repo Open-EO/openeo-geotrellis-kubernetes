@@ -8,9 +8,6 @@ COPY docker/AlmaLinux/vito.repo /etc/yum.repos.d/vito.repo
 
 WORKDIR /opt/spark/work-dir
 
-RUN adduser -u 18585 -d /opt/spark/work-dir spark && \
-    chown 18585:18585 /opt/spark/work-dir
-
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
 
 RUN dnf clean all && dnf install -y epel-release && \
@@ -68,5 +65,3 @@ ENV YARN_CONF_DIR=/etc/hadoop/conf
 ENV ACCUMULO_CLIENT_CONF_PATH=client.conf
 ENV OTB_HOME=/usr
 ENV OTB_APPLICATION_PATH=/usr/lib/otb/applications
-
-USER 18585
