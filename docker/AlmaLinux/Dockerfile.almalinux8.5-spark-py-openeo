@@ -13,6 +13,8 @@ WORKDIR /opt/spark/work-dir
 RUN adduser -u 18585 -d /opt/spark/work-dir spark && \
     chown 18585:18585 /opt/spark/work-dir
 
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
+
 RUN dnf clean all && dnf install -y epel-release && \
     dnf --enablerepo=powertools install -y spark-bin-${SPARK_VERSION} \
     gdal-3.4.0 \
@@ -54,6 +56,7 @@ RUN dnf clean all && dnf install -y epel-release && \
     ln -s /usr/lib64/libgdal.so.30 /usr/lib64/libgdal.so.27 && \
     python3.8 -m pip install --upgrade --target /usr/lib64/python3.8/site-packages/ pip setuptools wheel && \
     python3.8 -m pip install --upgrade --target /usr/lib64/python3.8/site-packages/ rpy2 && \
+    chmod +x /usr/bin/tini && \
     rm -r /root/.cache && \
     yum clean all && \
     rm -rf /var/cache/yum/*
