@@ -1,8 +1,6 @@
-ARG SPARK_VERSION
-ARG PYTHON_PACKAGE
-
 FROM vito-docker-private.artifactory.vgt.vito.be/almalinux8.5
 
+ARG TINI_VERSION=v0.19.0
 ARG SPARK_VERSION
 ARG PYTHON_PACKAGE
 
