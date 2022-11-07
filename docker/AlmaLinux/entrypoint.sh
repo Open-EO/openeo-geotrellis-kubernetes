@@ -61,6 +61,13 @@ if ! [ -z ${HADOOP_CONF_DIR+x} ]; then
   SPARK_CLASSPATH="$HADOOP_CONF_DIR:$SPARK_CLASSPATH";
 fi
 
+sparkSubmitLog4jConfigurationFile="/opt/venv/openeo-geopyspark-driver/submit_batch_job_log4j.properties"
+if [ ! -f ${sparkSubmitLog4jConfigurationFile} ]; then
+    >&2 echo "${sparkSubmitLog4jConfigurationFile} is missing"
+    exit 1
+fi
+export SPARK_SUBMIT_OPTS="-Dlog4j.configuration=file:${sparkSubmitLog4jConfigurationFile}"
+
 echo "My start command is $1"
 case "$1" in
   driver)
