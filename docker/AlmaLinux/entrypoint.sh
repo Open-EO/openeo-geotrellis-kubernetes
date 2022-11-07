@@ -75,6 +75,8 @@ case "$1" in
     CMD=(
       "$SPARK_HOME/bin/spark-submit"
       --conf "spark.driver.bindAddress=$SPARK_DRIVER_BIND_ADDRESS"
+      --driver-library-path "$SPARK_CLASSPATH:$SPARK_DIST_CLASSPATH"
+      --driver-java-options "$SPARK_SUBMIT_OPTS"
       --deploy-mode client
       "$@"
     )
