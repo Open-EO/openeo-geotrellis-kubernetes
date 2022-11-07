@@ -1,0 +1,36 @@
+FROM vito-docker.artifactory.vgt.vito.be/openeo-base:latest
+
+ARG JMX_PROMETHEUS_JAVAAGENT_VERSION=0.13.0
+
+USER root
+
+COPY docker/AlmaLinux/entrypoint.sh /opt/entrypoint.sh
+COPY docker/creo_layercatalog.json /opt/layercatalog.json
+COPY docker/log4j.properties /opt/log4j.properties
+
+# Add S3 dependencies
+ADD https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.2.2/hadoop-aws-3.2.2.jar $SPARK_HOME/jars
+ADD https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.11.199/aws-java-sdk-bundle-1.11.199.jar $SPARK_HOME/jars
+
+RUN adduser -u 18585 -d /opt/spark/work-dir spark && \
+    chown 18585:18585 /opt/spark/work-dir && \
+    printf "[global]\nindex = https://artifactory.vgt.vito.be/api/pypi/python-packages\nextra-index-url = https://artifactory.vgt.vito.be/api/pypi/python-packages/simple\n" > /etc/pip.conf && \
+    curl -O https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/${JMX_PROMETHEUS_JAVAAGENT_VERSION}/jmx_prometheus_javaagent-${JMX_PROMETHEUS_JAVAAGENT_VERSION}.jar && \
+    chmod +x /opt/entrypoint.sh && \
+    python3.8 -m pip install -I --upgrade pip && \
+    chown -R 18585:18585 $SPARK_HOME/jars && \
+    yum install -y tensorflow-python38-2.3.0 && \
+    python3.8 -m pip install -I --upgrade pip && \
+    python3.8 -m pip install py4j boto3==1.16.25 kubernetes==12.0.1 PyYAML==5.3.1 Jinja2==2.11.2 spark_memlogger==0.6 && \
+    rm -rf /root/.cache && \
+    yum clean all && \
+    rm -rf /var/cache/yum/* && \
+    mkdir /opt/tmp /batch_jobs /spark_tmp && \
+    touch /opt/openeo_python.log && \
+    rm -rf /opt/openeo/lib/python3.8/site-packages/tensorflow/* && \
+    ln -s /opt/venv /opt/openeo && \
+    chown -R 18585:18585 /opt/openeo /opt/tmp /batch_jobs /spark_tmp /opt/openeo_python.log
+
+ENTRYPOINT [ "/opt/entrypoint.sh" ]
+
+USER 18585
