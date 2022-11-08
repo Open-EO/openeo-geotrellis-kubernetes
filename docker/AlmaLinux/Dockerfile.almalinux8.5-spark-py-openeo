@@ -25,6 +25,7 @@ RUN dnf clean all && dnf install -y epel-release && \
     nss \
     orfeo-toolbox-py38 \
     boost-filesystem \
+    boost-serialization \
     procps-ng \
     ${PYTHON_PACKAGE} \
     python38-pytz  \
