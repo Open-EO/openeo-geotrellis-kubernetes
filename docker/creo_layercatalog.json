@@ -737,7 +737,7 @@
                 "x": {
                   "from_parameter": "value"
                 },
-                "y": "S3"
+                "y": "S3-private"
               },
               "result": true
             }
@@ -845,7 +845,7 @@
                 "x": {
                   "from_parameter": "value"
                 },
-                "y": "S3"
+                "y": "S3-private"
               },
               "result": true
             }
