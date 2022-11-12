@@ -61,6 +61,7 @@ if ! [ -z ${HADOOP_CONF_DIR+x} ]; then
   SPARK_CLASSPATH="$HADOOP_CONF_DIR:$SPARK_CLASSPATH";
 fi
 
+export PYARROW_IGNORE_TIMEZONE=1
 
 echo "My start command is $1"
 case "$1" in
