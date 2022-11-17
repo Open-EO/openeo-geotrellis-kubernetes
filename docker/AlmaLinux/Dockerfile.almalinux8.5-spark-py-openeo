@@ -49,6 +49,7 @@ RUN dnf clean all && dnf install -y epel-release && \
     Rlib-stars \
     Rlib-jsonlite \
     Rlib-caret \
+    Rlib-ggplot2 \
     compat-libgfortran-48-4.8.5-36.1.el8.x86_64 && \
     ln -s /usr/lib64/libgdal.so.30 /usr/lib64/libgdal.so.26 && \
     ln -s /usr/lib64/libgdal.so.30 /usr/lib64/libgdal.so.27 && \
