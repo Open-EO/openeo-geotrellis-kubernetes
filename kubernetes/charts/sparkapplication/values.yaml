@@ -9,6 +9,8 @@ executor:
 imagePullPolicy: "IfNotPresent"
 ingress:
   enabled: false
+ingressRoute:
+  enabled: false
 jmxPort: 8090
 pythonVersion: 3
 service:
