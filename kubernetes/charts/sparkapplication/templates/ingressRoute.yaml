@@ -22,17 +22,17 @@ spec:
       secretName: {{ .secretName }}
     {{- end }}
   {{- end }}
-  entrypoints: |-
+  entryPoints:
     {{- range .Values.ingressRoute.entryPoints }}
-    - {{ . | title }}
+    - {{ . }}
     {{- end }}
   routes:
     {{- range .Values.ingressRoute.rules }}
     - kind: "Rule"
       match: {{ .match | quote }}
       services:
-        {{- range .paths }}
-        - name: {{ . }}
+        {{- range .services }}
+        - name: {{ include "sparkapplication.fullname" . }}
           port: {{ $svcPort }}
         {{- end}}
     {{- end }}
