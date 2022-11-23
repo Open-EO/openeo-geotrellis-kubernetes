@@ -80,6 +80,18 @@ RUN dnf clean all && dnf install -y epel-release && \
     Rlib-stringr \
     Rlib-stringi \
     Rlib-pROC \
+    Rlib-zoo \
+    Rlib-strucchangeRcpp \
+    Rlib-sandwich \
+    Rlib-fracdiff \
+    Rlib-lmtest \
+    Rlib-quantmod \
+    Rlib-quadprog \
+    Rlib-xts \
+    Rlib-TTR \
+    Rlib-urca \
+    Rlib-Rdpack \
+    Rlib-rbibutils \
     compat-libgfortran-48-4.8.5-36.1.el8.x86_64 && \
     ln -s /usr/lib64/libgdal.so.30 /usr/lib64/libgdal.so.26 && \
     ln -s /usr/lib64/libgdal.so.30 /usr/lib64/libgdal.so.27 && \
