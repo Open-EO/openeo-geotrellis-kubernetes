@@ -51,6 +51,35 @@ RUN dnf clean all && dnf install -y epel-release && \
     Rlib-caret \
     Rlib-ggplot2 \
     Rlib-scales \
+    Rlib-vctrs \
+    Rlib-tibble \
+    Rlib-pillar \
+    Rlib-pkgconfig \
+    Rlib-withr \
+    Rlib-plyr \
+    Rlib-recipes \
+    Rlib-bfast \
+    Rlib-fansi \
+    Rlib-utf8 \
+    Rlib-timeDate \
+    Rlib-dplyr \
+    Rlib-tidyselect \
+    Rlib-gower \
+    Rlib-hardhat \
+    Rlib-ipred \
+    Rlib-prodlim \
+    Rlib-lava \
+    Rlib-future.apply \
+    Rlib-digest \
+    Rlib-globals \
+    Rlib-listenv \
+    Rlib-parallelly \
+    Rlib-timechange \
+    Rlib-purrr \
+    Rlib-reshape2 \
+    Rlib-stringr \
+    Rlib-stringi \
+    Rlib-pROC \
     compat-libgfortran-48-4.8.5-36.1.el8.x86_64 && \
     ln -s /usr/lib64/libgdal.so.30 /usr/lib64/libgdal.so.26 && \
     ln -s /usr/lib64/libgdal.so.30 /usr/lib64/libgdal.so.27 && \
