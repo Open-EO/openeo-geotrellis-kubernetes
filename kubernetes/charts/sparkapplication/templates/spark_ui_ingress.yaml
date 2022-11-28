@@ -39,8 +39,6 @@ spec:
                 port:
                   name: http
             pathType: 'Prefix'
-              serviceName: {{ $name }}-ui-svc
-              servicePort: {{ $name }}-ui-port
           {{- end }}
     {{- end }}
   {{- end }}
