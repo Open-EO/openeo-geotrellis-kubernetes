@@ -933,5 +933,83 @@
         }
       }
     }
+  },
+  {
+    "id": "COPERNICUS_30",
+    "title": "Copernicus Global 30 meter Digital Elevation Model dataset.",
+    "description": "Copernicus Global 30 meter Digital Elevation Model dataset.",
+    "license": "proprietary",
+    "providers": [
+    ],
+    "links": [
+      {
+        "rel": "license",
+        "href": "https://spacedata.copernicus.eu/documents/20126/0/CSCDA_ESA_Mission-specific+Annex.pdf"
+      },
+      {
+        "href": "https://services.terrascope.be/wmts/v2",
+        "rel": "wmts",
+        "wmts:layer": "COP_DEM_GLO_30M_COG"
+      }
+    ],
+    "extent": {
+      "spatial": {"bbox": [[-180, -90, 180, 90]]},
+      "temporal": {"interval": [["2010-12-12", null]]}
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x", "step": 0.0002777777777777778},
+      "y": {"type": "spatial", "axis": "y", "step": 0.0002777777777777778},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": ["DEM"]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {
+          "name": "DEM"
+        }
+      ]
+    },
+    "_vito": {
+      "data_source": {
+        "type": "file-oscars",
+        "opensearch_collection_id": "CopDem",
+        "opensearch_endpoint": "https://finder.creodias.eu",
+        "root_path": "/eodata",
+        "provider:backend": "creodias"
+      },
+      "properties": {
+        "productType": {
+          "process_graph": {
+            "asc": {
+              "process_id": "eq",
+              "arguments": {
+                "x": {
+                  "from_parameter": "value"
+                },
+                "y": "SAR_DGE_30_PUBLIC"
+              },
+              "result": true
+            }
+          }
+        },
+        "resolution": {
+          "process_graph": {
+            "asc": {
+              "process_id": "eq",
+              "arguments": {
+                "x": {
+                  "from_parameter": "value"
+                },
+                "y": "30"
+              },
+              "result": true
+            }
+          }
+        }
+      }
+    }
   }
 ]
