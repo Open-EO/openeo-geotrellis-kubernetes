@@ -913,8 +913,7 @@
     "_vito": {
       "data_source": {
         "type": "file-oscars",
-        "opensearch_collection_id": "urn:eop:VITO:ESA_WorldCover_10m_2020_V1",
-        "root_path": "/data/MTDA/WORLDCOVER/ESA_WORLDCOVER_10M_2020_V100/MAP"
+        "opensearch_collection_id": "urn:eop:VITO:ESA_WorldCover_10m_2020_V1"
       },
       "properties": {
         "accessedFrom": {
