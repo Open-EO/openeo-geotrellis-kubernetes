@@ -9,13 +9,13 @@ COPY docker/creo_layercatalog.json /opt/layercatalog.json
 COPY docker/log4j.properties /opt/log4j.properties
 
 # Add S3 dependencies
-ADD https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.2.2/hadoop-aws-3.2.2.jar $SPARK_HOME/jars
-ADD https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.11.199/aws-java-sdk-bundle-1.11.199.jar $SPARK_HOME/jars
+ADD https://artifactory.vgt.vito.be/libs-release/org/apache/hadoop/hadoop-aws/3.2.2/hadoop-aws-3.2.2.jar $SPARK_HOME/jars
+ADD https://artifactory.vgt.vito.be/libs-release/com/amazonaws/aws-java-sdk-bundle/1.11.199/aws-java-sdk-bundle-1.11.199.jar $SPARK_HOME/jars
 
 RUN adduser -u 18585 -d /opt/spark/work-dir spark && \
     chown 18585:18585 /opt/spark/work-dir && \
-    printf "[global]\nindex = https://artifactory.vgt.vito.be/api/pypi/python-packages\nextra-index-url = https://artifactory.vgt.vito.be/api/pypi/python-packages/simple\n" > /etc/pip.conf && \
-    curl -O https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/${JMX_PROMETHEUS_JAVAAGENT_VERSION}/jmx_prometheus_javaagent-${JMX_PROMETHEUS_JAVAAGENT_VERSION}.jar && \
+    printf "[global]\nindex-url = https://artifactory.vgt.vito.be/api/pypi/python-packages/simple\nextra-index-url = https://artifactory.vgt.vito.be/api/pypi/python-packages/simple\n" > /etc/pip.conf && \
+    curl -O https://artifactory.vgt.vito.be/libs-release/io/prometheus/jmx/jmx_prometheus_javaagent/${JMX_PROMETHEUS_JAVAAGENT_VERSION}/jmx_prometheus_javaagent-${JMX_PROMETHEUS_JAVAAGENT_VERSION}.jar && \
     chmod +x /opt/entrypoint.sh && \
     python3.8 -m pip install -I --upgrade pip && \
     chown -R 18585:18585 $SPARK_HOME/jars && \
