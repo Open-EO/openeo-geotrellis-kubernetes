@@ -933,6 +933,85 @@
       }
     }
   },
+    {
+    "id": "ESA_WORLDCOVER_10M_2021_V2",
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "providers": [
+      {
+          "name": "VITO",
+          "roles":
+          [
+              "producer"
+          ],
+          "url": "https://remotesensing.vito.be/"
+      }
+    ],
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x", "step": 0.000083333333333},
+      "y": {"type": "spatial", "axis": "y", "step": 0.000083333333333},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": ["MAP","INPUTQUALITY"]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {
+          "name": "MAP",
+          "gsd": 10,
+          "type": "uint8"
+        },
+        {
+          "name": "INPUTQUALITY",
+          "gsd": 10,
+          "type": "uint8"
+        }
+      ]
+    },
+     "links": [
+      {
+        "rel": "license",
+        "href": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      {
+          "rel": "alternate",
+          "title": "EO OpenSearch catalog",
+          "href": "https://services.terrascope.be/catalogue/description?collection=urn:eop:VITO:ESA_WorldCover_10m_2021_V2"
+      },
+      {
+          "rel": "alternate",
+          "title": "Product Viewer",
+          "href": "https://viewer.esa-worldcover.org/worldcover"
+      },
+      {
+        "href": "https://services.terrascope.be/wmts/v2",
+        "rel": "wmts",
+        "wmts:layer": "WORLDCOVER_2021_MAP"
+      }],
+    "_vito": {
+      "data_source": {
+        "type": "file-oscars",
+        "opensearch_collection_id": "urn:eop:VITO:ESA_WorldCover_10m_2021_V2"
+      },
+      "properties": {
+        "accessedFrom": {
+          "process_graph": {
+            "asc": {
+              "process_id": "eq",
+              "arguments": {
+                "x": {
+                  "from_parameter": "value"
+                },
+                "y": "HTTP"
+              },
+              "result": true
+            }
+          }
+        }
+      }
+    }
+  },
   {
     "id": "COPERNICUS_30",
     "title": "Copernicus Global 30 meter Digital Elevation Model dataset.",
