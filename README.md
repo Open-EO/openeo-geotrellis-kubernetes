@@ -120,6 +120,10 @@ To have a fully functional application, we need more than a `SparkApplication` K
 
 After creating a `values.yam` file with your necessary values, you can then invoke a regular `helm install` command to deploy your instance of openEO to your Kubernetes cluster.
 
+## Deploy an openEO job-tracker cron job
+
+To track the status of batch jobs, we need a job-tracker cron job. An example of such job can be found at [examples/job-tracker.yaml][17].
+
 ## Monitoring
 
 The spark-operator also provides an easy way to monitor your Spark Applications that are submitted by the operator. In the `openeo.yaml` manifest, you can find the necessary configuration:
@@ -191,3 +195,4 @@ The new metrics should now be appearing in your Prometheus instance.
 [14]: https://kubernetes.io/docs/concepts/configuration/configmap/
 [15]: https://github.com/GoogleCloudPlatform/spark-on-k8s-operator/blob/master/docs/quick-start-guide.md#about-the-mutating-admission-webhook
 [16]: https://registry.terraform.io/providers/rancher/rke/latest/docs
+[17]: examples/job-tracker.yaml

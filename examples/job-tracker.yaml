@@ -1,0 +1,37 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: job-tracker
+  namespace: spark-jobs
+spec:
+  containers:
+  - command:
+    - python3.8
+    - -m
+    - openeogeotrellis.job_tracker
+    - --principal
+    - ""
+    - --keytab
+    - ""
+    env:
+    - name: PYTHONPATH
+      value: $PYTHONPATH:/opt/openeo/lib/python3.8/site-packages/
+    - name: KUBE
+      value: "true"
+    - name: ZOOKEEPERNODES
+      value: zookeeper.zookeeper.svc.cluster.local:2181
+    - name: BATCH_JOBS_ZOOKEEPER_ROOT_PATH
+      value: /openeo/jobs
+    - name: SWIFT_URL
+      value: https://s3.waw3-1.cloudferro.com
+    - name: AWS_ACCESS_KEY_ID
+      value: <KEY_ID>
+    - name: AWS_SECRET_ACCESS_KEY
+      value: <SECRET_KEY>
+    - name: PYARROW_IGNORE_TIMEZONE
+      value: "1"
+    image: vito-docker.artifactory.vgt.vito.be/openeo-geotrellis-kube:20230110-331
+    name: job-tracker
+  restartPolicy: Never
+  serviceAccountName: openeo
