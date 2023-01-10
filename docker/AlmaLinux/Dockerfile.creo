@@ -12,6 +12,11 @@ COPY docker/log4j.properties /opt/log4j.properties
 ADD https://artifactory.vgt.vito.be/libs-release/org/apache/hadoop/hadoop-aws/3.2.2/hadoop-aws-3.2.2.jar $SPARK_HOME/jars
 ADD https://artifactory.vgt.vito.be/libs-release/com/amazonaws/aws-java-sdk-bundle/1.11.199/aws-java-sdk-bundle-1.11.199.jar $SPARK_HOME/jars
 
+# Add S1 backscatter DEM data
+RUN mkdir /s1backscatter_copernicus_30
+RUN curl -o copernicus-dem-30m.vrt https://artifactory.vgt.vito.be/auxdata-public/openeo/copernicus-dem-30m.vrt
+COPY copernicus-dem-30m.vrt /s1backscatter_copernicus_30/copernicus-dem-30m.vrt
+
 RUN adduser -u 18585 -d /opt/spark/work-dir spark && \
     chown 18585:18585 /opt/spark/work-dir && \
     printf "[global]\nindex-url = https://artifactory.vgt.vito.be/api/pypi/python-packages/simple\nextra-index-url = https://artifactory.vgt.vito.be/api/pypi/python-packages/simple\n" > /etc/pip.conf && \
