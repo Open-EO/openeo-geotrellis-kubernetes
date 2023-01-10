@@ -14,8 +14,7 @@ ADD https://artifactory.vgt.vito.be/libs-release/com/amazonaws/aws-java-sdk-bund
 
 # Add S1 backscatter DEM data
 RUN mkdir /s1backscatter_copernicus_30
-RUN curl -o copernicus-dem-30m.vrt https://artifactory.vgt.vito.be/auxdata-public/openeo/copernicus-dem-30m.vrt
-COPY copernicus-dem-30m.vrt /s1backscatter_copernicus_30/copernicus-dem-30m.vrt
+ADD https://artifactory.vgt.vito.be/auxdata-public/openeo/copernicus-dem-30m.vrt /s1backscatter_copernicus_30/copernicus-dem-30m.vrt
 
 RUN adduser -u 18585 -d /opt/spark/work-dir spark && \
     chown 18585:18585 /opt/spark/work-dir && \
