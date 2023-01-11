@@ -53,7 +53,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "sparkapplication.serviceAccountName" -}}
+{{- define "sparkapplication.serviceAccountDriver" -}}
 {{- if .Values.serviceAccount.create }}
 {{- default (include "sparkapplication.fullname" .) .Values.serviceAccount.name }}
 {{- else }}

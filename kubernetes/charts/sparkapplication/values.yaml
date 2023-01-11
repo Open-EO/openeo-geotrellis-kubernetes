@@ -19,7 +19,8 @@ service:
 sparkVersion: "2.4.5"
 rbac:
   create: false
-  serviceAccountName:
+  serviceAccountDriver:
+  serviceAccountExecutor: default
   sparkOperator:
     namespace: spark-operator
     serviceAccount: spark-operator

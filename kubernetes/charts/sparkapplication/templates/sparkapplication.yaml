@@ -71,7 +71,7 @@ spec:
       revision: {{ .Release.Revision | quote }}
       sparkVersion: {{ .Values.sparkVersion | quote }}
       version: {{ .Chart.Version | quote }}
-    serviceAccount: {{ required "Please provide a serviceaccount" .Values.serviceAccount }}
+    serviceAccount: {{ required "Please provide a rbac.serviceAccountDriver" .Values.rbac.serviceAccountDriver }}
     {{- if .Values.volumeMounts }}
     volumeMounts:
 {{ toYaml .Values.volumeMounts | indent 6 }}
@@ -101,7 +101,7 @@ spec:
       revision: {{ .Release.Revision | quote }}
       sparkVersion: {{ .Values.sparkVersion | quote }}
       version: {{ .Chart.Version | quote }}
-    serviceAccount: {{ .Values.serviceAccount }}
+    serviceAccount: {{ .Values.rbac.serviceAccountExecutor }}
     {{- if .Values.volumeMounts }}
     volumeMounts:
 {{ toYaml .Values.volumeMounts | indent 6 }}

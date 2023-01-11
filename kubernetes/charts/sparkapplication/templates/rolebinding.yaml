@@ -2,7 +2,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ .Values.rbac.serviceAccountName }}-role-binding
+  name: {{ .Values.rbac.serviceAccountDriver }}-role-binding
   namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/name: {{ .Release.Name }}
@@ -11,10 +11,10 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 subjects:
 - kind: ServiceAccount
-  name: {{ .Values.rbac.serviceAccountName }}
+  name: {{ .Values.rbac.serviceAccountDriver }}
   namespace: {{ .Release.Namespace }}
 roleRef:
   kind: Role
-  name: {{ .Values.rbac.serviceAccountName }}-role
+  name: {{ .Values.rbac.serviceAccountDriver }}-role
   apiGroup: rbac.authorization.k8s.io
 {{- end }}

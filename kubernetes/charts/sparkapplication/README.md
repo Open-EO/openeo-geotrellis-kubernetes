@@ -24,42 +24,42 @@ There are 4 required parameters to be set:
   * image
   * imageVersion
   * mainApplicationFile
-  * serviceAccount
+  * rbac.serviceAccountDriver
 
 ### Parameters
 
-| Parameter             | Description                                         | Default          |
-|-----------------------|-----------------------------------------------------|------------------|
-| `driver.envVars`      | Environment variables for the driver                |                  |
-| `driver.cores`        | How many cores the driver can use                   | `2`              |
-| `driver.memory`       | Memory limimt for the driver                        | `"4096m"`        |
-| `driver.userId`       | User to run the container as                        |                  |
-| `executor.cores`      | How many cores the driver can use                   | `2`              |
-| `executor.envVars`    | Environment variables for the driver                |                  |
-| `executor.instances`  | Number of executors                                 | `1`              |
-| `executor.memory`     | Memory limit for the driver                         | `"4096m"`        |
-| `fileDependencies`    | File dependencies for the application               |                  |
-| `hostNetwork`         | Use the host network                                | `false`          |
-| `image`               | Image for the Spark application                     |                  |
-| `imageVersion`        | Version for the Spark application image             |                  |
-| `imagePullPolicy`     | Docker image pull policy                            | `"IfNotPresent"` |
-| `ingress.annotations` | Annotations for the ingress resource                |                  |
-| `ingress.enabled`     | Enable ingress                                      | `false`          |
-| `ingress.hosts.[0]`   | host header for access                              |                  |
-| `ingress.tls`         | Utilize TLS backend in ingress                      | `false`          |
-| `jarDependencies`     | Jar dependencies for the application                |                  |
-| `jmxExporterJar`      | The Prometheus jar to use for monitoring            |                  |
-| `jmxPort`             | Port for serving the Prometheus metrics             | `8090`           |
-| `mainApplicationFile` | The start script of the Spark application           |                  |
-| `pythonVersion`       | The Python version                                  | `3`              |
-| `serviceAccount`      | Service account of the Spark Operator               |                  |
-| `service.enabled`     | Enable service                                      | `false`          |
-| `service.port`        | A port that point to your spark application         |                  |
-| `service.type`        | The type of the service                             |                  |
-| `sparkConf`           | Spark configuration settings                        |                  |
-| `sparkVersion`        | The Spark version to use                            | `"2.4.5"`        |
-| `volumes`             | Volumes to be consumed by the application           |                  |
-| `volumeMounts`        | The volumes that should be mounted in the container |                  |
+| Parameter              | Description                                         | Default          |
+|------------------------|-----------------------------------------------------|------------------|
+| `driver.envVars`       | Environment variables for the driver                |                  |
+| `driver.cores`         | How many cores the driver can use                   | `2`              |
+| `driver.memory`        | Memory limimt for the driver                        | `"4096m"`        |
+| `driver.userId`        | User to run the container as                        |                  |
+| `executor.cores`       | How many cores the driver can use                   | `2`              |
+| `executor.envVars`     | Environment variables for the driver                |                  |
+| `executor.instances`   | Number of executors                                 | `1`              |
+| `executor.memory`      | Memory limit for the driver                         | `"4096m"`        |
+| `fileDependencies`     | File dependencies for the application               |                  |
+| `hostNetwork`          | Use the host network                                | `false`          |
+| `image`                | Image for the Spark application                     |                  |
+| `imageVersion`         | Version for the Spark application image             |                  |
+| `imagePullPolicy`      | Docker image pull policy                            | `"IfNotPresent"` |
+| `ingress.annotations`  | Annotations for the ingress resource                |                  |
+| `ingress.enabled`      | Enable ingress                                      | `false`          |
+| `ingress.hosts.[0]`    | host header for access                              |                  |
+| `ingress.tls`          | Utilize TLS backend in ingress                      | `false`          |
+| `jarDependencies`      | Jar dependencies for the application                |                  |
+| `jmxExporterJar`       | The Prometheus jar to use for monitoring            |                  |
+| `jmxPort`              | Port for serving the Prometheus metrics             | `8090`           |
+| `mainApplicationFile`  | The start script of the Spark application           |                  |
+| `pythonVersion`        | The Python version                                  | `3`              |
+| `serviceAccountDriver` | Service account of the Spark driver                 |                  |
+| `service.enabled`      | Enable service                                      | `false`          |
+| `service.port`         | A port that point to your spark application         |                  |
+| `service.type`         | The type of the service                             |                  |
+| `sparkConf`            | Spark configuration settings                        |                  |
+| `sparkVersion`         | The Spark version to use                            | `"2.4.5"`        |
+| `volumes`              | Volumes to be consumed by the application           |                  |
+| `volumeMounts`         | The volumes that should be mounted in the container |                  |
 
 ### Sample values
 
@@ -71,7 +71,6 @@ image: "vito-docker.artifactory.vgt.vito.be/openeo-geotrellis-kube"
 imageVersion: "latest"
 jmxExporterJar: "/opt/jmx_prometheus_javaagent-0.13.0.jar"
 mainApplicationFile: "local:///opt/openeo/lib64/python3.8/site-packages/openeogeotrellis/deploy/kube.py"
-serviceAccount: "openeo"
 volumes:
   - name: "eodata"
     hostPath:
@@ -129,7 +128,7 @@ ingress:
       - '/'
 rbac:
   create: true
-  serviceAccountName: openeo
+  serviceAccountDriver: openeo
 spark_ui:
   port: 4040
   ingress:
