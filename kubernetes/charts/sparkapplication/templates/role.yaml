@@ -18,5 +18,5 @@ rules:
   verbs: ["create"]
 - apiGroups: ["sparkoperator.k8s.io"]
   resources: ["sparkapplications"]
-  verbs: ["create", "get"]
+  verbs: ["create", "delete", "get"]
 {{- end }}
