@@ -103,6 +103,7 @@ driver:
     OTB_HOME: "/opt/orfeo-toolbox"
     OTB_APPLICATION_PATH: "/opt/orfeo-toolbox/lib/otb/applications"
     PYTHONPATH: "$PYTHONPATH:/opt/openeo/lib/python3.8/site-packages/"
+    SIGNED_URL_SECRET: "REPLACE_WITH_A_SECRET"
   javaOptions: "-Dlog4j.configuration=/opt/log4j.properties -Dscala.concurrent.context.numThreads=6 -Dpixels.treshold=1000000"
 sparkConf:
   "spark.executorEnv.DRIVER_IMPLEMENTATION_PACKAGE": "openeogeotrellis"
