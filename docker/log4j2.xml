@@ -1,0 +1,20 @@
+<Configuration>
+    <Appenders>
+        <Console name="stdout" target="SYSTEM_OUT">
+            <JsonTemplateLayout eventTemplateUri="classpath:OpenEOJsonLogLayout.json"  locationInfoEnabled="true"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="org.apache.spark" level="warn"/>
+        <Logger name="org.openeo.geotrellis.layers.OpenSearch" level="debug"/>
+        <Logger name="org.openeo.geotrellis.OpenEOProcessScriptBuilder" level="debug"/>
+        <Logger name="org.openeo.geotrellis.icor" level="debug"/>
+        <Logger name="be.vito.eodata.gwcgeotrellis.opensearch" level="debug"/>
+        <Logger name="ucar.nc2.jni.netcdf.Nc4Iosp" level="debug"/>
+        <Logger name="com.amazonaws.latency" level="debug"/>
+        <Logger name="com.amazonaws.request" level="debug"/>
+        <Root level="${sys:openeo.logging.threshold}">
+            <AppenderRef ref="stdout"/>
+        </Root>
+    </Loggers>
+</Configuration>
