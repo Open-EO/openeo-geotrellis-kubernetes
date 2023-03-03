@@ -242,7 +242,7 @@
                 "x": {
                   "from_parameter": "value"
                 },
-                "y": "L1C"
+                "y": "S2MSI1C"
               },
               "result": true
             }
@@ -482,7 +482,7 @@
           "method": "creo",
           "creo_catalog": {
             "mission": "Sentinel2",
-            "product_type": "L2A"
+            "product_type": "S2MSI2A"
           }
         },
         "provider:backend": "creodias"
@@ -496,7 +496,7 @@
                 "x": {
                   "from_parameter": "value"
                 },
-                "y": "L2A"
+                "y": "S2MSI2A"
               },
               "result": true
             }
@@ -1067,7 +1067,7 @@
                 "x": {
                   "from_parameter": "value"
                 },
-                "y": "SAR_DGE_30_PUBLIC"
+                "y": "DGE_30"
               },
               "result": true
             }
