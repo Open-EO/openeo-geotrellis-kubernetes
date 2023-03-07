@@ -229,7 +229,7 @@
       "data_source": {
         "type": "file-s2",
         "opensearch_collection_id": "Sentinel2",
-        "opensearch_endpoint": "https://finder.creodias.eu",
+        "opensearch_endpoint": "https://catalogue.dataspace.copernicus.eu/resto",
         "root_path": "/eodata",
         "provider:backend": "creodias"
       },
@@ -476,13 +476,13 @@
       "data_source": {
         "type": "file-s2",
         "opensearch_collection_id": "Sentinel2",
-        "opensearch_endpoint": "https://finder.creodias.eu",
+        "opensearch_endpoint": "https://finder.creodias.eu/oldresto",
         "root_path": "/eodata",
         "check_missing_products": {
           "method": "creo",
           "creo_catalog": {
             "mission": "Sentinel2",
-            "product_type": "S2MSI2A"
+            "product_type": "L2A"
           }
         },
         "provider:backend": "creodias"
@@ -496,7 +496,7 @@
                 "x": {
                   "from_parameter": "value"
                 },
-                "y": "S2MSI2A"
+                "y": "L2A"
               },
               "result": true
             }
@@ -1054,7 +1054,7 @@
       "data_source": {
         "type": "file-oscars",
         "opensearch_collection_id": "CopDem",
-        "opensearch_endpoint": "https://finder.creodias.eu",
+        "opensearch_endpoint": "https://catalogue.dataspace.copernicus.eu/resto",
         "root_path": "/eodata",
         "provider:backend": "creodias"
       },
