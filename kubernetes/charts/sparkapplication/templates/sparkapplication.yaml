@@ -71,6 +71,11 @@ spec:
       revision: {{ .Release.Revision | quote }}
       sparkVersion: {{ .Values.sparkVersion | quote }}
       version: {{ .Chart.Version | quote }}
+    {{- if .Values.driver.labels }}
+    {{- range $name, $value := .Values.driver.labels }}
+      {{ $name }}: {{ $value }}
+    {{- end }}
+    {{- end}}
     serviceAccount: {{ required "Please provide a rbac.serviceAccountDriver" .Values.rbac.serviceAccountDriver }}
     {{- if .Values.volumeMounts }}
     volumeMounts:
@@ -101,6 +106,11 @@ spec:
       revision: {{ .Release.Revision | quote }}
       sparkVersion: {{ .Values.sparkVersion | quote }}
       version: {{ .Chart.Version | quote }}
+    {{- if .Values.executor.labels }}
+    {{- range $name, $value := .Values.executor.labels }}
+      {{ $name }}: {{ $value }}
+    {{- end }}
+    {{- end}}
     serviceAccount: {{ .Values.rbac.serviceAccountExecutor }}
     {{- if .Values.volumeMounts }}
     volumeMounts:
