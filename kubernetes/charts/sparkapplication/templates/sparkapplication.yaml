@@ -92,6 +92,10 @@ spec:
     initContainers:
 {{ toYaml .Values.initContainers | indent 6 }}
     {{- end }}
+    {{- if .Values.driver.lifecycle}}
+    lifecycle:
+{{ toYaml .Values.driver.lifecycle | indent 6 }}
+    {{- end }}
   executor:
     env:
       - name: POD_NAME
