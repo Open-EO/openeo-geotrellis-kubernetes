@@ -62,7 +62,7 @@ spec:
           fieldRef:
             fieldPath: metadata.namespace
     {{- if .Values.driver.env }}
-{{ toYaml .Values.driver.env | indent 8 }}
+{{ toYaml .Values.driver.env | indent 6 }}
     {{- end }}
     {{- if .Values.driver.javaOptions }}
     javaOptions: {{ .Values.driver.javaOptions }}
@@ -103,7 +103,7 @@ spec:
           fieldRef:
             fieldPath: metadata.namespace
     {{- if .Values.executor.env }}
-{{ toYaml .Values.executor.env | indent 8 }}
+{{ toYaml .Values.executor.env | indent 6 }}
     {{- end }}
     {{- if .Values.executor.javaOptions }}
     javaOptions: {{ .Values.executor.javaOptions }}
