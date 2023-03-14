@@ -30,12 +30,12 @@ There are 4 required parameters to be set:
 
 | Parameter              | Description                                         | Default          |
 |------------------------|-----------------------------------------------------|------------------|
-| `driver.envVars`       | Environment variables for the driver                |                  |
+| `driver.env`           | Environment variables for the driver                |                  |
 | `driver.cores`         | How many cores the driver can use                   | `2`              |
 | `driver.memory`        | Memory limimt for the driver                        | `"4096m"`        |
 | `driver.userId`        | User to run the container as                        |                  |
 | `executor.cores`       | How many cores the driver can use                   | `2`              |
-| `executor.envVars`     | Environment variables for the driver                |                  |
+| `executor.env`         | Environment variables for the driver                |                  |
 | `executor.instances`   | Number of executors                                 | `1`              |
 | `executor.memory`      | Memory limit for the driver                         | `"4096m"`        |
 | `fileDependencies`     | File dependencies for the application               |                  |

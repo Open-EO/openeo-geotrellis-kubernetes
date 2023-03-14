@@ -50,12 +50,19 @@ spec:
     {{- end }}
   {{- end }}
   driver:
-    envVars:
-      IMAGE_NAME: {{ .Values.image }}:{{ .Values.imageVersion }}
-    {{- if .Values.driver.envVars }}
-    {{- range $name, $value := .Values.driver.envVars }}
-      {{ $name }}: {{ $value | quote }}
-    {{- end }}
+    env:
+      - name: IMAGE_NAME
+        value: {{ .Values.image }}:{{ .Values.imageVersion }}
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.name
+      - name: POD_NAMESPACE
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.namespace
+    {{- if .Values.driver.env }}
+{{ toYaml .Values.driver.env | indent 8 }}
     {{- end }}
     {{- if .Values.driver.javaOptions }}
     javaOptions: {{ .Values.driver.javaOptions }}
@@ -86,11 +93,17 @@ spec:
 {{ toYaml .Values.initContainers | indent 6 }}
     {{- end }}
   executor:
-    {{- if .Values.executor.envVars }}
-    envVars:
-    {{- range $name, $value := .Values.executor.envVars }}
-      {{ $name | quote }}: {{ $value | quote }}
-    {{- end }}
+    env:
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.name
+      - name: POD_NAMESPACE
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.namespace
+    {{- if .Values.executor.env }}
+{{ toYaml .Values.executor.env | indent 8 }}
     {{- end }}
     {{- if .Values.executor.javaOptions }}
     javaOptions: {{ .Values.executor.javaOptions }}
