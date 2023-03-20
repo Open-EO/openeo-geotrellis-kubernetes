@@ -50,12 +50,19 @@ spec:
     {{- end }}
   {{- end }}
   driver:
-    envVars:
-      IMAGE_NAME: {{ .Values.image }}:{{ .Values.imageVersion }}
-    {{- if .Values.driver.envVars }}
-    {{- range $name, $value := .Values.driver.envVars }}
-      {{ $name }}: {{ $value | quote }}
-    {{- end }}
+    env:
+      - name: IMAGE_NAME
+        value: {{ .Values.image }}:{{ .Values.imageVersion }}
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.name
+      - name: POD_NAMESPACE
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.namespace
+    {{- if .Values.driver.env }}
+{{ toYaml .Values.driver.env | indent 6 }}
     {{- end }}
     {{- if .Values.driver.javaOptions }}
     javaOptions: {{ .Values.driver.javaOptions }}
@@ -71,6 +78,11 @@ spec:
       revision: {{ .Release.Revision | quote }}
       sparkVersion: {{ .Values.sparkVersion | quote }}
       version: {{ .Chart.Version | quote }}
+    {{- if .Values.driver.labels }}
+    {{- range $name, $value := .Values.driver.labels }}
+      {{ $name }}: {{ $value }}
+    {{- end }}
+    {{- end}}
     serviceAccount: {{ required "Please provide a rbac.serviceAccountDriver" .Values.rbac.serviceAccountDriver }}
     {{- if .Values.volumeMounts }}
     volumeMounts:
@@ -80,12 +92,22 @@ spec:
     initContainers:
 {{ toYaml .Values.initContainers | indent 6 }}
     {{- end }}
-  executor:
-    {{- if .Values.executor.envVars }}
-    envVars:
-    {{- range $name, $value := .Values.executor.envVars }}
-      {{ $name | quote }}: {{ $value | quote }}
+    {{- if .Values.driver.lifecycle}}
+    lifecycle:
+{{ toYaml .Values.driver.lifecycle | indent 6 }}
     {{- end }}
+  executor:
+    env:
+      - name: POD_NAME
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.name
+      - name: POD_NAMESPACE
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.namespace
+    {{- if .Values.executor.env }}
+{{ toYaml .Values.executor.env | indent 6 }}
     {{- end }}
     {{- if .Values.executor.javaOptions }}
     javaOptions: {{ .Values.executor.javaOptions }}
@@ -101,6 +123,11 @@ spec:
       revision: {{ .Release.Revision | quote }}
       sparkVersion: {{ .Values.sparkVersion | quote }}
       version: {{ .Chart.Version | quote }}
+    {{- if .Values.executor.labels }}
+    {{- range $name, $value := .Values.executor.labels }}
+      {{ $name }}: {{ $value }}
+    {{- end }}
+    {{- end}}
     serviceAccount: {{ .Values.rbac.serviceAccountExecutor }}
     {{- if .Values.volumeMounts }}
     volumeMounts:

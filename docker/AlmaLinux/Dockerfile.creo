@@ -12,10 +12,6 @@ COPY docker/log4j2.xml /opt/log4j2.xml
 ADD https://artifactory.vgt.vito.be/libs-release/org/apache/hadoop/hadoop-aws/3.2.2/hadoop-aws-3.2.2.jar $SPARK_HOME/jars
 ADD https://artifactory.vgt.vito.be/libs-release/com/amazonaws/aws-java-sdk-bundle/1.11.199/aws-java-sdk-bundle-1.11.199.jar $SPARK_HOME/jars
 
-# Add S1 backscatter DEM data
-RUN mkdir /s1backscatter_copernicus_30
-ADD https://artifactory.vgt.vito.be/auxdata-public/openeo/copernicus-dem-30m.vrt /s1backscatter_copernicus_30/copernicus-dem-30m.vrt
-
 RUN adduser -u 18585 -d /opt/spark/work-dir spark && \
     chown 18585:18585 /opt/spark/work-dir && \
     printf "[global]\nindex-url = https://artifactory.vgt.vito.be/api/pypi/python-packages/simple\nextra-index-url = https://artifactory.vgt.vito.be/api/pypi/python-packages/simple\n" > /etc/pip.conf && \
@@ -33,7 +29,7 @@ RUN adduser -u 18585 -d /opt/spark/work-dir spark && \
     touch /opt/openeo_python.log && \
     rm -rf /opt/openeo/lib/python3.8/site-packages/tensorflow/* && \
     ln -s /opt/venv /opt/openeo && \
-    chown -R 18585:18585 /opt/openeo /opt/tmp /batch_jobs /spark_tmp /opt/openeo_python.log /s1backscatter_copernicus_30/copernicus-dem-30m.vrt
+    chown -R 18585:18585 /opt/openeo /opt/tmp /batch_jobs /spark_tmp /opt/openeo_python.log
 
 ENTRYPOINT [ "/opt/entrypoint.sh" ]
 

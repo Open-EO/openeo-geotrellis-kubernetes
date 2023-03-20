@@ -120,6 +120,20 @@ To have a fully functional application, we need more than a `SparkApplication` K
 
 After creating a `values.yam` file with your necessary values, you can then invoke a regular `helm install` command to deploy your instance of openEO to your Kubernetes cluster.
 
+### Relevant config properties
+
+The configuration of the backend is mostly done via environment variables in values.yaml. Please review these values for your backend:
+
+
+| Service              | Function                                    |
+|----------------------|---------------------------------------------|
+| SWIFT_URL            | url of S3 API that will be used to store batch job results       |
+| AWS_ACCESS_KEY_ID    | S3 Access key used to manage batch job results     |
+| AWS_SECRET_ACCESS_KEY| S3 Access key secret                           |
+| ZOOKEEPERNODES       | Zookeeper cluster used for persistence      |
+| SIGNED_URL_SECRET    | Random secret to generate signed url's      |
+
+
 ## Deploy an openEO job-tracker cron job
 
 To track the status of batch jobs, we need a job-tracker cron job. An example of such job can be found at [examples/job-tracker.yaml][17].
