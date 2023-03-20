@@ -1,4 +1,4 @@
-FROM vito-docker.artifactory.vgt.vito.be/openeo-base:3.3.1
+FROM vito-docker.artifactory.vgt.vito.be/openeo-base:latest
 
 ARG JMX_PROMETHEUS_JAVAAGENT_VERSION=0.13.0
 
