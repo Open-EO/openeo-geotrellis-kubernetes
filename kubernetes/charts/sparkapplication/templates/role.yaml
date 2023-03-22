@@ -10,22 +10,5 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 rules:
-- apiGroups: [""]
-  resources: ["pods"]
-  verbs: ["create", "delete", "get", "list", "watch"]
-- apiGroups: [""]
-  resources: ["pods/exec"]
-  verbs: ["get"]
-- apiGroups: [""]
-  resources: ["configmaps"]
-  verbs: ["create", "list"]
-- apiGroups: [""]
-  resources: ["persistentvolumeclaims"]
-  verbs: ["list"]
-- apiGroups: [""]
-  resources: ["services"]
-  verbs: ["list"]
-- apiGroups: ["sparkoperator.k8s.io"]
-  resources: ["sparkapplications"]
-  verbs: ["create", "delete", "get"]
+{{ toYaml .Values.rbac.role.rules | indent 2 }}
 {{- end }}
