@@ -58,6 +58,10 @@
       }
     },
     "summaries": {
+      "eo:cloud_cover": {
+        "minimum": 0,
+        "maximum": 100
+      },
       "eo:bands": [
 
         {
@@ -309,6 +313,10 @@
       }
     },
     "summaries": {
+      "eo:cloud_cover": {
+        "minimum": 0,
+        "maximum": 100
+      },
       "eo:bands": [
         {
           "name": "B01",
@@ -555,6 +563,10 @@
       }
     },
     "summaries": {
+      "sat:orbit_state": [
+         "ascending",
+         "descending"
+      ],
       "eo:bands": [
         {
           "name": "VH",
