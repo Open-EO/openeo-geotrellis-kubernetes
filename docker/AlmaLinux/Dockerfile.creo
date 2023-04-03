@@ -5,6 +5,7 @@ ARG JMX_PROMETHEUS_JAVAAGENT_VERSION=0.13.0
 USER root
 
 COPY docker/AlmaLinux/entrypoint.sh /opt/entrypoint.sh
+COPY docker/AlmaLinux/decom.sh /opt/decom.sh
 COPY docker/creo_layercatalog.json /opt/layercatalog.json
 COPY docker/log4j2.xml /opt/log4j2.xml
 
@@ -16,7 +17,7 @@ RUN adduser -u 18585 -d /opt/spark/work-dir spark && \
     chown 18585:18585 /opt/spark/work-dir && \
     printf "[global]\nindex-url = https://artifactory.vgt.vito.be/api/pypi/python-packages/simple\nextra-index-url = https://artifactory.vgt.vito.be/api/pypi/python-packages/simple\n" > /etc/pip.conf && \
     curl -O https://artifactory.vgt.vito.be/libs-release/io/prometheus/jmx/jmx_prometheus_javaagent/${JMX_PROMETHEUS_JAVAAGENT_VERSION}/jmx_prometheus_javaagent-${JMX_PROMETHEUS_JAVAAGENT_VERSION}.jar && \
-    chmod +x /opt/entrypoint.sh && \
+    chmod +x /opt/entrypoint.sh /opt/decom.sh && \
     python3.8 -m pip install -I --upgrade pip && \
     chown -R 18585:18585 $SPARK_HOME/jars && \
     yum install -y tensorflow-python38-2.3.0 && \
