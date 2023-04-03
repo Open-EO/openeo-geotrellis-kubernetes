@@ -20,16 +20,3 @@
 
 set -ex
 echo "Asked to decommission"
-# Find the pid to signal
-date | tee -a ${LOG}
-WORKER_PID=$(ps -o pid -C java | tail -n 1| awk '{ sub(/^[ \t]+/, ""); print }')
-echo "Using worker pid $WORKER_PID"
-kill -s SIGPWR ${WORKER_PID}
-# For now we expect this to timeout, since we don't start exiting the backend.
-echo "Waiting for worker pid to exit"
-# If the worker does exit stop blocking the cleanup.
-timeout 60 tail --pid=${WORKER_PID} -f /dev/null
-date
-echo "Done"
-date
-sleep 1
