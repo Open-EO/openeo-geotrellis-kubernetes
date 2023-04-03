@@ -235,7 +235,8 @@
         "opensearch_collection_id": "Sentinel2",
         "opensearch_endpoint": "https://catalogue.dataspace.copernicus.eu/resto",
         "root_path": "/eodata",
-        "provider:backend": "creodias"
+        "provider:backend": "creodias",
+        "is_utm": true
       },
       "properties": {
         "productType": {
@@ -493,7 +494,8 @@
             "product_type": "L2A"
           }
         },
-        "provider:backend": "creodias"
+        "provider:backend": "creodias",
+        "is_utm": true
       },
       "properties": {
         "productType": {
