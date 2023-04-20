@@ -19,11 +19,11 @@ spec:
   mainApplicationFile: {{ required "Please provide a main application file." .Values.mainApplicationFile | quote }}
   sparkVersion: {{ .Values.sparkVersion | quote }}
   restartPolicy:
-    type: OnFailure
-    onFailureRetries: 3
-    onFailureRetryInterval: 10
-    onSubmissionFailureRetries: 5
-    onSubmissionFailureRetryInterval: 20
+    type: {{ .Values.restartPolicy.type }}
+    onFailureRetries: {{ .Values.restartPolicy.onFailureRetries }}
+    onFailureRetryInterval: {{ .Values.restartPolicy.onFailureRetryInterval }}
+    onSubmissionFailureRetries: {{ .Values.restartPolicy.onSubmissionFailureRetries }}
+    onSubmissionFailureRetryInterval: {{ .Values.restartPolicy.onSubmissionFailureRetryInterval }}
   {{- if .Values.sparkConf }}
   sparkConf:
   {{- range $conf, $value := .Values.sparkConf }}

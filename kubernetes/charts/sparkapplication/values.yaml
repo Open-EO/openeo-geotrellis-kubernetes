@@ -24,6 +24,12 @@ rbac:
   sparkOperator:
     namespace: spark-operator
     serviceAccount: spark-operator
+restartPolicy:
+  type: "OnFailure"
+  onFailureRetries: 3
+  onFailureRetryInterval: 10
+  onSubmissionFailureRetries: 5
+  onSubmissionFailureRetryInterval: 20
 spark_ui:
   port: 4040
   ingress:
