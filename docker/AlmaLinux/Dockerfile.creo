@@ -32,6 +32,8 @@ RUN adduser -u 18585 -d /opt/spark/work-dir spark && \
     ln -s /opt/venv /opt/openeo && \
     chown -R 18585:18585 /opt/openeo /opt/tmp /batch_jobs /spark_tmp /opt/openeo_python.log
 
+WORKDIR /opt/spark/work-dir
+
 ENTRYPOINT [ "/opt/entrypoint.sh" ]
 
 USER 18585
