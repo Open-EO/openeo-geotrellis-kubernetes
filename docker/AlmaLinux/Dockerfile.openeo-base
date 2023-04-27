@@ -1,4 +1,4 @@
-FROM vito-docker.artifactory.vgt.vito.be/almalinux8.5-spark-py-openeo:3.3.1
+FROM vito-docker.artifactory.vgt.vito.be/almalinux8.5-spark-py-openeo:3.4.0
 
 ARG GEOTRELLIS_EXTENSIONS_VERSION=2.4.0_2.12-SNAPSHOT
 ARG GEOTRELLIS_BACKEND_ASSEMBLY_VERSION=0.4.6-2-openeo_2.12
