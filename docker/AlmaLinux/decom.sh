@@ -18,5 +18,26 @@
 #
 
 
-set -ex
-echo "Asked to decommission"
+set +e
+set -x
+
+echo '{"message": "Asked to decommission", "levelname": "INFO", "name": "decommission", "filename": "decom.sh", "job_id":"'"$OPENEO_BATCH_JOB_ID"'", "user_id":"'"$OPENEO_USER_ID"'"}'
+# Find the pid to signal
+date | tee -a ${LOG}
+WORKER_PID=$(ps -o pid,cmd -C java |grep Executor \
+               | tail -n 1| awk '{ sub(/^[ \t]+/, ""); print }' \
+               | cut -f 1 -d " ")
+
+echo '{"message": "Using worker pid '"$WORKER_PID"'", "levelname": "INFO", "name": "decommission", "filename": "decom.sh", "job_id":"'"$OPENEO_BATCH_JOB_ID"'", "user_id":"'"$OPENEO_USER_ID"'"}'
+kill -s SIGPWR ${WORKER_PID}
+# If the worker does exit stop blocking K8s cleanup. Note this is a "soft"
+# block since the pod it's self will have a maximum decommissioning time which will
+# overload this.
+echo '{"message": "Waiting for worker pid to exit", "levelname": "INFO", "name": "decommission", "filename": "decom.sh", "job_id":"'"$OPENEO_BATCH_JOB_ID"'", "user_id":"'"$OPENEO_USER_ID"'"}'
+tail --pid=${WORKER_PID} -f /dev/null
+sleep 1
+date
+
+echo '{"message": "Done", "levelname": "INFO", "name": "decommission", "filename": "decom.sh", "job_id":"'"$OPENEO_BATCH_JOB_ID"'", "user_id":"'"$OPENEO_USER_ID"'"}'
+date
+sleep 1
