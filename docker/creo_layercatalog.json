@@ -1637,5 +1637,210 @@
         }
       ]
     }
+  },
+  {
+    "id": "SENTINEL3_SLSTR",
+    "_vito": {
+      "data_source": {
+        "type": "sentinel-hub",
+        "endpoint": "https://sh.dataspace.copernicus.eu",
+        "opensearch_endpoint": "https://sh.dataspace.copernicus.eu/api/v1/catalog/1.0.0",
+        "opensearch_collection_id": "sentinel-3-slstr",
+        "dataset_id": "sentinel-3-slstr",
+        "collection_id": "sentinel-3-slstr",
+        "sample_type": "FLOAT32"
+      }
+    },
+    "cube:dimensions": {
+      "x": {
+        "type": "spatial",
+        "axis": "x",
+        "extent": [
+          -180,
+          180
+        ],
+        "reference_system": 4326
+      },
+      "y": {
+        "type": "spatial",
+        "axis": "y",
+        "extent": [
+          -85,
+          85
+        ],
+        "reference_system": 4326
+      },
+      "t": {
+        "type": "temporal",
+        "extent": [
+          "2016-04-17T11:33:13Z",
+          null
+        ],
+        "step": "P1D"
+      },
+      "bands": {
+        "type": "bands",
+        "values": [
+          "S1",
+          "S2",
+          "S3",
+          "S4",
+          "S5",
+          "S6",
+          "S7",
+          "S8",
+          "S9",
+          "F1",
+          "F2"
+        ]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+      {
+        "description":"Cloud screening, vegetation monitoring, aerosol",
+        "name":"S1",
+        "center_wavelength":0.55427,
+        "full_width_half_max":0.01926,
+        "openeo:gsd":{
+          "value":[
+            0.004960317460317,
+            0.004960317460317
+          ],
+          "unit":"°"
+        }
+      },
+      {
+        "description":"NDVI, vegetation monitoring, aerosol",
+        "name":"S2",
+        "center_wavelength":0.65947,
+        "full_width_half_max":0.01925,
+        "openeo:gsd":{
+          "value":[
+            0.004960317460317,
+            0.004960317460317
+          ],
+          "unit":"°"
+        }
+      },
+      {
+        "description":"NDVI, cloud flagging, pixel co-registration",
+        "name":"S3",
+        "center_wavelength":0.868,
+        "full_width_half_max":0.0206,
+        "openeo:gsd":{
+          "value":[
+            0.004960317460317,
+            0.004960317460317
+          ],
+          "unit":"°"
+        }
+      },
+      {
+        "description":"Cirrus detection over land",
+        "name":"S4",
+        "center_wavelength":1.3748,
+        "full_width_half_max":0.0208,
+        "openeo:gsd":{
+          "value":[
+            0.004960317460317,
+            0.004960317460317
+          ],
+          "unit":"°"
+        }
+      },
+      {
+        "description":"Cloud clearing, ice, snow, vegetation monitoring",
+        "name":"S5",
+        "center_wavelength":1.6134,
+        "full_width_half_max":0.06068,
+        "openeo:gsd":{
+          "value":[
+            0.004960317460317,
+            0.004960317460317
+          ],
+          "unit":"°"
+        }
+      },
+      {
+        "description":"Vegetation state and cloud clearing",
+        "name":"S6",
+        "center_wavelength":2.2557,
+        "full_width_half_max":0.05015,
+        "openeo:gsd":{
+          "value":[
+            0.004960317460317,
+            0.004960317460317
+          ],
+          "unit":"°"
+        }
+      },
+      {
+        "description":"SST, LST, Active fire",
+        "name":"S7",
+        "center_wavelength":3.742,
+        "full_width_half_max":0.398,
+        "openeo:gsd":{
+          "value":[
+            0.009920634920333,
+            0.009920634920333
+          ],
+          "unit":"°"
+        }
+      },
+      {
+        "description":"SST, LST, Active fire",
+        "name":"S8",
+        "center_wavelength":10.854,
+        "full_width_half_max":0.776,
+        "openeo:gsd":{
+          "value":[
+            0.009920634920333,
+            0.009920634920333
+          ],
+          "unit":"°"
+        }
+      },
+      {
+        "description":"SST, LST",
+        "name":"S9",
+        "center_wavelength":12.0225,
+        "full_width_half_max":0.905,
+        "openeo:gsd":{
+          "value":[
+            0.009920634920333,
+            0.009920634920333
+          ],
+          "unit":"°"
+        }
+      },
+      {
+        "description":"Active fire",
+        "name":"F1",
+        "center_wavelength":3.742,
+        "full_width_half_max":0.398,
+        "openeo:gsd":{
+          "value":[
+            0.009920634920333,
+            0.009920634920333
+          ],
+          "unit":"°"
+        }
+      },
+      {
+        "description":"Active fire",
+        "name":"F2",
+        "center_wavelength":10.854,
+        "full_width_half_max":0.776,
+        "openeo:gsd":{
+          "value":[
+            0.009920634920333,
+            0.009920634920333
+          ],
+          "unit":"°"
+        }
+      }
+    ]
+    }
   }
 ]
