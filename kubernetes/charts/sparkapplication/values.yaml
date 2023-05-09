@@ -19,6 +19,8 @@ service:
 sparkVersion: "2.4.5"
 rbac:
   create: false
+  createClusterRole: true
+  createClusterRoleBinding: true
   serviceAccountDriver:
   serviceAccountExecutor: default
   sparkOperator:
