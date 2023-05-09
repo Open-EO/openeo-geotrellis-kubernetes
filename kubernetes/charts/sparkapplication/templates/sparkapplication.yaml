@@ -139,6 +139,10 @@ spec:
     {{- end }}
   {{- if .Values.jmxExporterJar }}
   {{- if .Values.priorityClassName }}
+  {{- if .Values.sparkUIOptions }}
+  sparkUIOptions:
+{{ toYaml .Values.sparkUIOptions | indent 4 }}
+  {{- end }}
   batchSchedulerOptions:
     priorityClassName: {{ .Values.priorityClassName }}
   {{- end }}
