@@ -3,6 +3,11 @@ name=vito-yum-almalinux8-public
 baseurl=https://artifactory.vgt.vito.be/vito-yum-almalinux8-public/
 gpgcheck=0
 
+[vito-testing-alma]
+name=vito-yum-almalinux8-public
+baseurl=https://artifactory.vgt.vito.be/vito-yum-almalinux8-testing/
+gpgcheck=0
+
 [vito-r]
 name=vito-r
 baseurl=https://artifactory.vgt.vito.be/vito-r-almalinux8/
