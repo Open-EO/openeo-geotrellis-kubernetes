@@ -23,7 +23,7 @@ RUN dnf clean all && dnf install -y epel-release && \
     sssd-client \
     ipa-client \
     nss \
-    orfeo-toolbox-py38 \
+    orfeo-toolbox-py38-8.1.1 \
     boost-filesystem \
     boost-serialization \
     procps-ng \
@@ -97,8 +97,8 @@ RUN dnf clean all && dnf install -y epel-release && \
     Rlib-e1071 \
     Rlib-proxy \
     compat-libgfortran-48-4.8.5-36.1.el8.x86_64 && \
-    ln -s /usr/lib64/libgdal.so.30 /usr/lib64/libgdal.so.26 && \
-    ln -s /usr/lib64/libgdal.so.30 /usr/lib64/libgdal.so.27 && \
+    ln -s /usr/lib64/libgdal.so.33 /usr/lib64/libgdal.so.26 && \
+    ln -s /usr/lib64/libgdal.so.33 /usr/lib64/libgdal.so.27 && \
     python3.8 -m pip install --upgrade --target /usr/lib64/python3.8/site-packages/ pip setuptools wheel && \
     python3.8 -m pip install --upgrade --target /usr/lib64/python3.8/site-packages/ rpy2 && \
     chmod +x /usr/bin/tini && \
