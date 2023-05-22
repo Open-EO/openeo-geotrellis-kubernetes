@@ -1,13 +1,15 @@
-{{- if not .Values.ha.enabled -}}
+{{- if .Values.ha.enabled -}}
+{{- range $i := until 2 }}
+{{- with $ }}
 ---
 apiVersion: sparkoperator.k8s.io/v1beta2
 kind: SparkApplication
 metadata:
-  name:  {{ .Release.Name | trunc 63 }}
+  name:  {{ printf "%s-%d" (.Release.Name | trunc 61 ) $i }}
   namespace: {{ .Release.Namespace }}
   labels:
     chartname: {{ .Chart.Name | trunc 63 | quote }}
-    release: {{ .Release.Name | trunc 63 | quote }}
+    release: {{ printf "%s-%d" (.Release.Name | trunc 61 ) $i }}
     revision: {{ .Release.Revision | quote }}
     sparkVersion: {{ .Values.sparkVersion | quote }}
     version: {{ .Chart.Version | quote }}
@@ -74,8 +76,9 @@ spec:
     memory: {{ .Values.driver.memory }}
     hostNetwork: {{ .Values.hostNetwork | default false}}
     labels:
-      app.kubernetes.io/name: {{ .Release.Name | trunc 63 }}-driver
-      release: {{ .Release.Name | trunc 63 | quote }}
+      app.kubernetes.io/name: {{ printf "%s-%d-driver" (.Release.Name | trunc 61 ) $i }}
+      k8s-app: {{ printf "%s-ha" .Release.Name }}
+      release: {{ printf "%s-%d" (.Release.Name | trunc 61 ) $i }}
       revision: {{ .Release.Revision | quote }}
       sparkVersion: {{ .Values.sparkVersion | quote }}
       version: {{ .Chart.Version | quote }}
@@ -120,7 +123,7 @@ spec:
     memory: {{ .Values.executor.memory }}
     hostNetwork: {{ .Values.hostNetwork | default false}}
     labels:
-      release: {{ .Release.Name | trunc 63 | quote }}
+      release: {{ printf "%s-%d" (.Release.Name | trunc 61 ) $i }}
       revision: {{ .Release.Revision | quote }}
       sparkVersion: {{ .Values.sparkVersion | quote }}
       version: {{ .Chart.Version | quote }}
@@ -154,4 +157,6 @@ spec:
       jmxExporterJar: {{ .Values.jmxExporterJar }}
       port: {{ .Values.jmxPort | default 8090 }}
   {{- end }}
+{{- end }}
+{{- end }}
 {{- end }}
