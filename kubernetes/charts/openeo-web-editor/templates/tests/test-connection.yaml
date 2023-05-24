@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "openeo-web-editor.fullname" . }}-test-connection"
+  labels:
+    {{- include "openeo-web-editor.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "openeo-web-editor.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never
