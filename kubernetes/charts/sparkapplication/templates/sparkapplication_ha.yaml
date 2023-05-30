@@ -1,5 +1,5 @@
 {{- if .Values.ha.enabled -}}
-{{- range $i := until 2 }}
+{{- range $i := until 1 }}
 {{- with $ }}
 ---
 apiVersion: sparkoperator.k8s.io/v1beta2
