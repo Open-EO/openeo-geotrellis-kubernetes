@@ -23,7 +23,7 @@ RUN dnf clean all && dnf install -y epel-release && \
     sssd-client \
     ipa-client \
     nss \
-    orfeo-toolbox-py38-8.1.1 \
+    orfeo-toolbox-py38-8.1.0 \
     boost-filesystem \
     boost-serialization \
     procps-ng \
