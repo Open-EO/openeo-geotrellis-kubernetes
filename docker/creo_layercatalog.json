@@ -430,16 +430,6 @@
           "unit": "1"
         },
         {
-          "name": "B10",
-          "aliases": ["IMG_DATA_Band_B10_60m_Tile1_Data"],
-          "wavelength_nm": 1373.5,
-          "gsd": 60,
-          "scale": 0.0001,
-          "offset": 0,
-          "type": "int16",
-          "unit": "1"
-        },
-        {
           "name": "B11",
           "aliases": ["IMG_DATA_Band_B11_20m_Tile1_Data"],
           "common_name": "swir",
