@@ -1834,5 +1834,182 @@
       }
     ]
     }
+  },
+  {
+    "id": "SENTINEL_5P_L2",
+    "_vito": {
+      "data_source": {
+        "type": "sentinel-hub",
+        "endpoint": "https://sh.dataspace.copernicus.eu",
+        "opensearch_endpoint": "https://sh.dataspace.copernicus.eu/api/v1/catalog/1.0.0",
+        "opensearch_collection_id": "sentinel-5p-l2",
+        "dataset_id": "sentinel-5p-l2",
+        "collection_id": "sentinel-5p-l2",
+        "sample_type": "FLOAT32"
+      }
+    },
+    "cube:dimensions": {
+      "x": {
+        "type": "spatial",
+        "axis": "x",
+        "extent": [
+          -180,
+          180
+        ],
+        "reference_system": 4326
+      },
+      "y": {
+        "type": "spatial",
+        "axis": "y",
+        "extent": [
+          -85,
+          85
+        ],
+        "reference_system": 4326
+      },
+      "t": {
+        "type": "temporal",
+        "extent": [
+          "2018-04-30T00:18:50Z",
+          null
+        ],
+        "step": "P1D"
+      },
+      "bands": {
+        "type": "bands",
+        "values": [
+          "CO",
+          "HCHO",
+          "NO2",
+          "O3",
+          "SO2",
+          "CH4"
+        ]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {
+          "description": "Carbon monoxide",
+          "name": "CO",
+          "openeo:gsd": {
+            "value": [
+              0.054563492063483,
+              0.034722222222216
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.1
+            ]
+          }
+        },
+        {
+          "description": "Formaldehyde",
+          "name": "HCHO",
+          "openeo:gsd": {
+            "value": [
+              0.054563492063483,
+              0.034722222222216
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.001
+            ]
+          }
+        },
+        {
+          "description": "Nitrogen oxide",
+          "name": "NO2",
+          "openeo:gsd": {
+            "value": [
+              0.054563492063483,
+              0.034722222222216
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.0003
+            ]
+          }
+        },
+        {
+          "description": "Ozone",
+          "name": "O3",
+          "openeo:gsd": {
+            "value": [
+              0.054563492063483,
+              0.034722222222216
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.36
+            ]
+          }
+        },
+        {
+          "description": "Sulphur dioxide",
+          "name": "SO2",
+          "openeo:gsd": {
+            "value": [
+              0.054563492063483,
+              0.034722222222216
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.01
+            ]
+          }
+        },
+        {
+          "description": "Methane",
+          "name": "CH4",
+          "openeo:gsd": {
+            "value": [
+              0.054563492063483,
+              0.034722222222216
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              1600
+            ],
+            "maximum": [
+              2000
+            ]
+          }
+        }
+      ]
+    }
   }
 ]
