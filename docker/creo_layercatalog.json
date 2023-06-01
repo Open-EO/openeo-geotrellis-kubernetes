@@ -1835,7 +1835,7 @@
     ]
     }
   },
-{
+  {
     "id": "SENTINEL_5P_L2",
     "_vito": {
       "data_source": {
@@ -1878,7 +1878,12 @@
       "bands": {
         "type": "bands",
         "values": [
-          "CO"
+          "CO",
+          "HCHO",
+          "NO2",
+          "O3",
+          "SO2",
+          "CH4"
         ]
       }
     },
@@ -1901,6 +1906,106 @@
             ],
             "maximum": [
               0.1
+            ]
+          }
+        },
+        {
+          "description": "Formaldehyde",
+          "name": "HCHO",
+          "openeo:gsd": {
+            "value": [
+              0.054563492063483,
+              0.034722222222216
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.001
+            ]
+          }
+        },
+        {
+          "description": "Nitrogen oxide",
+          "name": "NO2",
+          "openeo:gsd": {
+            "value": [
+              0.054563492063483,
+              0.034722222222216
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.0003
+            ]
+          }
+        },
+        {
+          "description": "Ozone",
+          "name": "O3",
+          "openeo:gsd": {
+            "value": [
+              0.054563492063483,
+              0.034722222222216
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.36
+            ]
+          }
+        },
+        {
+          "description": "Sulphur dioxide",
+          "name": "SO2",
+          "openeo:gsd": {
+            "value": [
+              0.054563492063483,
+              0.034722222222216
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.01
+            ]
+          }
+        },
+        {
+          "description": "Methane",
+          "name": "CH4",
+          "openeo:gsd": {
+            "value": [
+              0.054563492063483,
+              0.034722222222216
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              1600
+            ],
+            "maximum": [
+              2000
             ]
           }
         }
