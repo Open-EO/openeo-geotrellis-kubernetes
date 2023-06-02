@@ -1837,6 +1837,7 @@
   },
   {
     "id": "SENTINEL_5P_L2",
+    "description": "Sentinel 5 Precursor imagery captured by TROPOMI sensor.\n\nThis dataset only supports loading one band at a time.",
     "_vito": {
       "data_source": {
         "type": "sentinel-hub",
