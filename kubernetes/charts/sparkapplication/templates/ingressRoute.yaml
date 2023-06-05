@@ -12,16 +12,6 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- if .Values.ingressRoute.tls }}
-  tls:
-    {{- range .Values.ingressRoute.tls }}
-    - hosts:
-        {{- range .hosts }}
-        - {{ . | quote }}
-        {{- end }}
-      secretName: {{ .secretName }}
-    {{- end }}
-  {{- end }}
   entryPoints:
     {{- range .Values.ingressRoute.entryPoints }}
     - {{ . }}
@@ -30,10 +20,23 @@ spec:
     {{- range .Values.ingressRoute.rules }}
     - kind: "Rule"
       match: {{ .match | quote }}
+      {{- if .middlewares }}
+      middlewares:
+        {{- range .middlewares }}
+        - name: {{ .name }}
+          namespace: {{ .namespace }}
+        {{- end }}
+      {{- end}}
       services:
         {{- range .services }}
-        - name: {{ include "sparkapplication.fullname" . }}
-          port: {{ $svcPort }}
+        - kind: Service
+          name: {{ .name }}
+          namespace: {{ .namespace }}
+          port: {{ .port }}
         {{- end}}
     {{- end }}
+  {{- if .Values.ingressRoute.tls }}
+  tls:
+    {{- toYaml .Values.ingressRoute.tls | nindent 4 }}
   {{- end }}
+{{- end }}
