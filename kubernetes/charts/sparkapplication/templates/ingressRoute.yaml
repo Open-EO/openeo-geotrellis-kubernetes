@@ -27,6 +27,7 @@ spec:
           namespace: {{ .namespace }}
         {{- end }}
       {{- end}}
+      priority: {{ .priority | default 0 }}
       services:
         {{- range .services }}
         - kind: Service
