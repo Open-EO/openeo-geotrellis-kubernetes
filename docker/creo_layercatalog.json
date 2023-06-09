@@ -5,23 +5,50 @@
     "title": "Sentinel-2 L1C",
     "description": "SENTINEL-2 is a wide-swath, high-resolution, multi-spectral imaging mission, supporting Copernicus Land Monitoring studies, including the monitoring of vegetation, soil and water cover, as well as observation of inland waterways and coastal areas. The SENTINEL-2 Multispectral Instrument (MSI) samples 13 spectral bands: four bands at 10 metres, six bands at 20 metres and three bands at 60 metres spatial resolution.",
     "license": "proprietary",
-    "providers": [],
-    "links": ["https://earth.esa.int/web/sentinel/user-guides/sentinel-2-msi/product-types/level-1c","https://creodias.eu/data-offer"],
+      "providers": [
+    {
+      "name": "ESA",
+      "roles": [
+        "producer"
+      ],
+      "url": "https://esa.int/"
+    },
+    {
+      "name": "CDSE",
+      "roles": [
+        "processor",
+        "host"
+      ],
+      "url": "https://dataspace.copernicus.eu/"
+    }
+  ],
+   "links": [
+      {
+        "rel": "license",
+        "href": "https://sentinel.esa.int/documents/247904/690755/Sentinel_Data_Legal_Notice",
+        "type": "application/html"
+      },
+      {
+          "rel": "alternate",
+          "href": "https://documentation.dataspace.copernicus.eu/Data/Sentinel2.html",
+          "type": "application/html"
+      }
+      ],
     "extent": {
       "spatial": {
         "bbox": [
           [
             -180,
-            -90,
+            -56,
             180,
-            90
+            83
           ]
         ]
       },
       "temporal": {
         "interval": [
           [
-            "2015-07-04",
+            "2015-07-04T00:00:00Z",
             null
           ]
         ]
@@ -58,6 +85,19 @@
       }
     },
     "summaries": {
+    "platform": [
+      "sentinel-2a",
+      "sentinel-2b"
+    ],
+    "instrument": [
+      "msi"
+    ],
+    "constellation": [
+      "sentinel-2"
+    ],
+    "gsd": [
+      10
+    ],
       "eo:cloud_cover": {
         "minimum": 0,
         "maximum": 100
@@ -66,9 +106,10 @@
 
         {
           "name": "B01",
+          "common_name": "coastal",
+          "center_wavelength": 0.4427,
+          "full_width_half_max": 0.021,
           "aliases": ["IMG_DATA_Band_60m_1_Tile1_Data"],
-          "common_name": "coastal aerosol",
-          "wavelength_nm": 442.7,
           "gsd": 60,
           "scale": 0.0001,
           "offset": 0,
@@ -79,8 +120,8 @@
           "name": "B02",
           "aliases": ["IMG_DATA_Band_10m_1_Tile1_Data"],
           "common_name": "blue",
-          "center_wavelength": 0.4966,
-          "wavelength_nm": 496.6,
+          "center_wavelength": 0.4924,
+          "full_width_half_max": 0.066,
           "gsd": 10,
           "scale": 0.0001,
           "offset": 0,
@@ -91,8 +132,8 @@
           "name": "B03",
           "aliases": ["IMG_DATA_Band_10m_2_Tile1_Data"],
           "common_name": "green",
-          "center_wavelength": 0.560,
-          "wavelength_nm": 560,
+          "center_wavelength": 0.5598,
+          "full_width_half_max": 0.036,
           "gsd": 10,
           "scale": 0.0001,
           "offset": 0,
@@ -103,8 +144,8 @@
           "name": "B04",
           "aliases": ["IMG_DATA_Band_10m_3_Tile1_Data"],
           "common_name": "red",
-          "center_wavelength": 0.6645,
-          "wavelength_nm": 664.5,
+          "center_wavelength": 0.6646,
+          "full_width_half_max": 0.031,
           "gsd": 10,
           "scale": 0.0001,
           "offset": 0,
@@ -114,8 +155,8 @@
         {
           "name": "B05",
           "aliases": ["IMG_DATA_Band_20m_1_Tile1_Data"],
-          "common_name": "nir",
-          "wavelength_nm": 704.1,
+          "center_wavelength": 0.7041,
+          "full_width_half_max": 0.015,
           "gsd": 20,
           "scale": 0.0001,
           "offset": 0,
@@ -125,7 +166,8 @@
         {
           "name": "B06",
           "aliases": ["IMG_DATA_Band_20m_2_Tile1_Data"],
-          "wavelength_nm": 740.5,
+          "center_wavelength": 0.7405,
+          "full_width_half_max": 0.015,
           "gsd": 20,
           "scale": 0.0001,
           "offset": 0,
@@ -135,7 +177,8 @@
         {
           "name": "B07",
           "aliases": ["IMG_DATA_Band_20m_3_Tile1_Data"],
-          "wavelength_nm": 782.8,
+          "center_wavelength": 0.7828,
+          "full_width_half_max": 0.02,
           "gsd": 20,
           "scale": 0.0001,
           "offset": 0,
@@ -146,8 +189,8 @@
           "name": "B08",
           "aliases": ["IMG_DATA_Band_10m_4_Tile1_Data"],
           "common_name": "nir",
-          "center_wavelength": 0.8351,
-          "wavelength_nm": 835.1,
+          "center_wavelength": 0.8328,
+          "full_width_half_max": 0.106,
           "gsd": 10,
           "scale": 0.0001,
           "offset": 0,
@@ -157,7 +200,9 @@
         {
           "name": "B8A",
           "aliases": ["IMG_DATA_Band_20m_4_Tile1_Data"],
-          "wavelength_nm": 864.7,
+          "common_name": "nir08",
+          "center_wavelength": 0.8647,
+          "full_width_half_max": 0.021,
           "gsd": 20,
           "scale": 0.0001,
           "offset": 0,
@@ -167,7 +212,9 @@
         {
           "name": "B09",
           "aliases": ["IMG_DATA_Band_60m_2_Tile1_Data"],
-          "wavelength_nm": 945.1,
+          "common_name": "nir09",
+          "center_wavelength": 0.9451,
+          "full_width_half_max": 0.02,
           "gsd": 60,
           "scale": 0.0001,
           "offset": 0,
@@ -177,7 +224,9 @@
         {
           "name": "B10",
           "aliases": ["IMG_DATA_Band_60m_3_Tile1_Data"],
-          "wavelength_nm": 1373.5,
+          "common_name": "cirrus",
+          "center_wavelength": 1.3735,
+          "full_width_half_max": 0.031,
           "gsd": 60,
           "scale": 0.0001,
           "offset": 0,
@@ -187,8 +236,9 @@
         {
           "name": "B11",
           "aliases": ["IMG_DATA_Band_20m_5_Tile1_Data"],
-          "common_name": "swir",
-          "wavelength_nm": 1613.7,
+          "common_name": "swir16",
+          "center_wavelength": 1.6137,
+          "full_width_half_max": 0.091,
           "gsd": 20,
           "scale": 0.0001,
           "offset": 0,
@@ -198,8 +248,9 @@
         {
           "name": "B12",
           "aliases": ["IMG_DATA_Band_20m_6_Tile1_Data"],
-          "common_name": "swir",
-          "wavelength_nm": 2202.4,
+          "common_name": "swir22",
+          "center_wavelength": 2.2024,
+          "full_width_half_max": 0.175,
           "gsd": 20,
           "scale": 0.0001,
           "offset": 0,
@@ -262,16 +313,41 @@
     "title": "Sentinel-2 L2A",
     "description": "SENTINEL-2 is a wide-swath, high-resolution, multi-spectral imaging mission, supporting Copernicus Land Monitoring studies, including the monitoring of vegetation, soil and water cover, as well as observation of inland waterways and coastal areas. The SENTINEL-2 Multispectral Instrument (MSI) samples 13 spectral bands: four bands at 10 metres, six bands at 20 metres and three bands at 60 metres spatial resolution.\n The level 2A data is atmospherically corrected using Sen2Cor.",
     "license": "proprietary",
-    "providers": [],
-    "links": ["https://earth.esa.int/web/sentinel/user-guides/sentinel-2-msi/product-types/level-2a","https://creodias.eu/data-offer"],
+    "providers": [{
+      "name": "ESA",
+      "roles": [
+        "producer"
+      ],
+      "url": "https://esa.int/"
+    },
+    {
+      "name": "CDSE",
+      "roles": [
+        "processor",
+        "host"
+      ],
+      "url": "https://dataspace.copernicus.eu/"
+    }],
+    "links": [
+      {
+        "rel": "license",
+        "href": "https://sentinel.esa.int/documents/247904/690755/Sentinel_Data_Legal_Notice",
+        "type": "application/html"
+      },
+      {
+          "rel": "alternate",
+          "href": "https://documentation.dataspace.copernicus.eu/Data/Sentinel2.html",
+          "type": "application/html"
+      }
+      ],
     "extent": {
       "spatial": {
         "bbox": [
           [
             -180,
-            -90,
+            -56,
             180,
-            90
+            83
           ]
         ]
       },
@@ -313,6 +389,19 @@
       }
     },
     "summaries": {
+        "platform": [
+          "sentinel-2a",
+          "sentinel-2b"
+        ],
+        "instrument": [
+          "msi"
+        ],
+        "constellation": [
+          "sentinel-2"
+        ],
+        "gsd": [
+          10
+        ],
       "eo:cloud_cover": {
         "minimum": 0,
         "maximum": 100
@@ -321,8 +410,9 @@
         {
           "name": "B01",
           "aliases": ["IMG_DATA_Band_B01_60m_Tile1_Data"],
-          "common_name": "coastal aerosol",
-          "wavelength_nm": 442.7,
+          "common_name": "coastal",
+          "center_wavelength": 0.4427,
+          "full_width_half_max": 0.021,
           "gsd": 60,
           "scale": 0.0001,
           "offset": 0,
@@ -333,8 +423,8 @@
           "name": "B02",
           "aliases": ["IMG_DATA_Band_B02_10m_Tile1_Data"],
           "common_name": "blue",
-          "center_wavelength": 0.4966,
-          "wavelength_nm": 496.6,
+          "center_wavelength": 0.4924,
+          "full_width_half_max": 0.066,
           "gsd": 10,
           "scale": 0.0001,
           "offset": 0,
@@ -345,8 +435,8 @@
           "name": "B03",
           "aliases": ["IMG_DATA_Band_B03_10m_Tile1_Data"],
           "common_name": "green",
-          "center_wavelength": 0.560,
-          "wavelength_nm": 560,
+          "center_wavelength": 0.5598,
+          "full_width_half_max": 0.036,
           "gsd": 10,
           "scale": 0.0001,
           "offset": 0,
@@ -357,8 +447,8 @@
           "name": "B04",
           "aliases": ["IMG_DATA_Band_B04_10m_Tile1_Data"],
           "common_name": "red",
-          "center_wavelength": 0.6645,
-          "wavelength_nm": 664.5,
+          "center_wavelength": 0.6646,
+          "full_width_half_max": 0.031,
           "gsd": 10,
           "scale": 0.0001,
           "offset": 0,
@@ -368,8 +458,8 @@
         {
           "name": "B05",
           "aliases": ["IMG_DATA_Band_B05_20m_Tile1_Data"],
-          "common_name": "nir",
-          "wavelength_nm": 704.1,
+          "center_wavelength": 0.7041,
+          "full_width_half_max": 0.015,
           "gsd": 20,
           "scale": 0.0001,
           "offset": 0,
@@ -379,7 +469,8 @@
         {
           "name": "B06",
           "aliases": ["IMG_DATA_Band_B06_20m_Tile1_Data"],
-          "wavelength_nm": 740.5,
+          "center_wavelength": 0.7405,
+          "full_width_half_max": 0.015,
           "gsd": 20,
           "scale": 0.0001,
           "offset": 0,
@@ -389,7 +480,8 @@
         {
           "name": "B07",
           "aliases": ["IMG_DATA_Band_B07_20m_Tile1_Data"],
-          "wavelength_nm": 782.8,
+          "center_wavelength": 0.7828,
+          "full_width_half_max": 0.02,
           "gsd": 20,
           "scale": 0.0001,
           "offset": 0,
@@ -400,8 +492,8 @@
           "name": "B08",
           "aliases": ["IMG_DATA_Band_B08_10m_Tile1_Data"],
           "common_name": "nir",
-          "center_wavelength": 0.8351,
-          "wavelength_nm": 835.1,
+          "center_wavelength": 0.8328,
+          "full_width_half_max": 0.106,
           "gsd": 10,
           "scale": 0.0001,
           "offset": 0,
@@ -411,7 +503,9 @@
         {
           "name": "B8A",
           "aliases": ["IMG_DATA_Band_B8A_20m_Tile1_Data"],
-          "wavelength_nm": 864.7,
+          "common_name": "nir08",
+          "center_wavelength": 0.8647,
+          "full_width_half_max": 0.021,
           "gsd": 20,
           "scale": 0.0001,
           "offset": 0,
@@ -421,7 +515,9 @@
         {
           "name": "B09",
           "aliases": ["IMG_DATA_Band_B09_60m_Tile1_Data"],
-          "wavelength_nm": 945.1,
+          "common_name": "nir09",
+          "center_wavelength": 0.9451,
+          "full_width_half_max": 0.02,
           "gsd": 60,
           "scale": 0.0001,
           "offset": 0,
@@ -431,8 +527,9 @@
         {
           "name": "B11",
           "aliases": ["IMG_DATA_Band_B11_20m_Tile1_Data"],
-          "common_name": "swir",
-          "wavelength_nm": 1613.7,
+          "common_name": "swir16",
+          "center_wavelength": 1.6137,
+          "full_width_half_max": 0.091,
           "gsd": 20,
           "scale": 0.0001,
           "offset": 0,
@@ -442,8 +539,9 @@
         {
           "name": "B12",
           "aliases": ["IMG_DATA_Band_B12_20m_Tile1_Data"],
-          "common_name": "swir",
-          "wavelength_nm": 2202.4,
+          "common_name": "swir22",
+          "center_wavelength": 2.2024,
+          "full_width_half_max": 0.175,
           "gsd": 20,
           "scale": 0.0001,
           "offset": 0,
@@ -524,16 +622,16 @@
         "bbox": [
           [
             -180,
-            -56,
+            -85,
             180,
-            83
+            85
           ]
         ]
       },
       "temporal": {
         "interval": [
           [
-            "2015-07-06",
+            "2014-10-03T00:00:00Z",
             null
           ]
         ]
@@ -554,10 +652,72 @@
       }
     },
     "summaries": {
-      "sat:orbit_state": [
-         "ascending",
-         "descending"
-      ],
+      "platform": [
+      "sentinel-1a",
+      "sentinel-1b"
+    ],
+    "instrument": [
+      "c-sar"
+    ],
+    "constellation": [
+      "sentinel-1"
+    ],
+    "sat:orbit_state": [
+      "ascending",
+      "descending"
+    ],
+    "sar:instrument_mode": [
+      "SM",
+      "IW",
+      "EW",
+      "WV"
+    ],
+    "sar:frequency_band": [
+      "C"
+    ],
+    "sar:center_frequency": [
+      5.405
+    ],
+    "sar:product_type": [
+      "GRD"
+    ],
+    "sar:polarizations": [
+      "HH",
+      "HV",
+      "VH",
+      "VV"
+    ],
+    "sar:resolution_range": [
+      9,
+      20,
+      23,
+      50,
+      52,
+      84,
+      88,
+      93
+    ],
+    "sar:resolution_azimuth": [
+      9,
+      22,
+      23,
+      50,
+      51,
+      84,
+      87
+    ],
+    "sar:pixel_spacing_range": [
+      3.5,
+      10,
+      25,
+      40
+    ],
+    "sar:pixel_spacing_azimuth": [
+      3.5,
+      10,
+      25,
+      40
+    ],
       "eo:bands": [
         {
           "name": "VH",
@@ -571,9 +731,11 @@
         }
       ]
     },
-    "links": []
+    "links": [{
+        "rel": "license",
+        "href": "https://spacedata.copernicus.eu/documents/20126/0/CSCDA_ESA_Mission-specific+Annex.pdf"
+      }]
   },
-
   {
     "id": "COPERNICUS_30",
     "title": "Copernicus Global 30 meter Digital Elevation Model dataset.",
