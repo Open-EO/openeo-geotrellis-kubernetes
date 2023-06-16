@@ -36,7 +36,7 @@
    "links": [
       {
         "rel": "license",
-        "href": "https://sentinel.esa.int/documents/247904/690755/Sentinel_Data_Legal_Notice",
+        "href": "https://sentinels.copernicus.eu/documents/247904/690755/Sentinel_Data_Legal_Notice",
         "type": "application/pdf"
       },
       {
@@ -377,8 +377,8 @@
     "links": [
       {
         "rel": "license",
-        "href": "https://sentinel.esa.int/documents/247904/690755/Sentinel_Data_Legal_Notice",
-        "type": "application/html"
+        "href": "https://sentinels.copernicus.eu/documents/247904/690755/Sentinel_Data_Legal_Notice",
+        "type": "application/pdf"
       },
       {
           "rel": "alternate",
@@ -857,7 +857,8 @@
       },
       {
         "rel": "license",
-        "href": "https://spacedata.copernicus.eu/documents/20126/0/CSCDA_ESA_Mission-specific+Annex.pdf"
+        "href": "https://sentinels.copernicus.eu/documents/247904/690755/Sentinel_Data_Legal_Notice",
+        "type": "application/pdf"
       }]
   },
   {
@@ -865,12 +866,18 @@
     "title": "Copernicus Global 30 meter Digital Elevation Model dataset.",
     "description": "Copernicus Global 30 meter Digital Elevation Model dataset.",
     "license": "proprietary",
+    "sci:doi": "10.5270/ESA-c5d3d65",
     "providers": [
     ],
     "links": [
       {
+        "rel": "cite-as",
+        "href": "https://doi.org/10.5270/ESA-c5d3d65"
+      },
+      {
         "rel": "license",
-        "href": "https://spacedata.copernicus.eu/documents/20126/0/CSCDA_ESA_Mission-specific+Annex.pdf"
+        "href": "https://spacedata.copernicus.eu/documents/20123/121286/CSCDA_ESA_Mission-specific+Annex_31_Oct_22.pdf/fb109818-56ad-bbee-053c-d972aed25ce6?t=1674741175657",
+        "type": "application/pdf"
       },
       {
         "href": "https://services.terrascope.be/wmts/v2",
