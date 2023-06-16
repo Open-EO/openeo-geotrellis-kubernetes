@@ -2,10 +2,12 @@
 driver:
   cores: 2
   memory: "4096m"
+  terminationGracePeriodSeconds: 30
 executor:
   cores: 2
   instances: 1
   memory: "4096m"
+  terminationGracePeriodSeconds: 30
 imagePullPolicy: "IfNotPresent"
 ingress:
   enabled: false
