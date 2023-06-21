@@ -131,7 +131,6 @@ The configuration of the backend is mostly done via environment variables in val
 | AWS_ACCESS_KEY_ID    | S3 Access key used to manage batch job results     |
 | AWS_SECRET_ACCESS_KEY| S3 Access key secret                           |
 | ZOOKEEPERNODES       | Zookeeper cluster used for persistence      |
-| SIGNED_URL_SECRET    | Random secret to generate signed url's      |
 
 
 ## Deploy an openEO job-tracker cron job
