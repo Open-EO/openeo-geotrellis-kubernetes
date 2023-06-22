@@ -110,7 +110,6 @@
           "B10",
           "B11",
           "B12",
-          "IMG_DATA_Band_TCI_Tile1_Data",
           "SAA",
           "SZA",
           "VAA",
@@ -291,7 +290,6 @@
           "type": "int16",
           "unit": "1"
         },
-        {"name": "IMG_DATA_Band_TCI_Tile1_Data"},
         {
           "name": "SAA",
           "aliases":["S2_Level-1C_Tile1_Metadata##0"],
@@ -451,7 +449,6 @@
           "B09",
           "B11",
           "B12",
-          "TCI",
           "WVP",
           "AOT",
           "SCL"
@@ -617,10 +614,6 @@
           "offset": 0,
           "type": "int16",
           "unit": "1"
-        },
-        {
-          "name": "TCI",
-          "aliases": ["IMG_DATA_Band_TCI_10m_Tile1_Data"]
         },
         {
           "name": "WVP",
