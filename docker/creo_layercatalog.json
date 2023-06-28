@@ -317,6 +317,7 @@
         "type": "file-s2",
         "opensearch_collection_id": "Sentinel2",
         "opensearch_endpoint": "https://catalogue.dataspace.copernicus.eu/resto",
+        "opensearch_variant": "disabled",
         "root_path": "/eodata",
         "provider:backend": "creodias",
         "is_utm": true
@@ -646,6 +647,7 @@
         "type": "file-s2",
         "opensearch_collection_id": "Sentinel2",
         "opensearch_endpoint": "https://catalogue.dataspace.copernicus.eu/resto",
+        "opensearch_variant": "disabled",
         "root_path": "/eodata",
         "check_missing_products": {
           "method": "creo",
@@ -903,6 +905,7 @@
         "type": "file-oscars",
         "opensearch_collection_id": "CopDem",
         "opensearch_endpoint": "https://catalogue.dataspace.copernicus.eu/resto",
+        "opensearch_variant": "disabled",
         "root_path": "/eodata",
         "provider:backend": "creodias"
       },
