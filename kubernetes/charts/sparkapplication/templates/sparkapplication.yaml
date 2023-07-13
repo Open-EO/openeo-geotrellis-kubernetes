@@ -71,7 +71,9 @@ spec:
     securityContext:
       privileged: {{ .Values.privileged }}
     cores: {{ .Values.driver.cores }}
+    coreLimit: {{ .Values.driver.coreLimit }}
     memory: {{ .Values.driver.memory }}
+    memoryOverhead: {{ .Values.driver.memoryOverhead }}
     hostNetwork: {{ .Values.hostNetwork | default false}}
     labels:
       app.kubernetes.io/name: {{ .Release.Name | trunc 63 }}-driver
@@ -117,8 +119,10 @@ spec:
     securityContext:
       privileged: {{ .Values.privileged }}
     cores: {{ .Values.executor.cores }}
+    coreLimit: {{ .Values.executor.coreLimit }}
     instances: {{ .Values.executor.instances }}
     memory: {{ .Values.executor.memory }}
+    memoryOverhead: {{ .Values.executor.memoryOverhead }}
     hostNetwork: {{ .Values.hostNetwork | default false}}
     labels:
       release: {{ .Release.Name | trunc 63 | quote }}
