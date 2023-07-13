@@ -3,14 +3,14 @@ driver:
   cores: 1
   coreLimit: "1200m"
   memory: "4096m"
-  memoryOverhead: "0.1"
+  memoryOverhead: "2700m"
   terminationGracePeriodSeconds: 30
 executor:
   cores: 1
   coreLimit: "1200m"
   instances: 1
   memory: "4096m"
-  memoryOverhead: "0.1"
+  memoryOverhead: "2700m"
   terminationGracePeriodSeconds: 30
 imagePullPolicy: "IfNotPresent"
 ingress:
