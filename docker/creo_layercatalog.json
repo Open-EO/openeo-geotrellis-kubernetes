@@ -452,7 +452,11 @@
           "B12",
           "WVP",
           "AOT",
-          "SCL"
+          "SCL",
+          "SAA",
+          "SZA",
+          "VAA",
+          "VZA"
         ]
       }
     },
@@ -628,6 +632,27 @@
         {
           "name": "SCL",
           "aliases": ["IMG_DATA_Band_SCL_20m_Tile1_Data"]
+        },
+
+        {
+          "name": "SAA",
+          "aliases":["S2_Level-2A_Tile1_Metadata##0"],
+          "unit":"deg"
+        },
+        {
+          "name": "SZA",
+          "aliases":["S2_Level-2A_Tile1_Metadata##1"],
+          "unit":"deg"
+        },
+        {
+          "name": "VAA",
+          "aliases":["S2_Level-2A_Tile1_Metadata##2"],
+          "unit":"deg"
+        },
+        {
+          "name": "VZA",
+          "aliases":["S2_Level-2A_Tile1_Metadata##3"],
+          "unit":"deg"
         }
 
       ]
