@@ -110,10 +110,10 @@
           "B10",
           "B11",
           "B12",
-          "SAA",
-          "SZA",
-          "VAA",
-          "VZA"
+          "sunAzimuthAngles",
+          "sunZenithAngles",
+          "viewAzimuthMean",
+          "viewZenithMean"
         ]
       }
     },
@@ -291,23 +291,23 @@
           "unit": "1"
         },
         {
-          "name": "SAA",
-          "aliases":["S2_Level-1C_Tile1_Metadata##0"],
+          "name": "sunAzimuthAngles",
+          "aliases":["S2_Level-1C_Tile1_Metadata##0", "SAA"],
           "unit":"deg"
         },
         {
-          "name": "SZA",
-          "aliases":["S2_Level-1C_Tile1_Metadata##1"],
+          "name": "sunZenithAngles",
+          "aliases":["S2_Level-1C_Tile1_Metadata##1", "SZA"],
           "unit":"deg"
         },
         {
-          "name": "VAA",
-          "aliases":["S2_Level-1C_Tile1_Metadata##2"],
+          "name": "viewAzimuthMean",
+          "aliases":["S2_Level-1C_Tile1_Metadata##2", "VAA", "approximateViewAzimuth"],
           "unit":"deg"
         },
         {
-          "name": "VZA",
-          "aliases":["S2_Level-1C_Tile1_Metadata##3"],
+          "name": "viewZenithMean",
+          "aliases":["S2_Level-1C_Tile1_Metadata##3", "VZA", "approximateViewZenith"],
           "unit":"deg"
         }
       ]
@@ -452,7 +452,11 @@
           "B12",
           "WVP",
           "AOT",
-          "SCL"
+          "SCL",
+          "sunAzimuthAngles",
+          "sunZenithAngles",
+          "viewAzimuthMean",
+          "viewZenithMean"
         ]
       }
     },
@@ -628,6 +632,27 @@
         {
           "name": "SCL",
           "aliases": ["IMG_DATA_Band_SCL_20m_Tile1_Data"]
+        },
+
+        {
+          "name": "sunAzimuthAngles",
+          "aliases":["S2_Level-2A_Tile1_Metadata##0", "SAA"],
+          "unit":"deg"
+        },
+        {
+          "name": "sunZenithAngles",
+          "aliases":["S2_Level-2A_Tile1_Metadata##1", "SZA"],
+          "unit":"deg"
+        },
+        {
+          "name": "viewAzimuthMean",
+          "aliases":["S2_Level-2A_Tile1_Metadata##2", "VAA", "approximateViewAzimuth"],
+          "unit":"deg"
+        },
+        {
+          "name": "viewZenithMean",
+          "aliases":["S2_Level-2A_Tile1_Metadata##3", "VZA", "approximateViewZenith"],
+          "unit":"deg"
         }
 
       ]
