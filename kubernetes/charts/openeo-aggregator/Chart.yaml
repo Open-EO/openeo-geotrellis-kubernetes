@@ -1,0 +1,7 @@
+---
+apiVersion: v2
+name: openeo-aggregator
+description: A Helm chart for deploying openeo-aggregator
+type: application
+version: 0.1.0
+appVersion: "v0.8.5"
