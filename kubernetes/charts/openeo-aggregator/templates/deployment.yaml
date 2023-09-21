@@ -70,6 +70,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if .Values.volumes }}
       volumes:
         {{- toYaml .Values.volumes | indent 8}}
       {{- end }}
