@@ -43,3 +43,4 @@ spark_ui:
   ingress:
     enabled: false
 privileged: false
+timeToLiveSeconds: 172800

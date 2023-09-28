@@ -33,6 +33,7 @@ spec:
     {{ $conf | quote }}: {{ $value | quote }}
   {{- end }}
   {{- end }}
+  timeToLiveSeconds: {{ .Values.timeToLiveSeconds }}
   {{- if .Values.volumes }}
   volumes:
 {{ toYaml .Values.volumes | indent 3 }}
