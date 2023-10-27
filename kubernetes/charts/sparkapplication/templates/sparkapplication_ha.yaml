@@ -154,15 +154,15 @@ spec:
 {{ toYaml .Values.initContainers | indent 6 }}
     {{- end }}
     terminationGracePeriodSeconds: {{ .Values.executor.terminationGracePeriodSeconds }}
-  {{- if .Values.jmxExporterJar }}
-  {{- if .Values.priorityClassName }}
   {{- if .Values.sparkUIOptions }}
   sparkUIOptions:
 {{ toYaml .Values.sparkUIOptions | indent 4 }}
   {{- end }}
+  {{- if .Values.priorityClassName }}
   batchSchedulerOptions:
     priorityClassName: {{ .Values.priorityClassName }}
   {{- end }}
+  {{- if .Values.jmxExporterJar }}
   monitoring:
     exposeDriverMetrics: true
     exposeExecutorMetrics: true
