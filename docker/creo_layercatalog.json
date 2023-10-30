@@ -2103,15 +2103,15 @@
       "bands": {
         "type": "bands",
         "values": [
-          "SR_B1",
-          "SR_B2",
-          "SR_B3",
-          "SR_B4",
-          "SR_B5",
-          "SR_B6",
-          "SR_B7",
-          "ST_B10",
-          "QA_PIXEL",
+          "B01",
+          "B02",
+          "B03",
+          "B04",
+          "B05",
+          "B06",
+          "B07",
+          "B10",
+          "BQA",
           "QA_RADSAT",
           "SR_QA_AEROSOL",
           "ST_QA",
@@ -2128,31 +2128,40 @@
     "summaries": {
       "eo:bands": [
         {
-          "name": "SR_B1"
+          "name": "B01",
+          "aliases": ["SR_B1"]
         },
         {
-          "name": "SR_B2"
+          "name": "B02",
+          "aliases": ["SR_B2"]
         },
         {
-          "name": "SR_B3"
+          "name": "B03",
+          "aliases": ["SR_B3"]
         },
         {
-          "name": "SR_B4"
+          "name": "B04",
+          "aliases": ["SR_B4"]
         },
         {
-          "name": "SR_B5"
+          "name": "B05",
+          "aliases": ["SR_B5"]
         },
         {
-          "name": "SR_B6"
+          "name": "B06",
+          "aliases": ["SR_B6"]
         },
         {
-          "name": "SR_B7"
+          "name": "B07",
+          "aliases": ["SR_B7"]
         },
         {
-          "name": "ST_B10"
+          "name": "B10",
+          "aliases": ["ST_B10"]
         },
         {
-          "name": "QA_PIXEL"
+          "name": "BQA",
+          "aliases": ["QA_PIXEL"]
         },
         {
           "name": "QA_RADSAT"
