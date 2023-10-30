@@ -2064,5 +2064,127 @@
         }
       ]
     }
+  },
+{
+    "id": "LANDSAT8-9_L2",
+    "_vito": {
+      "data_source": {
+        "type": "file-s2",
+        "opensearch_collection_id": "Landsat8",
+        "opensearch_endpoint": "https://catalogue.dataspace.copernicus.eu/resto",
+        "opensearch_variant": "disabled",
+        "root_path": "/eodata",
+        "provider:backend": "creodias",
+        "is_utm": true
+      },
+      "properties": {
+        "productType": {
+          "process_graph": {
+            "eq1": {
+              "process_id": "eq",
+              "arguments": {
+                "x": {
+                  "from_parameter": "value"
+                },
+                "y": "L2SP"
+              },
+              "result": true
+            }
+          }
+        }
+      }
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x", "reference_system": {"$schema":"https://proj.org/schemas/v0.2/projjson.schema.json","type":"GeodeticCRS","name":"AUTO 42001 (Universal Transverse Mercator)","datum":{"type":"GeodeticReferenceFrame","name":"World Geodetic System 1984","ellipsoid":{"name":"WGS 84","semi_major_axis":6378137,"inverse_flattening":298.257223563}},"coordinate_system":{"subtype":"ellipsoidal","axis":[{"name":"Geodetic latitude","abbreviation":"Lat","direction":"north","unit":"degree"},{"name":"Geodetic longitude","abbreviation":"Lon","direction":"east","unit":"degree"}]},"area":"World","bbox":{"south_latitude":-90,"west_longitude":-180,"north_latitude":90,"east_longitude":180},"id":{"authority":"OGC","version":"1.3","code":"Auto42001"}}, "step": 30},
+      "y": {"type": "spatial", "axis": "y", "reference_system": {"$schema":"https://proj.org/schemas/v0.2/projjson.schema.json","type":"GeodeticCRS","name":"AUTO 42001 (Universal Transverse Mercator)","datum":{"type":"GeodeticReferenceFrame","name":"World Geodetic System 1984","ellipsoid":{"name":"WGS 84","semi_major_axis":6378137,"inverse_flattening":298.257223563}},"coordinate_system":{"subtype":"ellipsoidal","axis":[{"name":"Geodetic latitude","abbreviation":"Lat","direction":"north","unit":"degree"},{"name":"Geodetic longitude","abbreviation":"Lon","direction":"east","unit":"degree"}]},"area":"World","bbox":{"south_latitude":-90,"west_longitude":-180,"north_latitude":90,"east_longitude":180},"id":{"authority":"OGC","version":"1.3","code":"Auto42001"}}, "step": 30},
+      "t": {
+        "type": "temporal"
+      },
+      "bands": {
+        "type": "bands",
+        "values": [
+          "SR_B1",
+          "SR_B2",
+          "SR_B3",
+          "SR_B4",
+          "SR_B5",
+          "SR_B6",
+          "SR_B7",
+          "ST_B10",
+          "QA_PIXEL",
+          "QA_RADSAT",
+          "SR_QA_AEROSOL",
+          "ST_QA",
+          "ST_TRAD",
+          "ST_URAD",
+          "ST_DRAD",
+          "ST_ATRAN",
+          "ST_EMIS",
+          "ST_EMSD",
+          "ST_CDIST"
+        ]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {
+          "name": "SR_B1"
+        },
+        {
+          "name": "SR_B2"
+        },
+        {
+          "name": "SR_B3"
+        },
+        {
+          "name": "SR_B4"
+        },
+        {
+          "name": "SR_B5"
+        },
+        {
+          "name": "SR_B6"
+        },
+        {
+          "name": "SR_B7"
+        },
+        {
+          "name": "ST_B10"
+        },
+        {
+          "name": "QA_PIXEL"
+        },
+        {
+          "name": "QA_RADSAT"
+        },
+        {
+          "name": "SR_QA_AEROSOL"
+        },
+        {
+          "name": "ST_QA"
+        },
+        {
+          "name": "ST_TRAD"
+        },
+        {
+          "name": "ST_URAD"
+        },
+        {
+          "name": "ST_DRAD"
+        },
+        {
+          "name": "ST_ATRAN"
+        },
+        {
+          "name": "ST_EMIS"
+        },
+        {
+          "name": "ST_EMSD"
+        },
+        {
+          "name": "ST_CDIST"
+        }
+      ]
+    }
   }
 ]
