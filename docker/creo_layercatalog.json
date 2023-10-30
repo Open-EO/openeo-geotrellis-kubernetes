@@ -2129,69 +2129,88 @@
       "eo:bands": [
         {
           "name": "B01",
+          "description": "Coastal Aerosol",
           "aliases": ["SR_B1"]
         },
         {
           "name": "B02",
+          "description": "Blue",
           "aliases": ["SR_B2"]
         },
         {
           "name": "B03",
+          "description": "Green",
           "aliases": ["SR_B3"]
         },
         {
           "name": "B04",
+          "description": "Red",
           "aliases": ["SR_B4"]
         },
         {
           "name": "B05",
+          "description": "Near-Infrared",
           "aliases": ["SR_B5"]
         },
         {
           "name": "B06",
+          "description": "Short Wavelength Infrared 1",
           "aliases": ["SR_B6"]
         },
         {
           "name": "B07",
+          "description": "Short Wavelength Infrared 2",
           "aliases": ["SR_B7"]
         },
         {
           "name": "B10",
+          "description": "Thermal Infrared Sensor",
           "aliases": ["ST_B10"]
         },
         {
           "name": "BQA",
+          "description": "Level-1 QA Band",
           "aliases": ["QA_PIXEL"]
         },
         {
-          "name": "QA_RADSAT"
+          "name": "QA_RADSAT",
+          "description": "Level-1 Radiometric Saturation QA"
         },
         {
-          "name": "SR_QA_AEROSOL"
+          "name": "SR_QA_AEROSOL",
+          "description": "SR Aerosol QA"
         },
         {
-          "name": "ST_QA"
+          "name": "ST_QA",
+          "description": "Surface Temperature QA"
         },
         {
-          "name": "ST_TRAD"
+          "name": "ST_TRAD",
+          "description": "Thermal band converted to radiance"
         },
         {
-          "name": "ST_URAD"
+          "name": "ST_URAD",
+          "description": "Upwelled Radiance"
         },
         {
-          "name": "ST_DRAD"
+          "name": "ST_DRAD",
+          "description": "Downwelled Radiance"
         },
         {
-          "name": "ST_ATRAN"
+          "name": "ST_ATRAN",
+          "description": "Atmospheric Transmittance"
         },
         {
-          "name": "ST_EMIS"
+          "name": "ST_EMIS",
+          "description": "Emissivity of Band 10 estimated from ASTER GED "
         },
         {
-          "name": "ST_EMSD"
+          "name": "ST_EMSD",
+          "description": "Emissivity standard deviation"
         },
         {
-          "name": "ST_CDIST"
+          "name": "ST_CDIST",
+          "description": "Pixel distance to cloud"
         }
       ]
     }
