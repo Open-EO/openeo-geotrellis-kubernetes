@@ -2065,8 +2065,9 @@
       ]
     }
   },
-{
+  {
     "id": "LANDSAT8-9_L2",
+    "description": "Landsat-8 OLI/TIRS L2SP refers to the Level-2 Surface Reflectance product acquired by the Operational Land Imager (OLI) and Thermal Infrared Sensor (TIRS) instrument on board Landsat 8 satellite. This product is derived from the Landsat-8 OLI/TIRS L1T or L1TP product and is generated using atmospheric correction algorithms to remove atmospheric effects and convert the top-of-atmosphere reflectance to surface reflectance values.",
     "_vito": {
       "data_source": {
         "type": "file-s2",
@@ -2092,6 +2093,26 @@
             }
           }
         }
+      }
+    },
+    "extent": {
+      "spatial": {
+        "bbox": [
+          [
+            -20,
+            -35,
+            35,
+            75
+          ]
+        ]
+      },
+      "temporal": {
+        "interval": [
+          [
+            "2015-01-01T00:00:00Z",
+            null
+          ]
+        ]
       }
     },
     "cube:dimensions": {
