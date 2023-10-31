@@ -2130,87 +2130,97 @@
         {
           "name": "B01",
           "description": "Coastal Aerosol",
-          "aliases": ["SR_B1"]
+          "aliases": ["BAND_1"]
         },
         {
           "name": "B02",
           "description": "Blue",
-          "aliases": ["SR_B2"]
+          "aliases": ["BAND_2"]
         },
         {
           "name": "B03",
           "description": "Green",
-          "aliases": ["SR_B3"]
+          "aliases": ["BAND_3"]
         },
         {
           "name": "B04",
           "description": "Red",
-          "aliases": ["SR_B4"]
+          "aliases": ["BAND_4"]
         },
         {
           "name": "B05",
           "description": "Near-Infrared",
-          "aliases": ["SR_B5"]
+          "aliases": ["BAND_5"]
         },
         {
           "name": "B06",
           "description": "Short Wavelength Infrared 1",
-          "aliases": ["SR_B6"]
+          "aliases": ["BAND_6"]
         },
         {
           "name": "B07",
           "description": "Short Wavelength Infrared 2",
-          "aliases": ["SR_B7"]
+          "aliases": ["BAND_7"]
         },
         {
           "name": "B10",
           "description": "Thermal Infrared Sensor",
-          "aliases": ["ST_B10"]
+          "aliases": ["BAND_ST_B10"]
         },
         {
           "name": "BQA",
           "description": "Level-1 QA Band",
-          "aliases": ["QA_PIXEL"]
+          "aliases": ["QUALITY_L1_PIXEL"]
         },
         {
           "name": "QA_RADSAT",
-          "description": "Level-1 Radiometric Saturation QA"
+          "description": "Level-1 Radiometric Saturation QA",
+          "aliases": ["QUALITY_L1_RADIOMETRIC_SATURATION"]
         },
         {
           "name": "SR_QA_AEROSOL",
-          "description": "SR Aerosol QA"
+          "description": "SR Aerosol QA",
+          "aliases": ["QUALITY_L2_AEROSOL"]
         },
         {
           "name": "ST_QA",
-          "description": "Surface Temperature QA"
+          "description": "Surface Temperature QA",
+          "aliases": ["QUALITY_L2_SURFACE_TEMPERATURE"]
         },
         {
           "name": "ST_TRAD",
-          "description": "Thermal band converted to radiance"
+          "description": "Thermal band converted to radiance",
+          "aliases": ["THERMAL_RADIANCE"]
         },
         {
           "name": "ST_URAD",
-          "description": "Upwelled Radiance"
+          "description": "Upwelled Radiance",
+          "aliases": ["UPWELL_RADIANCE"]
         },
         {
           "name": "ST_DRAD",
-          "description": "Downwelled Radiance"
+          "description": "Downwelled Radiance",
+          "aliases": ["DOWNWELL_RADIANCE"]
         },
         {
           "name": "ST_ATRAN",
-          "description": "Atmospheric Transmittance"
+          "description": "Atmospheric Transmittance",
+          "aliases": ["ATMOSPHERIC_TRANSMITTANCE"]
         },
         {
           "name": "ST_EMIS",
-          "description": "Emissivity of Band 10 estimated from ASTER GED "
+          "description": "Emissivity of Band 10 estimated from ASTER GED",
+          "aliases": ["EMISSIVITY"]
         },
         {
           "name": "ST_EMSD",
-          "description": "Emissivity standard deviation"
+          "description": "Emissivity standard deviation",
+          "aliases": ["EMISSIVITY_STDEV"]
         },
         {
           "name": "ST_CDIST",
-          "description": "Pixel distance to cloud"
+          "description": "Pixel distance to cloud",
+          "aliases": ["CLOUD_DISTANCE"]
         }
       ]
     }
