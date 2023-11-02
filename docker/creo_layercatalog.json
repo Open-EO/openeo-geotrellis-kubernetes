@@ -2151,99 +2151,152 @@
         {
           "name": "B01",
           "description": "Coastal Aerosol",
-          "aliases": ["BAND_1"]
+          "aliases": ["BAND_1"],
+          "gsd": 30,
+          "type": "uint16"
         },
         {
           "name": "B02",
           "description": "Blue",
-          "aliases": ["BAND_2"]
+          "aliases": ["BAND_2"],
+          "gsd": 30,
+          "type": "uint16"
         },
         {
           "name": "B03",
           "description": "Green",
-          "aliases": ["BAND_3"]
+          "aliases": ["BAND_3"],
+          "gsd": 30,
+          "type": "uint16"
         },
         {
           "name": "B04",
           "description": "Red",
-          "aliases": ["BAND_4"]
+          "aliases": ["BAND_4"],
+          "gsd": 30,
+          "type": "uint16"
         },
         {
           "name": "B05",
           "description": "Near-Infrared",
-          "aliases": ["BAND_5"]
+          "aliases": ["BAND_5"],
+          "gsd": 30,
+          "type": "uint16"
         },
         {
           "name": "B06",
           "description": "Short Wavelength Infrared 1",
-          "aliases": ["BAND_6"]
+          "aliases": ["BAND_6"],
+          "gsd": 30,
+          "type": "uint16"
         },
         {
           "name": "B07",
           "description": "Short Wavelength Infrared 2",
-          "aliases": ["BAND_7"]
+          "aliases": ["BAND_7"],
+          "gsd": 30,
+          "type": "uint16"
         },
         {
           "name": "B10",
           "description": "Thermal Infrared Sensor",
-          "aliases": ["BAND_ST_B10"]
+          "aliases": ["BAND_ST_B10"],
+          "gsd": 30,
+          "type": "uint16"
         },
         {
           "name": "BQA",
           "description": "Level-1 QA Band",
-          "aliases": ["QUALITY_L1_PIXEL"]
+          "aliases": ["QUALITY_L1_PIXEL"],
+          "gsd": 30,
+          "type": "uint16"
         },
         {
           "name": "QA_RADSAT",
           "description": "Level-1 Radiometric Saturation QA",
-          "aliases": ["QUALITY_L1_RADIOMETRIC_SATURATION"]
+          "aliases": ["QUALITY_L1_RADIOMETRIC_SATURATION"],
+          "gsd": 30,
+          "type": "uint16"
         },
         {
           "name": "SR_QA_AEROSOL",
           "description": "SR Aerosol QA",
-          "aliases": ["QUALITY_L2_AEROSOL"]
+          "aliases": ["QUALITY_L2_AEROSOL"],
+          "gsd": 30,
+          "type": "uint8"
         },
         {
           "name": "ST_QA",
           "description": "Surface Temperature QA",
-          "aliases": ["QUALITY_L2_SURFACE_TEMPERATURE"]
+          "aliases": ["QUALITY_L2_SURFACE_TEMPERATURE"],
+          "gsd": 30,
+          "type": "int16",
+          "scale": 0.01
         },
         {
           "name": "ST_TRAD",
           "description": "Thermal band converted to radiance",
-          "aliases": ["THERMAL_RADIANCE"]
+          "aliases": ["THERMAL_RADIANCE"],
+          "gsd": 30,
+          "type": "int16",
+          "scale": 0.001
         },
         {
           "name": "ST_URAD",
           "description": "Upwelled Radiance",
-          "aliases": ["UPWELL_RADIANCE"]
+          "aliases": ["UPWELL_RADIANCE"],
+          "gsd": 30,
+          "type": "int16",
+          "scale": 0.001
         },
         {
           "name": "ST_DRAD",
           "description": "Downwelled Radiance",
-          "aliases": ["DOWNWELL_RADIANCE"]
+          "aliases": ["DOWNWELL_RADIANCE"],
+          "gsd": 30,
+          "type": "int16",
+          "scale": 0.001
         },
         {
           "name": "ST_ATRAN",
           "description": "Atmospheric Transmittance",
-          "aliases": ["ATMOSPHERIC_TRANSMITTANCE"]
+          "aliases": ["ATMOSPHERIC_TRANSMITTANCE"],
+          "gsd": 30,
+          "type": "int16",
+          "scale": 0.0001
         },
         {
           "name": "ST_EMIS",
           "description": "Emissivity of Band 10 estimated from ASTER GED",
-          "aliases": ["EMISSIVITY"]
+          "aliases": ["EMISSIVITY"],
+          "gsd": 30,
+          "type": "int16",
+          "scale": 0.0001
         },
         {
           "name": "ST_EMSD",
           "description": "Emissivity standard deviation",
-          "aliases": ["EMISSIVITY_STDEV"]
+          "aliases": ["EMISSIVITY_STDEV"],
+          "gsd": 30,
+          "type": "int16",
+          "scale": 0.0001
         },
         {
           "name": "ST_CDIST",
           "description": "Pixel distance to cloud",
-          "aliases": ["CLOUD_DISTANCE"]
+          "aliases": ["CLOUD_DISTANCE"],
+          "gsd": 30,
+          "type": "int16",
+          "scale": 0.01
         }
       ]
-    }
+    },
+    "links": [
+      {
+        "href": "https://catalogue.dataspace.copernicus.eu/resto/api/collections/Landsat8/search.json?productType=L2SP",
+        "rel": "opensearch",
+        "title": "OpenSearch product query link"
+      }
+    ]
   }
 ]
