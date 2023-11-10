@@ -674,13 +674,6 @@
         "opensearch_endpoint": "https://catalogue.dataspace.copernicus.eu/resto",
         "opensearch_variant": "disabled",
         "root_path": "/eodata",
-        "check_missing_products": {
-          "method": "creo",
-          "creo_catalog": {
-            "mission": "Sentinel2",
-            "product_type": "S2MSI2A"
-          }
-        },
         "provider:backend": "creodias",
         "is_utm": true
       },
