@@ -51,6 +51,13 @@ spec:
     {{- end }}
     {{- end }}
   {{- end }}
+  {{- if .Values.dynamicAllocation }}
+  dynamicAllocation:
+    enabled: true
+    initialExecutors: {{ .Values.dynamicAllocation.initialExecutors }}
+    minExecutors: {{ .Values.dynamicAllocation.minExecutors }}
+    maxExecutors: {{ .Values.dynamicAllocation.maxExecutors }}
+  {{- end }}
   driver:
     env:
       - name: IMAGE_NAME
