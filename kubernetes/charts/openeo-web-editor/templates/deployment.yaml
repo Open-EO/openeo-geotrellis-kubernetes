@@ -11,7 +11,7 @@ spec:
   selector:
     matchLabels:
       {{- include "openeo-web-editor.selectorLabels" . | nindent 6 }}
-      {{ - with .Values.labels }}
+      {{- with .Values.labels }}
         {{- toYaml . | nindent 6}}
       {{- end}}
   template:
@@ -22,7 +22,7 @@ spec:
       {{- end }}
       labels:
         {{- include "openeo-web-editor.selectorLabels" . | nindent 8 }}
-      {{ - with .Values.labels }}
+      {{- with .Values.labels }}
         {{- toYaml . | nindent 8}}
       {{- end}}
     spec:
