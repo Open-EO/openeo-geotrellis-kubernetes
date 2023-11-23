@@ -770,6 +770,12 @@
       }
     },
     "summaries": {
+      "polarisation": [
+        "VV",
+        "VV&VH",
+        "HH",
+        "HH&HV"
+      ],
       "platform": [
       "sentinel-1a",
       "sentinel-1b"
