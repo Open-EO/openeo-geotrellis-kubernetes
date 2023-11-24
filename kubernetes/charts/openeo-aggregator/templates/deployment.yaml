@@ -12,7 +12,7 @@ spec:
     matchLabels:
       {{- include "openeo-aggregator.selectorLabels" . | nindent 6 }}
       {{- with .Values.labels }}
-        {{- toYaml. | nindent 6}}
+        {{- toYaml . | nindent 6}}
       {{- end }}
   template:
     metadata:
