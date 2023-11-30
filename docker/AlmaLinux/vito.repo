@@ -1,9 +1,9 @@
 [vito-public-alma]
 name=vito-yum-almalinux8-public
-baseurl=https://artifactory.vgt.vito.be/vito-yum-almalinux8-public/
+baseurl=https://artifactory.vgt.vito.be/artifactory/vito-yum-almalinux8-public/
 gpgcheck=0
 
 [vito-r]
 name=vito-r
-baseurl=https://artifactory.vgt.vito.be/vito-r-almalinux8/
+baseurl=https://artifactory.vgt.vito.be/artifactory/vito-r-almalinux8/
 gpgcheck=0
