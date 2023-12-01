@@ -11,7 +11,7 @@ As the Spark Operator requires Kubernetes 1.13 or above, this chart needs the sa
 The chart can be found in our public Helm repository. Add the repository:
 
 ```bash
-$ helm repo add <repo_name> https://artifactory.vgt.vito.be/helm-charts
+$ helm repo add <repo_name> https://artifactory.vgt.vito.be/artifactory/helm-charts
 ```
 
 Install the chart with:
