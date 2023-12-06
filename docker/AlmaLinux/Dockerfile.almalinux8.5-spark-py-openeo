@@ -12,10 +12,10 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/
 
 RUN dnf clean all && dnf install -y epel-release && \
     dnf --enablerepo=powertools install -y spark-bin-${SPARK_VERSION} \
-    gdal-3.8.1 \
-    gdal-devel-3.8.1 \
-    python3-gdal-3.8.1 \
-    gdal-libs-3.8.1 \
+    gdal-3.7.0 \
+    gdal-devel-3.7.0 \
+    python3-gdal-3.7.0 \
+    gdal-libs-3.7.0 \
     unzip \
     java-11-openjdk-headless \
     krb5-workstation \
@@ -23,7 +23,7 @@ RUN dnf clean all && dnf install -y epel-release && \
     sssd-client \
     ipa-client \
     nss \
-    orfeo-toolbox-py38-8.1.2 \
+    orfeo-toolbox-py38-8.1.1 \
     boost-filesystem \
     boost-serialization \
     procps-ng \
