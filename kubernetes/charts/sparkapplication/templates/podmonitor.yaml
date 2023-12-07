@@ -15,7 +15,7 @@ spec:
     port: jmx-exporter
     relabelings:
       - sourceLabels: [__meta_kubernetes_pod_phase]
-        action: drop
+        action: keep
         regex: Running
     scheme: http
   selector:
