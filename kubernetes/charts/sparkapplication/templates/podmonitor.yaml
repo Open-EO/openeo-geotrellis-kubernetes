@@ -1,0 +1,30 @@
+{{- if .Values.monitoring.podMonitor.enabled -}}
+{{- $fullName := include "sparkapplication.fullname" . -}}
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: {{ $fullName }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  jobLabel: sparkapplication-podmonitor
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  podMetricsEndpoints:
+  - interval: 5s
+    port: jmx-exporter
+    relabelings:
+      - sourceLabels: [__meta_kubernetes_pod_phase]
+        action: drop
+        regex: Running
+    scheme: http
+  selector:
+    {{- with .Values.monitoring.podMonitor.matchExpressions }}
+    matchExpressions:
+      {{- toYaml . | nindent 6}}
+    {{- end }}
+    {{- with .Values.monitoring.podMonitor.matchLabels }}
+    matchLabels:
+      {{- toYaml . | nindent 6}}
+    {{- end }}
+{{- end }}

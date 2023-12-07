@@ -44,3 +44,6 @@ spark_ui:
     enabled: false
 privileged: false
 timeToLiveSeconds: 172800
+monitoring:
+  podMonitor:
+    enabled: false
