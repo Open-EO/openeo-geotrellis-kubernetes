@@ -17,6 +17,9 @@ spec:
       - sourceLabels: [__meta_kubernetes_pod_phase]
         action: keep
         regex: Running
+    {{- with .Values.monitoring.podMonitor.custom_relabelings}}
+      {{- toYaml . | nindent 6}}
+    {{- end }}
     scheme: http
   selector:
     {{- with .Values.monitoring.podMonitor.matchExpressions }}
