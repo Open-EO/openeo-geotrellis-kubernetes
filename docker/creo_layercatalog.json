@@ -2425,5 +2425,1782 @@
         }
       }
     }
+  },
+  {
+    "id": "SENTINEL3_OLCI_L1B_FILE",
+    "_vito": {
+      "data_source": {
+        "type": "file-s3-olci"
+      }
+    },
+    "cube:dimensions": {
+      "x": {
+        "type": "spatial",
+        "axis": "x",
+        "extent": [
+          -180,
+          180
+        ],
+        "reference_system": 4326
+      },
+      "y": {
+        "type": "spatial",
+        "axis": "y",
+        "extent": [
+          -85,
+          85
+        ],
+        "reference_system": 4326
+      },
+      "t": {
+        "type": "temporal",
+        "extent": [
+          "2016-04-17T11:33:13Z",
+          null
+        ],
+        "step": "P2D"
+      },
+      "bands": {
+        "type": "bands",
+        "values": [
+          "Oa01_radiance",
+          "Oa02_radiance",
+          "Oa03_radiance",
+          "Oa04_radiance",
+          "Oa05_radiance",
+          "Oa06_radiance",
+          "Oa07_radiance",
+          "Oa08_radiance",
+          "Oa09_radiance",
+          "Oa10_radiance",
+          "Oa11_radiance",
+          "Oa12_radiance",
+          "Oa13_radiance",
+          "Oa14_radiance",
+          "Oa15_radiance",
+          "Oa16_radiance",
+          "Oa17_radiance",
+          "Oa18_radiance",
+          "Oa19_radiance",
+          "Oa20_radiance",
+          "Oa21_radiance"
+        ]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {
+          "description": "Aerosol correction, improved water constituent retrieval",
+          "name": "Oa01_radiance",
+          "center_wavelength": 0.4,
+          "full_width_half_max": 0.015,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Yellow substance and detrital pigments (turbidity)",
+          "name": "Oa02_radiance",
+          "center_wavelength": 0.4125,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Chlorophyll absorption maximum, biogeochemistry, vegetation",
+          "name": "Oa03_radiance",
+          "center_wavelength": 0.4425,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Chlorophyll",
+          "name": "Oa04_radiance",
+          "center_wavelength": 0.49,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Chlorophyll, sediment, turbidity, red tide",
+          "name": "Oa05_radiance",
+          "center_wavelength": 0.51,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Chlorophyll reference (minimum)",
+          "name": "Oa06_radiance",
+          "center_wavelength": 0.56,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Sediment loading",
+          "name": "Oa07_radiance",
+          "center_wavelength": 0.62,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "2nd Chlorophyll absorption maximum, sediment, yellow substance / vegetation",
+          "name": "Oa08_radiance",
+          "center_wavelength": 0.665,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Improved fluorescence retrieval",
+          "name": "Oa09_radiance",
+          "center_wavelength": 0.67375,
+          "full_width_half_max": 0.0075,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Chlorophyll fluorescence peak, red edge",
+          "name": "Oa10_radiance",
+          "center_wavelength": 0.68125,
+          "full_width_half_max": 0.0075,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Chlorophyll fluorescence baseline, red edge transition",
+          "name": "Oa11_radiance",
+          "center_wavelength": 0.70875,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "O2 absorption / clouds, vegetation",
+          "name": "Oa12_radiance",
+          "center_wavelength": 0.75375,
+          "full_width_half_max": 0.0075,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "O2 absorption / aerosol correction",
+          "name": "Oa13_radiance",
+          "center_wavelength": 0.76125,
+          "full_width_half_max": 0.0025,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Atmospheric correction",
+          "name": "Oa14_radiance",
+          "center_wavelength": 0.764375,
+          "full_width_half_max": 0.00375,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "O2 absorption used for cloud top pressure, fluorescence over land",
+          "name": "Oa15_radiance",
+          "center_wavelength": 0.7675,
+          "full_width_half_max": 0.0025,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Atmospheric / aerosol correction",
+          "name": "Oa16_radiance",
+          "center_wavelength": 0.77875,
+          "full_width_half_max": 0.015,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Atmospheric / aerosol correction, clouds, pixel co-registration",
+          "name": "Oa17_radiance",
+          "center_wavelength": 0.865,
+          "full_width_half_max": 0.02,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Water vapour absorption reference. Common reference band with SLSTR. Vegetation monitoring",
+          "name": "Oa18_radiance",
+          "center_wavelength": 0.885,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Water vapour absorption, vegetation monitoring (maximum reflectance)",
+          "name": "Oa19_radiance",
+          "center_wavelength": 0.9,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Water vapour absorption, atmospheric / aerosol correction",
+          "name": "Oa20_radiance",
+          "center_wavelength": 0.94,
+          "full_width_half_max": 0.02,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Atmospheric / aerosol correction, snow grain size",
+          "name": "Oa21_radiance",
+          "center_wavelength": 1.02,
+          "full_width_half_max": 0.04,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        }
+      ]
+    }
+  },
+    {
+    "id": "SENTINEL3_OLCI_L1B_FILE",
+    "_vito": {
+      "data_source": {
+        "type": "file-s3-olci"
+      }
+    },
+    "cube:dimensions": {
+      "x": {
+        "type": "spatial",
+        "axis": "x",
+        "extent": [
+          -180,
+          180
+        ],
+        "reference_system": 4326
+      },
+      "y": {
+        "type": "spatial",
+        "axis": "y",
+        "extent": [
+          -85,
+          85
+        ],
+        "reference_system": 4326
+      },
+      "t": {
+        "type": "temporal",
+        "extent": [
+          "2016-04-17T11:33:13Z",
+          null
+        ],
+        "step": "P2D"
+      },
+      "bands": {
+        "type": "bands",
+        "values": [
+          "Oa01_radiance",
+          "Oa02_radiance",
+          "Oa03_radiance",
+          "Oa04_radiance",
+          "Oa05_radiance",
+          "Oa06_radiance",
+          "Oa07_radiance",
+          "Oa08_radiance",
+          "Oa09_radiance",
+          "Oa10_radiance",
+          "Oa11_radiance",
+          "Oa12_radiance",
+          "Oa13_radiance",
+          "Oa14_radiance",
+          "Oa15_radiance",
+          "Oa16_radiance",
+          "Oa17_radiance",
+          "Oa18_radiance",
+          "Oa19_radiance",
+          "Oa20_radiance",
+          "Oa21_radiance"
+        ]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {
+          "description": "Aerosol correction, improved water constituent retrieval",
+          "name": "Oa01_radiance",
+          "center_wavelength": 0.4,
+          "full_width_half_max": 0.015,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Yellow substance and detrital pigments (turbidity)",
+          "name": "Oa02_radiance",
+          "center_wavelength": 0.4125,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Chlorophyll absorption maximum, biogeochemistry, vegetation",
+          "name": "Oa03_radiance",
+          "center_wavelength": 0.4425,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Chlorophyll",
+          "name": "Oa04_radiance",
+          "center_wavelength": 0.49,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Chlorophyll, sediment, turbidity, red tide",
+          "name": "Oa05_radiance",
+          "center_wavelength": 0.51,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Chlorophyll reference (minimum)",
+          "name": "Oa06_radiance",
+          "center_wavelength": 0.56,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Sediment loading",
+          "name": "Oa07_radiance",
+          "center_wavelength": 0.62,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "2nd Chlorophyll absorption maximum, sediment, yellow substance / vegetation",
+          "name": "Oa08_radiance",
+          "center_wavelength": 0.665,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Improved fluorescence retrieval",
+          "name": "Oa09_radiance",
+          "center_wavelength": 0.67375,
+          "full_width_half_max": 0.0075,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Chlorophyll fluorescence peak, red edge",
+          "name": "Oa10_radiance",
+          "center_wavelength": 0.68125,
+          "full_width_half_max": 0.0075,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Chlorophyll fluorescence baseline, red edge transition",
+          "name": "Oa11_radiance",
+          "center_wavelength": 0.70875,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "O2 absorption / clouds, vegetation",
+          "name": "Oa12_radiance",
+          "center_wavelength": 0.75375,
+          "full_width_half_max": 0.0075,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "O2 absorption / aerosol correction",
+          "name": "Oa13_radiance",
+          "center_wavelength": 0.76125,
+          "full_width_half_max": 0.0025,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Atmospheric correction",
+          "name": "Oa14_radiance",
+          "center_wavelength": 0.764375,
+          "full_width_half_max": 0.00375,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "O2 absorption used for cloud top pressure, fluorescence over land",
+          "name": "Oa15_radiance",
+          "center_wavelength": 0.7675,
+          "full_width_half_max": 0.0025,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Atmospheric / aerosol correction",
+          "name": "Oa16_radiance",
+          "center_wavelength": 0.77875,
+          "full_width_half_max": 0.015,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Atmospheric / aerosol correction, clouds, pixel co-registration",
+          "name": "Oa17_radiance",
+          "center_wavelength": 0.865,
+          "full_width_half_max": 0.02,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Water vapour absorption reference. Common reference band with SLSTR. Vegetation monitoring",
+          "name": "Oa18_radiance",
+          "center_wavelength": 0.885,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Water vapour absorption, vegetation monitoring (maximum reflectance)",
+          "name": "Oa19_radiance",
+          "center_wavelength": 0.9,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Water vapour absorption, atmospheric / aerosol correction",
+          "name": "Oa20_radiance",
+          "center_wavelength": 0.94,
+          "full_width_half_max": 0.02,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Atmospheric / aerosol correction, snow grain size",
+          "name": "Oa21_radiance",
+          "center_wavelength": 1.02,
+          "full_width_half_max": 0.04,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "SENTINEL3_SYN_L2",
+    "_vito": {
+      "data_source": {
+        "type": "file-s3-synergy"
+      }
+    },
+    "cube:dimensions": {
+      "x": {
+        "type": "spatial",
+        "axis": "x",
+        "extent": [
+          -180,
+          180
+        ],
+        "reference_system": 4326
+      },
+      "y": {
+        "type": "spatial",
+        "axis": "y",
+        "extent": [
+          -85,
+          85
+        ],
+        "reference_system": 4326
+      },
+      "t": {
+        "type": "temporal",
+        "extent": [
+          "2016-04-17T11:33:13Z",
+          null
+        ],
+        "step": "P2D"
+      },
+      "bands": {
+        "type": "bands",
+        "values": [
+          "Syn_Oa01_reflectance",
+          "Syn_Oa02_reflectance",
+          "Syn_Oa03_reflectance",
+          "Syn_Oa04_reflectance",
+          "Syn_Oa05_reflectance",
+          "Syn_Oa06_reflectance",
+          "Syn_Oa07_reflectance",
+          "Syn_Oa08_reflectance",
+          "Syn_Oa09_reflectance",
+          "Syn_Oa10_reflectance",
+          "Syn_Oa11_reflectance",
+          "Syn_Oa12_reflectance",
+          "Syn_Oa16_reflectance",
+          "Syn_Oa17_reflectance",
+          "Syn_Oa18_reflectance",
+          "Syn_Oa21_reflectance",
+          "Syn_S1N_reflectance",
+          "Syn_S1O_reflectance",
+          "Syn_S2N_reflectance",
+          "Syn_S2O_reflectance",
+          "Syn_S3N_reflectance",
+          "Syn_S3O_reflectance",
+          "Syn_S5N_reflectance",
+          "Syn_S5O_reflectance",
+          "Syn_S6N_reflectance",
+          "Syn_S6O_reflectance"
+        ]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {
+          "description": "Aerosol correction, improved water constituent retrieval",
+          "name": "Syn_Oa01_reflectance",
+          "center_wavelength": 0.4,
+          "full_width_half_max": 0.015,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Yellow substance and detrital pigments (turbidity)",
+          "name": "Syn_Oa02_reflectance",
+          "center_wavelength": 0.4125,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Chlorophyll absorption maximum, biogeochemistry, vegetation",
+          "name": "Syn_Oa03_reflectance",
+          "center_wavelength": 0.4425,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Chlorophyll",
+          "name": "Syn_Oa04_reflectance",
+          "center_wavelength": 0.49,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Chlorophyll, sediment, turbidity, red tide",
+          "name": "Syn_Oa05_reflectance",
+          "center_wavelength": 0.51,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Chlorophyll reference (minimum)",
+          "name": "Syn_Oa06_reflectance",
+          "center_wavelength": 0.56,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Sediment loading",
+          "name": "Syn_Oa07_reflectance",
+          "center_wavelength": 0.62,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "2nd Chlorophyll absorption maximum, sediment, yellow substance / vegetation",
+          "name": "Syn_Oa08_reflectance",
+          "center_wavelength": 0.665,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Improved fluorescence retrieval",
+          "name": "Syn_Oa09_reflectance",
+          "center_wavelength": 0.67375,
+          "full_width_half_max": 0.0075,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Chlorophyll fluorescence peak, red edge",
+          "name": "Syn_Oa10_reflectance",
+          "center_wavelength": 0.68125,
+          "full_width_half_max": 0.0075,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Chlorophyll fluorescence baseline, red edge transition",
+          "name": "Syn_Oa11_reflectance",
+          "center_wavelength": 0.70875,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "O2 absorption / clouds, vegetation",
+          "name": "Syn_Oa12_reflectance",
+          "center_wavelength": 0.75375,
+          "full_width_half_max": 0.0075,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "O2 absorption / aerosol correction",
+          "name": "Syn_Oa16_reflectance",
+          "center_wavelength": 0.76125,
+          "full_width_half_max": 0.0025,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Atmospheric correction",
+          "name": "Syn_Oa17_reflectance",
+          "center_wavelength": 0.764375,
+          "full_width_half_max": 0.00375,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "O2 absorption used for cloud top pressure, fluorescence over land",
+          "name": "Syn_Oa18_reflectance",
+          "center_wavelength": 0.7675,
+          "full_width_half_max": 0.0025,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Atmospheric / aerosol correction",
+          "name": "Syn_Oa21_reflectance",
+          "center_wavelength": 0.77875,
+          "full_width_half_max": 0.015,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Atmospheric / aerosol correction, clouds, pixel co-registration",
+          "name": "Syn_S1N_reflectance",
+          "center_wavelength": 0.865,
+          "full_width_half_max": 0.02,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Water vapour absorption reference. Common reference band with SLSTR. Vegetation monitoring",
+          "name": "Syn_S1O_reflectance",
+          "center_wavelength": 0.885,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Water vapour absorption, vegetation monitoring (maximum reflectance)",
+          "name": "Syn_S2N_reflectance",
+          "center_wavelength": 0.9,
+          "full_width_half_max": 0.01,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Water vapour absorption, atmospheric / aerosol correction",
+          "name": "Syn_S2O_reflectance",
+          "center_wavelength": 0.94,
+          "full_width_half_max": 0.02,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Atmospheric / aerosol correction, snow grain size",
+          "name": "Syn_S3N_reflectance",
+          "center_wavelength": 1.02,
+          "full_width_half_max": 0.04,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Atmospheric / aerosol correction, snow grain size",
+          "name": "Syn_S3O_reflectance",
+          "center_wavelength": 1.02,
+          "full_width_half_max": 0.04,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Atmospheric / aerosol correction, snow grain size",
+          "name": "Syn_S5N_reflectance",
+          "center_wavelength": 1.02,
+          "full_width_half_max": 0.04,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Atmospheric / aerosol correction, snow grain size",
+          "name": "Syn_S5O_reflectance",
+          "center_wavelength": 1.02,
+          "full_width_half_max": 0.04,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Atmospheric / aerosol correction, snow grain size",
+          "name": "Syn_S6N_reflectance",
+          "center_wavelength": 1.02,
+          "full_width_half_max": 0.04,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        },
+        {
+          "description": "Atmospheric / aerosol correction, snow grain size",
+          "name": "Syn_S6O_reflectance",
+          "center_wavelength": 1.02,
+          "full_width_half_max": 0.04,
+          "openeo:gsd": {
+            "value": [
+              0.00297619047619,
+              0.00297619047619
+            ],
+            "unit": "°"
+          },
+          "data_type": "float32",
+          "statistics": {
+            "minimum": [
+              0
+            ],
+            "maximum": [
+              0.4
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "SENTINEL3_SLSTR_L2_LST",
+    "_vito": {
+      "data_source": {
+        "type": "file-s3-slstr"
+      }
+    },
+    "cube:dimensions": {
+      "x": {
+        "type": "spatial",
+        "axis": "x",
+        "extent": [
+          -180,
+          180
+        ],
+        "reference_system": 4326
+      },
+      "y": {
+        "type": "spatial",
+        "axis": "y",
+        "extent": [
+          -85,
+          85
+        ],
+        "reference_system": 4326
+      },
+      "t": {
+        "type": "temporal",
+        "extent": [
+          "2016-04-17T11:33:13Z",
+          null
+        ],
+        "step": "P2D"
+      },
+      "bands": {
+        "type": "bands",
+        "values": [
+          "LST_in:LST",
+          "LST_in:LST_uncertainty",
+          "LST_in:exception"
+        ]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {
+          "name": "LST_in:LST",
+          "openeo:gsd": {
+            "value": [
+              0.008928571428571,
+              0.008928571428571
+            ],
+            "unit": "°"
+          }
+        },
+        {
+          "name": "LST_in:LST_uncertainty",
+          "openeo:gsd": {
+            "value": [
+              0.008928571428571,
+              0.008928571428571
+            ],
+            "unit": "°"
+          }
+        },
+        {
+          "name": "LST_in:exception",
+          "openeo:gsd": {
+            "value": [
+              0.008928571428571,
+              0.008928571428571
+            ],
+            "unit": "°"
+          }
+        }
+      ]
+    }
   }
 ]
