@@ -2459,21 +2459,23 @@
           -180,
           180
         ],
-        "reference_system": 4326
+        "reference_system": 4326,
+        "step": 0.00297619047619
       },
       "y": {
         "type": "spatial",
         "axis": "y",
         "extent": [
-          -85,
-          85
+          -90,
+          90
         ],
-        "reference_system": 4326
+        "reference_system": 4326,
+        "step": 0.00297619047619
       },
       "t": {
         "type": "temporal",
         "extent": [
-          "2016-03-01T00:00:00Z",
+          "2016-04-17T11:33:13Z",
           null
         ],
         "step": "P2D"
@@ -2513,264 +2515,82 @@
     "summaries": {
       "eo:bands": [
         {
-          "name": "Syn_Oa01_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_Oa01_reflectance"
         },
         {
-          "name": "Syn_Oa02_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_Oa02_reflectance"
         },
         {
-          "name": "Syn_Oa03_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_Oa03_reflectance"
         },
         {
-          "name": "Syn_Oa04_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_Oa04_reflectance"
         },
         {
-          "name": "Syn_Oa05_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_Oa05_reflectance"
         },
         {
-          "name": "Syn_Oa06_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_Oa06_reflectance"
         },
         {
-          "name": "Syn_Oa07_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_Oa07_reflectance"
         },
         {
-          "name": "Syn_Oa08_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_Oa08_reflectance"
         },
         {
-          "name": "Syn_Oa09_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_Oa09_reflectance"
         },
         {
-          "name": "Syn_Oa10_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_Oa10_reflectance"
         },
         {
-          "name": "Syn_Oa11_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_Oa11_reflectance"
         },
         {
-          "name": "Syn_Oa12_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_Oa12_reflectance"
         },
         {
-          "name": "Syn_Oa16_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_Oa16_reflectance"
         },
         {
-          "name": "Syn_Oa17_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_Oa17_reflectance"
         },
         {
-          "name": "Syn_Oa18_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_Oa18_reflectance"
         },
         {
-          "name": "Syn_Oa21_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_Oa21_reflectance"
         },
         {
-          "name": "Syn_S1N_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_S1N_reflectance"
         },
         {
-          "name": "Syn_S1O_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_S1O_reflectance"
         },
         {
-          "name": "Syn_S2N_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_S2N_reflectance"
         },
         {
-          "name": "Syn_S2O_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_S2O_reflectance"
         },
         {
-          "name": "Syn_S3N_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_S3N_reflectance"
         },
         {
-          "name": "Syn_S3O_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_S3O_reflectance"
         },
         {
-          "name": "Syn_S5N_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_S5N_reflectance"
         },
         {
-          "name": "Syn_S5O_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_S5O_reflectance"
         },
         {
-          "name": "Syn_S6N_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_S6N_reflectance"
         },
         {
-          "name": "Syn_S6O_reflectance",
-          "openeo:gsd": {
-            "value": [
-              0.00297619047619,
-              0.00297619047619
-            ],
-            "unit": "°"
-          }
+          "name": "Syn_S6O_reflectance"
         }
       ]
     }
@@ -2808,21 +2628,23 @@
           -180,
           180
         ],
-        "reference_system": 4326
+        "reference_system": 4326,
+        "step": 0.008928571428571
       },
       "y": {
         "type": "spatial",
         "axis": "y",
         "extent": [
-          -85,
-          85
+          -90,
+          90
         ],
-        "reference_system": 4326
+        "reference_system": 4326,
+        "step": 0.008928571428571
       },
       "t": {
         "type": "temporal",
         "extent": [
-          "2016-03-01T00:00:00Z",
+          "2016-04-17T11:33:13Z",
           null
         ],
         "step": "P2D"
@@ -2839,34 +2661,13 @@
     "summaries": {
       "eo:bands": [
         {
-          "name": "LST_in:LST",
-          "openeo:gsd": {
-            "value": [
-              0.008928571428571,
-              0.008928571428571
-            ],
-            "unit": "°"
-          }
+          "name": "LST_in:LST"
         },
         {
-          "name": "LST_in:LST_uncertainty",
-          "openeo:gsd": {
-            "value": [
-              0.008928571428571,
-              0.008928571428571
-            ],
-            "unit": "°"
-          }
+          "name": "LST_in:LST_uncertainty"
         },
         {
-          "name": "LST_in:exception",
-          "openeo:gsd": {
-            "value": [
-              0.008928571428571,
-              0.008928571428571
-            ],
-            "unit": "°"
-          }
+          "name": "LST_in:exception"
         }
       ]
     }
