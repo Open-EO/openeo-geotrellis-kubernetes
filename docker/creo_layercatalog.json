@@ -2432,6 +2432,10 @@
     "description": "Experimental.",
     "experimental": true,
     "license": "proprietary",
+    "extent": {
+      "spatial": {"bbox": [[-180, -90, 180, 90]]},
+      "temporal": {"interval": [["2016-04-17T11:33:13Z", null]]}
+    },
     "keywords": [
                 "COPERNICUS",
                 "ESA",
@@ -2526,7 +2530,7 @@
           "2016-04-17T11:33:13Z",
           null
         ],
-        "step": "P2D"
+        "step": "P1D"
       },
       "bands": {
         "type": "bands",
@@ -2648,6 +2652,10 @@
     "title": "Daily global Sentinel-3 Land surface temperature at 1km resolution",
     "description": "*Experimental* Daily global Sentinel-3 Land surface temperature at 1km resolution",
     "experimental": true,
+    "extent": {
+      "spatial": {"bbox": [[-180, -90, 180, 90]]},
+      "temporal": {"interval": [["2016-04-17T11:33:13Z", null]]}
+    },
     "license": "proprietary",
     "keywords": [
                 "COPERNICUS",
@@ -2758,13 +2766,21 @@
       "eo:bands": [
         {
           "name": "LST_in:LST",
+          "common_name": "surface_temperature",
           "aliases": ["LST_in:LST"],
-          "gsd": 1000
+          "gsd": 1000,
+          "scale": 0.002,
+          "offset": 290,
+          "unit": "K"
         },
         {
           "name": "LST_uncertainty",
+          "common_name": "surface_temperature_standard_error",
           "aliases": ["LST_in:LST_uncertainty"],
-          "gsd": 1000
+          "gsd": 1000,
+          "scale": 0.0020000000949949,
+          "offset": 0,
+          "unit": "K"
         },
         {
           "name": "LST_in:exception",
