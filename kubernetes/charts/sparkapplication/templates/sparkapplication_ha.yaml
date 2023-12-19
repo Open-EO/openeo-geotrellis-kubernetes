@@ -160,6 +160,10 @@ spec:
     initContainers:
 {{ toYaml .Values.initContainers | indent 6 }}
     {{- end }}
+    {{- if .Values.executor.lifecycle}}
+    lifecycle:
+{{ toYaml .Values.executor.lifecycle | indent 6 }}
+    {{- end }}
     terminationGracePeriodSeconds: {{ .Values.executor.terminationGracePeriodSeconds }}
   {{- if .Values.sparkUIOptions }}
   sparkUIOptions:
