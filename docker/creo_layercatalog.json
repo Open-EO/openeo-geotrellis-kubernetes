@@ -2757,7 +2757,7 @@
         "type": "bands",
         "values": [
           "LST_in:LST",
-          "LST_in:LST_uncertainty",
+          "LST_uncertainty",
           "LST_in:exception"
         ]
       }
