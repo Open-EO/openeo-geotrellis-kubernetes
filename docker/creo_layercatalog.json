@@ -2758,7 +2758,8 @@
         "values": [
           "LST_in:LST",
           "LST_uncertainty",
-          "LST_in:exception"
+          "LST_in:exception",
+          "flags_in:confidence_in"
         ]
       }
     },
@@ -2784,6 +2785,10 @@
         },
         {
           "name": "LST_in:exception",
+          "gsd": 1000
+        },
+        {
+          "name": "flags_in:confidence_in",
           "gsd": 1000
         }
       ]
