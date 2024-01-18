@@ -79,6 +79,10 @@ spec:
     {{- if .Values.driver.javaOptions }}
     javaOptions: {{ .Values.driver.javaOptions }}
     {{- end }}
+    {{- if .Values.executor.podSecurityContext }}
+    podSecurityContext:
+{{ toYaml .Values.executor.podSecurityContext | indent 6 }}
+    {{- end }}
     securityContext:
       privileged: {{ .Values.privileged }}
     cores: {{ .Values.driver.cores }}
