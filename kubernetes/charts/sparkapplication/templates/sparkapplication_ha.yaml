@@ -61,6 +61,10 @@ spec:
     maxExecutors: {{ .Values.dynamicAllocation.maxExecutors }}
   {{- end }}
   driver:
+    {{- if .Values.driver.affinity }}
+    affinity:
+{{ toYaml .Values.driver.affinity | indent 6 }}
+    {{- end }}
     env:
       - name: IMAGE_NAME
         value: {{ .Values.image }}:{{ .Values.imageVersion }}
@@ -115,6 +119,10 @@ spec:
     {{- end }}
     terminationGracePeriodSeconds: {{ .Values.driver.terminationGracePeriodSeconds }}
   executor:
+    {{- if .Values.executor.affinity }}
+    affinity:
+{{ toYaml .Values.executor.affinity | indent 6 }}
+    {{- end }}
     env:
       - name: POD_NAME
         valueFrom:
