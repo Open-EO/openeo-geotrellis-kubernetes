@@ -4,7 +4,7 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: {{ $fullName }}
+  name: {{ default $fullName .Values.ingressRoute.name }}
   labels:
     {{- include "sparkapplication.labels" . | nindent 4 }}
   {{- with .Values.ingressRoute.annotations }}
