@@ -83,9 +83,9 @@ spec:
     {{- if .Values.driver.javaOptions }}
     javaOptions: {{ .Values.driver.javaOptions }}
     {{- end }}
-    {{- if .Values.executor.podSecurityContext }}
+    {{- if .Values.driver.podSecurityContext }}
     podSecurityContext:
-{{ toYaml .Values.executor.podSecurityContext | indent 6 }}
+{{ toYaml .Values.driver.podSecurityContext | indent 6 }}
     {{- end }}
     securityContext:
       privileged: {{ .Values.privileged }}
@@ -141,6 +141,10 @@ spec:
     {{- end }}
     {{- if .Values.executor.javaOptions }}
     javaOptions: {{ .Values.executor.javaOptions }}
+    {{- end }}
+    {{- if .Values.executor.podSecurityContext }}
+    podSecurityContext:
+{{ toYaml .Values.executor.podSecurityContext | indent 6 }}
     {{- end }}
     securityContext:
       privileged: {{ .Values.privileged }}
