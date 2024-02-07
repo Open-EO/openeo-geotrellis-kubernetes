@@ -12,6 +12,7 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/
 
 RUN dnf clean all && dnf install -y epel-release && \
     dnf --enablerepo=powertools install -y spark-bin-${SPARK_VERSION} \
+    hdf5-1.10.5-5.el8.x86_64 \
     gdal-3.7.0 \
     gdal-devel-3.7.0 \
     python3-gdal-3.7.0 \
