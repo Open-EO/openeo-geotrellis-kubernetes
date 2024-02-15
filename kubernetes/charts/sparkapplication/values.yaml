@@ -32,6 +32,14 @@ rbac:
   sparkOperator:
     namespace: spark-operator
     serviceAccount: spark-operator
+  clusterRole:
+    rules:
+      - apiGroups:
+          - 'policy'
+        resources:
+          - 'podsecuritypolicies'
+        verbs:
+          - 'use'
 restartPolicy:
   type: "OnFailure"
   onFailureRetries: 3

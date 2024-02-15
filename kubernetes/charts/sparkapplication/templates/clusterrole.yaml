@@ -9,10 +9,5 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 rules:
-- apiGroups:
-    - 'policy'
-  resources:
-    - 'podsecuritypolicies'
-  verbs:
-    - 'use'
+{{ toYaml .Values.rbac.clusterRole.rules | indent 2 }}
 {{- end }}
