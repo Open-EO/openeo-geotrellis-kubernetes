@@ -887,7 +887,7 @@
     "product_id": "SENTINEL1_RTC",
     "experimental": true,
     "title": "Sentinel-1 RTC",
-    "description": "[EXPERIMENTAL] The Sentinel-1 radiometric terrain corrected (RTC) backscatter product."
+    "description": "[EXPERIMENTAL] The Sentinel-1 radiometric terrain corrected (RTC) backscatter product.",
     "mission": "Sentinel-1",
     "providers": [],
     "_vito": {
