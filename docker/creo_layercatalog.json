@@ -632,7 +632,8 @@
 
         {
           "name": "SCL",
-          "aliases": ["IMG_DATA_Band_SCL_20m_Tile1_Data"]
+          "aliases": ["IMG_DATA_Band_SCL_20m_Tile1_Data"],
+          "gsd": 20
         },
 
         {
