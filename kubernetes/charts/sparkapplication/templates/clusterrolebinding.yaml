@@ -9,13 +9,15 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 subjects:
-- kind: ServiceAccount
-  name: {{ .Values.rbac.sparkOperator.serviceAccount }}
-  namespace: {{ .Values.rbac.sparkOperator.namespace }}
-- kind: ServiceAccount
-  name: {{ .Values.rbac.serviceAccountDriver }}
-  namespace: {{ .Release.Namespace }}
+  - kind: ServiceAccount
+    name: {{ .Values.rbac.sparkOperator.serviceAccount }}
+    namespace: {{ .Values.rbac.sparkOperator.namespace }}
+  - kind: ServiceAccount
+    name: {{ .Values.rbac.serviceAccountDriver }}
+    namespace: {{ .Release.Namespace }}
+{{- with .Valyes.rbac.clusterRoleBinding.subjects }}
 {{ toYaml .Values.rbac.clusterRoleBinding.subjects | indent 2 }}
+{{- end }}
 roleRef:
   kind: ClusterRole
   name: {{ .Values.rbac.serviceAccountDriver }}-cluster-role
