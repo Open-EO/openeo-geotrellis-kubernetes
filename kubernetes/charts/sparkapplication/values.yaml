@@ -40,6 +40,8 @@ rbac:
           - 'podsecuritypolicies'
         verbs:
           - 'use'
+  clusterRoleBinding:
+    subjects: {}
 restartPolicy:
   type: "OnFailure"
   onFailureRetries: 3
