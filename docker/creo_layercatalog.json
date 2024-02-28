@@ -2948,7 +2948,7 @@
         },
         {
           "name": "confidence_in",
-          "aliases": ["confidence_in"],
+          "aliases": ["flags_in:confidence_in"],
           "description": "quality control flags including summary_cloud flag",
           "gsd": 1000
         }
