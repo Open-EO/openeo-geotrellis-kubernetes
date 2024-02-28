@@ -2918,17 +2918,17 @@
       "bands": {
         "type": "bands",
         "values": [
-          "LST_in:LST",
+          "LST",
           "LST_uncertainty",
-          "LST_in:exception",
-          "flags_in:confidence_in"
+          "exception",
+          "confidence_in"
         ]
       }
     },
     "summaries": {
       "eo:bands": [
         {
-          "name": "LST_in:LST",
+          "name": "LST",
           "common_name": "surface_temperature",
           "aliases": ["LST_in:LST"],
           "gsd": 1000,
@@ -2942,11 +2942,13 @@
           "unit": "K"
         },
         {
-          "name": "LST_in:exception",
+          "name": "exception",
+          "aliases": ["LST_in:exception"],
           "gsd": 1000
         },
         {
-          "name": "flags_in:confidence_in",
+          "name": "confidence_in",
+          "aliases": ["confidence_in"],
           "description": "quality control flags including summary_cloud flag",
           "gsd": 1000
         }
