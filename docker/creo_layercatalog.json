@@ -2590,8 +2590,8 @@
   },
   {
     "id": "SENTINEL3_SYN_L2_SYN",
-    "title": "Daily global Sentinel-3 Synergy products combining OCLI and SLSTR bands.",
-    "description": "Experimental.",
+    "title": "Daily global Sentinel-3 Synergy products at 300m resolution combining OCLI and SLSTR bands.",
+    "description": "[Experimental] Sentinel-3  SYNERGY products are created from a combination of OLCI and SLSTR Level-1B products (including both\nnadir and oblique views). The SYNERGY swath is then corresponding to the common area between OLCI\nand SLSTR swaths, restricted to the daylight part of the SENTINEL-3 orbit (i.e., where the sun zenith angle\nat satellite ground track is lower than 80°).\n ",
     "experimental": true,
     "license": "proprietary",
     "extent": {
@@ -2722,92 +2722,269 @@
           "Syn_S5N_reflectance",
           "Syn_S5O_reflectance",
           "Syn_S6N_reflectance",
-          "Syn_S6O_reflectance"
+          "Syn_S6O_reflectance",
+          "CLOUD_flags",
+          "OLC_flags",
+          "SLN_flags",
+          "SLO_flags",
+          "SYN_flags"
         ]
       }
     },
     "summaries": {
       "eo:bands": [
         {
-          "name": "Syn_Oa01_reflectance"
+          "name": "Syn_Oa01_reflectance",
+          "center_wavelength": 0.400,
+          "full_width_half_max": 0.015
         },
         {
-          "name": "Syn_Oa02_reflectance"
+          "name": "Syn_Oa02_reflectance",
+          "center_wavelength": 0.4125,
+          "full_width_half_max": 0.01
         },
         {
-          "name": "Syn_Oa03_reflectance"
+          "name": "Syn_Oa03_reflectance",
+          "center_wavelength": 0.4425,
+          "full_width_half_max": 0.01
         },
         {
-          "name": "Syn_Oa04_reflectance"
+          "name": "Syn_Oa04_reflectance",
+          "center_wavelength": 0.49,
+          "full_width_half_max": 0.01
         },
         {
-          "name": "Syn_Oa05_reflectance"
+          "name": "Syn_Oa05_reflectance",
+          "center_wavelength": 0.51,
+          "full_width_half_max": 0.01
         },
         {
-          "name": "Syn_Oa06_reflectance"
+          "name": "Syn_Oa06_reflectance",
+          "center_wavelength": 0.56,
+          "full_width_half_max": 0.01
         },
         {
-          "name": "Syn_Oa07_reflectance"
+          "name": "Syn_Oa07_reflectance",
+          "center_wavelength": 0.620,
+          "full_width_half_max": 0.01
         },
         {
-          "name": "Syn_Oa08_reflectance"
+          "name": "Syn_Oa08_reflectance",
+          "center_wavelength": 0.665,
+          "full_width_half_max": 0.01
         },
         {
-          "name": "Syn_Oa09_reflectance"
+          "name": "Syn_Oa09_reflectance",
+          "center_wavelength": 0.67375,
+          "full_width_half_max": 0.0075
         },
         {
-          "name": "Syn_Oa10_reflectance"
+          "name": "Syn_Oa10_reflectance",
+          "center_wavelength": 0.68125,
+          "full_width_half_max": 0.0075
         },
         {
-          "name": "Syn_Oa11_reflectance"
+          "name": "Syn_Oa11_reflectance",
+          "center_wavelength": 0.70875,
+          "full_width_half_max": 0.010
         },
         {
-          "name": "Syn_Oa12_reflectance"
+          "name": "Syn_Oa12_reflectance",
+          "center_wavelength": 0.75375,
+          "full_width_half_max": 0.0075
         },
         {
-          "name": "Syn_Oa16_reflectance"
+          "name": "Syn_Oa16_reflectance",
+          "center_wavelength": 0.77875,
+          "full_width_half_max": 0.015
         },
         {
-          "name": "Syn_Oa17_reflectance"
+          "name": "Syn_Oa17_reflectance",
+          "center_wavelength": 0.865,
+          "full_width_half_max": 0.020
         },
         {
-          "name": "Syn_Oa18_reflectance"
+          "name": "Syn_Oa18_reflectance",
+          "center_wavelength": 0.885,
+          "full_width_half_max": 0.010
         },
         {
-          "name": "Syn_Oa21_reflectance"
+          "name": "Syn_Oa21_reflectance",
+          "center_wavelength": 1.020,
+          "full_width_half_max": 0.040
         },
         {
-          "name": "Syn_S1N_reflectance"
+          "name": "Syn_S1N_reflectance",
+          "center_wavelength": 0.555,
+          "full_width_half_max": 0.020
         },
         {
-          "name": "Syn_S1O_reflectance"
+          "name": "Syn_S1O_reflectance",
+          "center_wavelength": 0.555,
+          "full_width_half_max": 0.020
         },
         {
-          "name": "Syn_S2N_reflectance"
+          "name": "Syn_S2N_reflectance",
+          "center_wavelength": 0.659,
+          "full_width_half_max": 0.020
         },
         {
-          "name": "Syn_S2O_reflectance"
+          "name": "Syn_S2O_reflectance",
+          "center_wavelength": 0.659,
+          "full_width_half_max": 0.020
         },
         {
-          "name": "Syn_S3N_reflectance"
+          "name": "Syn_S3N_reflectance",
+          "center_wavelength": 0.865,
+          "full_width_half_max": 0.020
         },
         {
-          "name": "Syn_S3O_reflectance"
+          "name": "Syn_S3O_reflectance",
+          "center_wavelength": 0.865,
+          "full_width_half_max": 0.020
         },
         {
-          "name": "Syn_S5N_reflectance"
+          "name": "Syn_S5N_reflectance",
+          "center_wavelength": 1.610,
+          "full_width_half_max": 0.060
         },
         {
-          "name": "Syn_S5O_reflectance"
+          "name": "Syn_S5O_reflectance",
+          "center_wavelength": 1.610,
+          "full_width_half_max": 0.060
         },
         {
-          "name": "Syn_S6N_reflectance"
+          "name": "Syn_S6N_reflectance",
+          "center_wavelength": 2.250,
+          "full_width_half_max": 0.050
         },
         {
-          "name": "Syn_S6O_reflectance"
+          "name": "Syn_S6O_reflectance",
+          "center_wavelength": 2.250,
+          "full_width_half_max": 0.050
+        },
+        {
+          "name": "CLOUD_flags",
+          "aliases": ["flags_in:CLOUD_flags"]
+        },
+        {
+          "name": "OLC_flags",
+          "aliases": ["flags_in:OLC_flags"]
+        },
+        {
+            "name": "SLN_flags",
+            "aliases": ["flags_in:SLN_flags"]
+        },
+        {
+            "name": "SLO_flags",
+            "aliases": ["flags_in:SLO_flags"]
+        },
+        {
+            "name": "SYN_flags",
+            "aliases": ["flags_in:SYN_flags"]
         }
       ]
-    }
+    },
+    "raster:bands": [
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "classification:bitfields": [
+          {
+            "name": "CLOUD",
+            "description": "Cloudy pixel",
+            "offset": 0,
+            "length": 1,
+            "classes": [
+              {
+                "name": "not cloudy",
+                "value": 0
+              },
+              {
+                "name": "cloudy",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "name": "CLOUD_AMBIGUOUS",
+            "description": "Ambiguous Cloudy pixel",
+            "offset": 1,
+            "length": 1,
+            "classes": [
+              {
+                "name": "not_ambiguous",
+                "value": 0
+              },
+              {
+                "name": "ambiguous",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "name": "CLOUD_MARGIN",
+            "description": "Dilatation around (CLOUD+CLOUD_AMBIGUOUS)",
+            "offset": 2,
+            "length": 1,
+            "classes": [
+              {
+                "name": "Not Margin",
+                "value": 0
+              },
+              {
+                "name": "Margin",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "name": "SNOW_ICE",
+            "description": "Snow/ice pixel",
+            "offset": 3,
+            "length": 1,
+            "classes": [
+              {
+                "name": "No snow",
+                "value": 0
+              },
+              {
+                "name": "snow",
+                "value": 1
+              }
+            ]
+          }
+        ]
+      },
+      {},
+      {},
+      {},
+      {}
+    ]
   },
   {
     "id": "SENTINEL3_SLSTR_L2_LST",
