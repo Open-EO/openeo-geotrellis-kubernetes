@@ -15,7 +15,7 @@ subjects:
   - kind: ServiceAccount
     name: {{ .Values.rbac.serviceAccountDriver }}
     namespace: {{ .Release.Namespace }}
-{{- with .Values.rbac.clusterRoleBinding.subjects }}
+{{- if .Values.rbac.clusterRoleBinding.subjects }}
 {{ toYaml .Values.rbac.clusterRoleBinding.subjects | indent 2 }}
 {{- end }}
 roleRef:
