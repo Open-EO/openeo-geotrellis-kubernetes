@@ -2865,23 +2865,23 @@
         },
         {
           "name": "CLOUD_flags",
-          "aliases": ["flags_in:CLOUD_flags"]
+          "aliases": ["flags:CLOUD_flags"]
         },
         {
           "name": "OLC_flags",
-          "aliases": ["flags_in:OLC_flags"]
+          "aliases": ["flags:OLC_flags"]
         },
         {
             "name": "SLN_flags",
-            "aliases": ["flags_in:SLN_flags"]
+            "aliases": ["flags:SLN_flags"]
         },
         {
             "name": "SLO_flags",
-            "aliases": ["flags_in:SLO_flags"]
+            "aliases": ["flags:SLO_flags"]
         },
         {
             "name": "SYN_flags",
-            "aliases": ["flags_in:SYN_flags"]
+            "aliases": ["flags:SYN_flags"]
         }
       ]
     },
