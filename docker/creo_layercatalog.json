@@ -1128,6 +1128,91 @@
     }
   },
   {
+    "id": "COPERNICUS_90",
+    "title": "Copernicus Global 90 meter Digital Elevation Model dataset.",
+    "description": "Copernicus Global 90 meter Digital Elevation Model dataset.",
+    "license": "proprietary",
+    "sci:doi": "10.5270/ESA-c5d3d65",
+    "providers": [
+    ],
+    "links": [
+      {
+        "rel": "cite-as",
+        "href": "https://doi.org/10.5270/ESA-c5d3d65"
+      },
+      {
+        "rel": "license",
+        "href": "https://spacedata.copernicus.eu/documents/20123/121286/CSCDA_ESA_Mission-specific+Annex_31_Oct_22.pdf/fb109818-56ad-bbee-053c-d972aed25ce6?t=1674741175657",
+        "type": "application/pdf"
+      },
+      {
+        "href": "https://services.terrascope.be/wmts/v2",
+        "rel": "wmts",
+        "wmts:layer": "COP_DEM_GLO_30M_COG"
+      }
+    ],
+    "extent": {
+      "spatial": {"bbox": [[-180, -90, 180, 90]]},
+      "temporal": {"interval": [["2010-12-12", null]]}
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x", "step": 0.0002777777777777778},
+      "y": {"type": "spatial", "axis": "y", "step": 0.0002777777777777778},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": ["DEM"]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {
+          "name": "DEM"
+        }
+      ]
+    },
+    "_vito": {
+      "data_source": {
+        "type": "file-oscars",
+        "opensearch_collection_id": "CopDem",
+        "opensearch_endpoint": "https://catalogue.dataspace.copernicus.eu/resto",
+        "opensearch_variant": "disabled",
+        "root_path": "/eodata",
+        "provider:backend": "creodias"
+      },
+      "properties": {
+        "productType": {
+          "process_graph": {
+            "asc": {
+              "process_id": "eq",
+              "arguments": {
+                "x": {
+                  "from_parameter": "value"
+                },
+                "y": "DGE_90"
+              },
+              "result": true
+            }
+          }
+        },
+        "resolution": {
+          "process_graph": {
+            "asc": {
+              "process_id": "eq",
+              "arguments": {
+                "x": {
+                  "from_parameter": "value"
+                },
+                "y": "90"
+              },
+              "result": true
+            }
+          }
+        }
+      }
+    }
+  },
+  {
     "id": "SENTINEL3_OLCI_L1B",
     "_vito": {
       "data_source": {
