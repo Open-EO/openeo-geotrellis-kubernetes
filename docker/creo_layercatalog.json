@@ -3183,7 +3183,9 @@
           "LST",
           "LST_uncertainty",
           "exception",
-          "confidence_in"
+          "confidence_in",
+          "solar_azimuth_tn",
+          "solar_zenith_tn"
         ]
       }
     },
@@ -3213,6 +3215,18 @@
           "aliases": ["flags_in:confidence_in"],
           "description": "quality control flags including summary_cloud flag",
           "gsd": 1000
+        },
+        {
+          "name": "solar_azimuth_tn",
+          "aliases": ["geometry_tn:solar_azimuth_tn"],
+          "gsd": 1000,
+          "unit": "deg"
+        },
+        {
+          "name": "solar_zenith_tn",
+          "aliases": ["geometry_tn:solar_zenith_tn"],
+          "gsd": 1000,
+          "unit": "deg"
         }
       ],
       "raster:bands": [
