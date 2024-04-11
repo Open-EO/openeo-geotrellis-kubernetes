@@ -3414,5 +3414,51 @@
         },
         {}]
     }
+  },
+  {
+    "id": "COPERNICUS_R_3035_X_M_HRVPP-VPP_P_2017-NOW_V01",
+    "description": "[EXPERIMENTAL]",
+    "experimental": true,
+    "_vito": {
+      "data_source": {
+        "type": "stac",
+        "href": "https://stac.openeo.vito.be/collections/copernicus_r_3035_x_m_hrvpp-vpp_p_2017-now_v01"
+      }
+    },
+    "cube:dimensions": {
+      "x": {
+        "type": "spatial",
+        "axis": "x",
+        "reference_system": 3035
+      },
+      "y": {
+        "type": "spatial",
+        "axis": "y",
+        "reference_system": 3035
+      },
+      "t": {
+        "type": "temporal"
+      },
+      "bands": {
+        "type": "bands",
+        "values": [
+          "QFLAG_100M"
+        ]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {
+          "name": "QFLAG_100M",
+          "openeo:gsd": {
+            "value": [
+              100,
+              100
+            ],
+            "unit": "m"
+          }
+        }
+      ]
+    }
   }
 ]
