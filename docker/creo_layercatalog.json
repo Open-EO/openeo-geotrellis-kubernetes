@@ -3422,7 +3422,7 @@
     "_vito": {
       "data_source": {
         "type": "stac",
-        "href": "https://stac.openeo.vito.be/collections/copernicus_r_3035_x_m_hrvpp-vpp_p_2017-now_v01"
+        "url": "https://stac.openeo.vito.be/collections/copernicus_r_3035_x_m_hrvpp-vpp_p_2017-now_v01"
       }
     },
     "cube:dimensions": {
@@ -3442,12 +3442,155 @@
       "bands": {
         "type": "bands",
         "values": [
+          "SOSD_100M",
+          "EOSD_100M",
+          "MAXD_100M",
+          "SOSV_100M",
+          "EOSV_100M",
+          "MINV_100M",
+          "MAXV_100M",
+          "AMPL_100M",
+          "LENGTH_100M",
+          "LSLOPE_100M",
+          "RSLOPE_100M",
+          "SPROD_100M",
+          "TPROD_100M",
           "QFLAG_100M"
         ]
       }
     },
     "summaries": {
       "eo:bands": [
+        {
+          "name": "SOSD_100M",
+          "openeo:gsd": {
+            "value": [
+              100,
+              100
+            ],
+            "unit": "m"
+          }
+        },
+        {
+          "name": "EOSD_100M",
+          "openeo:gsd": {
+            "value": [
+              100,
+              100
+            ],
+            "unit": "m"
+          }
+        },
+        {
+          "name": "MAXD_100M",
+          "openeo:gsd": {
+            "value": [
+              100,
+              100
+            ],
+            "unit": "m"
+          }
+        },
+        {
+          "name": "SOSV_100M",
+          "openeo:gsd": {
+            "value": [
+              100,
+              100
+            ],
+            "unit": "m"
+          }
+        },
+        {
+          "name": "EOSV_100M",
+          "openeo:gsd": {
+            "value": [
+              100,
+              100
+            ],
+            "unit": "m"
+          }
+        },
+        {
+          "name": "MINV_100M",
+          "openeo:gsd": {
+            "value": [
+              100,
+              100
+            ],
+            "unit": "m"
+          }
+        },
+        {
+          "name": "MAXV_100M",
+          "openeo:gsd": {
+            "value": [
+              100,
+              100
+            ],
+            "unit": "m"
+          }
+        },
+        {
+          "name": "AMPL_100M",
+          "openeo:gsd": {
+            "value": [
+              100,
+              100
+            ],
+            "unit": "m"
+          }
+        },
+        {
+          "name": "LENGTH_100M",
+          "openeo:gsd": {
+            "value": [
+              100,
+              100
+            ],
+            "unit": "m"
+          }
+        },
+        {
+          "name": "LSLOPE_100M",
+          "openeo:gsd": {
+            "value": [
+              100,
+              100
+            ],
+            "unit": "m"
+          }
+        },
+        {
+          "name": "RSLOPE_100M",
+          "openeo:gsd": {
+            "value": [
+              100,
+              100
+            ],
+            "unit": "m"
+          }
+        },
+        {
+          "name": "SPROD_100M",
+          "openeo:gsd": {
+            "value": [
+              100,
+              100
+            ],
+            "unit": "m"
+          }
+        },
+        {
+          "name": "TPROD_100M",
+          "openeo:gsd": {
+            "value": [
+              100,
+              100
+            ],
+            "unit": "m"
+          }
+        },
         {
           "name": "QFLAG_100M",
           "openeo:gsd": {
