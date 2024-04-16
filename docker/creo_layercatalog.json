@@ -3416,8 +3416,8 @@
     }
   },
   {
-    "id": "COPERNICUS_R_3035_X_M_HRVPP-VPP_P_2017-NOW_V01",
-    "description": "[EXPERIMENTAL]",
+    "id": "COPERNICUS_VEGETATION_PHENOLOGY_PRODUCTIVITY_100M",
+    "description": "[EXPERIMENTAL] Copernicus High Resolution Land Phenology at 100m, from 2017 onwards for EU countries.",
     "experimental": true,
     "_vito": {
       "data_source": {
@@ -3605,8 +3605,8 @@
     }
   },
   {
-    "id": "COPERNICUS_R_UTM-WGS84_10_M_HRVPP-VPP_P_2017-NOW_V01",
-    "description": "[EXPERIMENTAL]",
+    "id": "COPERNICUS_VEGETATION_PHENOLOGY_PRODUCTIVITY_10M",
+    "description": "[EXPERIMENTAL] Copernicus High Resolution Land Vegetation Phenology and Productivity parameters at 10m on yearly basis from 2017 onwards for EU countries.",
     "experimental": true,
     "_vito": {
       "data_source": {
@@ -3688,8 +3688,8 @@
     }
   },
   {
-    "id": "COPERNICUS_R_UTM-WGS84_10_M_HRVPP-ST_P_2017-NOW_V01",
-    "description": "[EXPERIMENTAL]",
+    "id": "COPERNICUS_PLANT_PHENOLOGY_INDEX",
+    "description": "[EXPERIMENTAL] Plant phenology index (PPI) at 10m resolution for EU.",
     "experimental": true,
     "_vito": {
       "data_source": {
@@ -3723,7 +3723,7 @@
     }
   },
   {
-    "id": "COPERNICUS_R_3035_X_M_HRVPP-ST_P_2017-NOW_V01",
+    "id": "COPERNICUS_PLANT_PHENOLOGY_INDEX_100M",
     "description": "[EXPERIMENTAL]",
     "experimental": true,
     "_vito": {
