@@ -3184,8 +3184,8 @@
           "LST_uncertainty",
           "exception",
           "confidence_in",
-          "solar_azimuth_tn",
-          "solar_zenith_tn"
+          "sunAzimuthAngles",
+          "sunZenithAngles"
         ]
       }
     },
@@ -3217,13 +3217,15 @@
           "gsd": 1000
         },
         {
-          "name": "solar_azimuth_tn",
+          "name": "sunAzimuthAngles",
+          "description": "nadir view solar azimuth angles",
           "aliases": ["geometry_tn:solar_azimuth_tn"],
           "gsd": 1000,
           "unit": "deg"
         },
         {
-          "name": "solar_zenith_tn",
+          "name": "sunZenithAngles",
+          "description": "nadir view solar azimuth angles",
           "aliases": ["geometry_tn:solar_zenith_tn"],
           "gsd": 1000,
           "unit": "deg"
@@ -3412,7 +3414,7 @@
             }
            ]
         },
-        {}]
+        {}, {},{}]
     }
   },
   {
