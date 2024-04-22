@@ -87,6 +87,10 @@ spec:
     podSecurityContext:
 {{ toYaml .Values.driver.podSecurityContext | indent 6 }}
     {{- end }}
+    {{- if .Values.driver.ports }}
+    ports:
+{{ toYaml .Values.driver.ports | indent 6 }}
+    {{- end }}
     securityContext:
       privileged: {{ .Values.privileged }}
     cores: {{ .Values.driver.cores }}
