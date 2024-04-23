@@ -32,5 +32,22 @@ Steps to run a job:
 3. In openeo_batch.sh, make sure that paths to the singularity image, layer catalog, working dir and job spec are correct.
 4. Submit SLURM job ``sbatch openeo_batch.sh ``
 
+# Running openEO on HPC using local method
 
+The above explanation describes how to use multipe nodes in an HPC cluster.
+This gives access to a lot of processing resources, but is also more complex to manage.
 
+There may be an easier option on HPC, considering that contrary to Cloud infrastructure, HPC often
+consists of fairly large nodes with for instance 256GB of memory.
+If we know that for instance a lot of openEO batch jobs use 20 executors with 4GB per executor, we
+can even run 3 batch jobs like this on a single HPC node, or we can run a single large batch job.
+
+As a result, the 'local' execution mode which runs the full openEO backend in a single docker container can
+actually be suitable for HPC as well. The SLURM job manager can then still be used to run multiple 
+batch jobs in parallel, which is anyway needed very often when processing large areas.
+
+This has the big advantage that openEO can be run 'on-premise' by operators without the experience of managing
+large Spark/Kubernetes clusters. Also the number of auxiliary components needed would be reduced.
+
+The local method may need to be extended to allow starting a local openEO  batch jobs, without starting the full web
+service, but just running things like it is done in the client side execution mode. This is still to be done!
