@@ -3929,8 +3929,7 @@
       "bands": {
         "type": "bands",
         "values": [
-          "MAP",
-          "INPUTQUALITY"
+          "MAP"
         ]
       }
     },
@@ -3938,11 +3937,6 @@
       "eo:bands": [
         {
           "name": "MAP",
-          "gsd": 10,
-          "type": "uint8"
-        },
-        {
-          "name": "INPUTQUALITY",
           "gsd": 10,
           "type": "uint8"
         }
@@ -3972,24 +3966,8 @@
     ],
     "_vito": {
       "data_source": {
-        "type": "file-oscars",
-        "opensearch_collection_id": "urn:eop:VITO:ESA_WorldCover_10m_2021_V2"
-      },
-      "properties": {
-        "accessedFrom": {
-          "process_graph": {
-            "asc": {
-              "process_id": "eq",
-              "arguments": {
-                "x": {
-                  "from_parameter": "value"
-                },
-                "y": "HTTP"
-              },
-              "result": true
-            }
-          }
-        }
+        "type": "stac",
+        "url": "https://stac.openeo.vito.be/collections/ESA_WORLDCOVER_10M_2021_V2"
       }
     }
   },
