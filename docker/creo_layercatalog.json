@@ -3185,7 +3185,9 @@
           "exception",
           "confidence_in",
           "sunAzimuthAngles",
-          "sunZenithAngles"
+          "sunZenithAngles",
+          "viewAzimuthAngles",
+          "viewZenithAngles"
         ]
       }
     },
@@ -3225,8 +3227,22 @@
         },
         {
           "name": "sunZenithAngles",
-          "description": "nadir view solar azimuth angles",
+          "description": "nadir view solar zenith angles",
           "aliases": ["geometry_tn:solar_zenith_tn"],
+          "gsd": 1000,
+          "unit": "deg"
+        },
+        {
+          "name": "viewAzimuthAngles",
+          "description": "nadir view satellite azimuth angles",
+          "aliases": ["geometry_tn:sat_azimuth_tn"],
+          "gsd": 1000,
+          "unit": "deg"
+        },
+        {
+          "name": "viewZenithAngles",
+          "description": "nadir view satellite zenith angles",
+          "aliases": ["geometry_tn:sat_zenith_tn"],
           "gsd": 1000,
           "unit": "deg"
         }
@@ -3414,7 +3430,7 @@
             }
            ]
         },
-        {}, {},{}]
+        {}, {},{}, {}, {}]
     }
   },
   {
