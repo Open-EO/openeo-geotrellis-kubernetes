@@ -41,7 +41,8 @@
       },
       {
           "rel": "alternate",
-          "href": "https://documentation.dataspace.copernicus.eu/Data/Sentinel2.html",
+          "title": "Copernicus dataspace documentation",
+          "href": "https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/Sentinel2.html#sentinel-2-level-1c-top-of-atmosphere-toa",
           "type": "application/html"
       },
      {
@@ -381,7 +382,7 @@
       },
       {
           "rel": "alternate",
-          "href": "https://documentation.dataspace.copernicus.eu/Data/Sentinel2.html",
+          "href": "https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/Sentinel2.html#sentinel-2-level-2a-top-of-canopy-toc",
           "type": "application/html"
       },
       {
@@ -2715,7 +2716,7 @@
       {
           "rel": "alternate",
           "title": "Data space collection documentation",
-          "href": "https://documentation.dataspace.copernicus.eu/Data/Sentinel3.html#sentinel-3-syn-level-2",
+          "href": "https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/Sentinel3.html#sentinel-3-syn-level-2",
           "type": "application/html"
       },
       {
@@ -3113,7 +3114,7 @@
       {
           "rel": "alternate",
           "title": "Data space collection documentation",
-          "href": "https://documentation.dataspace.copernicus.eu/Data/Sentinel3.html#sentinel-3-slstr-level-2",
+          "href": "https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/Sentinel3.html#sentinel-3-slstr-level-2",
           "type": "application/html"
       },
       {
