@@ -7,3 +7,9 @@ gpgcheck=0
 name=vito-r
 baseurl=https://artifactory.vgt.vito.be/artifactory/vito-r-almalinux8/
 gpgcheck=0
+
+[appstream]
+name=Upstream appstream
+baseurl=https://repo.almalinux.org/almalinux/8/AppStream/x86_64/os/
+gpgcheck=0
+
