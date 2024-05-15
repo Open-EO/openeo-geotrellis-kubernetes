@@ -1094,6 +1094,7 @@
         "opensearch_endpoint": "https://catalogue.dataspace.copernicus.eu/resto",
         "opensearch_variant": "disabled",
         "root_path": "/eodata",
+        "consider_as_singular_time_step": true,
         "provider:backend": "creodias"
       },
       "properties": {
@@ -1179,6 +1180,7 @@
         "opensearch_endpoint": "https://catalogue.dataspace.copernicus.eu/resto",
         "opensearch_variant": "disabled",
         "root_path": "/eodata",
+        "consider_as_singular_time_step": true,
         "provider:backend": "creodias"
       },
       "properties": {
