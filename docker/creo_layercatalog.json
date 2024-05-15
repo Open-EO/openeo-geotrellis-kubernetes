@@ -4035,8 +4035,7 @@
       "bands": {
         "type": "bands",
         "values": [
-          "MAP",
-          "INPUTQUALITY"
+          "MAP"
         ]
       }
     },
@@ -4046,14 +4045,6 @@
           "name": "MAP",
           "aliases": [
             "ESA_WORLDCOVER_10M_MAP"
-          ],
-          "gsd": 10,
-          "type": "uint8"
-        },
-        {
-          "name": "INPUTQUALITY",
-          "aliases": [
-            "ESA_WORLDCOVER_10M_INPUTQUALITY"
           ],
           "gsd": 10,
           "type": "uint8"
