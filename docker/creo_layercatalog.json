@@ -4084,24 +4084,8 @@
     ],
     "_vito": {
       "data_source": {
-        "type": "file-oscars",
-        "opensearch_collection_id": "urn:eop:VITO:ESA_WorldCover_10m_2020_V1"
-      },
-      "properties": {
-        "accessedFrom": {
-          "process_graph": {
-            "asc": {
-              "process_id": "eq",
-              "arguments": {
-                "x": {
-                  "from_parameter": "value"
-                },
-                "y": "HTTP"
-              },
-              "result": true
-            }
-          }
-        }
+        "type": "stac",
+        "url": "https://stac.openeo.vito.be/collections/ESA_WORLDCOVER_10M_2020_V1"
       }
     }
   },
