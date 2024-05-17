@@ -678,6 +678,7 @@
         "opensearch_variant": "disabled",
         "root_path": "/eodata",
         "provider:backend": "creodias",
+        "parallel_query": true,
         "is_utm": true
       },
       "properties": {
