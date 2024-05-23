@@ -19,3 +19,5 @@ ingress:
   className: ""
   annotations: {}
 resources: {}
+nodeSelector: {}
+tolerations: []
