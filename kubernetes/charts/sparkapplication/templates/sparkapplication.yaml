@@ -113,7 +113,9 @@ spec:
     {{- if .Values.volumeMounts }}
     volumeMounts:
 {{ toYaml .Values.volumeMounts | indent 6 }}
+{{- if .Values.driver.volumeMounts }}
 {{ toYaml .Values.driver.volumeMounts | indent 6 }}
+{{- end }}
     {{- end }}
     {{- if .Values.initContainers }}
     initContainers:
@@ -173,7 +175,9 @@ spec:
     {{- if .Values.volumeMounts }}
     volumeMounts:
 {{ toYaml .Values.volumeMounts | indent 6 }}
+{{- if .Values.executor.volumeMounts }}
 {{ toYaml .Values.executor.volumeMounts | indent 6 }}
+{{- end }}
     {{- end }}
     {{- if .Values.initContainers }}
     initContainers:
