@@ -1,10 +1,10 @@
 # Helm Chart for Spark applications using the Spark Operator
 
-This is the Helm chart to create Spark applications to work with the [Kubernetes Operator for Apache Spark](https://github.com/GoogleCloudPlatform/spark-on-k8s-operator).
+This is the Helm chart to create the openEO webapp driver Sparkpplication, using the CRD provided by the [Kubernetes Operator for Apache Spark](https://github.com/kubeflow/spark-operator).
 
 ### Prerequisites
 
-As the Spark Operator requires Kubernetes 1.13 or above, this chart needs the same. It also requires an instance of the Spark Operator in your cluster. You can deploy one with the provided [Helm Chart](https://github.com/helm/charts/tree/master/incubator/sparkoperator)
+As the Spark Operator requires Kubernetes 1.13 or above, this chart needs the same. It also requires an instance of the Spark Operator in your cluster. You can deploy one with the provided [Helm Chart](https://github.com/kubeflow/spark-operator/tree/master/charts/spark-operator-chart)
 
 ### Installing the Chart
 
@@ -67,76 +67,94 @@ Following is an example `values.yaml` file:
 
 ```yaml
 ---
-image: "vito-docker.artifactory.vgt.vito.be/openeo-geotrellis-kube"
-imageVersion: "latest"
-jmxExporterJar: "/opt/jmx_prometheus_javaagent-0.13.0.jar"
-mainApplicationFile: "local:///opt/openeo/lib64/python3.8/site-packages/openeogeotrellis/deploy/kube.py"
-volumes:
-  - name: "eodata"
-    hostPath:
-      path: "/eodata"
-      type: "DirectoryOrCreate"
-volumeMounts:
-  - name: "eodata"
-    mountPath: "/eodata"
-executor:
-  memory: "512m"
-  cpu: 1
-  envVars:
-    OPENEO_CATALOG_FILES: "/opt/layercatalog.json"
-    OPENEO_S1BACKSCATTER_ELEV_GEOID: "/opt/openeo-vito-aux-data/egm96.grd"
-    OTB_HOME: "/opt/orfeo-toolbox"
-    OTB_APPLICATION_PATH: "/opt/orfeo-toolbox/lib/otb/applications"
-    KUBE: "true"
-    GDAL_NUM_THREADS: "2"
-    PYTHONPATH: "$PYTHONPATH:/opt/openeo/lib/python3.8/site-packages/"
-  javaOptions: "-Dlog4j.configuration=/opt/log4j.properties -Dscala.concurrent.context.numThreads=4 -Dscala.concurrent.context.maxThreads=4"
+image: vito-docker.artifactory.vgt.vito.be/openeo-geotrellis-kube
+imageVersion: latest
 driver:
-  memory: "512m"
-  cpu: 1
-  envVars:
+  env:
     KUBE: "true"
     KUBE_OPENEO_API_PORT: "50001"
-    DRIVER_IMPLEMENTATION_PACKAGE: "openeogeotrellis"
-    OPENEO_CATALOG_FILES: "/opt/layercatalog.json"
-    OPENEO_S1BACKSCATTER_ELEV_GEOID: "/opt/openeo-vito-aux-data/egm96.grd"
-    OTB_HOME: "/opt/orfeo-toolbox"
-    OTB_APPLICATION_PATH: "/opt/orfeo-toolbox/lib/otb/applications"
-    PYTHONPATH: "$PYTHONPATH:/opt/openeo/lib/python3.8/site-packages/"
-  javaOptions: "-Dlog4j.configuration=/opt/log4j.properties -Dscala.concurrent.context.numThreads=6 -Dpixels.treshold=1000000"
-sparkConf:
-  "spark.executorEnv.DRIVER_IMPLEMENTATION_PACKAGE": "openeogeotrellis"
-  "spark.extraListeners": "org.openeo.sparklisteners.CancelRunawayJobListener"
-  "spark.appMasterEnv.DRIVER_IMPLEMENTATION_PACKAGE": "openeogeotrellis"
-  "spark.executorEnv.GDAL_NUM_THREADS": "2"
-  "spark.executorEnv.GDAL_DISABLE_READDIR_ON_OPEN": "EMPTY_DIR"
+    PYTHONPATH: $PYTHONPATH:/opt/tensorflow/python38/2.3.0/:/opt/openeo/lib/python3.8/site-packages/
+    SPARK_LOCAL_IP: "127.0.0.1"
+  ports:
+    - name: webapp
+      containerPort: 50001
+      protocol: TCP
+executor:
+  env:
+    PYTHONPATH: $PYTHONPATH:/opt/tensorflow/python38/2.3.0/:/opt/openeo/lib/python3.8/site-packages/
+ha:
+  enabled: false
 jarDependencies:
-  - 'local:///opt/geotrellis-extensions-2.3.0_2.12-SNAPSHOT.jar'
-  - 'local:///opt/geotrellis-backend-assembly-0.4.6-openeo_2.12.jar'
-fileDependencies:
-  - 'local:///opt/layercatalog.json'
+  - local:///opt/geotrellis-extensions-static.jar
+mainApplicationFile: local:///opt/openeo/lib64/python3.8/site-packages/openeogeotrellis/deploy/kube.py
+rbac:
+  create: true
+  role:
+    rules:
+      - apiGroups:
+          - ""
+        resources:
+          - pods
+        verbs:
+          - create
+          - delete
+          - deletecollection
+          - get
+          - list
+          - patch
+          - watch
+      - apiGroups:
+          - ""
+        resources:
+          - configmaps
+        verbs:
+          - create
+          - delete
+          - deletecollection
+          - list
+      - apiGroups:
+          - ""
+        resources:
+          - persistentvolumeclaims
+        verbs:
+          - create
+          - delete
+          - deletecollection
+          - list
+      - apiGroups:
+          - ""
+        resources:
+          - services
+        verbs:
+          - deletecollection
+          - list
+      - apiGroups:
+          - sparkoperator.k8s.io
+        resources:
+          - sparkapplications
+        verbs:
+          - create
+          - delete
+          - get
+          - list
+  serviceAccountDriver: openeo
+restartPolicy:
+  type: Always
 service:
   enabled: true
   port: 50001
-ingress:
-  annotations:
-    kubernetes.io/ingress.class: traefik
-  enabled: true
-  hosts:
-  - host: openeo.example.com
-    paths:
-      - '/'
-rbac:
-  create: true
-  serviceAccountDriver: openeo
-spark_ui:
-  port: 4040
-  ingress:
-    enabled: true
-    annotations:
-      kubernetes.io/ingress.class: traefik
-    hosts:
-      - host: spark-ui.openeo.example.com
-        paths:
-          - '/'
+serviceAccount: openeo
+sparkConf:
+  spark.appMasterEnv.DRIVER_IMPLEMENTATION_PACKAGE: openeogeotrellis
+  spark.executorEnv.DRIVER_IMPLEMENTATION_PACKAGE: openeogeotrellis
+sparkVersion: 3.2.0
+type: Java
+fileDependencies:
+  - local:///opt/layercatalog.json
 ```
+
+This should give a working webapp driver that can be accessed on port 50001 via port-forwarding. The chart has the possibility to create an Ingress as well.
+
+### HA mode
+
+As the `SparkApplication` CRD doesn't provide the ability to run in HA, the chart was developed to create multiple separate SparkApplications when HA mode is activated. The `Service` has a `Selector` that matches both drivers and thus an `Ingress` can be created to expose a HA Spark driver.
