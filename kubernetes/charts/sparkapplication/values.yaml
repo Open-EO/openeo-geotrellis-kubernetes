@@ -1,22 +1,36 @@
 ---
+# Driver parameters
 driver:
+  # Number of cores allocated to driver
   cores: 1
+  # Hard limit on CPU cores for the pod
   coreLimit: "1200m"
+  # Memory limit for pod
   memory: "4096m"
+  # MemoryOverhead is the amount of off-heap memory to allocate in cluster mode, in MiB unless otherwise specified.
   memoryOverhead: "2700m"
+  # Termination grace period seconds for the pod
   terminationGracePeriodSeconds: 30
+# Executor parameters
 executor:
+  # Number of cores allocated to executor
   cores: 1
+  # Hard limit on CPU cores for the pod
   coreLimit: "1200m"
+  # Number of executors to spawn by default
   instances: 1
+  # Memory limit for pod
   memory: "4096m"
+  # MemoryOverhead is the amount of off-heap memory to allocate in cluster mode, in MiB unless otherwise specified.
   memoryOverhead: "2700m"
+  # Termination grace period seconds for the pod
   terminationGracePeriodSeconds: 30
 imagePullPolicy: "IfNotPresent"
 ingress:
   enabled: false
 ingressRoute:
   enabled: false
+# Port of the HTTP server run by the Prometheus JMX exporter
 jmxPort: 8090
 pythonVersion: 3
 service:
@@ -24,11 +38,13 @@ service:
   type: "ClusterIP"
 sparkVersion: "2.4.5"
 rbac:
+  # Wether to create RBAC resources
   create: false
   createClusterRole: true
   createClusterRoleBinding: true
-  serviceAccountDriver:
+  serviceAccountDriver: default
   serviceAccountExecutor: default
+  # Where the spark-operator lives
   sparkOperator:
     namespace: spark-operator
     serviceAccount: spark-operator
@@ -52,8 +68,11 @@ spark_ui:
   port: 4040
   ingress:
     enabled: false
+# Run in privileged mode
 privileged: false
+# TimeToLiveSeconds defines the Time-To-Live (TTL) duration in seconds for this SparkApplication after its termination
 timeToLiveSeconds: 172800
+# Scrape pod metrics with Prometheus
 monitoring:
   podMonitor:
     enabled: false
