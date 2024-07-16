@@ -3202,6 +3202,8 @@
           "common_name": "surface_temperature",
           "aliases": ["LST_in:LST"],
           "gsd": 1000,
+          "scale": 0.0020000001,
+          "offset": 290,
           "unit": "K"
         },
         {
@@ -3209,12 +3211,16 @@
           "common_name": "surface_temperature_standard_error",
           "aliases": ["LST_in:LST_uncertainty"],
           "gsd": 1000,
+          "scale": 0.0020000001,
+          "offset": 0,
           "unit": "K"
         },
         {
           "name": "exception",
           "aliases": ["LST_in:exception"],
-          "gsd": 1000
+          "gsd": 1000,
+          "scale": 1,
+          "offset": 0
         },
         {
           "name": "confidence_in",
