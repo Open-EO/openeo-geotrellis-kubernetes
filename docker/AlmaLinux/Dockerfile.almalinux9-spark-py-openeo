@@ -1,0 +1,53 @@
+FROM vito-docker-private.artifactory.vgt.vito.be/almalinux9.3
+
+ARG TINI_VERSION=v0.19.0
+ARG SPARK_VERSION
+ARG PYTHON_PACKAGE
+
+COPY docker/AlmaLinux/vito_almalinux9.repo /etc/yum.repos.d/vito.repo
+
+WORKDIR /opt/spark/work-dir
+
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
+
+#orfeo-toolbox-py38-8.1.2 \openeo-vito-aux-data \
+RUN dnf clean all && dnf install -y epel-release && \
+    dnf --enablerepo=crb install -y spark-vito-3_5_0 \
+    hdf5 \
+    gdal-3.8.4 \
+    gdal-devel-3.8.4 \
+    gdal-libs-3.8.4 \
+    unzip \
+    java-11-openjdk-headless \
+    krb5-workstation \
+    krb5-libs \
+    sssd-client \
+    ipa-client \
+    nss \
+    boost-filesystem \
+    boost-serialization \
+    procps-ng \
+    ${PYTHON_PACKAGE} \
+    python3.11-Cython \
+    fftw-libs-double \
+    fftw-libs-single \
+    tinyxml \
+    udunits2 \
+    R-core \
+    compat-libgfortran-48 && \
+    python3 -m pip install --upgrade --target /usr/lib64/python3.11/site-packages/ pip setuptools wheel && \
+    python3 -m pip install --upgrade --target /usr/lib64/python3.11/site-packages/ 'rpy2==3.5.12' && \
+    chmod +x /usr/bin/tini && \
+    rm -r /root/.cache && \
+    yum clean all && \
+    rm -rf /var/cache/yum/*
+
+ENV SPARK_HOME /usr/local/spark
+ENV JAVA_HOME /usr/lib/jvm/jre
+ENV PYSPARK_PYTHON=python3
+ENV HADOOP_HOME=/usr/hdp/current/hadoop-client
+ENV HADOOP_CONF_DIR=/etc/hadoop/conf
+ENV YARN_CONF_DIR=/etc/hadoop/conf
+ENV ACCUMULO_CLIENT_CONF_PATH=client.conf
+ENV OTB_HOME=/usr
+ENV OTB_APPLICATION_PATH=/usr/lib/otb/applications
