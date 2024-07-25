@@ -29,14 +29,15 @@ RUN dnf clean all && dnf install -y epel-release && \
     procps-ng \
     ${PYTHON_PACKAGE} \
     python3.11-Cython \
+    python3.11-pip \
     fftw-libs-double \
     fftw-libs-single \
     tinyxml \
     udunits2 \
     R-core \
     compat-libgfortran-48 && \
-    python3 -m pip install --upgrade --target /usr/lib64/python3.11/site-packages/ pip setuptools wheel && \
-    python3 -m pip install --upgrade --target /usr/lib64/python3.11/site-packages/ 'rpy2==3.5.12' && \
+    python3.11 -m pip install --upgrade --target /usr/lib64/python3.11/site-packages/ pip setuptools wheel && \
+    python3.11 -m pip install --upgrade --target /usr/lib64/python3.11/site-packages/ 'rpy2==3.5.12' && \
     chmod +x /usr/bin/tini && \
     rm -r /root/.cache && \
     yum clean all && \
