@@ -43,7 +43,7 @@ RUN dnf clean all && dnf install -y epel-release && \
     yum clean all && \
     rm -rf /var/cache/yum/*
 
-ENV SPARK_HOME /usr/local/spark
+ENV SPARK_HOME /opt/spark3_5_0/
 ENV JAVA_HOME /usr/lib/jvm/jre
 ENV PYSPARK_PYTHON=python3
 ENV HADOOP_HOME=/usr/hdp/current/hadoop-client
