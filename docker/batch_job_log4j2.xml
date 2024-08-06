@@ -4,7 +4,7 @@
             <JsonTemplateLayout eventTemplateUri="classpath:OpenEOBatchJobJsonLogLayout.json" locationInfoEnabled="true"/>
             <Filters>
                 <!-- this filter allows to print 1 log (maxBurst) every minute (rate) -->
-                <BurstFilter level="warn" rate="0.0166" maxBurst="1"/>
+                <BurstFilter level="info" rate="1" maxBurst="20"/>
             </Filters>
         </Console>
     </Appenders>
