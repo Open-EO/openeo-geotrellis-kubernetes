@@ -22,9 +22,6 @@
         <Logger name="org.apache.spark.storage.DiskBlockObjectWriter" level="off"/>
         <Logger name="org.apache.zookeeper" level="warn"/>
         <Logger name="org.apache.zookeeper.ClientCnxn" level="error"/> <!-- Ignore this: "Unable to read additional data from server sessionid 0x..., likely server has closed socket" -->
-        <Logger name="org.openeo.geotrellis.icor" level="debug"/>
-        <Logger name="org.openeo.geotrellis.layers.OpenSearch" level="debug"/>
-        <Logger name="org.openeo.geotrellis.OpenEOProcessScriptBuilder" level="info"/>
         <Logger name="org.sparkproject.jetty.server" level="warn"/>
         <Logger name="ucar.nc2.jni.netcdf.Nc4Iosp" level="warn"/>
         <Root level="${sys:openeo.logging.threshold}">
