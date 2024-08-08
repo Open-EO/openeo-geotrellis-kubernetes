@@ -10,9 +10,10 @@ WORKDIR /opt/spark/work-dir
 
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
 
-#orfeo-toolbox-py38-8.1.2 \openeo-vito-aux-data \
+# openeo-vito-aux-data \
 RUN dnf clean all && dnf install -y epel-release && \
-    dnf --enablerepo=crb install -y spark-vito-3_5_0 \
+    dnf --enablerepo=crb install -y spark-bin-${SPARK_VERSION} \
+    orfeo-toolbox-py311 \
     hdf5 \
     gdal-3.8.4 \
     gdal-devel-3.8.4 \
@@ -43,7 +44,7 @@ RUN dnf clean all && dnf install -y epel-release && \
     yum clean all && \
     rm -rf /var/cache/yum/*
 
-ENV SPARK_HOME /opt/spark3_5_0/
+ENV SPARK_HOME /usr/local/spark
 ENV JAVA_HOME /usr/lib/jvm/jre
 ENV PYSPARK_PYTHON=python3
 ENV HADOOP_HOME=/usr/hdp/current/hadoop-client
