@@ -3,8 +3,8 @@
         <Console name="stdout" target="SYSTEM_OUT">
             <JsonTemplateLayout eventTemplateUri="classpath:OpenEOBatchJobJsonLogLayout.json" locationInfoEnabled="true"/>
             <Filters>
-                <!-- this filter allows to print 1 log (maxBurst) every minute (rate) -->
-                <BurstFilter level="info" rate="1" maxBurst="20"/>
+                <!-- this filter allows to print 50 log (maxBurst) every minute (rate) -->
+                <BurstFilter level="info" rate="1" maxBurst="50"/>
             </Filters>
         </Console>
     </Appenders>
