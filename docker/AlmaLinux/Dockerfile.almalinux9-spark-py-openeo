@@ -18,6 +18,7 @@ RUN dnf clean all && dnf install -y epel-release && \
     gdal-3.8.4 \
     gdal-devel-3.8.4 \
     gdal-libs-3.8.4 \
+    gdal-python311-3.8.4 \
     unzip \
     java-11-openjdk-headless \
     krb5-workstation \
