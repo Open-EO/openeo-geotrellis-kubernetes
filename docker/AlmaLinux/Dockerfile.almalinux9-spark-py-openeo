@@ -30,8 +30,8 @@ RUN dnf clean all && dnf install -y epel-release && \
     boost-serialization \
     procps-ng \
     ${PYTHON_PACKAGE} \
-    python3.11-Cython \
     python3.11-pip \
+    python3.11-Cython \
     fftw-libs-double \
     fftw-libs-single \
     tinyxml \
