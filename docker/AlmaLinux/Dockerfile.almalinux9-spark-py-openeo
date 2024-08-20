@@ -19,8 +19,9 @@ RUN dnf clean all && dnf install -y epel-release && \
     gdal-devel-3.8.4 \
     gdal-libs-3.8.4 \
     gdal-python311-3.8.4 \
+    gcc-c++ \
     unzip \
-    java-11-openjdk-headless \
+    java-21-openjdk-headless \
     krb5-workstation \
     krb5-libs \
     sssd-client \
