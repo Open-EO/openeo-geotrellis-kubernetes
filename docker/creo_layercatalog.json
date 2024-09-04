@@ -4085,7 +4085,8 @@
     "_vito": {
       "data_source": {
         "type": "stac",
-        "url": "https://stac.openeo.vito.be/collections/ESA_WORLDCOVER_10M_2020_V1"
+        "url": "https://stac.openeo.vito.be/collections/ESA_WORLDCOVER_10M_2020_V1",
+        "consider_as_singular_time_step": true
       }
     }
   },
@@ -4166,7 +4167,8 @@
     "_vito": {
       "data_source": {
         "type": "stac",
-        "url": "https://stac.openeo.vito.be/collections/ESA_WORLDCOVER_10M_2021_V2"
+        "url": "https://stac.openeo.vito.be/collections/ESA_WORLDCOVER_10M_2021_V2",
+        "consider_as_singular_time_step": true
       }
     }
   },
