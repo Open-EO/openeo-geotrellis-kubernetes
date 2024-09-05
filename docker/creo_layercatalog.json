@@ -4259,9 +4259,33 @@
   },
   {
     "id": "SENTINEL1_GLOBAL_MOSAICS",
-    "title": "Sentinel 1 Global Mosaics",
-    "description": "[EXPERIMENTAL]",
+    "title": "Sentinel 1 Monthly Mosaics",
+    "description": "[EXPERIMENTAL] Sentinel-1 monthly mosaics are generated from monthly stacks of Sentinel-1 GRD data by calculating the weighted sum of the terrain corrected backscatter observations. Two different Sentinel-1 mosaics are being produced for each month: IW mosaic and DH mosaic.",
     "experimental": true,
+    "keywords": [
+            "raster",
+            "systematic",
+            "satellite imagery",
+            "SAR",
+            "radar",
+            "backscattering",
+            "polarization",
+            "Copernicus",
+            "maritime monitoring",
+            "land monitoring",
+            "disaster response",
+            "open data"
+        ],
+    "assets": {
+              "thumbnail": {
+                  "href": "https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/_images/Thumbnail/Sentinel1_Monthly_Mosaic_Thumbnail.png",
+                  "type": "image/png",
+                  "roles": [
+                      "thumbnail"
+                  ],
+                  "title": "Sentinel 1 L3 Mosaic preview"
+              }
+          },
     "_vito": {
       "data_source": {
         "type": "file-s2",
@@ -4347,6 +4371,22 @@
       ]
     },
     "links": [
+      {
+        "rel": "license",
+        "href": "https://sentinels.copernicus.eu/documents/247904/690755/Sentinel_Data_Legal_Notice",
+        "type": "application/pdf"
+      },
+      {
+          "rel": "alternate",
+          "title": "Data space collection documentation",
+          "href": "https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/Sentinel1.html#sentinel-1-level-3-monthly-mosaics",
+          "type": "application/html"
+      },
+      {
+          "href": "https://catalogue.dataspace.copernicus.eu/resto/api/collections/GLOBAL-MOSAICS/search.json?platform=SENTINEL-1",
+          "title": "Catalog API",
+          "rel": "opensearch"
+      }
     ]
   }
 ]
