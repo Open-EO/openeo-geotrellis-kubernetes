@@ -31,8 +31,6 @@ RUN dnf clean all && dnf install -y epel-release && \
     ${PYTHON_PACKAGE} \
     python38-pytz  \
     python38-Cython \
-    python3.11 \
-    python3.11-pip \
     fftw-libs-double \
     fftw-libs-single \
     openeo-vito-aux-data \
