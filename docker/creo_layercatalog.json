@@ -2322,7 +2322,7 @@
     "_vito": {
       "data_source": {
         "type": "file-s2",
-        "opensearch_collection_id": "Landsat8",
+        "opensearch_collection_id": "LANDSAT-8-ESA",
         "opensearch_endpoint": "https://catalogue.dataspace.copernicus.eu/resto",
         "opensearch_variant": "disabled",
         "root_path": "/eodata",
