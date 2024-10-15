@@ -3036,6 +3036,17 @@
           "href": "https://catalogue.dataspace.copernicus.eu/resto/api/collections/Sentinel3/search.json?productType=SL_2_LST___",
           "title": "Catalog API",
           "rel": "opensearch"
+      },
+      {
+          "href": "https://sentinel.esa.int/documents/247904/4598082/Sentinel-3-SLSTR-Land-Handbook.pdf",
+          "title": "Handbook",
+          "rel": "about",
+          "type": "application/pdf"
+      },
+      {
+          "href": "https://github.com/Open-EO/openeo-community-examples/blob/main/python/Heatwave/HeatwaveNL.ipynb",
+          "title": "Heatwave example",
+          "rel": "example"
       }
    ],
     "_vito": {
