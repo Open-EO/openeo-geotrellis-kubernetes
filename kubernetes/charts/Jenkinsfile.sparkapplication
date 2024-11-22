@@ -1,0 +1,9 @@
+#!/usr/bin/env groovy
+
+@Library('lib')_
+
+helmchartPipeline{
+  chart_path       = './kubernetes/charts/sparkapplication'
+  chart_repository = 'helm-public'
+  chart_version    = '0.14.10'
+}
