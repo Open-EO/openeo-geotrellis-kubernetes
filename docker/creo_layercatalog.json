@@ -4351,6 +4351,7 @@
       "eo:bands": [
         {
           "name": "B1",
+          "aliases": ["coastal"],
           "description": "Coastal/Aerosol (Operational Land Imager)",
           "eo:common_name": "coastal",
           "eo:center_wavelength": 0.44,
@@ -4358,6 +4359,7 @@
         },
         {
           "name": "B2",
+          "aliases": ["blue"],
           "description": "Visible blue (Operational Land Imager)",
           "eo:common_name": "blue",
           "eo:center_wavelength": 0.48,
@@ -4365,6 +4367,7 @@
         },
         {
           "name": "B3",
+          "aliases": ["green"],
           "description": "Visible green (Operational Land Imager)",
           "eo:common_name": "green",
           "eo:center_wavelength": 0.56,
@@ -4372,6 +4375,7 @@
         },
         {
           "name": "B4",
+          "aliases": ["red"],
           "description": "Visible red (Operational Land Imager)",
           "eo:common_name": "red",
           "eo:center_wavelength": 0.65,
@@ -4379,6 +4383,7 @@
         },
         {
           "name": "B5",
+          "aliases": ["nir08"],
           "description": "Near infrared (Operational Land Imager)",
           "eo:common_name": "nir08",
           "eo:center_wavelength": 0.87,
@@ -4386,6 +4391,7 @@
         },
         {
           "name": "B6",
+          "aliases": ["swir16"],
           "description": "Short-wave infrared (Operational Land Imager)",
           "eo:common_name": "swir16",
           "eo:center_wavelength": 1.61,
@@ -4393,6 +4399,7 @@
         },
         {
           "name": "B7",
+          "aliases": ["swir22"],
           "description": "Short-wave infrared (Operational Land Imager)",
           "eo:common_name": "swir22",
           "eo:center_wavelength": 2.2,
@@ -4400,6 +4407,7 @@
         },
         {
           "name": "B8",
+          "aliases": ["pan"],
           "description": "Panchromatic (Operational Land Imager)",
           "eo:common_name": "pan",
           "eo:center_wavelength": 0.59,
@@ -4407,6 +4415,7 @@
         },
         {
           "name": "B9",
+          "aliases": ["cirrus"],
           "description": "Cirrus (Operational Land Imager)",
           "eo:common_name": "cirrus",
           "eo:center_wavelength": 1.37,
