@@ -2642,7 +2642,8 @@
    ],
     "_vito": {
       "data_source": {
-        "type": "file-s3"
+        "type": "file-s3",
+        "realign": false
       },
       "properties": {
         "productType": {
@@ -3051,7 +3052,8 @@
    ],
     "_vito": {
       "data_source": {
-        "type": "file-s3"
+        "type": "file-s3",
+        "realign": false
       },
       "properties": {
         "productType": {
