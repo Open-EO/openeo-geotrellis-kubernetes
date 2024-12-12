@@ -4140,67 +4140,32 @@
     }
   },
   {
-    "id": "SENTINEL1_GLOBAL_MOSAICS_STAC",
-    "description": "[EXPERIMENTAL] The Sentinel-2 Global Mosaic 2 (S2GM-2) service is a component of the Copernicus Global Land Service providing Sentinel-2 surface reflectance time series composites.",
-    "experimental": true,
-    "_vito": {
-        "data_source": {
-            "type": "stac",
-            "url": "https://pgstac.demo.cloudferro.com/collections/sentinel-2-global-mosaics"
-        }
-    },
-    "extent": {"spatial": {"bbox": [[-180, -85, 180, 85]]}},
-    "cube:dimensions": {
-        "x": {"type": "spatial", "axis": "x", "reference_system": {"$schema":"https://proj.org/schemas/v0.2/projjson.schema.json","type":"GeodeticCRS","name":"AUTO 42001 (Universal Transverse Mercator)","datum":{"type":"GeodeticReferenceFrame","name":"World Geodetic System 1984","ellipsoid":{"name":"WGS 84","semi_major_axis":6378137,"inverse_flattening":298.257223563}},"coordinate_system":{"subtype":"ellipsoidal","axis":[{"name":"Geodetic latitude","abbreviation":"Lat","direction":"north","unit":"degree"},{"name":"Geodetic longitude","abbreviation":"Lon","direction":"east","unit":"degree"}]},"area":"World","bbox":{"south_latitude":-90,"west_longitude":-180,"north_latitude":90,"east_longitude":180},"id":{"authority":"OGC","version":"1.3","code":"Auto42001"}}, "step": 10},
-        "y": {"type": "spatial", "axis": "y", "reference_system": {"$schema":"https://proj.org/schemas/v0.2/projjson.schema.json","type":"GeodeticCRS","name":"AUTO 42001 (Universal Transverse Mercator)","datum":{"type":"GeodeticReferenceFrame","name":"World Geodetic System 1984","ellipsoid":{"name":"WGS 84","semi_major_axis":6378137,"inverse_flattening":298.257223563}},"coordinate_system":{"subtype":"ellipsoidal","axis":[{"name":"Geodetic latitude","abbreviation":"Lat","direction":"north","unit":"degree"},{"name":"Geodetic longitude","abbreviation":"Lon","direction":"east","unit":"degree"}]},"area":"World","bbox":{"south_latitude":-90,"west_longitude":-180,"north_latitude":90,"east_longitude":180},"id":{"authority":"OGC","version":"1.3","code":"Auto42001"}}, "step": 10},
-        "t": {"type": "temporal"},
-        "bands": {
-            "type": "bands",
-            "values": ["B02", "B03", "B04", "B08", "observations"]
-        }
-    },
-    "summaries": {
-        "eo:bands": [
-            {"name": "B02", "description": "Blue (band 2)", "eo:common_name": "blue"},
-            {"name": "B03", "description": "Green (band 3)", "eo:common_name": "green"},
-            {"name": "B04", "description": "Red (band 4)", "eo:common_name": "red"},
-            {"name": "B08", "description": "NIR 1 (band 8)", "eo:common_name": "nir"},
-            {
-                "name": "observations",
-                "description": "Number of valid observations for each pixel"
-            }
-        ]
-    }
-  },
-  {
     "id": "SENTINEL1_GLOBAL_MOSAICS",
     "title": "Sentinel 1 Monthly Mosaics",
     "description": "[EXPERIMENTAL] Sentinel-1 monthly mosaics are generated from monthly stacks of Sentinel-1 GRD data by calculating the weighted sum of the terrain corrected backscatter observations. Two different Sentinel-1 mosaics are being produced for each month: IW mosaic and DH mosaic.",
     "experimental": true,
     "keywords": [
-            "raster",
-            "systematic",
-            "satellite imagery",
-            "SAR",
-            "radar",
-            "backscattering",
-            "polarization",
-            "Copernicus",
-            "maritime monitoring",
-            "land monitoring",
-            "disaster response",
-            "open data"
-        ],
+      "raster",
+      "systematic",
+      "satellite imagery",
+      "SAR",
+      "radar",
+      "backscattering",
+      "polarization",
+      "Copernicus",
+      "maritime monitoring",
+      "land monitoring",
+      "disaster response",
+      "open data"
+    ],
     "assets": {
-              "thumbnail": {
-                  "href": "https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/_images/Thumbnail/Sentinel1_Monthly_Mosaic_Thumbnail.png",
-                  "type": "image/png",
-                  "roles": [
-                      "thumbnail"
-                  ],
-                  "title": "Sentinel 1 L3 Mosaic preview"
-              }
-          },
+      "thumbnail": {
+        "href": "https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/_images/Thumbnail/Sentinel1_Monthly_Mosaic_Thumbnail.png",
+        "type": "image/png",
+        "roles": ["thumbnail"],
+        "title": "Sentinel 1 L3 Mosaic preview"
+      }
+    },
     "_vito": {
       "data_source": {
         "type": "file-s2",
@@ -4216,12 +4181,7 @@
           "process_graph": {
             "eq1": {
               "process_id": "eq",
-              "arguments": {
-                "x": {
-                  "from_parameter": "value"
-                },
-                "y": "SENTINEL-1"
-              },
+              "arguments": {"x": {"from_parameter": "value"}, "y": "SENTINEL-1"},
               "result": true
             }
           }
@@ -4229,60 +4189,34 @@
       }
     },
     "extent": {
-      "spatial": {
-        "bbox": [[-180, -90, 180, 90]]
-      },
-      "temporal": {
-        "interval": [["2023-01-01", "2023-12-01"]]
-      }
+      "spatial": {"bbox": [[-180, -90, 180, 90]]},
+      "temporal": {"interval": [["2023-01-01", "2023-12-01"]]}
     },
-     "providers": [
-      {
-        "name": "CDSE",
-        "roles": [
-          "host"
-        ],
-        "url": "https://dataspace.copernicus.eu/"
-      }
+    "providers": [
+      {"name": "CDSE", "roles": ["host"], "url": "https://dataspace.copernicus.eu/"}
     ],
     "cube:dimensions": {
-      "x": {"type": "spatial", "axis": "x", "reference_system": {"$schema":"https://proj.org/schemas/v0.2/projjson.schema.json","type":"GeodeticCRS","name":"AUTO 42001 (Universal Transverse Mercator)","datum":{"type":"GeodeticReferenceFrame","name":"World Geodetic System 1984","ellipsoid":{"name":"WGS 84","semi_major_axis":6378137,"inverse_flattening":298.257223563}},"coordinate_system":{"subtype":"ellipsoidal","axis":[{"name":"Geodetic latitude","abbreviation":"Lat","direction":"north","unit":"degree"},{"name":"Geodetic longitude","abbreviation":"Lon","direction":"east","unit":"degree"}]},"area":"World","bbox":{"south_latitude":-90,"west_longitude":-180,"north_latitude":90,"east_longitude":180},"id":{"authority":"OGC","version":"1.3","code":"Auto42001"}}, "step": 20},
-      "y": {"type": "spatial", "axis": "y", "reference_system": {"$schema":"https://proj.org/schemas/v0.2/projjson.schema.json","type":"GeodeticCRS","name":"AUTO 42001 (Universal Transverse Mercator)","datum":{"type":"GeodeticReferenceFrame","name":"World Geodetic System 1984","ellipsoid":{"name":"WGS 84","semi_major_axis":6378137,"inverse_flattening":298.257223563}},"coordinate_system":{"subtype":"ellipsoidal","axis":[{"name":"Geodetic latitude","abbreviation":"Lat","direction":"north","unit":"degree"},{"name":"Geodetic longitude","abbreviation":"Lon","direction":"east","unit":"degree"}]},"area":"World","bbox":{"south_latitude":-90,"west_longitude":-180,"north_latitude":90,"east_longitude":180},"id":{"authority":"OGC","version":"1.3","code":"Auto42001"}}, "step": 20},
-      "t": {
-        "type": "temporal"
+      "x": {
+        "type": "spatial",
+        "axis": "x",
+        "reference_system": {"$schema":"https://proj.org/schemas/v0.2/projjson.schema.json","type":"GeodeticCRS","name":"AUTO 42001 (Universal Transverse Mercator)","datum":{"type":"GeodeticReferenceFrame","name":"World Geodetic System 1984","ellipsoid":{"name":"WGS 84","semi_major_axis":6378137,"inverse_flattening":298.257223563}},"coordinate_system":{"subtype":"ellipsoidal","axis":[{"name":"Geodetic latitude","abbreviation":"Lat","direction":"north","unit":"degree"},{"name":"Geodetic longitude","abbreviation":"Lon","direction":"east","unit":"degree"}]},"area":"World","bbox":{"south_latitude":-90,"west_longitude":-180,"north_latitude":90,"east_longitude":180},"id":{"authority":"OGC","version":"1.3","code":"Auto42001"}},
+        "step": 20
       },
-      "bands": {
-        "type": "bands",
-        "values": [
-          "VV",
-          "VH",
-          "HV",
-          "HH"
-        ]
-      }
+      "y": {
+        "type": "spatial",
+        "axis": "y",
+        "reference_system": {"$schema":"https://proj.org/schemas/v0.2/projjson.schema.json","type":"GeodeticCRS","name":"AUTO 42001 (Universal Transverse Mercator)","datum":{"type":"GeodeticReferenceFrame","name":"World Geodetic System 1984","ellipsoid":{"name":"WGS 84","semi_major_axis":6378137,"inverse_flattening":298.257223563}},"coordinate_system":{"subtype":"ellipsoidal","axis":[{"name":"Geodetic latitude","abbreviation":"Lat","direction":"north","unit":"degree"},{"name":"Geodetic longitude","abbreviation":"Lon","direction":"east","unit":"degree"}]},"area":"World","bbox":{"south_latitude":-90,"west_longitude":-180,"north_latitude":90,"east_longitude":180},"id":{"authority":"OGC","version":"1.3","code":"Auto42001"}},
+        "step": 20
+      },
+      "t": {"type": "temporal"},
+      "bands": {"type": "bands", "values": ["VV", "VH", "HV", "HH"]}
     },
     "summaries": {
       "eo:bands": [
-        {
-          "name": "VV"
-        },
-        {
-          "name": "VH"
-        },
-        {
-          "name": "HV",
-          "openeo:gsd": {
-            "value": [40, 40],
-            "unit": "m"
-          }
-        },
-        {
-          "name": "HH",
-          "openeo:gsd": {
-            "value": [40, 40],
-            "unit": "m"
-          }
-        }
+        {"name": "VV"},
+        {"name": "VH"},
+        {"name": "HV", "openeo:gsd": {"value": [40, 40], "unit": "m"}},
+        {"name": "HH", "openeo:gsd": {"value": [40, 40], "unit": "m"}}
       ]
     },
     "links": [
@@ -4292,17 +4226,194 @@
         "type": "application/pdf"
       },
       {
-          "rel": "alternate",
-          "title": "Data space collection documentation",
-          "href": "https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/Sentinel1.html#sentinel-1-level-3-monthly-mosaics",
-          "type": "application/html"
+        "rel": "alternate",
+        "title": "Data space collection documentation",
+        "href": "https://documentation.dataspace.copernicus.eu/Data/SentinelMissions/Sentinel1.html#sentinel-1-level-3-monthly-mosaics",
+        "type": "application/html"
       },
       {
-          "href": "https://catalogue.dataspace.copernicus.eu/resto/api/collections/GLOBAL-MOSAICS/search.json?platform=SENTINEL-1",
-          "title": "Catalog API",
-          "rel": "opensearch"
+        "href": "https://catalogue.dataspace.copernicus.eu/resto/api/collections/GLOBAL-MOSAICS/search.json?platform=SENTINEL-1",
+        "title": "Catalog API",
+        "rel": "opensearch"
       }
     ]
+  },
+  {
+    "id": "SENTINEL2_GLOBAL_MOSAICS_STAC_CLOUDFERRO",
+    "description": "[EXPERIMENTAL] The Sentinel-2 Global Mosaic 2 (S2GM-2) service is a component of the Copernicus Global Land Service providing Sentinel-2 surface reflectance time series composites.",
+    "experimental": true,
+    "_vito": {
+      "data_source": {
+        "type": "stac",
+        "url": "https://pgstac.demo.cloudferro.com/collections/sentinel-2-global-mosaics"
+      }
+    },
+    "extent": {"spatial": {"bbox": [[-180, -85, 180, 85]]}},
+    "cube:dimensions": {
+      "x": {
+        "type": "spatial",
+        "axis": "x",
+        "reference_system": {"$schema":"https://proj.org/schemas/v0.2/projjson.schema.json","type":"GeodeticCRS","name":"AUTO 42001 (Universal Transverse Mercator)","datum":{"type":"GeodeticReferenceFrame","name":"World Geodetic System 1984","ellipsoid":{"name":"WGS 84","semi_major_axis":6378137,"inverse_flattening":298.257223563}},"coordinate_system":{"subtype":"ellipsoidal","axis":[{"name":"Geodetic latitude","abbreviation":"Lat","direction":"north","unit":"degree"},{"name":"Geodetic longitude","abbreviation":"Lon","direction":"east","unit":"degree"}]},"area":"World","bbox":{"south_latitude":-90,"west_longitude":-180,"north_latitude":90,"east_longitude":180},"id":{"authority":"OGC","version":"1.3","code":"Auto42001"}},
+        "step": 10
+      },
+      "y": {
+        "type": "spatial",
+        "axis": "y",
+        "reference_system": {"$schema":"https://proj.org/schemas/v0.2/projjson.schema.json","type":"GeodeticCRS","name":"AUTO 42001 (Universal Transverse Mercator)","datum":{"type":"GeodeticReferenceFrame","name":"World Geodetic System 1984","ellipsoid":{"name":"WGS 84","semi_major_axis":6378137,"inverse_flattening":298.257223563}},"coordinate_system":{"subtype":"ellipsoidal","axis":[{"name":"Geodetic latitude","abbreviation":"Lat","direction":"north","unit":"degree"},{"name":"Geodetic longitude","abbreviation":"Lon","direction":"east","unit":"degree"}]},"area":"World","bbox":{"south_latitude":-90,"west_longitude":-180,"north_latitude":90,"east_longitude":180},"id":{"authority":"OGC","version":"1.3","code":"Auto42001"}},
+        "step": 10
+      },
+      "t": {"type": "temporal"},
+      "bands": {"type": "bands", "values": ["B02", "B03", "B04", "B08", "observations"]}
+    },
+    "summaries": {
+      "eo:bands": [
+        {"name": "B02", "description": "Blue (band 2)", "eo:common_name": "blue"},
+        {"name": "B03", "description": "Green (band 3)", "eo:common_name": "green"},
+        {"name": "B04", "description": "Red (band 4)", "eo:common_name": "red"},
+        {"name": "B08", "description": "NIR 1 (band 8)", "eo:common_name": "nir"},
+        {
+          "name": "observations",
+          "description": "Number of valid observations for each pixel"
+        }
+      ]
+    }
+  },
+  {
+    "id": "SENTINEL2_GLOBAL_MOSAICS_STAC_COPERNICUS",
+    "description": "[EXPERIMENTAL] The Sentinel-2 Global Mosaic 2 (S2GM-2) service is a component of the Copernicus Global Land Service providing Sentinel-2 surface reflectance time series composites.",
+    "experimental": true,
+    "_vito": {
+      "data_source": {
+        "type": "stac",
+        "url": "https://stac.dataspace.copernicus.eu/v1/collections/sentinel-2-global-mosaics"
+      }
+    },
+    "extent": {"spatial": {"bbox": [[-180, -85, 180, 85]]}},
+    "cube:dimensions": {
+      "x": {
+        "type": "spatial",
+        "axis": "x",
+        "reference_system": {"$schema":"https://proj.org/schemas/v0.2/projjson.schema.json","type":"GeodeticCRS","name":"AUTO 42001 (Universal Transverse Mercator)","datum":{"type":"GeodeticReferenceFrame","name":"World Geodetic System 1984","ellipsoid":{"name":"WGS 84","semi_major_axis":6378137,"inverse_flattening":298.257223563}},"coordinate_system":{"subtype":"ellipsoidal","axis":[{"name":"Geodetic latitude","abbreviation":"Lat","direction":"north","unit":"degree"},{"name":"Geodetic longitude","abbreviation":"Lon","direction":"east","unit":"degree"}]},"area":"World","bbox":{"south_latitude":-90,"west_longitude":-180,"north_latitude":90,"east_longitude":180},"id":{"authority":"OGC","version":"1.3","code":"Auto42001"}},
+        "step": 10
+      },
+      "y": {
+        "type": "spatial",
+        "axis": "y",
+        "reference_system": {"$schema":"https://proj.org/schemas/v0.2/projjson.schema.json","type":"GeodeticCRS","name":"AUTO 42001 (Universal Transverse Mercator)","datum":{"type":"GeodeticReferenceFrame","name":"World Geodetic System 1984","ellipsoid":{"name":"WGS 84","semi_major_axis":6378137,"inverse_flattening":298.257223563}},"coordinate_system":{"subtype":"ellipsoidal","axis":[{"name":"Geodetic latitude","abbreviation":"Lat","direction":"north","unit":"degree"},{"name":"Geodetic longitude","abbreviation":"Lon","direction":"east","unit":"degree"}]},"area":"World","bbox":{"south_latitude":-90,"west_longitude":-180,"north_latitude":90,"east_longitude":180},"id":{"authority":"OGC","version":"1.3","code":"Auto42001"}},
+        "step": 10
+      },
+      "t": {"type": "temporal"},
+      "bands": {"type": "bands", "values": ["B02", "B03", "B04", "B08", "observations"]}
+    },
+    "summaries": {
+      "eo:bands": [
+        {"name": "B02", "description": "Blue (band 2)", "eo:common_name": "blue"},
+        {"name": "B03", "description": "Green (band 3)", "eo:common_name": "green"},
+        {"name": "B04", "description": "Red (band 4)", "eo:common_name": "red"},
+        {"name": "B08", "description": "NIR 1 (band 8)", "eo:common_name": "nir"},
+        {
+          "name": "observations",
+          "description": "Number of valid observations for each pixel"
+        }
+      ]
+    }
+  },
+  {
+    "id": "LANDSAT_C2_L1_OLI_STAC",
+    "description": "[EXPERIMENTAL] Landsat Collection 2 Level 1 Operational Land Imager.",
+    "experimental": true,
+    "_vito": {
+      "data_source": {
+        "type": "stac",
+        "url": "https://pgstac.demo.cloudferro.com/collections/landsat-c2-l1-oli"
+      }
+    },
+    "cube:dimensions": {
+      "x": {
+        "type": "spatial",
+        "axis": "x",
+        "reference_system": {"$schema":"https://proj.org/schemas/v0.2/projjson.schema.json","type":"GeodeticCRS","name":"AUTO 42001 (Universal Transverse Mercator)","datum":{"type":"GeodeticReferenceFrame","name":"World Geodetic System 1984","ellipsoid":{"name":"WGS 84","semi_major_axis":6378137,"inverse_flattening":298.257223563}},"coordinate_system":{"subtype":"ellipsoidal","axis":[{"name":"Geodetic latitude","abbreviation":"Lat","direction":"north","unit":"degree"},{"name":"Geodetic longitude","abbreviation":"Lon","direction":"east","unit":"degree"}]},"area":"World","bbox":{"south_latitude":-90,"west_longitude":-180,"north_latitude":90,"east_longitude":180},"id":{"authority":"OGC","version":"1.3","code":"Auto42001"}},
+        "step": 10
+      },
+      "y": {
+        "type": "spatial",
+        "axis": "y",
+        "reference_system": {"$schema":"https://proj.org/schemas/v0.2/projjson.schema.json","type":"GeodeticCRS","name":"AUTO 42001 (Universal Transverse Mercator)","datum":{"type":"GeodeticReferenceFrame","name":"World Geodetic System 1984","ellipsoid":{"name":"WGS 84","semi_major_axis":6378137,"inverse_flattening":298.257223563}},"coordinate_system":{"subtype":"ellipsoidal","axis":[{"name":"Geodetic latitude","abbreviation":"Lat","direction":"north","unit":"degree"},{"name":"Geodetic longitude","abbreviation":"Lon","direction":"east","unit":"degree"}]},"area":"World","bbox":{"south_latitude":-90,"west_longitude":-180,"north_latitude":90,"east_longitude":180},"id":{"authority":"OGC","version":"1.3","code":"Auto42001"}},
+        "step": 10
+      },
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9"]
+      }
+    },
+    "summaries": {
+      "eo:bands": [
+        {
+          "name": "B1",
+          "description": "Coastal/Aerosol (Operational Land Imager)",
+          "eo:common_name": "coastal",
+          "eo:center_wavelength": 0.44,
+          "eo:full_width_half_max": 0.02
+        },
+        {
+          "name": "B2",
+          "description": "Visible blue (Operational Land Imager)",
+          "eo:common_name": "blue",
+          "eo:center_wavelength": 0.48,
+          "eo:full_width_half_max": 0.06
+        },
+        {
+          "name": "B3",
+          "description": "Visible green (Operational Land Imager)",
+          "eo:common_name": "green",
+          "eo:center_wavelength": 0.56,
+          "eo:full_width_half_max": 0.06
+        },
+        {
+          "name": "B4",
+          "description": "Visible red (Operational Land Imager)",
+          "eo:common_name": "red",
+          "eo:center_wavelength": 0.65,
+          "eo:full_width_half_max": 0.04
+        },
+        {
+          "name": "B5",
+          "description": "Near infrared (Operational Land Imager)",
+          "eo:common_name": "nir08",
+          "eo:center_wavelength": 0.87,
+          "eo:full_width_half_max": 0.03
+        },
+        {
+          "name": "B6",
+          "description": "Short-wave infrared (Operational Land Imager)",
+          "eo:common_name": "swir16",
+          "eo:center_wavelength": 1.61,
+          "eo:full_width_half_max": 0.09
+        },
+        {
+          "name": "B7",
+          "description": "Short-wave infrared (Operational Land Imager)",
+          "eo:common_name": "swir22",
+          "eo:center_wavelength": 2.2,
+          "eo:full_width_half_max": 0.19
+        },
+        {
+          "name": "B8",
+          "description": "Panchromatic (Operational Land Imager)",
+          "eo:common_name": "pan",
+          "eo:center_wavelength": 0.59,
+          "eo:full_width_half_max": 0.18
+        },
+        {
+          "name": "B9",
+          "description": "Cirrus (Operational Land Imager)",
+          "eo:common_name": "cirrus",
+          "eo:center_wavelength": 1.37,
+          "eo:full_width_half_max": 0.03
+        }
+      ]
+    }
   },
   {
     "id": "TestCollection-LonLat16x16",
@@ -4310,29 +4421,29 @@
     "experimental": true,
     "_vito": {"data_source": {"type": "testing"}},
     "cube:dimensions": {
-        "x": {"type": "spatial", "axis": "x", "reference_system": 4326},
-        "y": {"type": "spatial", "axis": "y", "reference_system": 4326},
-        "t": {"type": "temporal"},
-        "bands": {
-            "type": "bands",
-            "values": [
-                "Flat:0",
-                "Flat:1",
-                "Flat:2",
-                "TileCol",
-                "TileRow",
-                "TileColRow:10",
-                "Longitude",
-                "Latitude",
-                "Year",
-                "Month",
-                "Day"
-            ]
-        }
+      "x": {"type": "spatial", "axis": "x", "reference_system": 4326},
+      "y": {"type": "spatial", "axis": "y", "reference_system": 4326},
+      "t": {"type": "temporal"},
+      "bands": {
+        "type": "bands",
+        "values": [
+          "Flat:0",
+          "Flat:1",
+          "Flat:2",
+          "TileCol",
+          "TileRow",
+          "TileColRow:10",
+          "Longitude",
+          "Latitude",
+          "Year",
+          "Month",
+          "Day"
+        ]
+      }
     },
     "extent": {
-        "spatial": {"bbox": [[-180, -56, 180, 83]]},
-        "temporal": {"interval": [["2000-01-01", null]]}
+      "spatial": {"bbox": [[-180, -56, 180, 83]]},
+      "temporal": {"interval": [["2000-01-01", null]]}
     }
   }
 ]
