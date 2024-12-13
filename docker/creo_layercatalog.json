@@ -1090,6 +1090,7 @@
     },
     "_vito": {
       "data_source": {
+        "realign": false,
         "type": "file-oscars",
         "opensearch_collection_id": "CopDem",
         "opensearch_endpoint": "https://catalogue.dataspace.copernicus.eu/resto",
@@ -1176,6 +1177,7 @@
     },
     "_vito": {
       "data_source": {
+        "realign": false,
         "type": "file-oscars",
         "opensearch_collection_id": "CopDem",
         "opensearch_endpoint": "https://catalogue.dataspace.copernicus.eu/resto",
