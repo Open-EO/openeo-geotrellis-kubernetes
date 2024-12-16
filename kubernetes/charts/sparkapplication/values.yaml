@@ -2,7 +2,9 @@
 # Driver parameters
 driver:
   # Number of cores allocated to driver
-  cores: 1
+  cores: 0  # coreRequest is the preferred way if you use this you MUST set coreRequest to empty string
+  # Number of cores allocated to executor (but expressed as a request allowing more granularity)
+  coreRequest: 1000m  # If you use this you MUST set cores to 0
   # Hard limit on CPU cores for the pod
   coreLimit: "1200m"
   # Memory limit for pod
@@ -14,7 +16,9 @@ driver:
 # Executor parameters
 executor:
   # Number of cores allocated to executor
-  cores: 1
+  cores: 0  # coreRequest is the preferred way if you use this you MUST set coreRequest to empty string
+  # Number of cores allocated to executor (but expressed as a request allowing more granularity)
+  coreRequest: 1000m  # If you use this you MUST set cores to 0
   # Hard limit on CPU cores for the pod
   coreLimit: "1200m"
   # Number of executors to spawn by default

@@ -93,7 +93,12 @@ spec:
     {{- end }}
     securityContext:
       privileged: {{ .Values.privileged }}
+    {{- if .Values.driver.cores }}
     cores: {{ .Values.driver.cores }}
+    {{- end }}
+    {{- if .Values.driver.coreRequest }}
+    coreRequest: {{ .Values.driver.coreRequest }}
+    {{- end }}
     coreLimit: {{ .Values.driver.coreLimit }}
     memory: {{ .Values.driver.memory }}
     memoryOverhead: {{ .Values.driver.memoryOverhead }}
@@ -155,7 +160,12 @@ spec:
     {{- end }}
     securityContext:
       privileged: {{ .Values.privileged }}
+    {{- if .Values.executor.cores }}
     cores: {{ .Values.executor.cores }}
+    {{- end }}
+    {{- if .Values.executor.coreRequest }}
+    coreRequest: {{ .Values.executor.coreRequest }}
+    {{- end }}
     coreLimit: {{ .Values.executor.coreLimit }}
     instances: {{ .Values.executor.instances }}
     memory: {{ .Values.executor.memory }}
