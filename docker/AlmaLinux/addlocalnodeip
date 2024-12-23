@@ -1,0 +1,13 @@
+#/usr/bin/sh
+DNS_NAME="localnodeip"
+if [ ! -f "/etc/hosts.localnodeip" ]
+then
+  echo "$NODE_IP" > /etc/hosts.localnodeip
+fi
+if ! grep ${DNS_NAME} /etc/hosts &>/dev/null
+then
+  if [ "$(cat /etc/hosts.localnodeip | tr -d '\n')" != "" ]
+  then
+    echo "$(cat /etc/hosts.localnodeip | tr -d '\n') ${DNS_NAME}" >>/etc/hosts
+  fi
+fi

@@ -36,6 +36,9 @@ if [ -z "$uidentry" ] ; then
     fi
 fi
 
+# Set the local node ip from environment variable
+sudo -E /bin/addlocalnodeip
+
 SPARK_CLASSPATH="$SPARK_CLASSPATH:${SPARK_HOME}/jars/*"
 env | grep SPARK_JAVA_OPT_ | sort -t_ -k4 -n | sed 's/[^=]*=\(.*\)/\1/g' > /tmp/java_opts.txt
 readarray -t SPARK_EXECUTOR_JAVA_OPTS < /tmp/java_opts.txt
