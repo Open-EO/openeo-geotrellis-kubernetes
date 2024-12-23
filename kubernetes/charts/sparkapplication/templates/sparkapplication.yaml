@@ -80,6 +80,12 @@ spec:
         value: {{ $value | quote }}
       {{- end }}
     {{- end }}
+    {{- with .Values.driver.extraEnv }}
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .Values.global.extraEnv }}
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
     {{- if .Values.driver.javaOptions }}
     javaOptions: {{ .Values.driver.javaOptions }}
     {{- end }}
@@ -150,6 +156,12 @@ spec:
       - name: {{ $key }}
         value: {{ $value | quote }}
       {{- end }}
+    {{- end }}
+    {{- with .Values.executor.extraEnv }}
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .Values.global.extraEnv }}
+      {{- toYaml . | nindent 6 }}
     {{- end }}
     {{- if .Values.executor.javaOptions }}
     javaOptions: {{ .Values.executor.javaOptions }}

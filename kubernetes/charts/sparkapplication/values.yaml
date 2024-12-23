@@ -13,6 +13,9 @@ driver:
   memoryOverhead: "2700m"
   # Termination grace period seconds for the pod
   terminationGracePeriodSeconds: 30
+  # Extra environment variable to be added to drivers as per envvar-v1-core spec
+  # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#envvar-v1-core
+  extraEnv: []
 # Executor parameters
 executor:
   # Number of cores allocated to executor
@@ -29,6 +32,13 @@ executor:
   memoryOverhead: "2700m"
   # Termination grace period seconds for the pod
   terminationGracePeriodSeconds: 30
+  # Extra environment variable to be added to executors as per envvar-v1-core spec
+  # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#envvar-v1-core
+  extraEnv: []
+global:
+  # Extra environment variable to be added to drivers and executors as per envvar-v1-core spec
+  # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#envvar-v1-core
+  extraEnv: []
 imagePullPolicy: "IfNotPresent"
 ingress:
   enabled: false
