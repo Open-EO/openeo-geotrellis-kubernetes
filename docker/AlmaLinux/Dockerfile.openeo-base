@@ -1,10 +1,18 @@
 ARG OPENEO_IMAGE=vito-docker.artifactory.vgt.vito.be/almalinux8.5-spark-py-openeo:3.4.0
 
-FROM ${OPENEO_IMAGE}
 
+FROM ${OPENEO_IMAGE} as build_stage
+ARG OPENEO_ZIP
+WORKDIR /opt
+COPY ${OPENEO_ZIP} /opt/${OPENEO_ZIP}
+
+RUN mkdir -p /opt/venv && \
+    unzip -o /opt/${OPENEO_ZIP} -d /opt/venv && \
+    rm -f /opt/${OPENEO_ZIP}
+
+FROM ${OPENEO_IMAGE}
 ARG GEOTRELLIS_EXTENSIONS_VERSION=2.4.0_2.12-SNAPSHOT
 ARG GEOTRELLIS_BACKEND_ASSEMBLY_VERSION=0.4.6-2-openeo_2.12
-ARG OPENEO_ZIP
 
 LABEL maintainer="VITO Remote Sensing"
 
@@ -12,12 +20,10 @@ USER root
 
 WORKDIR /opt
     
-COPY ${OPENEO_ZIP} /opt/${OPENEO_ZIP}
 
 RUN curl --fail https://artifactory.vgt.vito.be/artifactory/libs-snapshot-public/org/openeo/geotrellis-extensions/${GEOTRELLIS_EXTENSIONS_VERSION}/geotrellis-extensions-${GEOTRELLIS_EXTENSIONS_VERSION}.jar -o geotrellis-extensions-static.jar && \
-    curl --fail https://artifactory.vgt.vito.be/artifactory/libs-snapshot-public/org/openeo/openeo-logging/${GEOTRELLIS_EXTENSIONS_VERSION}/openeo-logging-${GEOTRELLIS_EXTENSIONS_VERSION}.jar -o openeo-logging-static.jar && \
-    mkdir -p /opt/venv && \
-    unzip -o /opt/${OPENEO_ZIP} -d /opt/venv && \
-    rm -f /opt/${OPENEO_ZIP}
+    curl --fail https://artifactory.vgt.vito.be/artifactory/libs-snapshot-public/org/openeo/openeo-logging/${GEOTRELLIS_EXTENSIONS_VERSION}/openeo-logging-${GEOTRELLIS_EXTENSIONS_VERSION}.jar -o openeo-logging-static.jar 
+
+COPY --from=build_stage /opt/venv /opt/venv
 
 ENV PYSPARK_PYTHON=/opt/venv/bin/python3
