@@ -1,4 +1,5 @@
 ---
+configMaps: {}
 # Driver parameters
 driver:
   # Number of cores allocated to driver
@@ -35,6 +36,7 @@ executor:
   # Extra environment variable to be added to executors as per envvar-v1-core spec
   # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#envvar-v1-core
   extraEnv: []
+existingConfigMaps: true
 global:
   # Extra environment variable to be added to drivers and executors as per envvar-v1-core spec
   # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#envvar-v1-core

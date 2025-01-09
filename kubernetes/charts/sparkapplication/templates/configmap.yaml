@@ -1,0 +1,11 @@
+{{- if not .Values.existingConfigMaps }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "sparkapplication.fullname" . }}
+data:
+  {{- with .Values.configMaps.backendConfig }}
+  backendconfig.py: |
+{{- tpl . . | nindent 4 }}
+  {{- end }}
+{{- end }}
