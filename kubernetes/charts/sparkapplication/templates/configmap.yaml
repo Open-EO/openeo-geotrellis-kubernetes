@@ -8,4 +8,8 @@ data:
   backendconfig.py: |
 {{- tpl . . | nindent 4 }}
   {{- end }}
+  {{- with .Values.configMaps.layerCatalog }}
+  layercatalog.json: |
+{{- tpl . . | nindent 4 }}
+  {{- end }}
 {{- end }}
