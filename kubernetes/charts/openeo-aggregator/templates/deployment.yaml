@@ -39,11 +39,17 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if .Values.envVars }}
+          {{- if or .Values.envVars .Values.configMaps.conf }}
           env:
-          {{- range $key, $value :=  .Values.envVars }}
+          {{- if .Values.envVars }}
+          {{- range $key, $value := .Values.envVars }}
             - name: {{ $key }}
               value: {{ $value | quote }}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.configMaps.conf }}
+            - name: OPENEO_BACKEND_CONFIG
+              value: "/conf/openeofed.conf.py"
           {{- end }}
           {{- end }}
           ports:
@@ -64,9 +70,15 @@ spec:
             initialDelaySeconds: 30
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumeMounts }}
+          {{- if or .Values.volumeMounts (not .Values.existingConfigMaps) }}
           volumeMounts:
+            {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- if not .Values.existingConfigMaps }}
+            - name: {{ include "openeo-aggregator.fullname" . }}-config
+              mountPath: /conf
+            {{- end }}
           {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
@@ -80,7 +92,17 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.volumes }}
+      {{- if or .Values.volumes (not .Values.existingConfigMaps) }}
       volumes:
-        {{ toYaml . | nindent 8}}
+        {{- with .Values.volumes }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- if not .Values.existingConfigMaps }}
+        - configMap:
+            name: openeofed
+            items:
+              - key: conf.py
+                path: openeofed.conf.py
+          name: openeofed-config
+        {{- end }}
       {{- end }}
