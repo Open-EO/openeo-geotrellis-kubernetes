@@ -63,6 +63,8 @@ spec:
     affinity:
 {{ toYaml .Values.driver.affinity | indent 6 }}
     {{- end }}
+    annotations:
+      checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     env:
       - name: IMAGE_NAME
         value: {{ .Values.image }}:{{ .Values.imageVersion }}
