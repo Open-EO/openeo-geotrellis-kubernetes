@@ -32,9 +32,29 @@ spec:
   {{- end }}
   {{- end }}
   timeToLiveSeconds: {{ .Values.timeToLiveSeconds }}
-  {{- if .Values.volumes }}
+  {{- if or .Values.volumes (not .Values.existingConfigMaps) }}
   volumes:
-{{ toYaml .Values.volumes | indent 3 }}
+  {{- with .Values.volumes }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- if not .Values.existingConfigMaps }}
+  {{- if .Values.configMaps.backendConfig }}
+    - configMap:
+        name: openeo-geotrellis-openeo-sparkapplication
+        items:
+          - key: backendconfig.py
+            path: backendconfig.py
+      name: backend-config-configmap
+  {{- end }}
+  {{- if .Values.configMaps.layerCatalog }}
+    - configMap:
+        name: openeo-geotrellis-openeo-sparkapplication
+        items:
+          - key: layercatalog.json
+            path: layercatalog.json
+      name: layercatalog-configmap
+  {{- end }}
+  {{- end }}
   {{- end }}
   {{- if or .Values.jarDependencies .Values.fileDependencies }}
   deps:
@@ -88,6 +108,10 @@ spec:
     {{- with .Values.global.extraEnv }}
       {{- toYaml . | nindent 6 }}
     {{- end }}
+    {{- if .Values.configMaps.backendConfig }}
+      - name: OPENEO_BACKEND_CONFIG
+        value: "/opt/backend_config/backendconfig.py"
+    {{- end }}
     {{- if .Values.driver.javaOptions }}
     javaOptions: {{ .Values.driver.javaOptions }}
     {{- end }}
@@ -123,12 +147,24 @@ spec:
     {{- end }}
     {{- end}}
     serviceAccount: {{ required "Please provide a rbac.serviceAccountDriver" .Values.rbac.serviceAccountDriver }}
-    {{- if .Values.volumeMounts }}
+    {{- if or .Values.volumeMounts (not .Values.existingConfigMaps) }}
     volumeMounts:
-{{ toYaml .Values.volumeMounts | indent 6 }}
-{{- if .Values.driver.volumeMounts }}
-{{ toYaml .Values.driver.volumeMounts | indent 6 }}
-{{- end }}
+    {{- with .Values.volumesMounts }}
+    {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .Values.driver.volumeMounts }}
+    {{- toYaml .Values.driver.volumeMounts | indent 6 }}
+    {{- end }}
+    {{- if not .Values.existingConfigMaps }}
+    {{- if .Values.configMaps.backendConfig }}
+      - mountPath: /opt/backend_config/
+        name: backend-config-configmap
+    {{- end }}
+    {{- if .Values.configMaps.layerCatalog }}
+      - mountPath: /opt/layercatalog/
+        name: layercatalog-configmap
+    {{- end }}
+    {{- end }}
     {{- end }}
     {{- if .Values.initContainers }}
     initContainers:
@@ -196,12 +232,24 @@ spec:
     {{- end }}
     {{- end}}
     serviceAccount: {{ .Values.rbac.serviceAccountExecutor }}
-    {{- if .Values.volumeMounts }}
+    {{- if or .Values.volumeMounts (not .Values.existingConfigMaps) }}
     volumeMounts:
-{{ toYaml .Values.volumeMounts | indent 6 }}
-{{- if .Values.executor.volumeMounts }}
-{{ toYaml .Values.executor.volumeMounts | indent 6 }}
-{{- end }}
+    {{- with .Values.volumesMounts }}
+    {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .Values.executor.volumeMounts }}
+    {{- toYaml .Values.executor.volumeMounts | indent 6 }}
+    {{- end }}
+    {{- if not .Values.existingConfigMaps }}
+    {{- if .Values.configMaps.backendConfig }}
+      - mountPath: /opt/backend_config/
+        name: backend-config-configmap
+    {{- end }}
+    {{- if .Values.configMaps.layerCatalog }}
+      - mountPath: /opt/layercatalog/
+        name: layercatalog-configmap
+    {{- end }}
+    {{- end }}
     {{- end }}
     {{- if .Values.initContainers }}
     initContainers:
