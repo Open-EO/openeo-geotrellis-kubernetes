@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 configMaps: {}
-existingConfigMaps: false
+existingConfigMaps: true
 
 replicaCount: 1
 
