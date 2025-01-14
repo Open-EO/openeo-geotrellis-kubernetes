@@ -104,6 +104,6 @@ spec:
             items:
               - key: conf.py
                 path: openeofed.conf.py
-          name: openeofed-config
+          name: {{ include "openeo-aggregator.fullname" . }}-config
         {{- end }}
       {{- end }}
