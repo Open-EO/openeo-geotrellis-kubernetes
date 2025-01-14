@@ -100,7 +100,7 @@ spec:
         {{- end }}
         {{- if not .Values.existingConfigMaps }}
         - configMap:
-            name: openeofed
+            name: {{ include "openeo-aggregator.fullname" . }}-config
             items:
               - key: conf.py
                 path: openeofed.conf.py
