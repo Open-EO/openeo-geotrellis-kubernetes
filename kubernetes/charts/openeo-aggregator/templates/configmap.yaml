@@ -4,8 +4,8 @@ kind: ConfigMap
 metadata:
   name: {{ include "openeo-aggregator.fullname" . }}
 data:
-  {{- with .Values.configMaps.conf }}
+  {{- if .Values.configMaps.conf }}
   conf.py: |
-{{- tpl . . | nindent 4 }}
+{{- tpl .Values.configMaps.conf . | nindent 4 }}
   {{- end }}
 {{- end }}
