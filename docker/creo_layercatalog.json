@@ -679,6 +679,7 @@
         "root_path": "/eodata",
         "provider:backend": "creodias",
         "parallel_query": true,
+        "select_one_orbit_per_day": true,
         "is_utm": true
       },
       "properties": {
