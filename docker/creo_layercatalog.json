@@ -4017,7 +4017,7 @@
     "id": "ESA_WORLDCOVER_10M_2021_V2",
     "experimental": true,
     "title": "Global landcover at 10m resolution for 2021.",
-    "description": "WorldCover provides global land cover products for 2020 at 10 m resolution, developed and validated in near-real time based on Sentinel-1 and Sentinel-2 data. ",
+    "description": "WorldCover provides global land cover products for 2021 at 10 m resolution, developed and validated in near-real time based on Sentinel-1 and Sentinel-2 data. ",
     "license": "CC-BY-4.0",
     "providers": [
       {
