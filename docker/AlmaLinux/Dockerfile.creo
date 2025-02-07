@@ -17,7 +17,7 @@ ADD https://artifactory.vgt.vito.be/artifactory/libs-release/com/amazonaws/aws-j
 
 RUN adduser -u 18585 -d /opt/spark/work-dir spark && \
     chown 18585:18585 /opt/spark/work-dir && \
-    printf "[global]\nindex-url = https://artifactory.vgt.vito.be/artifactory/api/pypi/python-packages/simple\nextra-index-url = https://artifactory.vgt.vito.be/artifactory/api/pypi/python-packages/simple\n" > /etc/pip.conf && \
+    printf "[global]\nextra-index-url = https://artifactory.vgt.vito.be/artifactory/api/pypi/python-openeo/simple\n" > /etc/pip.conf && \
     curl -O https://artifactory.vgt.vito.be/artifactory/libs-release/io/prometheus/jmx/jmx_prometheus_javaagent/${JMX_PROMETHEUS_JAVAAGENT_VERSION}/jmx_prometheus_javaagent-${JMX_PROMETHEUS_JAVAAGENT_VERSION}.jar && \
     chmod +x /opt/entrypoint.sh /opt/decom.sh && \
     PYTHONPLATLIBDIR=lib64 /opt/venv/bin/python3 -m pip install -I --upgrade pip && \
