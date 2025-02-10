@@ -49,6 +49,7 @@ RUN dnf clean all && dnf install -y epel-release && \
 
 ENV SPARK_HOME /usr/local/spark
 ENV JAVA_HOME /usr/lib/jvm/jre
+ENV PYSPARK_PYTHON=python3.11
 ENV PYTHONPLATLIBDIR=lib64
 ENV HADOOP_HOME=/usr/hdp/current/hadoop-client
 ENV HADOOP_CONF_DIR=/etc/hadoop/conf
