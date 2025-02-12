@@ -11,7 +11,7 @@ WORKDIR /opt/spark/work-dir
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
 
 RUN dnf clean all && dnf install -y epel-release && \
-    dnf --enablerepo=powertools install -y spark-bin-${SPARK_VERSION} \
+    dnf --enablerepo=powertools install -y spark-vito-${SPARK_VERSION} \
     hdf5-1.10.5-5.el8.x86_64 \
     gdal-3.8.4 \
     gdal-devel-3.8.4 \
@@ -106,6 +106,8 @@ RUN dnf clean all && dnf install -y epel-release && \
     rm -r /root/.cache && \
     yum clean all && \
     rm -rf /var/cache/yum/*
+
+RUN ln -s /opt/spark3_5_3 /usr/local/spark-3.5.3
 
 ENV SPARK_HOME /usr/local/spark
 ENV JAVA_HOME /usr/lib/jvm/jre
