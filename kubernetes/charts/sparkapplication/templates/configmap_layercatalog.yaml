@@ -1,0 +1,9 @@
+{{- if and (not .Values.existingConfigMaps) (.Values.configMaps.layerCatalog) }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "sparkapplication.fullname" . }}-layercatalog
+data:
+  layercatalog.json: |
+{{- tpl .Values.configMaps.layerCatalog . | nindent 4 }}
+{{- end }}

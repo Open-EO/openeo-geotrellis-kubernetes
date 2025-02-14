@@ -1,4 +1,4 @@
-{{- if and (.Values.spark_ui.ingress.enabled) (not .Values.ha.enabled) -}}
+{{- if .Values.spark_ui.ingress.enabled -}}
 {{- $name := .Release.Name -}}
 {{- $svcPort := .Values.spark_ui.port -}}
 {{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}

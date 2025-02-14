@@ -15,9 +15,5 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- if .Values.ha.enabled }}
-    k8s-app: {{ printf "%s-ha" .Release.Name }}
-    {{- else }}
     app.kubernetes.io/name: {{ .Release.Name | trunc 63 }}-driver
-    {{- end }}
 {{- end }}

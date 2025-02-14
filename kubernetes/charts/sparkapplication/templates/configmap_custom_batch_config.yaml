@@ -1,0 +1,9 @@
+{{- if and (not .Values.existingConfigMaps) (.Values.configMaps.customBatchConfig) }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "sparkapplication.fullname" . }}-custom-batch-config
+data:
+  sparkapplication.yaml.j2: |
+{{- tpl .Values.configMaps.customBatchConfig . | nindent 4 }}
+{{- end }}

@@ -1,4 +1,3 @@
-{{- if not .Values.ha.enabled -}}
 ---
 apiVersion: sparkoperator.k8s.io/v1beta2
 kind: SparkApplication
@@ -37,23 +36,40 @@ spec:
   {{- with .Values.volumes }}
   {{- toYaml . | nindent 4 }}
   {{- end }}
-  {{- if not .Values.existingConfigMaps }}
   {{- if .Values.configMaps.backendConfig }}
     - configMap:
-        name: openeo-geotrellis-openeo-sparkapplication
-        items:
-          - key: backendconfig.py
-            path: backendconfig.py
-      name: backend-config-configmap
+        name: {{ include "sparkapplication.fullname" . }}-backend-config
+      name: {{ include "sparkapplication.fullname" . }}-backend-config
+  {{- end }}
+  {{- if .Values.configMaps.batchJobLog4j2 }}
+    - configMap:
+        name: {{ include "sparkapplication.fullname" . }}-batch-job-log4j2
+      name: {{ include "sparkapplication.fullname" . }}-batch-job-log4j2
+  {{- end }}
+  {{- if .Values.configMaps.customBatchConfig }}
+    - configMap:
+        name: {{ include "sparkapplication.fullname" . }}-custom-batch-config
+      name: {{ include "sparkapplication.fullname" . }}-custom-batch-config
+  {{- end }}
+  {{- if .Values.configMaps.httpCredentials }}
+    - configMap:
+        name: {{ include "sparkapplication.fullname" . }}-http-credentials
+      name: {{ include "sparkapplication.fullname" . }}-http-credentials
   {{- end }}
   {{- if .Values.configMaps.layerCatalog }}
     - configMap:
-        name: openeo-geotrellis-openeo-sparkapplication
-        items:
-          - key: layercatalog.json
-            path: layercatalog.json
-      name: layercatalog-configmap
+        name: {{ include "sparkapplication.fullname" . }}-layercatalog
+      name: {{ include "sparkapplication.fullname" . }}-layercatalog
   {{- end }}
+  {{- if .Values.configMaps.log4j2 }}
+    - configMap:
+        name: {{ include "sparkapplication.fullname" . }}-log4j2
+      name: {{ include "sparkapplication.fullname" . }}-log4j2
+  {{- end }}
+  {{- if .Values.configMaps.prometheusConfig }}
+    - configMap:
+        name: {{ include "sparkapplication.fullname" . }}-prometheus-config
+      name: {{ include "sparkapplication.fullname" . }}-prometheus-config
   {{- end }}
   {{- end }}
   {{- if or .Values.jarDependencies .Values.fileDependencies }}
@@ -84,7 +100,13 @@ spec:
 {{ toYaml .Values.driver.affinity | indent 6 }}
     {{- end }}
     annotations:
-      checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      checksum/backend-config: {{ include (print $.Template.BasePath "/configmap_backend_config.yaml") . | sha256sum }}
+      checksum/batch-job-log4j2: {{ include (print $.Template.BasePath "/configmap_batch_job_log4j2.yaml") . | sha256sum }}
+      checksum/custom-batch-config: {{ include (print $.Template.BasePath "/configmap_custom_batch_config.yaml") . | sha256sum }}
+      checksum/http-credentials: {{ include (print $.Template.BasePath "/configmap_http_credentials.yaml") . | sha256sum }}
+      checksum/layercatalog: {{ include (print $.Template.BasePath "/configmap_layercatalog.yaml") . | sha256sum }}
+      checksum/log4j2: {{ include (print $.Template.BasePath "/configmap_log4j2.yaml") . | sha256sum }}
+      checksum/prometheus-config: {{ include (print $.Template.BasePath "/configmap_prometheus_config.yaml") . | sha256sum }}
     env:
       - name: IMAGE_NAME
         value: {{ .Values.image }}:{{ .Values.imageVersion }}
@@ -147,38 +169,65 @@ spec:
     {{- end }}
     {{- end}}
     serviceAccount: {{ required "Please provide a rbac.serviceAccountDriver" .Values.rbac.serviceAccountDriver }}
-    {{- if or .Values.volumeMounts (not .Values.existingConfigMaps) }}
+  {{- if or .Values.volumeMounts .Values.driver.volumeMounts }}
     volumeMounts:
-    {{- with .Values.volumesMounts }}
-    {{- toYaml . | nindent 6 }}
-    {{- end }}
-    {{- with .Values.driver.volumeMounts }}
-    {{- toYaml .Values.driver.volumeMounts | indent 6 }}
-    {{- end }}
+      {{- with .Values.volumeMounts }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+      {{- with .Values.driver.volumeMounts }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
     {{- if not .Values.existingConfigMaps }}
     {{- if .Values.configMaps.backendConfig }}
-      - mountPath: /opt/backend_config/
-        name: backend-config-configmap
+      - mountPath: /opt/backend_config/backendconfig.py
+        name: {{ include "sparkapplication.fullname" . }}-backend-config
+        subPath: backendconfig.py
+    {{- end }}
+    {{- if .Values.configMaps.batchJobLog4j2 }}
+      - mountPath: /opt/batch_job_log4j2.xml
+        name: {{ include "sparkapplication.fullname" . }}-batch-job-log4j2
+        subPath: batch_job_log4j2.xml
+    {{- end }}
+    {{- if .Values.configMaps.httpCredentials }}
+      - mountPath: /opt/http_credentials/http_credentials.json
+        name: {{ include "sparkapplication.fullname" . }}-http-credentials
+        subPath: http_credentials.json
+    {{- end }}
+    {{- if .Values.configMaps.customBatchConfig }}
+      - mountPath: /opt/venv/lib64/python3.8/site-packages/openeogeotrellis/deploy/sparkapplication.yaml.j2
+        name: {{ include "sparkapplication.fullname" . }}-custom-batch-config
+        subPath: sparkapplication.yaml.j2
     {{- end }}
     {{- if .Values.configMaps.layerCatalog }}
-      - mountPath: /opt/layercatalog/
-        name: layercatalog-configmap
+      - mountPath: /opt/layercatalog.json
+        name: {{ include "sparkapplication.fullname" . }}-layercatalog
+        subPath: layercatalog.json
+    {{- end }}
+    {{- if .Values.configMaps.log4j2 }}
+      - mountPath: /opt/log4j2.xml
+        name: {{ include "sparkapplication.fullname" . }}-log4j2
+        subPath: log4j2.xml
+    {{- end }}
+    {{- if .Values.configMaps.prometheusConfig }}
+      - mountPath: /opt/prometheus_config.yaml
+        name: {{ include "sparkapplication.fullname" . }}-prometheus-config
+        subPath: prometheus_config.yaml
     {{- end }}
     {{- end }}
-    {{- end }}
+  {{- end }}
     {{- if .Values.initContainers }}
     initContainers:
-{{ toYaml .Values.initContainers | indent 6 }}
+{{ toYaml .Values.initContainers | nindent 6 }}
     {{- end }}
     {{- if .Values.driver.lifecycle}}
     lifecycle:
-{{ toYaml .Values.driver.lifecycle | indent 6 }}
+{{ toYaml .Values.driver.lifecycle | nindent 6 }}
     {{- end }}
     terminationGracePeriodSeconds: {{ .Values.driver.terminationGracePeriodSeconds }}
   executor:
     {{- if .Values.executor.affinity }}
     affinity:
-{{ toYaml .Values.executor.affinity | indent 6 }}
+{{ toYaml .Values.executor.affinity | nindent 6 }}
     {{- end }}
     env:
       - name: POD_NAME
@@ -232,25 +281,47 @@ spec:
     {{- end }}
     {{- end}}
     serviceAccount: {{ .Values.rbac.serviceAccountExecutor }}
-    {{- if or .Values.volumeMounts (not .Values.existingConfigMaps) }}
+  {{- if or .Values.volumeMounts .Values.executor.volumeMounts }}
     volumeMounts:
-    {{- with .Values.volumesMounts }}
-    {{- toYaml . | nindent 6 }}
-    {{- end }}
-    {{- with .Values.executor.volumeMounts }}
-    {{- toYaml .Values.executor.volumeMounts | indent 6 }}
-    {{- end }}
+      {{- with .Values.volumeMounts }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+      {{- with .Values.executor.volumeMounts }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
     {{- if not .Values.existingConfigMaps }}
     {{- if .Values.configMaps.backendConfig }}
-      - mountPath: /opt/backend_config/
-        name: backend-config-configmap
+      - mountPath: /opt/backend_config/backendconfig.py
+        name: {{ include "sparkapplication.fullname" . }}-backend-config
+        subPath: backendconfig.py
     {{- end }}
-    {{- if .Values.configMaps.layerCatalog }}
-      - mountPath: /opt/layercatalog/
-        name: layercatalog-configmap
+    {{- if .Values.configMaps.batchJobLog4j2 }}
+      - mountPath: /opt/batch_job_log4j2.xml
+        name: {{ include "sparkapplication.fullname" . }}-batch-job-log4j2
+        subPath: batch_job_log4j2.xml
+    {{- end }}
+    {{- if .Values.configMaps.httpCredentials }}
+      - mountPath: /opt/http_credentials/http_credentials.json
+        name: {{ include "sparkapplication.fullname" . }}-http-credentials
+        subPath: http_credentials.json
+    {{- end }}
+    {{- if .Values.configMaps.prometheusConfig }}
+      - mountPath: /opt/prometheus_config.yaml
+        name: {{ include "sparkapplication.fullname" . }}-prometheus-config
+        subPath: prometheus_config.yaml
+    {{- end }}
+    {{- if .Values.configMaps.backendConfig }}
+      - mountPath: /opt/backend_config/backendconfig.py
+        name: {{ include "sparkapplication.fullname" . }}-backend-config
+        subPath: backendconfig.py
+    {{- end }}
+    {{- if .Values.configMaps.log4j2 }}
+      - mountPath: /opt/log4j2.xml
+        name: {{ include "sparkapplication.fullname" . }}-log4j2
+        subPath: log4j2.xml
     {{- end }}
     {{- end }}
-    {{- end }}
+  {{- end }}
     {{- if .Values.initContainers }}
     initContainers:
 {{ toYaml .Values.initContainers | indent 6 }}
@@ -279,4 +350,3 @@ spec:
       jmxExporterJar: {{ .Values.jmxExporterJar }}
       port: {{ .Values.jmxPort | default 8090 }}
   {{- end }}
-{{- end }}

@@ -1,0 +1,9 @@
+{{- if and (not .Values.existingConfigMaps) (.Values.configMaps.prometheusConfig) }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "sparkapplication.fullname" . }}-prometheus-config
+data:
+  prometheus_config.yaml: |
+{{- tpl .Values.configMaps.prometheusConfig . | nindent 4 }}
+{{- end }}
