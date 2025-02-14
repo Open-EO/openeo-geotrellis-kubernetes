@@ -4428,6 +4428,66 @@
     }
   },
   {
+    "id": "SENTINEL2_L2A_STAC",
+    "description": "[EXPERIMENTAL]",
+    "experimental": true,
+    "_vito": {
+      "data_source": {
+        "type": "stac",
+        "url": "https://stac.dataspace.copernicus.eu/v1/collections/sentinel-2-l2a",
+        "load_stac_apply_lcfm_improvements": true
+      }
+    },
+    "cube:dimensions": {
+      "x": {"type": "spatial", "axis": "x", "reference_system": {"$schema":"https://proj.org/schemas/v0.2/projjson.schema.json","type":"GeodeticCRS","name":"AUTO 42001 (Universal Transverse Mercator)","datum":{"type":"GeodeticReferenceFrame","name":"World Geodetic System 1984","ellipsoid":{"name":"WGS 84","semi_major_axis":6378137,"inverse_flattening":298.257223563}},"coordinate_system":{"subtype":"ellipsoidal","axis":[{"name":"Geodetic latitude","abbreviation":"Lat","direction":"north","unit":"degree"},{"name":"Geodetic longitude","abbreviation":"Lon","direction":"east","unit":"degree"}]},"area":"World","bbox":{"south_latitude":-90,"west_longitude":-180,"north_latitude":90,"east_longitude":180},"id":{"authority":"OGC","version":"1.3","code":"Auto42001"}}},
+      "y": {"type": "spatial", "axis": "y", "reference_system": {"$schema":"https://proj.org/schemas/v0.2/projjson.schema.json","type":"GeodeticCRS","name":"AUTO 42001 (Universal Transverse Mercator)","datum":{"type":"GeodeticReferenceFrame","name":"World Geodetic System 1984","ellipsoid":{"name":"WGS 84","semi_major_axis":6378137,"inverse_flattening":298.257223563}},"coordinate_system":{"subtype":"ellipsoidal","axis":[{"name":"Geodetic latitude","abbreviation":"Lat","direction":"north","unit":"degree"},{"name":"Geodetic longitude","abbreviation":"Lon","direction":"east","unit":"degree"}]},"area":"World","bbox":{"south_latitude":-90,"west_longitude":-180,"north_latitude":90,"east_longitude":180},"id":{"authority":"OGC","version":"1.3","code":"Auto42001"}}},
+      "t": {
+        "type": "temporal"
+      },
+      "bands": {
+        "type": "bands",
+        "values": [
+          "AOT_10m",
+          "AOT_20m",
+          "AOT_60m",
+          "B01_20m",
+          "B01_60m",
+          "B02_10m",
+          "B02_20m",
+          "B02_60m",
+          "B03_10m",
+          "B03_20m",
+          "B03_60m",
+          "B04_10m",
+          "B04_20m",
+          "B04_60m",
+          "B05_20m",
+          "B05_60m",
+          "B06_20m",
+          "B06_60m",
+          "B07_20m",
+          "B07_60m",
+          "B08_10m",
+          "B09_60m",
+          "B11_20m",
+          "B11_60m",
+          "B12_20m",
+          "B12_60m",
+          "B8A_20m",
+          "B8A_60m",
+          "SCL_20m",
+          "SCL_60m",
+          "TCI_10m",
+          "TCI_20m",
+          "TCI_60m",
+          "WVP_10m",
+          "WVP_20m",
+          "WVP_60m"
+        ]
+      }
+    }
+  },
+  {
     "id": "TestCollection-LonLat16x16",
     "description": "[DEBUGGING] Fast and predictable layer for debugging purposes. One sample every 5 days. Resolution will vary, to always output 16x16 pixels.",
     "experimental": true,
