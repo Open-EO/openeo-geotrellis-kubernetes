@@ -100,13 +100,27 @@ spec:
 {{ toYaml .Values.driver.affinity | indent 6 }}
     {{- end }}
     annotations:
+      {{- if .Values.configMaps.backendConfig }}
       checksum/backend-config: {{ include (print $.Template.BasePath "/configmap_backend_config.yaml") . | sha256sum }}
+      {{- end }}
+      {{- if .Values.configMaps.batchJobLog4j2 }}
       checksum/batch-job-log4j2: {{ include (print $.Template.BasePath "/configmap_batch_job_log4j2.yaml") . | sha256sum }}
+      {{- end }}
+      {{- if .Values.configMaps.customBatchConfig }}
       checksum/custom-batch-config: {{ include (print $.Template.BasePath "/configmap_custom_batch_config.yaml") . | sha256sum }}
+      {{- end }}
+      {{- if .Values.configMaps.httpCredentials }}
       checksum/http-credentials: {{ include (print $.Template.BasePath "/configmap_http_credentials.yaml") . | sha256sum }}
+      {{- end }}
+      {{- if .Values.configMaps.layerCatalog }}
       checksum/layercatalog: {{ include (print $.Template.BasePath "/configmap_layercatalog.yaml") . | sha256sum }}
+      {{- end }}
+      {{- if .Values.configMaps.log4j2 }}
       checksum/log4j2: {{ include (print $.Template.BasePath "/configmap_log4j2.yaml") . | sha256sum }}
+      {{- end }}
+      {{- if .Values.configMaps.prometheusConfig }}
       checksum/prometheus-config: {{ include (print $.Template.BasePath "/configmap_prometheus_config.yaml") . | sha256sum }}
+      {{- end }}
     env:
       - name: IMAGE_NAME
         value: {{ .Values.image }}:{{ .Values.imageVersion }}
