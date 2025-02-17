@@ -324,11 +324,6 @@ spec:
         name: {{ include "sparkapplication.fullname" . }}-prometheus-config
         subPath: prometheus_config.yaml
     {{- end }}
-    {{- if .Values.configMaps.backendConfig }}
-      - mountPath: /opt/backend_config/backendconfig.py
-        name: {{ include "sparkapplication.fullname" . }}-backend-config
-        subPath: backendconfig.py
-    {{- end }}
     {{- if .Values.configMaps.log4j2 }}
       - mountPath: /opt/log4j2.xml
         name: {{ include "sparkapplication.fullname" . }}-log4j2
