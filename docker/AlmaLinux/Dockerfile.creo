@@ -7,9 +7,6 @@ USER root
 COPY docker/AlmaLinux/entrypoint.sh /opt/entrypoint.sh
 COPY docker/AlmaLinux/decom.sh /opt/decom.sh
 COPY --chmod=700 docker/AlmaLinux/addlocalnodeip /bin/addlocalnodeip
-COPY docker/creo_layercatalog.json /opt/layercatalog.json
-COPY docker/log4j2.xml /opt/log4j2.xml
-COPY docker/batch_job_log4j2.xml /opt/batch_job_log4j2.xml
 
 # Add S3 dependencies
 ADD https://artifactory.vgt.vito.be/artifactory/libs-release/org/apache/hadoop/hadoop-aws/3.2.2/hadoop-aws-3.2.2.jar $SPARK_HOME/jars
