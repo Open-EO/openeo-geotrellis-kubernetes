@@ -21,3 +21,4 @@ RUN curl --fail https://artifactory.vgt.vito.be/artifactory/libs-snapshot-public
     rm -f /opt/${OPENEO_ZIP}
 
 ENV PYSPARK_PYTHON=/opt/venv/bin/python3
+ENV LANG=en_US.UTF-8
