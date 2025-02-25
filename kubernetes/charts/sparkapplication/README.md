@@ -38,7 +38,7 @@ driver:
   env:
     KUBE: "true"
     KUBE_OPENEO_API_PORT: "50001"
-    PYTHONPATH: $PYTHONPATH:/opt/tensorflow/python38/2.3.0/:/opt/openeo/lib/python3.8/site-packages/
+    PYTHONPATH: $PYTHONPATH:/opt/openeo/lib/python3.8/site-packages/
     SPARK_LOCAL_IP: "127.0.0.1"
   ports:
     - name: webapp
@@ -46,7 +46,7 @@ driver:
       protocol: TCP
 executor:
   env:
-    PYTHONPATH: $PYTHONPATH:/opt/tensorflow/python38/2.3.0/:/opt/openeo/lib/python3.8/site-packages/
+    PYTHONPATH: $PYTHONPATH:/opt/openeo/lib/python3.8/site-packages/
 ha:
   enabled: false
 jarDependencies:
