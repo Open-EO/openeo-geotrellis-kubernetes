@@ -1,22 +1,34 @@
+"""
+openeo-geopyspark-driver plugin to load/add custom processes
+
+loaded automatically by `openeogeotrellis.deploy.load_custom_processes`
+"""
+
 import base64
 import json
 import logging
 import os
 import re
+import textwrap
+from copy import deepcopy
 from pathlib import Path
 
 import kubernetes.config
 from kubernetes.config.incluster_config import SERVICE_TOKEN_FILENAME
+from openeo_driver.datacube import DriverDataCube
+from openeo_driver.datastructs import SarBackscatterArgs
 from openeo_driver.processes import ProcessArgs
 from openeo_driver.ProcessGraphDeserializer import (
     ENV_DRY_RUN_TRACER,
     ProcessSpec,
     non_standard_process,
+    process_registry_2xx,
+    process_registry_100,
 )
+from openeo_driver.specs import read_spec
 from openeo_driver.utils import EvalEnv
 from openeogeotrellis.integrations.calrissian import CalrissianJobLauncher, CwLSource
 from openeogeotrellis.util.runtime import get_job_id, get_request_id
-
 
 log = logging.getLogger("openeo-k8s-custom_processes")
 log.info(f"Loading custom processes from {__file__}")
@@ -117,3 +129,70 @@ def _cwl_demo_insar(args: ProcessArgs, env: EvalEnv):
     # TODO: Load the results as datacube with load_stac.
 
     return results["output.txt"].read(encoding="utf8")
+
+
+SAR_BACKSCATTER_COEFFICIENT_DEFAULT = "sigma0-ellipsoid"
+
+
+def _update_sar_backscatter_spec(spec: dict) -> dict:
+    spec = deepcopy(spec)
+    spec["experimental"] = False
+    spec["description"] += textwrap.dedent(
+        """
+        \n\n
+        ## Backend notes
+        The implementation in this backend is based on Orfeo Toolbox.
+        """
+    )
+
+    (coefficient_param,) = (p for p in spec["parameters"] if p["name"] == "coefficient")
+
+    coefficient_param["description"] = textwrap.dedent(
+        f"""
+        The radiometric correction coefficient.
+        On this backend, only the following option is available:
+
+        * `{SAR_BACKSCATTER_COEFFICIENT_DEFAULT}`: ground area computed with ellipsoid earth model
+        """
+    )
+    coefficient_param["default"] = SAR_BACKSCATTER_COEFFICIENT_DEFAULT
+    coefficient_param["schema"] = [
+        {"type": "string", "enum": [SAR_BACKSCATTER_COEFFICIENT_DEFAULT]},
+        {"title": "Non-normalized backscatter", "type": "null"},
+    ]
+
+    spec["links"].append(
+        {
+            "rel": "about",
+            "href": "https://www.orfeo-toolbox.org/CookBook/Applications/app_SARCalibration.html",
+            "title": "Orfeo toolbox backscatter processor.",
+        }
+    )
+
+    return spec
+
+
+@process_registry_100.add_function(
+    spec=_update_sar_backscatter_spec(read_spec("openeo-processes/1.x/proposals/sar_backscatter.json")),
+    allow_override=True,
+)
+@process_registry_2xx.add_function(
+    spec=_update_sar_backscatter_spec(read_spec("openeo-processes/2.x/proposals/sar_backscatter.json")),
+    allow_override=True,
+)
+def sar_backscatter(args: ProcessArgs, env: EvalEnv):
+    cube: DriverDataCube = args.get_required("data", expected_type=DriverDataCube)
+    kwargs = args.get_subset(
+        names=[
+            "coefficient",
+            "elevation_model",
+            "mask",
+            "contributing_area",
+            "local_incidence_angle",
+            "ellipsoid_incidence_angle",
+            "noise_removal",
+            "options",
+        ]
+    )
+    kwargs.setdefault("coefficient", SAR_BACKSCATTER_COEFFICIENT_DEFAULT)
+    return cube.sar_backscatter(SarBackscatterArgs(**kwargs))
