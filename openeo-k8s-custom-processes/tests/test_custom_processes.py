@@ -71,10 +71,7 @@ def test_sar_backscatter(processes_listing):
         ),
         "default": "sigma0-ellipsoid",
         "optional": True,
-        "schema": [
-            {"type": "string", "enum": ["sigma0-ellipsoid"]},
-            {"type": "null", "title": "Non-normalized backscatter"},
-        ],
+        "schema": {"type": "string", "enum": ["sigma0-ellipsoid"]},
     }
 
     assert spec == dirty_equals.IsPartialDict(
