@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "openeo-geopyspark-k8s-custom-processes"
+version = "0.0.1"
+description = "Custom openEO processes for openEO GeoPySpark driver on Kubernetes/Creodias."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "Apache-2.0"
+license-files = ["../LICENSE"]
+dependencies = [
+    "openeo_driver>=0.131.0.dev",
+    "openeo-geopyspark[k8s]>=0.64.1.dev",
+]
+
+
+[project.urls]
+Homepage = "https://github.com/Open-EO/openeo-geotrellis-kubernetes"
+
+
+[project.optional-dependencies]
+tests = [
+    "pytest>=8.0",
+    "dirty_equals>=0.8.0"
+]
+
+[tool.hatch.build.targets.sdist]
+packages = ["src/openeo_geopyspark_k8s_custom_processes"]
+
+
+[tool.black]
+line-length = 120
+
+[tool.isort]
+profile = "black"
+
+[tool.ruff]
+line-length = 120

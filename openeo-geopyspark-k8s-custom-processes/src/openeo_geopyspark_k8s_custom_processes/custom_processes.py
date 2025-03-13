@@ -30,7 +30,7 @@ from openeo_driver.utils import EvalEnv
 from openeogeotrellis.integrations.calrissian import CalrissianJobLauncher, CwLSource
 from openeogeotrellis.util.runtime import get_job_id, get_request_id
 
-log = logging.getLogger("openeo-k8s-custom_processes")
+log = logging.getLogger("openeo_geopyspark_k8s_custom_processes")
 log.info(f"Loading custom processes from {__file__}")
 
 

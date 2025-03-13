@@ -41,7 +41,9 @@ def api(client) -> ApiTester:
 
 @pytest.fixture(scope="session")
 def _load_custom_processes():
-    openeogeotrellis.deploy.load_custom_processes(path=ROOT / "custom_processes.py")
+    # TODO use importlib to get the actual path of the custom_processes. file
+    path = ROOT / "src/openeo_geopyspark_k8s_custom_processes/custom_processes.py"
+    openeogeotrellis.deploy.load_custom_processes(path=path)
 
 
 class ProcessListing:

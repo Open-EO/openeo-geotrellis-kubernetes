@@ -30,8 +30,8 @@ RUN adduser -u 18585 -d /opt/spark/work-dir spark && \
     echo "spark   ALL=(root) NOPASSWD:SETENV: /bin/addlocalnodeip" > /etc/sudoers.d/spark
 
 # Set up custom openEO processes
-COPY openeo-k8s-custom-processes /opt/openeo-k8s-custom-processes
-ENV OPENEO_CUSTOM_PROCESSES=/opt/openeo-k8s-custom-processes/custom_processes.py
+COPY openeo-geopyspark-k8s-custom-processes /opt/openeo-geopyspark-k8s-custom-processes
+ENV OPENEO_CUSTOM_PROCESSES=/opt/openeo-geopyspark-k8s-custom-processes/src/openeo_geopyspark_k8s_custom_processes/custom_processes.py
 
 # Fix encoding for gdalinfo stdout:
 ENV LANG=en_US.UTF-8
