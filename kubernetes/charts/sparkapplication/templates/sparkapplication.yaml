@@ -18,6 +18,11 @@ spec:
   imagePullPolicy: {{ .Values.imagePullPolicy }}
   mainApplicationFile: {{ required "Please provide a main application file." .Values.mainApplicationFile | quote }}
   sparkVersion: {{ .Values.sparkVersion | quote }}
+  batchScheduler: {{ .Values.batchScheduler.name }}
+  {{- if ne .Values.batchScheduler.name 'default-scheduler'}}
+  batchSchedulerOptions:
+    queue: {{ .Values.batchScheduler.queue }}
+  {{- end }}
   restartPolicy:
     type: {{ .Values.restartPolicy.type }}
     onFailureRetries: {{ .Values.restartPolicy.onFailureRetries }}

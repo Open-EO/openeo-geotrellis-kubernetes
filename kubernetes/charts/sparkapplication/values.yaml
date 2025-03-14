@@ -1,4 +1,7 @@
 ---
+batchScheduler:
+  name: 'default-scheduler'
+  queue: 'root.default'
 configMaps: {}
 # Driver parameters
 driver:
