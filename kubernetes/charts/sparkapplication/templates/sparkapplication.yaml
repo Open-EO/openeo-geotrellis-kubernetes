@@ -19,9 +19,14 @@ spec:
   mainApplicationFile: {{ required "Please provide a main application file." .Values.mainApplicationFile | quote }}
   sparkVersion: {{ .Values.sparkVersion | quote }}
   batchScheduler: {{ .Values.batchScheduler.name }}
-  {{- if ne .Values.batchScheduler.name "default-scheduler"}}
+  {{- if or (ne .Values.batchScheduler.name "default-scheduler") .Values.priorityClassName }}
   batchSchedulerOptions:
+    {{- if eq .Values.batchScheduler.name "yunikorn"}}
     queue: {{ .Values.batchScheduler.queue }}
+    {{- end }}
+    {{- if .Values.priorityClassName }}
+    priorityClassName: {{ .Values.priorityClassName }}
+    {{- end }}
   {{- end }}
   restartPolicy:
     type: {{ .Values.restartPolicy.type }}
@@ -348,10 +353,6 @@ spec:
   {{- if .Values.sparkUIOptions }}
   sparkUIOptions:
 {{ toYaml .Values.sparkUIOptions | indent 4 }}
-  {{- end }}
-  {{- if .Values.priorityClassName }}
-  batchSchedulerOptions:
-    priorityClassName: {{ .Values.priorityClassName }}
   {{- end }}
   {{- if .Values.jmxExporterJar }}
   monitoring:
