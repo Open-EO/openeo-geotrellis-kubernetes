@@ -19,7 +19,7 @@ spec:
   mainApplicationFile: {{ required "Please provide a main application file." .Values.mainApplicationFile | quote }}
   sparkVersion: {{ .Values.sparkVersion | quote }}
   batchScheduler: {{ .Values.batchScheduler.name }}
-  {{- if ne .Values.batchScheduler.name 'default-scheduler'}}
+  {{- if ne .Values.batchScheduler.name "default-scheduler"}}
   batchSchedulerOptions:
     queue: {{ .Values.batchScheduler.queue }}
   {{- end }}
