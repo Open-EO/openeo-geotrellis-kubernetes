@@ -1,5 +1,10 @@
 # sparkapplication chart changelog
 
+## 0.17.2
+- Allow advanced TLS configuration for spark-ui
+- Add support for different scheduler refs
+- restart sparkapp on configmap change
+
 ## 0.16.0
 
 Add `global.extraEnv`, `driver.extraEnv` and `executor.extraEnv` to allow setting environment variables
