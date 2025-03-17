@@ -5,5 +5,5 @@
 helmchartPipeline{
   chart_path       = './kubernetes/charts/sparkapplication'
   chart_repository = 'helm-public'
-  chart_version    = '0.16.0'
+  chart_version    = '0.16.1'
 }
