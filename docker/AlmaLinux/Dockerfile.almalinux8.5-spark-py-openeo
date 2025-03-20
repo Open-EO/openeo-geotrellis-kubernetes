@@ -119,4 +119,3 @@ ENV YARN_CONF_DIR=/etc/hadoop/conf
 ENV ACCUMULO_CLIENT_CONF_PATH=client.conf
 ENV OTB_HOME=/usr
 ENV OTB_APPLICATION_PATH=/usr/lib/otb/applications
-ENV PROJ_LIB=/usr/share/proj
