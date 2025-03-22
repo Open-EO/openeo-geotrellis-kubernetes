@@ -81,6 +81,9 @@ def _cwl_demo_hello(args: ProcessArgs, env: EvalEnv):
         output_paths=["output.txt"],
     )
 
+    for k, v in results.items():
+        log.info(f"Result {k!r} at presigned URL {v.generate_presigned_url()}")
+
     return results["output.txt"].read(encoding="utf8")
 
 
