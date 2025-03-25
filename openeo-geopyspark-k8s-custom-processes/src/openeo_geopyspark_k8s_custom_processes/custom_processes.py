@@ -15,8 +15,11 @@ from pathlib import Path
 
 import kubernetes.config
 from kubernetes.config.incluster_config import SERVICE_TOKEN_FILENAME
+
+from openeo_driver.backend import LoadParameters
 from openeo_driver.datacube import DriverDataCube
 from openeo_driver.datastructs import SarBackscatterArgs
+from openeo_driver.dry_run import DryRunDataTracer
 from openeo_driver.processes import ProcessArgs
 from openeo_driver.ProcessGraphDeserializer import (
     ENV_DRY_RUN_TRACER,
@@ -29,6 +32,7 @@ from openeo_driver.specs import read_spec
 from openeo_driver.utils import EvalEnv
 from openeogeotrellis.integrations.calrissian import CalrissianJobLauncher, CwLSource
 from openeogeotrellis.util.runtime import get_job_id, get_request_id
+import openeogeotrellis.load_stac
 
 log = logging.getLogger("openeo_geopyspark_k8s_custom_processes")
 log.info(f"Loading custom processes from {__file__}")
@@ -82,9 +86,63 @@ def _cwl_demo_hello(args: ProcessArgs, env: EvalEnv):
     )
 
     for k, v in results.items():
-        log.info(f"Result {k!r} at presigned URL {v.generate_presigned_url()}")
+        log.info(f"_cwl_demo_hello result {k!r} at pre-signed URL {v.generate_presigned_url()}")
 
     return results["output.txt"].read(encoding="utf8")
+
+
+@non_standard_process(
+    ProcessSpec(
+        id="_cwl_dummy_stac",
+        description="Proof-of-concept process to run CWL based processing, and load the result as data cube.",
+    ).returns(description="data", schema={"type": "object", "subtype": "datacube"})
+)
+def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv):
+    """
+    Proof of concept openEO process to run CWL based processing:
+    CWL produces a local STAC collection,
+    that is then loaded `load_stac`-style as a `GeopysparkDataCube`.
+    """
+
+    dry_run_tracer: DryRunDataTracer = env.get(ENV_DRY_RUN_TRACER)
+    if dry_run_tracer:
+        return dry_run_tracer.load_stac(url="https://example.com/", arguments={})
+
+    _ensure_kubernetes_config()
+
+    cwl_source = CwLSource.from_path(CWL_ROOT / "dummy_stac.cwl")
+    cwl_arguments = []
+    output_paths = [
+        # TODO: does calrissian allow getting these output paths
+        #       from the CWL output listing, so we can avoid this hardcoded list?
+        "collection.json",
+        "openEO_2023-06-01Z.tif",
+        "openEO_2023-06-01Z.tif.json",
+        "openEO_2023-06-04Z.tif",
+        "openEO_2023-06-04Z.tif.json",
+        "openEO_2023-06-06Z.tif",
+        "openEO_2023-06-06Z.tif.json",
+    ]
+
+    launcher = CalrissianJobLauncher.from_context()
+    results = launcher.run_cwl_workflow(
+        cwl_source=cwl_source,
+        cwl_arguments=cwl_arguments,
+        output_paths=output_paths,
+    )
+
+    for k, v in results.items():
+        log.info(f"_cwl_demo_hello result {k!r} at pre-signed URL {v.generate_presigned_url()}")
+
+    collection_url = results["collection.json"].generate_presigned_url()
+
+    return openeogeotrellis.load_stac.load_stac(
+        url=collection_url,
+        load_params=LoadParameters(),
+        env=EvalEnv(),
+        layer_properties=None,
+        batch_jobs=None,
+    )
 
 
 @non_standard_process(
