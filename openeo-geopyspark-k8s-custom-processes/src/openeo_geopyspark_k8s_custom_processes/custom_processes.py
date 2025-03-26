@@ -132,10 +132,9 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv):
     )
 
     for k, v in results.items():
-        log.info(f"_cwl_demo_hello result {k!r} at pre-signed URL {v.generate_presigned_url()}")
+        log.info(f"_cwl_demo_hello result {k!r}: {v.generate_public_url()=} {v.generate_presigned_url()=}")
 
-    collection_url = results["collection.json"].generate_presigned_url()
-
+    collection_url = results["collection.json"].generate_public_url()
     return openeogeotrellis.load_stac.load_stac(
         url=collection_url,
         load_params=LoadParameters(),
