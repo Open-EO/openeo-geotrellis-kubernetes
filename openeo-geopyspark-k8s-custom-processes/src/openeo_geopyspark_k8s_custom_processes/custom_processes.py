@@ -138,7 +138,7 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv):
     return openeogeotrellis.load_stac.load_stac(
         url=collection_url,
         load_params=LoadParameters(),
-        env=EvalEnv(),
+        env=env,
         layer_properties=None,
         batch_jobs=None,
     )
