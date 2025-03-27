@@ -106,7 +106,7 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv):
 
     dry_run_tracer: DryRunDataTracer = env.get(ENV_DRY_RUN_TRACER)
     if dry_run_tracer:
-        return dry_run_tracer.load_stac(url="https://example.com/", arguments={})
+        return dry_run_tracer.load_stac(url="dummy", arguments={})
 
     _ensure_kubernetes_config()
 
