@@ -135,6 +135,12 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv):
         log.info(f"_cwl_demo_hello result {k!r}: {v.generate_public_url()=} {v.generate_presigned_url()=}")
 
     collection_url = results["collection.json"].generate_public_url()
+    env = env.push(
+        {
+            # TODO: this is apparently necessary to set explicitly, but shouldn't this be the default?
+            "pyramid_levels": "highest",
+        }
+    )
     return openeogeotrellis.load_stac.load_stac(
         url=collection_url,
         load_params=LoadParameters(),
