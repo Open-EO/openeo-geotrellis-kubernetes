@@ -106,6 +106,8 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv):
 
     dry_run_tracer: DryRunDataTracer = env.get(ENV_DRY_RUN_TRACER)
     if dry_run_tracer:
+        # TODO: use something else than `dry_run_tracer.load_stac`
+        #       to avoid risk on conflict with "regular" load_stac code flows?
         return dry_run_tracer.load_stac(url="dummy", arguments={})
 
     _ensure_kubernetes_config()
@@ -131,6 +133,7 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv):
         output_paths=output_paths,
     )
 
+    # TODO: provide generic helper to log some info about the results
     for k, v in results.items():
         log.info(f"_cwl_demo_hello result {k!r}: {v.generate_public_url()=} {v.generate_presigned_url()=}")
 
@@ -145,6 +148,7 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv):
         url=collection_url,
         load_params=LoadParameters(),
         env=env,
+        # TODO: remove these explicit None's once these arguments have proper defaults
         layer_properties=None,
         batch_jobs=None,
     )
@@ -192,8 +196,7 @@ def _cwl_demo_insar(args: ProcessArgs, env: EvalEnv):
         },
     )
 
-    # TODO: Load the results as datacube with load_stac.
-
+    # TODO: Load the results as datacube with load_stac. See _cwl_dummy_stac
     return results["output.txt"].read(encoding="utf8")
 
 
