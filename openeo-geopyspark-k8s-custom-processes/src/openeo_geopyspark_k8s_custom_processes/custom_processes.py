@@ -189,15 +189,32 @@ def _cwl_demo_insar(args: ProcessArgs, env: EvalEnv):
     results = launcher.run_cwl_workflow(
         cwl_source=cwl_source,
         cwl_arguments=cwl_arguments,
-        output_paths=["output.txt"],
+        output_paths=["S1_coh_2images_collection.json"],  # TODO: Rename to collection.json?
         env_vars={
             "AWS_ACCESS_KEY_ID": os.environ.get("SWIFT_ACCESS_KEY_ID", ""),
             "AWS_SECRET_ACCESS_KEY": os.environ.get("SWIFT_SECRET_ACCESS_KEY", ""),
         },
     )
 
-    # TODO: Load the results as datacube with load_stac. See _cwl_dummy_stac
-    return results["output.txt"].read(encoding="utf8")
+    # TODO: provide generic helper to log some info about the results
+    for k, v in results.items():
+        log.info(f"_cwl_demo_hello result {k!r}: {v.generate_public_url()=} {v.generate_presigned_url()=}")
+
+    collection_url = results["S1_coh_2images_collection.json"].generate_public_url()
+    env = env.push(
+        {
+            # TODO: this is apparently necessary to set explicitly, but shouldn't this be the default?
+            "pyramid_levels": "highest",
+        }
+    )
+    return openeogeotrellis.load_stac.load_stac(
+        url=collection_url,
+        load_params=LoadParameters(),
+        env=env,
+        # TODO: remove these explicit None's once these arguments have proper defaults
+        layer_properties=None,
+        batch_jobs=None,
+    )
 
 
 SAR_BACKSCATTER_COEFFICIENT_DEFAULT = "sigma0-ellipsoid"
