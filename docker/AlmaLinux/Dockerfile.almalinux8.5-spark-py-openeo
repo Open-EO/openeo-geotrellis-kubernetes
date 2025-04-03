@@ -98,6 +98,7 @@ RUN dnf clean all && dnf install -y epel-release && \
     Rlib-e1071 \
     Rlib-proxy \
     libtiff-tools \
+    blosc \
     compat-libgfortran-48-4.8.5-36.1.el8.x86_64 && \
     ln -s /usr/lib64/libgdal.so.34 /usr/lib64/libgdal.so.27 && \
     python3.8 -m pip install --upgrade --target /usr/lib64/python3.8/site-packages/ pip setuptools wheel && \

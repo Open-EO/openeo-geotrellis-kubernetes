@@ -39,6 +39,7 @@ RUN dnf clean all && dnf install -y epel-release && \
     udunits2 \
     R-core \
     libtiff-tools \
+    blosc \
     compat-libgfortran-48 && \
     python3.11 -m pip install --upgrade --target /usr/lib64/python3.11/site-packages/ pip setuptools wheel && \
     python3.11 -m pip install --upgrade --target /usr/lib64/python3.11/site-packages/ 'rpy2==3.5.12' && \
