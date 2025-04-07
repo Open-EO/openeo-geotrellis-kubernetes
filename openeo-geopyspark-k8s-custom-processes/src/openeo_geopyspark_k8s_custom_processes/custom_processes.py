@@ -158,7 +158,7 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv):
     ProcessSpec(id="_cwl_demo_insar", description="Proof-of-concept process to run CWL based inSAR.")
     .param(name="spatial_extent", description="Spatial extent.", schema={"type": "dict"}, required=False)
     .param(name="temporal_extent", description="Temporal extent.", schema={"type": "dict"}, required=False)
-    .returns(description="the data as a data cube", schema={})
+    .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
 )
 def _cwl_demo_insar(args: ProcessArgs, env: EvalEnv):
     """Proof of concept openEO process to run CWL based processing"""
