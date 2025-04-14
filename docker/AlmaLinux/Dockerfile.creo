@@ -9,8 +9,8 @@ COPY docker/AlmaLinux/decom.sh /opt/decom.sh
 COPY --chmod=700 docker/AlmaLinux/addlocalnodeip /bin/addlocalnodeip
 
 # Add S3 dependencies
-ADD https://artifactory.vgt.vito.be/artifactory/libs-release/org/apache/hadoop/hadoop-aws/3.2.2/hadoop-aws-3.2.2.jar $SPARK_HOME/jars
-ADD https://artifactory.vgt.vito.be/artifactory/libs-release/com/amazonaws/aws-java-sdk-bundle/1.11.199/aws-java-sdk-bundle-1.11.199.jar $SPARK_HOME/jars
+ADD https://artifactory.vgt.vito.be/artifactory/libs-release/org/apache/hadoop/hadoop-aws/3.4.1/hadoop-aws-3.4.1.jar $SPARK_HOME/jars
+ADD https://artifactory.vgt.vito.be/artifactory/libs-release/com/amazonaws/aws-java-sdk-bundle/1.12.263/aws-java-sdk-bundle-1.12.263.jar $SPARK_HOME/jars
 
 RUN adduser -u 18585 -d /opt/spark/work-dir spark && \
     chown 18585:18585 /opt/spark/work-dir && \
