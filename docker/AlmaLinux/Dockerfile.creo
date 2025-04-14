@@ -12,6 +12,10 @@ COPY --chmod=700 docker/AlmaLinux/addlocalnodeip /bin/addlocalnodeip
 ADD https://artifactory.vgt.vito.be/artifactory/libs-release/org/apache/hadoop/hadoop-aws/3.4.1/hadoop-aws-3.4.1.jar $SPARK_HOME/jars
 ADD https://artifactory.vgt.vito.be/artifactory/libs-release/com/amazonaws/aws-java-sdk-bundle/1.12.263/aws-java-sdk-bundle-1.12.263.jar $SPARK_HOME/jars
 
+# override jars provided by spark itself, to fix https://github.com/Open-EO/openeo-geopyspark-driver/issues/1144
+ADD https://artifactory.vgt.vito.be/artifactory/libs-release/org/apache/hadoop/hadoop-client-api/3.3.6/hadoop-client-api-3.3.6.jar $SPARK_HOME/jars
+ADD https://artifactory.vgt.vito.be/artifactory/libs-release/org/apache/hadoop/hadoop-client-runtime/3.3.6/hadoop-client-runtime-3.3.6.jar $SPARK_HOME/jars
+
 RUN adduser -u 18585 -d /opt/spark/work-dir spark && \
     chown 18585:18585 /opt/spark/work-dir && \
     printf "[global]\nextra-index-url = https://artifactory.vgt.vito.be/artifactory/api/pypi/python-openeo/simple\n" > /etc/pip.conf && \
