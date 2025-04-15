@@ -1,5 +1,14 @@
 # sparkapplication chart changelog
 
+## 1.0.0
+
+Go to version 1 in order to start following semantic versioning conventions.
+
+- !Breaking change: default cluster role binding also includes a namespace.
+This change is needed to allow deploying the chart multiple times on a single Kubernetes cluster.
+It avoids conflicts in cluster-role-binding names. It also avoids overriding the cluster-role and the cluster-role-binding names
+but the defaults should also work now (but the change in default means it is a breaking change)
+
 ## 0.17.2
 - Allow advanced TLS configuration for spark-ui
 - Add support for different scheduler refs
