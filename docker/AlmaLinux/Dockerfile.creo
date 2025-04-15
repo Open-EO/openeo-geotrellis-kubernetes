@@ -10,7 +10,7 @@ COPY --chmod=700 docker/AlmaLinux/addlocalnodeip /bin/addlocalnodeip
 
 # Add S3 dependencies
 ADD https://artifactory.vgt.vito.be/artifactory/libs-release/org/apache/hadoop/hadoop-aws/3.4.1/hadoop-aws-3.4.1.jar $SPARK_HOME/jars
-ADD https://artifactory.vgt.vito.be/artifactory/libs-release/com/amazonaws/aws-java-sdk-bundle/1.12.263/aws-java-sdk-bundle-1.12.263.jar $SPARK_HOME/jars
+#ADD https://artifactory.vgt.vito.be/artifactory/libs-release/com/amazonaws/aws-java-sdk-bundle/1.12.263/aws-java-sdk-bundle-1.12.263.jar $SPARK_HOME/jars
 
 # override jars provided by spark itself, to fix https://github.com/Open-EO/openeo-geopyspark-driver/issues/1144
 RUN rm $SPARK_HOME/jars/hadoop-client-api-3.3.4.jar $SPARK_HOME/jars/hadoop-client-runtime-3.3.4.jar
