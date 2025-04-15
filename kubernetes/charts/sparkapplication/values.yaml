@@ -60,6 +60,8 @@ rbac:
   # Wether to create RBAC resources
   create: false
   createClusterRole: true
+  clusterRoleName: ""  # empty default results in {service-account-name}-cluster-role
+  clusterRoleBindingName: ""  # empty default results in {service-account-name}-cluster-role-{namespace}
   createClusterRoleBinding: true
   serviceAccountDriver: default
   serviceAccountExecutor: default

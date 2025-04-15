@@ -2,7 +2,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ .Values.rbac.serviceAccountDriver }}-cluster-role-binding
+  name: {{ include "sparkapplication.clusterRoleBindingName" . }}
   labels:
     app.kubernetes.io/name: {{ .Release.Name }}
     helm.sh/chart: {{ .Chart.Name }}
@@ -20,6 +20,6 @@ subjects:
 {{- end }}
 roleRef:
   kind: ClusterRole
-  name: {{ .Values.rbac.serviceAccountDriver }}-cluster-role
+  name: {{ include "sparkapplication.clusterRoleName" . }}
   apiGroup: rbac.authorization.k8s.io
 {{- end }}
