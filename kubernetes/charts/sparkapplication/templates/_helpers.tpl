@@ -63,9 +63,9 @@ Create the name of the service account to use
 
 
 {{- define "sparkapplication.clusterRoleName" -}}
-{{- default .Values.rbac.clusterRoleName (printf "%s-cluster-role" .Values.rbac.serviceAccountDriver) | trunc 63 | trimSuffix "-" }}
+{{- .Values.rbac.clusterRoleName | default (printf "%s-cluster-role" .Values.rbac.serviceAccountDriver) | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{- define "sparkapplication.clusterRoleBindingName" -}}
-{{- default .Values.rbac.clusterRoleBindingName (printf "%s-cluster-role-%s" .Values.rbac.serviceAccountDriver .Release.Namespace) | trunc 63 | trimSuffix "-" }}
+{{- .Values.rbac.clusterRoleBindingName | default (printf "%s-cluster-role-%s" .Values.rbac.serviceAccountDriver .Release.Namespace) | trunc 63 | trimSuffix "-" }}
 {{- end }} 
