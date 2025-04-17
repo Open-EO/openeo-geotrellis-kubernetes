@@ -1,5 +1,9 @@
 # sparkapplication chart changelog
 
+## 1.0.1
+
+fix: Make sure the Values of rbac.clusterRoleName and rbac.clusterRoleBindingName are used when specified.
+
 ## 1.0.0
 
 Go to version 1 in order to start following semantic versioning conventions.
