@@ -165,8 +165,11 @@ def _cwl_demo_insar(args: ProcessArgs, env: EvalEnv):
     spatial_extent = args.get_optional("spatial_extent", default=None)
     temporal_extent = args.get_optional("temporal_extent", default=None)
 
-    if env.get(ENV_DRY_RUN_TRACER):
-        return "dummy"
+    dry_run_tracer: DryRunDataTracer = env.get(ENV_DRY_RUN_TRACER)
+    if dry_run_tracer:
+        # TODO: use something else than `dry_run_tracer.load_stac`
+        #       to avoid risk on conflict with "regular" load_stac code flows?
+        return dry_run_tracer.load_stac(url="dummy", arguments={})
 
     _ensure_kubernetes_config()
 
