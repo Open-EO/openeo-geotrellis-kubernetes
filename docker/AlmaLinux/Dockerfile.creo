@@ -1,8 +1,6 @@
 ARG OPENEO_BASE_IMAGE=vito-docker.artifactory.vgt.vito.be/openeo-base:latest
 FROM ${OPENEO_BASE_IMAGE}
 
-FROM vito-docker.artifactory.vgt.vito.be/openeo-base:latest
-
 ARG JMX_PROMETHEUS_JAVAAGENT_VERSION=0.13.0
 
 USER root
