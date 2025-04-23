@@ -156,8 +156,32 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv):
 
 @non_standard_process(
     ProcessSpec(id="_cwl_demo_insar", description="Proof-of-concept process to run CWL based inSAR.")
-    .param(name="spatial_extent", description="Spatial extent.", schema={"type": "dict"}, required=False)
-    .param(name="temporal_extent", description="Temporal extent.", schema={"type": "dict"}, required=False)
+    .param(name="burst_id", description="burst_id", schema={"type": "string"}, required=True)
+    .param(name="sub_swath", description="sub_swath", schema={"type": "string"}, required=True)
+    .param(name="InSAR_pairs", description="InSAR_pairs", schema={
+        "type": "array",
+        "subtype": "temporal-interval",
+        "minItems": 2,
+        "maxItems": 2,
+        "items": {
+            "anyOf": [
+                {
+                    "type": "string",
+                    "format": "date-time",
+                    "subtype": "date-time"
+                },
+                {
+                    "type": "string",
+                    "format": "date",
+                    "subtype": "date"
+                },
+                {
+                    "type": "null"
+                }
+            ]
+        }
+    }, required=True)
+    .param(name="polarization", description="polarization", schema={"type": "string"}, required=False)
     .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
 )
 def _cwl_demo_insar(args: ProcessArgs, env: EvalEnv):
@@ -201,7 +225,7 @@ def _cwl_demo_insar(args: ProcessArgs, env: EvalEnv):
 
     # TODO: provide generic helper to log some info about the results
     for k, v in results.items():
-        log.info(f"_cwl_demo_hello result {k!r}: {v.generate_public_url()=} {v.generate_presigned_url()=}")
+        log.info(f"_cwl_demo_insar result {k!r}: {v.generate_public_url()=} {v.generate_presigned_url()=}")
 
     collection_url = results["S1_coh_2images_collection.json"].generate_public_url()
     env = env.push(
