@@ -199,9 +199,12 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv):
     .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
 )
 def _cwl_demo_insar(args: ProcessArgs, env: EvalEnv):
-    """Proof of concept openEO process to run CWL based processing"""
-    spatial_extent = args.get_optional("spatial_extent", default=None)
-    temporal_extent = args.get_optional("temporal_extent", default=None)
+    kwargs = dict(
+        burst_id=args.get_required("burst_id", expected_type=int),
+        sub_swath=args.get_required("sub_swath", expected_type=str),
+        InSAR_pairs=args.get_required("InSAR_pairs", expected_type=list),
+        polarization=args.get_optional("polarization", default="vv", expected_type=str),
+    )
 
     dry_run_tracer: DryRunDataTracer = env.get(ENV_DRY_RUN_TRACER)
     if dry_run_tracer:
@@ -219,11 +222,7 @@ def _cwl_demo_insar(args: ProcessArgs, env: EvalEnv):
         log.error(f"Failed to load CWL from {cwl_url=}: {e!r}. Falling back to local CWL.")
         cwl_source = CwLSource.from_path(CWL_ROOT / "insar.cwl")
 
-    input_dict = {
-        "spatial_extent": spatial_extent,
-        "temporal_extent": temporal_extent,
-    }
-    input_base64_json = base64.b64encode(json.dumps(input_dict).encode("utf8")).decode("ascii")
+    input_base64_json = base64.b64encode(json.dumps(kwargs).encode("utf8")).decode("ascii")
     cwl_arguments = ["--input_base64_json", input_base64_json]
 
     launcher = CalrissianJobLauncher.from_context()
