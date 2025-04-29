@@ -170,12 +170,8 @@ def insar_common(args: ProcessArgs, env: EvalEnv, cwl_url: str):
 
     _ensure_kubernetes_config()
 
-    try:
-        log.info(f"Loading CWL from {cwl_url=}")
-        cwl_source = CwLSource.from_url(cwl_url)
-    except Exception as e:
-        log.error(f"Failed to load CWL from {cwl_url=}: {e!r}. Falling back to local CWL.")
-        cwl_source = CwLSource.from_path(CWL_ROOT / "insar.cwl")
+    log.info(f"Loading CWL from {cwl_url=}")
+    cwl_source = CwLSource.from_url(cwl_url)
 
     input_base64_json = base64.b64encode(json.dumps(kwargs).encode("utf8")).decode("ascii")
     cwl_arguments = ["--input_base64_json", input_base64_json]
