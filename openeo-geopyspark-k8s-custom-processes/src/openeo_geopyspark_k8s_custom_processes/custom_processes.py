@@ -156,7 +156,7 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv):
 
 @non_standard_process(
     ProcessSpec(id="_cwl_demo_insar", description="Proof-of-concept process to run CWL based inSAR.")
-    .param(name="burst_id", description="burst_id", schema={"type": "string"}, required=True)
+    .param(name="burst_id", description="burst_id", schema={"type": "integer"}, required=True)
     .param(name="sub_swath", description="sub_swath", schema={"type": "string"}, required=True)
     .param(name="InSAR_pairs", description="InSAR_pairs", schema={
         "type": "array",
@@ -231,8 +231,8 @@ def _cwl_demo_insar(args: ProcessArgs, env: EvalEnv):
         cwl_arguments=cwl_arguments,
         output_paths=["S1_coh_2images_collection.json"],  # TODO: Rename to collection.json?
         env_vars={
-            "AWS_ACCESS_KEY_ID": os.environ.get("SWIFT_ACCESS_KEY_ID", ""),
-            "AWS_SECRET_ACCESS_KEY": os.environ.get("SWIFT_SECRET_ACCESS_KEY", ""),
+            "AWS_ACCESS_KEY_ID": os.environ.get("SWIFT_ACCESS_KEY_ID",os.environ.get("AWS_ACCESS_KEY_ID")),
+            "AWS_SECRET_ACCESS_KEY": os.environ.get("SWIFT_SECRET_ACCESS_KEY",os.environ.get("AWS_SECRET_ACCESS_KEY")),
         },
     )
 
