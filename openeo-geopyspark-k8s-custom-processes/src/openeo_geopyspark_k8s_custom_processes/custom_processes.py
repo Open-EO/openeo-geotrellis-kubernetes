@@ -154,51 +154,7 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv):
     )
 
 
-@non_standard_process(
-    ProcessSpec(id="_cwl_demo_insar", description="Proof-of-concept process to run CWL based inSAR.")
-    .param(name="burst_id", description="burst_id", schema={"type": "integer"}, required=True)
-    .param(name="sub_swath", description="sub_swath", schema={"type": "string"}, required=True)
-    .param(name="InSAR_pairs", description="InSAR_pairs", schema={
-        "type": "array",
-        "subtype": "temporal-intervals",
-        "minItems": 1,
-        "items": {
-            "type": "array",
-            "subtype": "temporal-interval",
-            "uniqueItems": True,
-            "minItems": 2,
-            "maxItems": 2,
-            "items": {
-                "anyOf": [
-                    {
-                        "type": "string",
-                        "format": "date-time",
-                        "subtype": "date-time",
-                        "description": "Date and time with a time zone."
-                    },
-                    {
-                        "type": "string",
-                        "format": "date",
-                        "subtype": "date",
-                        "description": "Date only, formatted as `YYYY-MM-DD`. The time zone is UTC. Missing time components are all 0."
-                    },
-                    {
-                        "type": "string",
-                        "subtype": "time",
-                        "pattern": "^\\d{2}:\\d{2}:\\d{2}$",
-                        "description": "Time only, formatted as `HH:MM:SS`. The time zone is UTC."
-                    },
-                    {
-                        "type": "null"
-                    }
-                ]
-            }
-        }
-    }, required=True)
-    .param(name="polarization", description="polarization", schema={"type": "string"}, required=False)
-    .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
-)
-def _cwl_demo_insar(args: ProcessArgs, env: EvalEnv):
+def insar_common(args: ProcessArgs, env: EvalEnv, cwl_url: str):
     kwargs = dict(
         burst_id=args.get_required("burst_id", expected_type=int),
         sub_swath=args.get_required("sub_swath", expected_type=str),
@@ -214,7 +170,6 @@ def _cwl_demo_insar(args: ProcessArgs, env: EvalEnv):
 
     _ensure_kubernetes_config()
 
-    cwl_url = "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/insar.cwl"
     try:
         log.info(f"Loading CWL from {cwl_url=}")
         cwl_source = CwLSource.from_url(cwl_url)
@@ -231,14 +186,14 @@ def _cwl_demo_insar(args: ProcessArgs, env: EvalEnv):
         cwl_arguments=cwl_arguments,
         output_paths=["S1_coh_2images_collection.json"],  # TODO: Rename to collection.json?
         env_vars={
-            "AWS_ACCESS_KEY_ID": os.environ.get("SWIFT_ACCESS_KEY_ID",os.environ.get("AWS_ACCESS_KEY_ID")),
-            "AWS_SECRET_ACCESS_KEY": os.environ.get("SWIFT_SECRET_ACCESS_KEY",os.environ.get("AWS_SECRET_ACCESS_KEY")),
+            "AWS_ACCESS_KEY_ID": os.environ.get("SWIFT_ACCESS_KEY_ID", os.environ.get("AWS_ACCESS_KEY_ID")),
+            "AWS_SECRET_ACCESS_KEY": os.environ.get("SWIFT_SECRET_ACCESS_KEY", os.environ.get("AWS_SECRET_ACCESS_KEY")),
         },
     )
 
     # TODO: provide generic helper to log some info about the results
     for k, v in results.items():
-        log.info(f"_cwl_demo_insar result {k!r}: {v.generate_public_url()=} {v.generate_presigned_url()=}")
+        log.info(f"result {k!r}: {v.generate_public_url()=} {v.generate_presigned_url()=}")
 
     collection_url = results["S1_coh_2images_collection.json"].generate_public_url()
     env = env.push(
@@ -254,6 +209,120 @@ def _cwl_demo_insar(args: ProcessArgs, env: EvalEnv):
         # TODO: remove these explicit None's once these arguments have proper defaults
         layer_properties=None,
         batch_jobs=None,
+    )
+
+
+@non_standard_process(
+    ProcessSpec(
+        id="insar_coherence",
+        description="Proof-of-concept process to run CWL based inSAR. More info here: https://github.com/cloudinsar/s1-workflows",
+    )
+    .param(name="burst_id", description="burst_id", schema={"type": "integer"}, required=True)
+    .param(name="sub_swath", description="sub_swath", schema={"type": "string"}, required=True)
+    .param(
+        name="InSAR_pairs",
+        description="InSAR_pairs",
+        schema={
+            "type": "array",
+            "subtype": "temporal-intervals",
+            "minItems": 1,
+            "items": {
+                "type": "array",
+                "subtype": "temporal-interval",
+                "uniqueItems": True,
+                "minItems": 2,
+                "maxItems": 2,
+                "items": {
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "format": "date-time",
+                            "subtype": "date-time",
+                            "description": "Date and time with a time zone.",
+                        },
+                        {
+                            "type": "string",
+                            "format": "date",
+                            "subtype": "date",
+                            "description": "Date only, formatted as `YYYY-MM-DD`. The time zone is UTC. Missing time components are all 0.",
+                        },
+                        {
+                            "type": "string",
+                            "subtype": "time",
+                            "pattern": "^\\d{2}:\\d{2}:\\d{2}$",
+                            "description": "Time only, formatted as `HH:MM:SS`. The time zone is UTC.",
+                        },
+                        {"type": "null"},
+                    ]
+                },
+            },
+        },
+        required=True,
+    )
+    .param(name="polarization", description="polarization", schema={"type": "string"}, required=False)
+    .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
+)
+def insar_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
+    return insar_common(
+        args, env, "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/insar_coherence.cwl"
+    )
+
+
+@non_standard_process(
+    ProcessSpec(
+        id="insar_preprocessing",
+        description="Proof-of-concept process to run CWL based inSAR. More info here: https://github.com/cloudinsar/s1-workflows",
+    )
+    .param(name="burst_id", description="burst_id", schema={"type": "integer"}, required=True)
+    .param(name="sub_swath", description="sub_swath", schema={"type": "string"}, required=True)
+    .param(
+        name="InSAR_pairs",
+        description="InSAR_pairs",
+        schema={
+            "type": "array",
+            "subtype": "temporal-intervals",
+            "minItems": 1,
+            "items": {
+                "type": "array",
+                "subtype": "temporal-interval",
+                "uniqueItems": True,
+                "minItems": 2,
+                "maxItems": 2,
+                "items": {
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "format": "date-time",
+                            "subtype": "date-time",
+                            "description": "Date and time with a time zone.",
+                        },
+                        {
+                            "type": "string",
+                            "format": "date",
+                            "subtype": "date",
+                            "description": "Date only, formatted as `YYYY-MM-DD`. The time zone is UTC. Missing time components are all 0.",
+                        },
+                        {
+                            "type": "string",
+                            "subtype": "time",
+                            "pattern": "^\\d{2}:\\d{2}:\\d{2}$",
+                            "description": "Time only, formatted as `HH:MM:SS`. The time zone is UTC.",
+                        },
+                        {"type": "null"},
+                    ]
+                },
+            },
+        },
+        required=True,
+    )
+    .param(name="polarization", description="polarization", schema={"type": "string"}, required=False)
+    .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
+)
+def insar_preprocessing(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
+    return insar_common(
+        args,
+        env,
+        "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/insar_preprocessing.cwl",
     )
 
 
