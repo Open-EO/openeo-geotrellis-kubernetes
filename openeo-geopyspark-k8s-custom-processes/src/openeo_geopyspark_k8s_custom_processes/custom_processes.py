@@ -180,7 +180,7 @@ def insar_common(args: ProcessArgs, env: EvalEnv, cwl_url: str):
     results = launcher.run_cwl_workflow(
         cwl_source=cwl_source,
         cwl_arguments=cwl_arguments,
-        output_paths=["S1_coh_2images_collection.json"],  # TODO: Rename to collection.json?
+        output_paths=["S1_2images_collection.json"],  # TODO: Rename to collection.json?
         env_vars={
             "AWS_ACCESS_KEY_ID": os.environ.get("SWIFT_ACCESS_KEY_ID", os.environ.get("AWS_ACCESS_KEY_ID")),
             "AWS_SECRET_ACCESS_KEY": os.environ.get("SWIFT_SECRET_ACCESS_KEY", os.environ.get("AWS_SECRET_ACCESS_KEY")),
@@ -191,7 +191,7 @@ def insar_common(args: ProcessArgs, env: EvalEnv, cwl_url: str):
     for k, v in results.items():
         log.info(f"result {k!r}: {v.generate_public_url()=} {v.generate_presigned_url()=}")
 
-    collection_url = results["S1_coh_2images_collection.json"].generate_public_url()
+    collection_url = results["S1_2images_collection.json"].generate_public_url()
     env = env.push(
         {
             # TODO: this is apparently necessary to set explicitly, but shouldn't this be the default?
