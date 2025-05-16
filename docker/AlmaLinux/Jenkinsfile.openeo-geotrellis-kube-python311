@@ -10,4 +10,5 @@ containerImageBuildPipeline {
   image_name            = 'openeo-geotrellis-kube-python311'
   promotion_job         = false
   run_tests             = false
+  oci_format            = true
 }
