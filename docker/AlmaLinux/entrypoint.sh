@@ -73,8 +73,8 @@ case "$1" in
     CMD=(
       "$SPARK_HOME/bin/spark-submit"
       --conf "spark.driver.bindAddress=$SPARK_DRIVER_BIND_ADDRESS"
-      --conf spark.executor.extraClassPath=/opt/openeo-logging-static.jar:/opt/geotrellis-extensions-static.jar
-      --conf spark.driver.extraClassPath=/opt/openeo-logging-static.jar:/opt/geotrellis-extensions-static.jar
+      --conf spark.executor.extraClassPath=/opt/openeo-logging-static.jar:$SPARK_HOME/jars/geotrellis-dependencies-splitjar.jar
+      --conf spark.driver.extraClassPath=/opt/openeo-logging-static.jar:$SPARK_HOME/jars/geotrellis-dependencies-splitjar.jar
       --deploy-mode client
       "$@"
     )

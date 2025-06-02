@@ -121,4 +121,4 @@ ENV ACCUMULO_CLIENT_CONF_PATH=client.conf
 ENV OTB_HOME=/usr
 ENV OTB_APPLICATION_PATH=/usr/lib/otb/applications
 
-ADD https://artifactory.vgt.vito.be/artifactory/libs-release-public/org/openeo/geotrellis-dependencies/splitjar/geotrellis-dependencies-splitjar.jar $SPARK_HOME/jars
+ADD https://artifactory.vgt.vito.be/artifactory/libs-release-public/org/openeo/geotrellis-dependencies/splitjar/geotrellis-dependencies-splitjar.jar $SPARK_HOME/jars/geotrellis-dependencies-static.jar
