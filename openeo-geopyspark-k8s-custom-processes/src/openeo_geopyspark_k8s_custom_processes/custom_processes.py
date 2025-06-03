@@ -374,10 +374,72 @@ def insar_preprocessing(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
 )
 def insar_preprocessing_v02(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
-    return insar_common(
-        args,
-        env,
-        "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/insar_preprocessing_v02.cwl",
+    cwl_url = (
+        "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/insar_preprocessing_v02.cwl"
+    )
+    kwargs = dict(
+        burst_id=args.get_required("burst_id", expected_type=int),
+        sub_swath=args.get_required("sub_swath", expected_type=str),
+        temporal_extent=args.get_required("temporal_extent", expected_type=list),
+        master_date=args.get_required("master_date", expected_type=str),
+        polarization=args.get_optional("polarization", default="vv", expected_type=str),
+    )
+
+    dry_run_tracer: DryRunDataTracer = env.get(ENV_DRY_RUN_TRACER)
+    if dry_run_tracer:
+        # TODO: use something else than `dry_run_tracer.load_stac`
+        #       to avoid risk on conflict with "regular" load_stac code flows?
+        return dry_run_tracer.load_stac(url="dummy", arguments={})
+
+    _ensure_kubernetes_config()
+
+    log.info(f"Loading CWL from {cwl_url=}")
+    cwl_source = CwLSource.from_url(cwl_url)
+
+    input_base64_json = base64.b64encode(json.dumps(kwargs).encode("utf8")).decode("ascii")
+    aws_access_key_id = os.environ.get("SWIFT_ACCESS_KEY_ID", os.environ.get("AWS_ACCESS_KEY_ID"))
+    aws_secret_access_key = os.environ.get("SWIFT_SECRET_ACCESS_KEY", os.environ.get("AWS_SECRET_ACCESS_KEY"))
+    cwl_arguments = ["--input_base64_json", input_base64_json]
+
+    launcher = CalrissianJobLauncher.from_context()
+    results = launcher.run_cwl_workflow(
+        cwl_source=cwl_source,
+        cwl_arguments=cwl_arguments,
+        output_paths=["S1_2images_collection.json"],  # TODO: Rename to collection.json?
+        env_vars={
+            "AWS_ACCESS_KEY_ID": aws_access_key_id,
+            "AWS_SECRET_ACCESS_KEY": aws_secret_access_key,
+        },
+    )
+
+    # TODO: provide generic helper to log some info about the results
+    for k, v in results.items():
+        log.info(f"result {k!r}: {v.generate_public_url()=} {v.generate_presigned_url()=}")
+
+    collection_url = results["S1_2images_collection.json"].generate_public_url()
+    env = env.push(
+        {
+            # TODO: this is apparently necessary to set explicitly, but shouldn't this be the default?
+            "pyramid_levels": "highest",
+        }
+    )
+
+    stac_root_master = results["S1_2images_collection_master.json"].generate_public_url()
+    stac_root_slaves = results["S1_2images_collection_slaves.json"].generate_public_url()
+
+    datacube_master = openeogeotrellis.load_stac.load_stac(url=str(stac_root_master), bands=["grid_lat", "grid_lon"])
+    datacube_master = datacube_master.reduce_dimension(reducer="max", dimension="t")
+    datacube_slaves = openeogeotrellis.load_stac.load_stac(url=str(stac_root_slaves), bands=["i_VH", "q_VH"])
+    datacube = datacube_slaves.merge_cubes(datacube_master)
+    datacube = datacube.resample_spatial(resolution=1, projection="EPSG:3857")  # webmercator
+
+    return openeogeotrellis.load_stac.load_stac(
+        url=collection_url,
+        load_params=LoadParameters(),
+        env=env,
+        # TODO: remove these explicit None's once these arguments have proper defaults
+        layer_properties=None,
+        batch_jobs=None,
     )
 
 
