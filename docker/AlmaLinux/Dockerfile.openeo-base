@@ -22,7 +22,7 @@ WORKDIR /opt
     
 
 RUN curl -v --fail -JO https://artifactory.vgt.vito.be/artifactory/libs-release-public/org/openeo/geotrellis-extensions/${GEOTRELLIS_EXTENSIONS_VERSION}/geotrellis-extensions-${GEOTRELLIS_EXTENSIONS_VERSION}.jar  && \
-    curl --fail https://artifactory.vgt.vito.be/artifactory/libs-snapshot-public/org/openeo/openeo-logging/${GEOTRELLIS_EXTENSIONS_VERSION}/openeo-logging-${GEOTRELLIS_EXTENSIONS_VERSION}.jar -o openeo-logging-static.jar && \
+    curl --fail https://artifactory.vgt.vito.be/artifactory/libs-release-public/org/openeo/openeo-logging/${GEOTRELLIS_EXTENSIONS_VERSION}/openeo-logging-${GEOTRELLIS_EXTENSIONS_VERSION}.jar -o openeo-logging-static.jar && \
     ln -s geotrellis-extensions*jar geotrellis-extensions-static.jar
 
 COPY --from=build_stage /opt/venv /opt/venv
