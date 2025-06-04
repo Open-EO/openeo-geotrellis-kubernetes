@@ -314,7 +314,7 @@ def insar_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     .param(name="polarization", description="polarization", schema={"type": "string"}, required=False)
     .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
 )
-def insar_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
+def insar_interferogram_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     return insar_common(
         args,
         env,
