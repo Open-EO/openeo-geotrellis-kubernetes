@@ -266,6 +266,64 @@ def insar_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
 
 @non_standard_process(
     ProcessSpec(
+        id="insar_interferogram_coherence",
+        description="Proof-of-concept process to run CWL based inSAR. More info here: https://github.com/cloudinsar/s1-workflows",
+    )
+    .param(name="burst_id", description="burst_id", schema={"type": "integer"}, required=True)
+    .param(name="sub_swath", description="sub_swath", schema={"type": "string"}, required=True)
+    .param(
+        name="InSAR_pairs",
+        description="InSAR_pairs",
+        schema={
+            "type": "array",
+            "subtype": "temporal-intervals",
+            "minItems": 1,
+            "items": {
+                "type": "array",
+                "subtype": "temporal-interval",
+                "uniqueItems": True,
+                "minItems": 2,
+                "maxItems": 2,
+                "items": {
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "format": "date-time",
+                            "subtype": "date-time",
+                            "description": "Date and time with a time zone.",
+                        },
+                        {
+                            "type": "string",
+                            "format": "date",
+                            "subtype": "date",
+                            "description": "Date only, formatted as `YYYY-MM-DD`. The time zone is UTC. Missing time components are all 0.",
+                        },
+                        {
+                            "type": "string",
+                            "subtype": "time",
+                            "pattern": "^\\d{2}:\\d{2}:\\d{2}$",
+                            "description": "Time only, formatted as `HH:MM:SS`. The time zone is UTC.",
+                        },
+                        {"type": "null"},
+                    ]
+                },
+            },
+        },
+        required=True,
+    )
+    .param(name="polarization", description="polarization", schema={"type": "string"}, required=False)
+    .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
+)
+def insar_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
+    return insar_common(
+        args,
+        env,
+        "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/insar_interferogram_coherence.cwl",
+    )
+
+
+@non_standard_process(
+    ProcessSpec(
         id="insar_preprocessing",
         description="Proof-of-concept process to run CWL based inSAR. More info here: https://github.com/cloudinsar/s1-workflows",
     )
