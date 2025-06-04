@@ -121,4 +121,4 @@ ENV ACCUMULO_CLIENT_CONF_PATH=client.conf
 ENV OTB_HOME=/usr
 ENV OTB_APPLICATION_PATH=/usr/lib/otb/applications
 
-ADD --chmod=755 https://artifactory.vgt.vito.be/artifactory/libs-release-public/org/openeo/geotrellis-dependencies/splitjar/geotrellis-dependencies-splitjar.jar /opt/geotrellis-dependencies-static.jar
+ADD --chmod=755 https://artifactory.vgt.vito.be/artifactory/libs-snapshot-public/org/openeo/geotrellis-extensions/2.5.0_2.12-SNAPSHOT/geotrellis-dependencies-2.5.0_2.12-SNAPSHOT.jar /opt/geotrellis-dependencies-static.jar
