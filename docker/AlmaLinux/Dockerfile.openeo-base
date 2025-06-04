@@ -11,7 +11,7 @@ RUN mkdir -p /opt/venv && \
     rm -f /opt/${OPENEO_ZIP}
 
 FROM ${OPENEO_IMAGE}
-ARG GEOTRELLIS_EXTENSIONS_VERSION=splitjar
+ARG GEOTRELLIS_EXTENSIONS_VERSION=2.5.0_2.12-SNAPSHOT
 ARG GEOTRELLIS_BACKEND_ASSEMBLY_VERSION=0.4.6-2-openeo_2.12
 
 LABEL maintainer="VITO Remote Sensing"
@@ -21,8 +21,8 @@ USER root
 WORKDIR /opt
     
 
-RUN curl -v --fail -JO https://artifactory.vgt.vito.be/artifactory/libs-release-public/org/openeo/geotrellis-extensions/${GEOTRELLIS_EXTENSIONS_VERSION}/geotrellis-extensions-${GEOTRELLIS_EXTENSIONS_VERSION}.jar  && \
-    curl --fail https://artifactory.vgt.vito.be/artifactory/libs-release-public/org/openeo/openeo-logging/${GEOTRELLIS_EXTENSIONS_VERSION}/openeo-logging-${GEOTRELLIS_EXTENSIONS_VERSION}.jar -o openeo-logging-static.jar && \
+RUN curl -v --fail -JO https://artifactory.vgt.vito.be/artifactory/libs-release-snapshot/org/openeo/geotrellis-extensions/${GEOTRELLIS_EXTENSIONS_VERSION}/geotrellis-extensions-${GEOTRELLIS_EXTENSIONS_VERSION}.jar  && \
+    curl --fail https://artifactory.vgt.vito.be/artifactory/libs-release-snapshot/org/openeo/openeo-logging/${GEOTRELLIS_EXTENSIONS_VERSION}/openeo-logging-${GEOTRELLIS_EXTENSIONS_VERSION}.jar -o openeo-logging-static.jar && \
     ln -s geotrellis-extensions*jar geotrellis-extensions-static.jar
 
 COPY --from=build_stage /opt/venv /opt/venv
