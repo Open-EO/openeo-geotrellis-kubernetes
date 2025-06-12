@@ -463,7 +463,7 @@ def insar_preprocessing_v02(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     results = launcher.run_cwl_workflow(
         cwl_source=cwl_source,
         cwl_arguments=cwl_arguments,
-        output_paths=["S1_2images_collection.json"],  # TODO: Rename to collection.json?
+        output_paths=["S1_2images_collection_master.json", "S1_2images_collection_slaves.json"],
         env_vars={
             "AWS_ACCESS_KEY_ID": aws_access_key_id,
             "AWS_SECRET_ACCESS_KEY": aws_secret_access_key,
@@ -474,7 +474,7 @@ def insar_preprocessing_v02(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     for k, v in results.items():
         log.info(f"result {k!r}: {v.generate_public_url()=} {v.generate_presigned_url()=}")
 
-    collection_url = results["S1_2images_collection.json"].generate_public_url()
+    collection_url = results["S1_2images_collection_master.json"].generate_public_url()
     env = env.push(
         {
             # TODO: this is apparently necessary to set explicitly, but shouldn't this be the default?
@@ -491,14 +491,7 @@ def insar_preprocessing_v02(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     datacube = datacube_slaves.merge_cubes(datacube_master)
     datacube = datacube.resample_spatial(resolution=1, projection="EPSG:3857")  # webmercator
 
-    return openeogeotrellis.load_stac.load_stac(
-        url=collection_url,
-        load_params=LoadParameters(),
-        env=env,
-        # TODO: remove these explicit None's once these arguments have proper defaults
-        layer_properties=None,
-        batch_jobs=None,
-    )
+    return datacube
 
 
 SAR_BACKSCATTER_COEFFICIENT_DEFAULT = "sigma0-ellipsoid"
