@@ -474,20 +474,29 @@ def insar_preprocessing_v02(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     for k, v in results.items():
         log.info(f"result {k!r}: {v.generate_public_url()=} {v.generate_presigned_url()=}")
 
-    collection_url = results["S1_2images_collection_master.json"].generate_public_url()
-    env = env.push(
-        {
-            # TODO: this is apparently necessary to set explicitly, but shouldn't this be the default?
-            "pyramid_levels": "highest",
-        }
-    )
-
     stac_root_master = results["S1_2images_collection_master.json"].generate_public_url()
     stac_root_slaves = results["S1_2images_collection_slaves.json"].generate_public_url()
 
-    datacube_master = openeogeotrellis.load_stac.load_stac(url=str(stac_root_master), bands=["grid_lat", "grid_lon"])
-    datacube_master = datacube_master.reduce_dimension(reducer="max", dimension="t")
-    datacube_slaves = openeogeotrellis.load_stac.load_stac(url=str(stac_root_slaves), bands=["i_VH", "q_VH"])
+    datacube_master = openeogeotrellis.load_stac.load_stac(
+        url=str(stac_root_master),
+        load_params=LoadParameters({"bands": ["grid_lat", "grid_lon"]}),
+        env=env,
+        layer_properties=None,
+        batch_jobs=None,
+    )
+    reducer = {"max1": {"arguments": {"data": {"from_parameter": "data"}}, "process_id": "max", "result": True}}
+    datacube_master = datacube_master.reduce_dimension(
+        reducer=reducer,
+        dimension="t",
+        env=env,
+    )
+    datacube_slaves = openeogeotrellis.load_stac.load_stac(
+        url=str(stac_root_slaves),
+        load_params=LoadParameters({"bands": ["i_VH", "q_VH"]}),
+        env=env,
+        layer_properties=None,
+        batch_jobs=None,
+    )
     datacube = datacube_slaves.merge_cubes(datacube_master)
     datacube = datacube.resample_spatial(resolution=1, projection="EPSG:3857")  # webmercator
 
