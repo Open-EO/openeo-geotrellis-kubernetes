@@ -422,6 +422,10 @@ def insar_preprocessing(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         },
         required=True,
     )
+    .param(name="coherence_window_rg", description="coherence_window_rg", schema={"type": "integer"}, required=True)
+    .param(name="coherence_window_az", description="coherence_window_az", schema={"type": "integer"}, required=True)
+    .param(name="n_rg_looks", description="n_rg_looks", schema={"type": "integer"}, required=True)
+    .param(name="n_az_looks", description="n_az_looks", schema={"type": "integer"}, required=True)
     .param(
         name="master_date",
         description="master_date",
