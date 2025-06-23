@@ -490,9 +490,10 @@ def insar_preprocessing_v02(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         dimension="t",
         env=env,
     )
+    polarization = kwargs["polarization"].upper()
     datacube_slaves = openeogeotrellis.load_stac.load_stac(
         url=str(stac_root_slaves),
-        load_params=LoadParameters({"bands": ["i_VH", "q_VH"]}),
+        load_params=LoadParameters({"bands": ["i_" + polarization, "q_" + polarization]}),
         env=env,
         layer_properties=None,
         batch_jobs=None,
