@@ -193,7 +193,7 @@ spec:
     {{- end }}
     {{- end}}
     serviceAccount: {{ required "Please provide a rbac.serviceAccountDriver" .Values.rbac.serviceAccountDriver }}
-  {{- if or .Values.volumeMounts .Values.driver.volumeMounts }}
+  {{- if or (or .Values.volumeMounts .Values.driver.volumeMounts) (not .Values.existingConfigMaps) }}
     volumeMounts:
       {{- with .Values.volumeMounts }}
       {{- toYaml . | nindent 6 }}
