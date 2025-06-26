@@ -443,6 +443,10 @@ def insar_preprocessing_v02(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         burst_id=args.get_required("burst_id", expected_type=int),
         sub_swath=args.get_required("sub_swath", expected_type=str),
         temporal_extent=args.get_required("temporal_extent", expected_type=list),
+        coherence_window_rg=args.get_required("coherence_window_rg", expected_type=float),
+        coherence_window_az=args.get_required("coherence_window_az", expected_type=float),
+        n_rg_looks=args.get_required("n_rg_looks", expected_type=float),
+        n_az_looks=args.get_required("n_az_looks", expected_type=float),
         master_date=args.get_required("master_date", expected_type=str),
         polarization=args.get_optional("polarization", default="vv", expected_type=str),
     )
