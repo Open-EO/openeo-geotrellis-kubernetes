@@ -154,14 +154,14 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv):
     )
 
 
-def insar_common(args: ProcessArgs, env: EvalEnv, cwl_url: str):
-    kwargs = dict(
-        burst_id=args.get_required("burst_id", expected_type=int),
-        sub_swath=args.get_required("sub_swath", expected_type=str),
-        InSAR_pairs=args.get_required("InSAR_pairs", expected_type=list),
-        polarization=args.get_optional("polarization", default="vv", expected_type=str),
-    )
-
+def insar_common(kwargs, env: EvalEnv, cwl_url: str):
+    primary_dates = [pair[0] for pair in kwargs["InSAR_pairs"]]
+    primary_dates_duplicates = set([d for d in primary_dates if primary_dates.count(d) > 1])
+    if primary_dates_duplicates:
+        raise ValueError(
+            f"Duplicate primary date(s) found in InSAR_pairs: {primary_dates_duplicates}. "
+            "You can load multiple primary dates over multiple processes if needed."
+        )
     dry_run_tracer: DryRunDataTracer = env.get(ENV_DRY_RUN_TRACER)
     if dry_run_tracer:
         # TODO: use something else than `dry_run_tracer.load_stac`
@@ -259,8 +259,14 @@ def insar_common(args: ProcessArgs, env: EvalEnv, cwl_url: str):
     .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
 )
 def insar_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
+    kwargs = dict(
+        burst_id=args.get_required("burst_id", expected_type=int),
+        sub_swath=args.get_required("sub_swath", expected_type=str),
+        InSAR_pairs=args.get_required("InSAR_pairs", expected_type=list),
+        polarization=args.get_optional("polarization", default="vv", expected_type=str),
+    )
     return insar_common(
-        args, env, "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/insar_coherence.cwl"
+        kwargs, env, "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/insar_coherence.cwl"
     )
 
 
@@ -312,11 +318,25 @@ def insar_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         required=True,
     )
     .param(name="polarization", description="polarization", schema={"type": "string"}, required=False)
+    .param(name="coherence_window_rg", description="coherence_window_rg", schema={"type": "integer"}, required=True)
+    .param(name="coherence_window_az", description="coherence_window_az", schema={"type": "integer"}, required=True)
+    .param(name="n_rg_looks", description="n_rg_looks", schema={"type": "integer"}, required=True)
+    .param(name="n_az_looks", description="n_az_looks", schema={"type": "integer"}, required=True)
     .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
 )
 def insar_interferogram_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
+    kwargs = dict(
+        burst_id=args.get_required("burst_id", expected_type=int),
+        sub_swath=args.get_required("sub_swath", expected_type=str),
+        InSAR_pairs=args.get_required("InSAR_pairs", expected_type=list),
+        polarization=args.get_optional("polarization", default="vv", expected_type=str),
+        coherence_window_rg=args.get_required("coherence_window_rg", expected_type=int),
+        coherence_window_az=args.get_required("coherence_window_az", expected_type=int),
+        n_rg_looks=args.get_required("n_rg_looks", expected_type=int),
+        n_az_looks=args.get_required("n_az_looks", expected_type=int),
+    )
     return insar_common(
-        args,
+        kwargs,
         env,
         "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/insar_interferogram_coherence.cwl",
     )
@@ -373,8 +393,14 @@ def insar_interferogram_coherence(args: ProcessArgs, env: EvalEnv) -> DriverData
     .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
 )
 def insar_preprocessing(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
+    kwargs = dict(
+        burst_id=args.get_required("burst_id", expected_type=int),
+        sub_swath=args.get_required("sub_swath", expected_type=str),
+        InSAR_pairs=args.get_required("InSAR_pairs", expected_type=list),
+        polarization=args.get_optional("polarization", default="vv", expected_type=str),
+    )
     return insar_common(
-        args,
+        kwargs,
         env,
         "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/insar_preprocessing.cwl",
     )
@@ -422,10 +448,6 @@ def insar_preprocessing(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         },
         required=True,
     )
-    .param(name="coherence_window_rg", description="coherence_window_rg", schema={"type": "integer"}, required=True)
-    .param(name="coherence_window_az", description="coherence_window_az", schema={"type": "integer"}, required=True)
-    .param(name="n_rg_looks", description="n_rg_looks", schema={"type": "integer"}, required=True)
-    .param(name="n_az_looks", description="n_az_looks", schema={"type": "integer"}, required=True)
     .param(
         name="master_date",
         description="master_date",
@@ -443,10 +465,6 @@ def insar_preprocessing_v02(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         burst_id=args.get_required("burst_id", expected_type=int),
         sub_swath=args.get_required("sub_swath", expected_type=str),
         temporal_extent=args.get_required("temporal_extent", expected_type=list),
-        coherence_window_rg=args.get_required("coherence_window_rg", expected_type=float),
-        coherence_window_az=args.get_required("coherence_window_az", expected_type=float),
-        n_rg_looks=args.get_required("n_rg_looks", expected_type=float),
-        n_az_looks=args.get_required("n_az_looks", expected_type=float),
         master_date=args.get_required("master_date", expected_type=str),
         polarization=args.get_optional("polarization", default="vv", expected_type=str),
     )
