@@ -330,10 +330,10 @@ def insar_interferogram_coherence(args: ProcessArgs, env: EvalEnv) -> DriverData
         sub_swath=args.get_required("sub_swath", expected_type=str),
         InSAR_pairs=args.get_required("InSAR_pairs", expected_type=list),
         polarization=args.get_optional("polarization", default="vv", expected_type=str),
-        coherence_window_rg=args.get_required("coherence_window_rg", expected_type=int),
-        coherence_window_az=args.get_required("coherence_window_az", expected_type=int),
-        n_rg_looks=args.get_required("n_rg_looks", expected_type=int),
-        n_az_looks=args.get_required("n_az_looks", expected_type=int),
+        coherence_window_rg=args.get_optional("coherence_window_rg", default=10, expected_type=int),
+        coherence_window_az=args.get_optional("coherence_window_az", default=2, expected_type=int),
+        n_rg_looks=args.get_optional("n_rg_looks", default=4, expected_type=int),
+        n_az_looks=args.get_optional("n_az_looks", default=1, expected_type=int),
     )
     return insar_common(
         kwargs,
