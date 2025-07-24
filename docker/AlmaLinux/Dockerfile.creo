@@ -26,7 +26,7 @@ RUN adduser -u 18585 -d /opt/spark/work-dir spark && \
     chmod +x /opt/entrypoint.sh /opt/decom.sh && \
     PYTHONPLATLIBDIR=lib64 /opt/venv/bin/python3 -m pip install -I --upgrade pip && \
     chown -R 18585:18585 $SPARK_HOME/jars && \
-    PYTHONPLATLIBDIR=lib64 /opt/venv/bin/python3 -m pip install py4j boto3==1.16.25 kubernetes==12.0.1 PyYAML==5.3.1 Jinja2==3.1.4 spark_memlogger==0.6 && \
+    PYTHONPLATLIBDIR=lib64 /opt/venv/bin/python3 -m pip install py4j boto3==1.35.99 kubernetes==12.0.1 PyYAML==5.3.1 Jinja2==3.1.4 spark_memlogger==0.6 && \
     rm -rf /root/.cache && \
     yum clean all && \
     rm -rf /var/cache/yum/* && \
