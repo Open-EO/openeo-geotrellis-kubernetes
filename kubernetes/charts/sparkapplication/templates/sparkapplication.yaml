@@ -105,6 +105,9 @@ spec:
     maxExecutors: {{ .Values.dynamicAllocation.maxExecutors }}
   {{- end }}
   driver:
+    {{- if .Values.driver.priorityClassName }}
+    priorityClassName: {{ .Values.driver.priorityClassName }}
+    {{- end }}
     {{- if .Values.driver.affinity }}
     affinity:
 {{ toYaml .Values.driver.affinity | indent 6 }}
