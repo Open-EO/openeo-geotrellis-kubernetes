@@ -1,5 +1,9 @@
 # sparkapplication chart changelog
 
+## 1.0.3
+
+feature: allow specifying PriorityClassName for driver.
+
 ## 1.0.1
 
 fix: Make sure the Values of rbac.clusterRoleName and rbac.clusterRoleBindingName are used when specified.

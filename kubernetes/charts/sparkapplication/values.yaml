@@ -20,6 +20,8 @@ driver:
   # Extra environment variable to be added to drivers as per envvar-v1-core spec
   # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#envvar-v1-core
   extraEnv: []
+  # A priority class that can be used for the driver of the deployed spark application.
+  # priorityClassName: <value>
 # Executor parameters
 executor:
   # Number of cores allocated to executor
