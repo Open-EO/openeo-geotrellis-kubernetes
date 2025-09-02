@@ -6,7 +6,7 @@
 
 containerImageBuildPipeline {
   dockerfile            = 'docker/AlmaLinux/Dockerfile.creo'
-  docker_registry_prod  = 'registry.stag.waw3-1.openeo-int.v1.dataspace.copernicus.eu/dev'
+  docker_registry_prod  = 'vito-docker.artifactory.vgt.vito.be'
   image_name            = 'openeo-geotrellis-kube-python311'
   promotion_job         = false
   run_tests             = false
