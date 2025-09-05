@@ -12,7 +12,6 @@ WORKDIR /opt/spark/work-dir
 
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
 
-# openeo-vito-aux-data \
 RUN dnf clean all && dnf install -y epel-release && \
     dnf --enablerepo=crb install -y spark-bin-${SPARK_VERSION} \
     orfeo-toolbox-py311 \
@@ -43,6 +42,7 @@ RUN dnf clean all && dnf install -y epel-release && \
     libtiff-tools \
     blosc \
     compat-libgfortran-48 && \
+    openeo-vito-aux-data \
     python3.11 -m pip install --upgrade --target /usr/lib64/python3.11/site-packages/ pip setuptools wheel && \
     python3.11 -m pip install --upgrade --target /usr/lib64/python3.11/site-packages/ 'rpy2==3.5.12' && \
     chmod +x /usr/bin/tini && \
