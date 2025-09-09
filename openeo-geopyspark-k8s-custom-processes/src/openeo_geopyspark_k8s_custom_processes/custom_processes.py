@@ -256,6 +256,8 @@ def insar_common(kwargs, env: EvalEnv, cwl_url: str, stac_root: str = "S1_2image
         required=True,
     )
     .param(name="polarization", description="polarization", schema={"type": "string"}, required=False)
+    .param(name="coherence_window_rg", description="coherence_window_rg", schema={"type": "integer"}, required=True)
+    .param(name="coherence_window_az", description="coherence_window_az", schema={"type": "integer"}, required=True)
     .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
 )
 def insar_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
