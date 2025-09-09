@@ -1,0 +1,8 @@
+#!/usr/bin/env groovy
+
+@Library('lib')_
+
+helmchartPipeline{
+  chart_path       = './kubernetes/charts/openeo-job-registry-api'
+  chart_repository = 'helm-public'
+}
