@@ -110,7 +110,7 @@ venv*/
 # Various
 openeo_driver/data
 tmp*
-temp*
+temp
 
 # pytest basetemp root (e.g. for tmp_path fixture).
 pytest-tmp
