@@ -530,6 +530,7 @@ def insar_preprocessing(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         required=True,
     )
     .param(name="polarization", description="polarization", schema={"type": "string"}, required=False)
+    .param(name="gdainfo_stac", description="gdainfo_stac", schema={"type": "boolean"}, required=False)
     .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
 )
 def insar_preprocessing_v02(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
@@ -542,6 +543,7 @@ def insar_preprocessing_v02(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         temporal_extent=args.get_required("temporal_extent", expected_type=list),
         master_date=args.get_required("master_date", expected_type=str),
         polarization=args.get_optional("polarization", default="vv", expected_type=str),
+        gdainfo_stac=args.get_optional("gdainfo_stac", default=True, expected_type=bool),
     )
 
     dry_run_tracer: DryRunDataTracer = env.get(ENV_DRY_RUN_TRACER)
