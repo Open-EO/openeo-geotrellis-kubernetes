@@ -1,24 +1,36 @@
 ARG OPENEO_BASE_IMAGE=vito-docker.artifactory.vgt.vito.be/openeo-base:latest
 FROM ${OPENEO_BASE_IMAGE}
 
+# Build arguments
 ARG JMX_PROMETHEUS_JAVAAGENT_VERSION=0.13.0
+ARG HADOOP_VERSION=3.4.1
+ARG SPARK_VERSION=3.5.3
+ARG SCALA_VERSION=2.12
 
 USER root
 
+# Copy entrypoints and helper scripts
 COPY docker/AlmaLinux/entrypoint.sh /opt/entrypoint.sh
 COPY docker/AlmaLinux/decom.sh /opt/decom.sh
 COPY --chmod=700 docker/AlmaLinux/addlocalnodeip /bin/addlocalnodeip
 
 # Add S3 dependencies
-ADD https://artifactory.vgt.vito.be/artifactory/libs-release/org/apache/hadoop/hadoop-aws/3.4.1/hadoop-aws-3.4.1.jar $SPARK_HOME/jars
+ADD https://artifactory.vgt.vito.be/artifactory/libs-release/org/apache/hadoop/hadoop-aws/${HADOOP_VERSION}/hadoop-aws-${HADOOP_VERSION}.jar $SPARK_HOME/jars
 #ADD https://artifactory.vgt.vito.be/artifactory/libs-release/com/amazonaws/aws-java-sdk-bundle/1.12.263/aws-java-sdk-bundle-1.12.263.jar $SPARK_HOME/jars
 
-# override jars provided by spark itself, to fix https://github.com/Open-EO/openeo-geopyspark-driver/issues/1144
-RUN rm $SPARK_HOME/jars/hadoop-client-api-3.3.4.jar $SPARK_HOME/jars/hadoop-client-runtime-3.3.4.jar
-ADD https://artifactory.vgt.vito.be/artifactory/libs-release/org/apache/hadoop/hadoop-client-api/3.4.1/hadoop-client-api-3.4.1.jar $SPARK_HOME/jars
-ADD https://artifactory.vgt.vito.be/artifactory/libs-release/org/apache/hadoop/hadoop-client-runtime/3.4.1/hadoop-client-runtime-3.4.1.jar $SPARK_HOME/jars
-ADD https://artifactory.vgt.vito.be/artifactory/libs-release/org/apache/spark/spark-hadoop-cloud_2.12/3.5.3/spark-hadoop-cloud_2.12-3.5.3.jar $SPARK_HOME/jars
 
+# Conditionally override jars provided by spark itself, to fix https://github.com/Open-EO/openeo-geopyspark-driver/issues/1144
+RUN if [ -f $SPARK_HOME/jars/hadoop-client-api-3.3.4.jar ]; then \
+        rm $SPARK_HOME/jars/hadoop-client-api-3.3.4.jar $SPARK_HOME/jars/hadoop-client-runtime-3.3.4.jar; \
+    fi && \
+    # Add the desired Hadoop version jars
+    ADD https://artifactory.vgt.vito.be/artifactory/libs-release/org/apache/hadoop/hadoop-client-api/${HADOOP_VERSION}/hadoop-client-api-${HADOOP_VERSION}.jar $SPARK_HOME/jars && \
+    ADD https://artifactory.vgt.vito.be/artifactory/libs-release/org/apache/hadoop/hadoop-client-runtime/${HADOOP_VERSION}/hadoop-client-runtime-${HADOOP_VERSION}.jar $SPARK_HOME/jars
+
+# Add Spark Hadoop cloud support
+ADD https://artifactory.vgt.vito.be/artifactory/libs-release/org/apache/spark/spark-hadoop-cloud_${SCALA_VERSION}/${SPARK_VERSION}/spark-hadoop-cloud_${SCALA_VERSION}-${SPARK_VERSION}.jar $SPARK_HOME/jars
+
+# Create spark user and set permissions, install Python packages, and other setup
 RUN adduser -u 18585 -d /opt/spark/work-dir spark && \
     chown 18585:18585 /opt/spark/work-dir && \
     printf "[global]\nextra-index-url = https://artifactory.vgt.vito.be/artifactory/api/pypi/python-openeo/simple\n" > /etc/pip.conf && \
@@ -40,7 +52,7 @@ RUN adduser -u 18585 -d /opt/spark/work-dir spark && \
 COPY openeo-geopyspark-k8s-custom-processes /opt/openeo-geopyspark-k8s-custom-processes
 ENV OPENEO_CUSTOM_PROCESSES=/opt/openeo-geopyspark-k8s-custom-processes/src/openeo_geopyspark_k8s_custom_processes/custom_processes.py
 
-# Fix encoding for gdalinfo stdout:
+# Fix encoding for gdalinfo stdout
 ENV LANG=en_US.UTF-8
 
 WORKDIR /opt/spark/work-dir
