@@ -12,6 +12,7 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/
 
 RUN dnf clean all && dnf install -y epel-release && \
     dnf --enablerepo=powertools install -y spark-vito-${SPARK_VERSION} \
+    glibc-langpack-en \
     hdf5-1.10.5-5.el8.x86_64 \
     gdal-3.8.4 \
     gdal-devel-3.8.4 \

@@ -14,6 +14,7 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/
 
 RUN dnf clean all && dnf install -y epel-release && \
     dnf --enablerepo=crb install -y spark-vito-${SPARK_VERSION} \
+    glibc-langpack-en \
     orfeo-toolbox-py311 \
     hdf5 \
     gdal-3.8.4 \
