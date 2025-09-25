@@ -5,11 +5,11 @@
 @Library('lib')_
 
 containerImageBuildPipeline {
-  build_args           = ['SPARK_VERSION=4_0_1','PYTHON_PACKAGE=python3.11-devel']
+  build_args           = ['SPARK_VERSION=3_5_3','PYTHON_PACKAGE=python3.11-devel']
   dockerfile           = 'docker/AlmaLinux/Dockerfile.almalinux9-spark-py-openeo'
   docker_registry_prod = 'vito-docker.artifactory.vgt.vito.be'
   image_name           = 'almalinux9-spark-py-openeo'
-  image_tag            = '3.5.7'
+  image_tag            = '3.5.8'
   promotion_job        = false
   run_tests            = false
 }

@@ -13,7 +13,7 @@ WORKDIR /opt/spark/work-dir
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
 
 RUN dnf clean all && dnf install -y epel-release && \
-    dnf --enablerepo=crb install -y spark-vito-${SPARK_VERSION} \
+    dnf --enablerepo=crb install -y spark-bin-${SPARK_VERSION} \
     glibc-langpack-en \
     orfeo-toolbox-py311 \
     hdf5 \
@@ -49,10 +49,11 @@ RUN dnf clean all && dnf install -y epel-release && \
     chmod +x /usr/bin/tini && \
     rm -r /root/.cache && \
     yum clean all && \
-    rm -rf /var/cache/yum/* \
-    rm -f /opt/spark${SPARK_VERSION}/jars/spire*
+    rm -rf /var/cache/yum/*
+#   rm -f /opt/spark${SPARK_VERSION}/jars/spire*    
 
-RUN ln -s /opt/spark${SPARK_VERSION} /usr/local/spark-${SPARK_VERSION} && ln -s /opt/spark${SPARK_VERSION} /usr/local/spark
+# TODO: Spark 4.0.1
+# RUN ln -s /opt/spark${SPARK_VERSION} /usr/local/spark-${SPARK_VERSION} && ln -s /opt/spark${SPARK_VERSION} /usr/local/spark
     
 ENV SPARK_HOME /usr/local/spark
 ENV JAVA_HOME /usr/lib/jvm/jre
@@ -65,4 +66,6 @@ ENV ACCUMULO_CLIENT_CONF_PATH=client.conf
 ENV OTB_HOME=/usr
 ENV OTB_APPLICATION_PATH=/usr/lib/otb/applications
 
-ADD --chmod=755 https://artifactory.vgt.vito.be/artifactory/libs-release-public/org/openeo/geotrellis-dependencies/PR-515/geotrellis-dependencies-PR-515.jar /opt/geotrellis-dependencies-static.jar
+# TODO: Spark 4.0.1
+# ADD --chmod=755 https://artifactory.vgt.vito.be/artifactory/libs-release-public/org/openeo/geotrellis-dependencies/PR-515/geotrellis-dependencies-PR-515.jar /opt/geotrellis-dependencies-static.jar
+ADD --chmod=755 https://artifactory.vgt.vito.be/artifactory/libs-snapshot-public/org/openeo/geotrellis-dependencies/2.5.0_2.12-SNAPSHOT/geotrellis-dependencies-2.5.0_2.12-SNAPSHOT.jar /opt/geotrellis-dependencies-static.jar
