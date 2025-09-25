@@ -18,14 +18,25 @@ COPY --chmod=700 docker/AlmaLinux/addlocalnodeip /bin/addlocalnodeip
 ADD https://artifactory.vgt.vito.be/artifactory/libs-release/org/apache/hadoop/hadoop-aws/${HADOOP_VERSION}/hadoop-aws-${HADOOP_VERSION}.jar $SPARK_HOME/jars
 #ADD https://artifactory.vgt.vito.be/artifactory/libs-release/com/amazonaws/aws-java-sdk-bundle/1.12.263/aws-java-sdk-bundle-1.12.263.jar $SPARK_HOME/jars
 
-
-# Conditionally override jars provided by spark itself, to fix https://github.com/Open-EO/openeo-geopyspark-driver/issues/1144
-RUN if [ -f $SPARK_HOME/jars/hadoop-client-api-3.3.4.jar ]; then \
-        rm $SPARK_HOME/jars/hadoop-client-api-3.3.4.jar $SPARK_HOME/jars/hadoop-client-runtime-3.3.4.jar; \
-    fi && \
-    # Add the desired Hadoop version jars
-    ADD https://artifactory.vgt.vito.be/artifactory/libs-release/org/apache/hadoop/hadoop-client-api/${HADOOP_VERSION}/hadoop-client-api-${HADOOP_VERSION}.jar $SPARK_HOME/jars && \
-    ADD https://artifactory.vgt.vito.be/artifactory/libs-release/org/apache/hadoop/hadoop-client-runtime/${HADOOP_VERSION}/hadoop-client-runtime-${HADOOP_VERSION}.jar $SPARK_HOME/jars
+# Conditionally override jars provided by Spark itself,
+# to fix https://github.com/Open-EO/openeo-geopyspark-driver/issues/1144
+#
+# Spark sometimes ships with Hadoop 3.3.4 client jars by default.
+# If those jars are found, we remove them and replace them
+# with the matching Hadoop ${HADOOP_VERSION} jars.
+RUN if [ -f "$SPARK_HOME/jars/hadoop-client-api-3.3.4.jar" ]; then \
+      echo "Found Spark 3.3.4 Hadoop client jars — removing them..." && \
+      rm -f \
+        "$SPARK_HOME/jars/hadoop-client-api-3.3.4.jar" \
+        "$SPARK_HOME/jars/hadoop-client-runtime-3.3.4.jar" && \
+      echo "Downloading replacement jars for Hadoop ${HADOOP_VERSION}..." && \
+      curl -fsSL -o "$SPARK_HOME/jars/hadoop-client-api-${HADOOP_VERSION}.jar" \
+        "https://artifactory.vgt.vito.be/artifactory/libs-release/org/apache/hadoop/hadoop-client-api/${HADOOP_VERSION}/hadoop-client-api-${HADOOP_VERSION}.jar" && \
+      curl -fsSL -o "$SPARK_HOME/jars/hadoop-client-runtime-${HADOOP_VERSION}.jar" \
+        "https://artifactory.vgt.vito.be/artifactory/libs-release/org/apache/hadoop/hadoop-client-runtime/${HADOOP_VERSION}/hadoop-client-runtime-${HADOOP_VERSION}.jar" ; \
+    else \
+      echo "No Spark 3.3.4 Hadoop client jars found — skipping override." ; \
+    fi
 
 # Add Spark Hadoop cloud support
 ADD https://artifactory.vgt.vito.be/artifactory/libs-release/org/apache/spark/spark-hadoop-cloud_${SCALA_VERSION}/${SPARK_VERSION}/spark-hadoop-cloud_${SCALA_VERSION}-${SPARK_VERSION}.jar $SPARK_HOME/jars
