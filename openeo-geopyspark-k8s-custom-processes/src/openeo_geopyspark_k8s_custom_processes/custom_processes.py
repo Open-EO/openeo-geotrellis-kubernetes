@@ -277,70 +277,10 @@ def insar_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         id="insar_interferogram_coherence",
         description="Proof-of-concept process to run CWL based inSAR. More info here: https://github.com/cloudinsar/s1-workflows",
     )
-    .param(name="burst_id", description="burst_id", schema={"type": "integer"}, required=True)
-    .param(name="sub_swath", description="sub_swath", schema={"type": "string"}, required=True)
-    .param(
-        name="InSAR_pairs",
-        description="InSAR_pairs",
-        schema={
-            "type": "array",
-            "subtype": "temporal-intervals",
-            "minItems": 1,
-            "items": {
-                "type": "array",
-                "subtype": "temporal-interval",
-                "uniqueItems": True,
-                "minItems": 2,
-                "maxItems": 2,
-                "items": {
-                    "anyOf": [
-                        {
-                            "type": "string",
-                            "format": "date-time",
-                            "subtype": "date-time",
-                            "description": "Date and time with a time zone.",
-                        },
-                        {
-                            "type": "string",
-                            "format": "date",
-                            "subtype": "date",
-                            "description": "Date only, formatted as `YYYY-MM-DD`. The time zone is UTC. Missing time components are all 0.",
-                        },
-                        {
-                            "type": "string",
-                            "subtype": "time",
-                            "pattern": "^\\d{2}:\\d{2}:\\d{2}$",
-                            "description": "Time only, formatted as `HH:MM:SS`. The time zone is UTC.",
-                        },
-                        {"type": "null"},
-                    ]
-                },
-            },
-        },
-        required=True,
-    )
-    .param(name="polarization", description="polarization", schema={"type": "string"}, required=False)
-    .param(name="coherence_window_rg", description="coherence_window_rg", schema={"type": "integer"}, required=True)
-    .param(name="coherence_window_az", description="coherence_window_az", schema={"type": "integer"}, required=True)
-    .param(name="n_rg_looks", description="n_rg_looks", schema={"type": "integer"}, required=True)
-    .param(name="n_az_looks", description="n_az_looks", schema={"type": "integer"}, required=True)
-    .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
 )
 def insar_interferogram_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
-    kwargs = dict(
-        burst_id=args.get_required("burst_id", expected_type=int),
-        sub_swath=args.get_required("sub_swath", expected_type=str),
-        InSAR_pairs=args.get_required("InSAR_pairs", expected_type=list),
-        polarization=args.get_optional("polarization", default="vv", expected_type=str),
-        coherence_window_rg=args.get_optional("coherence_window_rg", default=10, expected_type=int),
-        coherence_window_az=args.get_optional("coherence_window_az", default=2, expected_type=int),
-        n_rg_looks=args.get_optional("n_rg_looks", default=4, expected_type=int),
-        n_az_looks=args.get_optional("n_az_looks", default=1, expected_type=int),
-    )
-    return insar_common(
-        kwargs,
-        env,
-        "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/insar_interferogram_coherence.cwl",
+    raise NotImplementedError(
+        "insar_interferogram_coherence is removed: https://github.com/cloudinsar/s1-workflows/issues/38#issuecomment-3332493118"
     )
 
 
