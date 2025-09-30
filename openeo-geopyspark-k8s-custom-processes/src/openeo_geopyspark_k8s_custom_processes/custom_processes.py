@@ -405,7 +405,12 @@ def insar_interferogram_snaphu(args: ProcessArgs, env: EvalEnv) -> DriverDataCub
         schema={"type": "string", "subtype": "date"},
         required=True,
     )
-    .param(name="polarization", description="polarization", schema={"type": "string"}, required=False)
+    .param(
+        name="polarization",
+        description="polarization",
+        schema={"type": ["string", "array"], "items": {"type": "string"}},
+        required=False,
+    )
     .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
 )
 def insar_preprocessing(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
@@ -414,7 +419,7 @@ def insar_preprocessing(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         sub_swath=args.get_required("sub_swath", expected_type=str),
         temporal_extent=args.get_required("temporal_extent", expected_type=list),
         master_date=args.get_required("master_date", expected_type=str),
-        polarization=args.get_optional("polarization", default="vv", expected_type=str),
+        polarization=args.get_optional("polarization", default="vv", expected_type=(str, list)),
     )
     return insar_common(
         kwargs,
