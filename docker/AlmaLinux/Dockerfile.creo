@@ -59,6 +59,10 @@ RUN adduser -u 18585 -d /opt/spark/work-dir spark && \
     chown -R 18585:18585 /opt/openeo /opt/tmp /batch_jobs /spark_tmp /opt/openeo_python.log && \
     echo "spark   ALL=(root) NOPASSWD:SETENV: /bin/addlocalnodeip" > /etc/sudoers.d/spark
 
+# install openjpeg here, to avoid a conflict with gdal. Better option is to clean up dependency chain downstream
+# this openjpeg contains important bugfix for reading JPEG2000 files
+RUN [[ "$OPENEO_BASE_IMAGE" == *python311* ]] && rpm -i --nodeps --force https://artifactory.vgt.vito.be/artifactory/vito-yum-almalinux9-public/openjpeg-2.5.3-2.el9.x86_64.rpm
+
 
 # Set up custom openEO processes
 COPY openeo-geopyspark-k8s-custom-processes /opt/openeo-geopyspark-k8s-custom-processes
