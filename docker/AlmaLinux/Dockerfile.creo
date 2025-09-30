@@ -61,7 +61,7 @@ RUN adduser -u 18585 -d /opt/spark/work-dir spark && \
 
 # install openjpeg here, to avoid a conflict with gdal. Better option is to clean up dependency chain downstream
 # this openjpeg contains important bugfix for reading JPEG2000 files
-RUN [[ "$OPENEO_BASE_IMAGE" == *python311* ]] && rpm -i --nodeps --force https://artifactory.vgt.vito.be/artifactory/vito-yum-almalinux9-public/openjpeg-2.5.3-2.el9.x86_64.rpm
+RUN [[ ${OPENEO_BASE_IMAGE} == *python311* ]] && rpm -i --nodeps --force https://artifactory.vgt.vito.be/artifactory/vito-yum-almalinux9-public/openjpeg-2.5.3-2.el9.x86_64.rpm
 
 
 # Set up custom openEO processes
