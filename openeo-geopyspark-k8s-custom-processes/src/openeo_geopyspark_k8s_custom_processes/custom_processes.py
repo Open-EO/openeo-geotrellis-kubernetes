@@ -276,7 +276,7 @@ def insar_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     ProcessSpec(
         id="insar_interferogram_coherence",
         description="Proof-of-concept process to run CWL based inSAR. More info here: https://github.com/cloudinsar/s1-workflows",
-    )
+    ).returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
 )
 def insar_interferogram_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     raise NotImplementedError(
