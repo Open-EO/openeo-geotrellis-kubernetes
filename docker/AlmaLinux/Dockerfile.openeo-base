@@ -16,8 +16,8 @@ LABEL maintainer="VITO Remote Sensing"
 USER root
 WORKDIR /opt
 
-ARG GEOTRELLIS_EXTENSIONS_URL=https://artifactory.vgt.vito.be/artifactory/libs-snapshot-public/org/openeo/geotrellis-extensions/2.5.0_2.12-SNAPSHOT/geotrellis-extensions-2.5.0_2.12-SNAPSHOT.jar
-ARG GEOTRELLIS_LOGGING_URL=https://artifactory.vgt.vito.be/artifactory/libs-snapshot-public/org/openeo/openeo-logging/2.5.0_2.12-SNAPSHOT/openeo-logging-2.5.0_2.12-SNAPSHOT.jar
+ARG GEOTRELLIS_EXTENSIONS_URL=https://artifactory.vgt.vito.be/artifactory/libs-snapshot-public/org/openeo/geotrellis-extensions/2.5.1_2.12-SNAPSHOT/geotrellis-extensions-2.5.1_2.12-SNAPSHOT.jar
+ARG GEOTRELLIS_LOGGING_URL=https://artifactory.vgt.vito.be/artifactory/libs-snapshot-public/org/openeo/openeo-logging/2.5.1_2.12-SNAPSHOT/openeo-logging-2.5.1_2.12-SNAPSHOT.jar
 
 RUN curl -v --fail -JO "${GEOTRELLIS_EXTENSIONS_URL}" && \
     curl -v --fail -o openeo-logging-static.jar "${GEOTRELLIS_LOGGING_URL}" && \

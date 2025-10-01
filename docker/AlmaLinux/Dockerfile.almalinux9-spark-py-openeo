@@ -68,4 +68,4 @@ ENV OTB_APPLICATION_PATH=/usr/lib/otb/applications
 
 # TODO: Spark 4.0.1
 # ADD --chmod=755 https://artifactory.vgt.vito.be/artifactory/libs-release-public/org/openeo/geotrellis-dependencies/PR-515/geotrellis-dependencies-PR-515.jar /opt/geotrellis-dependencies-static.jar
-ADD --chmod=755 https://artifactory.vgt.vito.be/artifactory/libs-snapshot-public/org/openeo/geotrellis-dependencies/2.5.0_2.12-SNAPSHOT/geotrellis-dependencies-2.5.0_2.12-SNAPSHOT.jar /opt/geotrellis-dependencies-static.jar
+ADD --chmod=755 https://artifactory.vgt.vito.be/artifactory/libs-snapshot-public/org/openeo/geotrellis-dependencies/2.5.1_2.12-SNAPSHOT/geotrellis-dependencies-2.5.1_2.12-SNAPSHOT.jar /opt/geotrellis-dependencies-static.jar
