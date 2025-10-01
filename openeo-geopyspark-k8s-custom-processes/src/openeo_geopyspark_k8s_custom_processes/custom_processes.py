@@ -155,13 +155,14 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv):
 
 
 def insar_common(kwargs, env: EvalEnv, cwl_url: str, stac_root: str = "S1_2images_collection.json"):
-    primary_dates = [pair[0] for pair in kwargs["InSAR_pairs"]]
-    primary_dates_duplicates = set([d for d in primary_dates if primary_dates.count(d) > 1])
-    if primary_dates_duplicates:
-        raise ValueError(
-            f"Duplicate primary date(s) found in InSAR_pairs: {primary_dates_duplicates}. "
-            "You can load multiple primary dates over multiple processes if needed."
-        )
+    if "InSAR_pairs" in kwargs:
+        primary_dates = [pair[0] for pair in kwargs["InSAR_pairs"]]
+        primary_dates_duplicates = set([d for d in primary_dates if primary_dates.count(d) > 1])
+        if primary_dates_duplicates:
+            raise ValueError(
+                f"Duplicate primary date(s) found in InSAR_pairs: {primary_dates_duplicates}. "
+                "You can load multiple primary dates over multiple processes if needed."
+            )
     dry_run_tracer: DryRunDataTracer = env.get(ENV_DRY_RUN_TRACER)
     if dry_run_tracer:
         # TODO: use something else than `dry_run_tracer.load_stac`
