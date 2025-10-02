@@ -267,6 +267,8 @@ def insar_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         sub_swath=args.get_required("sub_swath", expected_type=str),
         InSAR_pairs=args.get_required("InSAR_pairs", expected_type=list),
         polarization=args.get_optional("polarization", default="vv", expected_type=str),
+        coherence_window_rg=args.get_optional("coherence_window_rg", default=10, expected_type=int),
+        coherence_window_az=args.get_optional("coherence_window_az", default=2, expected_type=int),
     )
     return insar_common(
         kwargs, env, "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/insar_coherence.cwl"
