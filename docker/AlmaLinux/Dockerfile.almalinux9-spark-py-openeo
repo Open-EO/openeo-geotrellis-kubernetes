@@ -13,7 +13,7 @@ WORKDIR /opt/spark/work-dir
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
 
 RUN dnf clean all && dnf install -y epel-release && \
-    dnf --enablerepo=crb install -y spark-bin-${SPARK_VERSION} \
+    dnf --enablerepo=crb install -y spark-vito-${SPARK_VERSION} \
     glibc-langpack-en \
     orfeo-toolbox-py311 \
     hdf5 \
