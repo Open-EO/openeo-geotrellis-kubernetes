@@ -9,7 +9,7 @@ containerImageBuildPipeline {
     'PYTHON_PACKAGE=python3.11-devel',
     'SPARK_PACKAGE=spark-vito-4_0_1',
     'SPARK_INSTALL_PREFIX=/opt/spark4_0_1',
-    'GEOTRELLIS_DEPENDENCIES_STATIC_JAR_URL=https://artifactory.vgt.vito.be/artifactory/libs-release-public/org/openeo/geotrellis-extensions/PR-549/geotrellis-dependencies-PR-549.jar',
+    'GEOTRELLIS_DEPENDENCIES_STATIC_JAR_URL=https://artifactory.vgt.vito.be/artifactory/libs-release-public/org/openeo/geotrellis-dependencies/PR-549/geotrellis-dependencies-PR-549.jar',
   ]
   dockerfile           = 'docker/AlmaLinux/Dockerfile.almalinux9-spark-py-openeo'
   docker_registry_prod = 'vito-docker.artifactory.vgt.vito.be'
