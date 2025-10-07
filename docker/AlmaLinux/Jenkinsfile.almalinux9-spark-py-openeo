@@ -5,11 +5,16 @@
 @Library('lib')_
 
 containerImageBuildPipeline {
-  build_args           = ['SPARK_VERSION=scala213-3_5_7','PYTHON_PACKAGE=python3.11-devel']
+  build_args           = [
+    'PYTHON_PACKAGE=python3.11-devel',
+    'SPARK_PACKAGE=spark-vito-scala213-3_5_7',
+    'SPARK_INSTALL_PREFIX=/opt/spark3_5_7_scala213',
+    'GEOTRELLIS_DEPENDENCIES_STATIC_JAR_URL=https://artifactory.vgt.vito.be/artifactory/libs-snapshot-public/org/openeo/geotrellis-dependencies/2.5.1_2.13-SNAPSHOT/geotrellis-dependencies-2.5.1_2.13-SNAPSHOT.jar',
+  ]
   dockerfile           = 'docker/AlmaLinux/Dockerfile.almalinux9-spark-py-openeo'
   docker_registry_prod = 'vito-docker.artifactory.vgt.vito.be'
   image_name           = 'almalinux9-spark-py-openeo'
-  image_tag            = '3.5.10'
+  image_tag            = '3.5.11'
   promotion_job        = false
   run_tests            = false
 }

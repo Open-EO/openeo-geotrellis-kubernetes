@@ -1,8 +1,12 @@
 FROM vito-docker-private.artifactory.vgt.vito.be/almalinux9.4
 
 ARG TINI_VERSION=v0.19.0
-ARG SPARK_VERSION
+ARG SPARK_PACKAGE
+# Location where the spark package is installed to and to be symlinked to `/usr/local/spark`
+ARG SPARK_INSTALL_PREFIX
 ARG PYTHON_PACKAGE
+ARG GEOTRELLIS_DEPENDENCIES_STATIC_JAR_URL
+
 
 RUN sed -i '/^\[appstream\]/a module_hotfixes=1' /etc/yum.repos.d/alma_9.4.repo
 
@@ -13,7 +17,7 @@ WORKDIR /opt/spark/work-dir
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
 
 RUN dnf clean all && dnf install -y epel-release && \
-    dnf --enablerepo=crb install -y spark-vito-${SPARK_VERSION} \
+    dnf --enablerepo=crb install -y ${SPARK_PACKAGE} \
     glibc-langpack-en \
     orfeo-toolbox-py311 \
     hdf5 \
@@ -50,13 +54,10 @@ RUN dnf clean all && dnf install -y epel-release && \
     rm -r /root/.cache && \
     yum clean all && \
     rm -rf /var/cache/yum/*
-#   rm -f /opt/spark${SPARK_VERSION}/jars/spire*    
 
 
-RUN ln -s /opt/spark3_5_7_scala213 /usr/local/spark-3.5.7 && ln -s /opt/spark3_5_7_scala213 /usr/local/spark
-# TODO: Spark 4.0.1 and switch back to use of arg
-# RUN ln -s /opt/spark${SPARK_VERSION} /usr/local/spark-${SPARK_VERSION} && ln -s /opt/spark${SPARK_VERSION} /usr/local/spark
-    
+RUN if [ -n "${SPARK_INSTALL_PREFIX}" ]; then ln -s ${SPARK_INSTALL_PREFIX} /usr/local/spark; fi
+
 ENV SPARK_HOME /usr/local/spark
 ENV JAVA_HOME /usr/lib/jvm/jre
 ENV PYSPARK_PYTHON=python3.11
@@ -68,6 +69,4 @@ ENV ACCUMULO_CLIENT_CONF_PATH=client.conf
 ENV OTB_HOME=/usr
 ENV OTB_APPLICATION_PATH=/usr/lib/otb/applications
 
-# TODO: Spark 4.0.1
-# ADD --chmod=755 https://artifactory.vgt.vito.be/artifactory/libs-release-public/org/openeo/geotrellis-dependencies/PR-515/geotrellis-dependencies-PR-515.jar /opt/geotrellis-dependencies-static.jar
-ADD --chmod=755 https://artifactory.vgt.vito.be/artifactory/libs-snapshot-public/org/openeo/geotrellis-dependencies/2.5.1_2.13-SNAPSHOT/geotrellis-dependencies-2.5.1_2.13-SNAPSHOT.jar /opt/geotrellis-dependencies-static.jar
+ADD --chmod=755 $GEOTRELLIS_DEPENDENCIES_STATIC_JAR_URL /opt/geotrellis-dependencies-static.jar
