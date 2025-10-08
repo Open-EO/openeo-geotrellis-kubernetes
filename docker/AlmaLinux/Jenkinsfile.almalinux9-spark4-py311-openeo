@@ -14,7 +14,7 @@ containerImageBuildPipeline {
   dockerfile           = 'docker/AlmaLinux/Dockerfile.almalinux9-spark-py-openeo'
   docker_registry_prod = 'vito-docker.artifactory.vgt.vito.be'
   image_name           = 'almalinux9-spark4-py311-openeo'
-  image_tag            = "0.0.2"
+  image_tag            = "0.1.0"
   promotion_job        = false
   run_tests            = false
 }
