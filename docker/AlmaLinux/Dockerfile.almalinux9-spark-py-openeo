@@ -16,38 +16,41 @@ WORKDIR /opt/spark/work-dir
 
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
 
-RUN dnf clean all && dnf install -y epel-release && \
-    dnf --enablerepo=crb install -y ${SPARK_PACKAGE} \
-    glibc-langpack-en \
-    orfeo-toolbox-py311 \
-    hdf5 \
-    gdal-3.8.4 \
-    gdal-devel-3.8.4 \
-    gdal-libs-3.8.4 \
-    gdal-python311-3.8.4 \
-    gcc-c++ \
-    unzip \
-    java-21-openjdk-headless \
-    krb5-workstation \
-    krb5-libs \
-    sssd-client \
-    ipa-client \
-    nss \
-    boost-filesystem \
-    boost-serialization \
-    procps-ng \
-    ${PYTHON_PACKAGE} \
-    python3.11-pip \
-    python3.11-Cython \
-    fftw-libs-double \
-    fftw-libs-single \
-    tinyxml \
-    udunits2 \
-    R-core \
-    libtiff-tools \
-    blosc \
-    compat-libgfortran-48 \
-    openeo-vito-aux-data && \
+RUN dnf clean all && \
+    dnf install -y epel-release && \
+    dnf --enablerepo=crb install -y \
+        ${SPARK_PACKAGE} \
+        glibc-langpack-en \
+        orfeo-toolbox-py311 \
+        hdf5 \
+        gdal-3.8.4 \
+        gdal-devel-3.8.4 \
+        gdal-libs-3.8.4 \
+        gdal-python311-3.8.4 \
+        gcc-c++ \
+        unzip \
+        java-21-openjdk-headless \
+        krb5-workstation \
+        krb5-libs \
+        sssd-client \
+        ipa-client \
+        nss \
+        boost-filesystem \
+        boost-serialization \
+        procps-ng \
+        ${PYTHON_PACKAGE} \
+        python3.11-pip \
+        python3.11-Cython \
+        fftw-libs-double \
+        fftw-libs-single \
+        tinyxml \
+        udunits2 \
+        R-core \
+        libtiff-tools \
+        blosc \
+        compat-libgfortran-48 \
+        openeo-vito-aux-data \
+        && \
     python3.11 -m pip install --upgrade --target /usr/lib64/python3.11/site-packages/ pip setuptools wheel && \
     python3.11 -m pip install --upgrade --target /usr/lib64/python3.11/site-packages/ 'rpy2==3.5.12' && \
     chmod +x /usr/bin/tini && \
@@ -56,7 +59,9 @@ RUN dnf clean all && dnf install -y epel-release && \
     rm -rf /var/cache/yum/*
 
 
-RUN if [ -n "${SPARK_INSTALL_PREFIX}" ]; then ln -s ${SPARK_INSTALL_PREFIX} /usr/local/spark; fi
+RUN if [ -n "${SPARK_INSTALL_PREFIX}" ]; then \
+        ln -s ${SPARK_INSTALL_PREFIX} /usr/local/spark; \
+    fi
 
 ENV SPARK_HOME /usr/local/spark
 ENV JAVA_HOME /usr/lib/jvm/jre
