@@ -108,7 +108,7 @@ RUN dnf clean all && dnf install -y epel-release && \
     rm -r /root/.cache && \
     yum clean all && \
     rm -rf /var/cache/yum/* \
-    rm -f /opt/spark${SPARK_VERSION}/jars/spire*
+    rm -f /opt/spark3_5_7_scala213/jars/spire*
 
 # Spire is removed because of version mismatch with geotrellis! Spark only has a minimal dependency on it, in a part that we do not use.
 
