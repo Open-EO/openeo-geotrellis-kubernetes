@@ -54,6 +54,7 @@ ingressRoute:
 # Port of the HTTP server run by the Prometheus JMX exporter
 jmxPort: 8090
 pythonVersion: 3
+pythonMinorVersion: 8
 service:
   enabled: false
   type: "ClusterIP"

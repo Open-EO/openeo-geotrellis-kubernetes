@@ -221,7 +221,7 @@ spec:
         subPath: http_credentials.json
     {{- end }}
     {{- if .Values.configMaps.customBatchConfig }}
-      - mountPath: /opt/venv/lib64/python3.8/site-packages/openeogeotrellis/deploy/sparkapplication.yaml.j2
+      - mountPath: /opt/venv/lib64/python{{ .Values.pythonVersion }}.{{ .Values.pythonMinorVersion }}/site-packages/openeogeotrellis/deploy/sparkapplication.yaml.j2
         name: {{ include "sparkapplication.fullname" . }}-custom-batch-config
         subPath: sparkapplication.yaml.j2
     {{- end }}
