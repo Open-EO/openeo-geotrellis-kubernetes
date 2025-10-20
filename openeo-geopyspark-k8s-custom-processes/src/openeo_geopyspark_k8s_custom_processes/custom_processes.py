@@ -211,6 +211,23 @@ def insar_common(kwargs, env: EvalEnv, cwl_url: str, stac_root: str = "S1_2image
 
 @non_standard_process(
     ProcessSpec(
+        id="insar_parallel_dummy_stac",
+        description="Proof-of-concept process to run CWL in parallel.",
+    ).returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
+)
+def insar_parallel_dummy_stac(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
+    kwargs = dict()
+    return insar_common(
+        kwargs,
+        env,
+        # TODO: Put CWL in repository.
+        "https://emilesonneveld.be/dropbox_proxy/work/VITO/VITO2025/insar_project/cwl/dummy_stac_parallel.cwl",
+        stac_root="collection.json",
+    )
+
+
+@non_standard_process(
+    ProcessSpec(
         id="insar_coherence",
         description="Proof-of-concept process to run CWL based inSAR. More info here: https://github.com/cloudinsar/s1-workflows",
     )
