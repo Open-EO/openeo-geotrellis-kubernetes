@@ -30,6 +30,7 @@ from openeo_driver.ProcessGraphDeserializer import (
 )
 from openeo_driver.specs import read_spec
 from openeo_driver.utils import EvalEnv
+import openeogeotrellis.integrations.stac
 from openeogeotrellis.integrations.calrissian import CalrissianJobLauncher, CwLSource
 from openeogeotrellis.util.runtime import get_job_id, get_request_id
 import openeogeotrellis.load_stac
@@ -103,6 +104,7 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv):
     CWL produces a local STAC collection,
     that is then loaded `load_stac`-style as a `GeopysparkDataCube`.
     """
+    direct_s3_mode = args.get_optional("direct_s3_mode", default=False)
 
     dry_run_tracer: DryRunDataTracer = env.get(ENV_DRY_RUN_TRACER)
     if dry_run_tracer:
@@ -137,7 +139,13 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv):
     for k, v in results.items():
         log.info(f"_cwl_demo_hello result {k!r}: {v.generate_public_url()=} {v.generate_presigned_url()=}")
 
-    collection_url = results["collection.json"].generate_public_url()
+    if direct_s3_mode:
+        collection_url = results["collection.json"].s3_uri()
+        load_stac_kwargs = {"stac_io": openeogeotrellis.integrations.stac.S3StacIO()}
+    else:
+        collection_url = results["collection.json"].generate_public_url()
+        load_stac_kwargs = {}
+
     env = env.push(
         {
             # TODO: this is apparently necessary to set explicitly, but shouldn't this be the default?
@@ -151,6 +159,7 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv):
         # TODO: remove these explicit None's once these arguments have proper defaults
         layer_properties=None,
         batch_jobs=None,
+        **load_stac_kwargs,
     )
 
 
