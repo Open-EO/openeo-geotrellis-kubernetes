@@ -1,5 +1,9 @@
 # sparkapplication chart changelog
 
+## 1.1.0
+
+feature: make `pythonMinorVersion` configurable via value but default to 8 to be backwards compatible.
+
 ## 1.0.3
 
 feature: allow specifying PriorityClassName for driver.
