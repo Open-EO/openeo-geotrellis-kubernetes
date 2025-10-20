@@ -7,8 +7,6 @@
 containerImageBuildPipeline {
   dockerfile            = 'docker/AlmaLinux/Dockerfile.creo'
   docker_registry_prod  = 'vito-docker.artifactory.vgt.vito.be'
-  downstream_jobs       = ['openEO/openeo-deploy-cdse']
-  downstream_job_params = ['force_redeploy': 'false', 'cluster': 'all']
   image_name            = 'openeo-geotrellis-kube'
   promotion_job         = false
   run_tests             = false
