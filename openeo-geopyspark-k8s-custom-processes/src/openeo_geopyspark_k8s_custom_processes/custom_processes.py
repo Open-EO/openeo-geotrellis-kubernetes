@@ -92,19 +92,69 @@ def _cwl_demo_hello(args: ProcessArgs, env: EvalEnv):
     return results["output.txt"].read(encoding="utf8")
 
 
+def cwl_common(
+    cwl_arguments: list, env: EvalEnv, cwl_source: CwLSource, stac_root: str = "collection.json",
+    direct_s3_mode=False
+) -> DriverDataCube:
+    dry_run_tracer: DryRunDataTracer = env.get(ENV_DRY_RUN_TRACER)
+    if dry_run_tracer:
+        # TODO: use something else than `dry_run_tracer.load_stac`
+        #       to avoid risk on conflict with "regular" load_stac code flows?
+        return dry_run_tracer.load_stac(url="dummy", arguments={})
+
+    _ensure_kubernetes_config()
+
+    log.info(f"Loading CWL from {cwl_source=}")
+
+    launcher = CalrissianJobLauncher.from_context()
+    results = launcher.run_cwl_workflow(
+        cwl_source=cwl_source,
+        cwl_arguments=cwl_arguments,
+        output_paths=[stac_root],
+        env_vars={
+            "AWS_ACCESS_KEY_ID": os.environ.get("SWIFT_ACCESS_KEY_ID", os.environ.get("AWS_ACCESS_KEY_ID")),
+            "AWS_SECRET_ACCESS_KEY": os.environ.get("SWIFT_SECRET_ACCESS_KEY", os.environ.get("AWS_SECRET_ACCESS_KEY")),
+        },
+    )
+
+    # TODO: provide generic helper to log some info about the results
+    for k, v in results.items():
+        log.info(f"result {k!r}: {v.generate_public_url()=} {v.generate_presigned_url()=}")
+
+    if direct_s3_mode:
+        collection_url = results["collection.json"].s3_uri()
+        load_stac_kwargs = {"stac_io": openeogeotrellis.integrations.stac.S3StacIO()}
+    else:
+        collection_url = results[stac_root].generate_public_url()
+        load_stac_kwargs = {}
+    env = env.push(
+        {
+            # TODO: this is apparently necessary to set explicitly, but shouldn't this be the default?
+            "pyramid_levels": "highest",
+        }
+    )
+    return openeogeotrellis.load_stac.load_stac(
+        url=collection_url,
+        load_params=LoadParameters(),
+        env=env,
+        **load_stac_kwargs,
+    )
+
+
 @non_standard_process(
     ProcessSpec(
         id="_cwl_dummy_stac",
         description="Proof-of-concept process to run CWL based processing, and load the result as data cube.",
-    ).returns(description="data", schema={"type": "object", "subtype": "datacube"})
+    )
+    .param(name="direct_s3_mode", description="direct_s3_mode", schema={"type": "boolean"}, required=False)
+    .returns(description="data", schema={"type": "object", "subtype": "datacube"})
 )
-def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv):
+def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     """
     Proof of concept openEO process to run CWL based processing:
     CWL produces a local STAC collection,
     that is then loaded `load_stac`-style as a `GeopysparkDataCube`.
     """
-    direct_s3_mode = args.get_optional("direct_s3_mode", default=False)
 
     dry_run_tracer: DryRunDataTracer = env.get(ENV_DRY_RUN_TRACER)
     if dry_run_tracer:
@@ -116,54 +166,69 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv):
 
     cwl_source = CwLSource.from_path(CWL_ROOT / "dummy_stac.cwl")
     cwl_arguments = []
-    output_paths = [
-        # TODO: does calrissian allow getting these output paths
-        #       from the CWL output listing, so we can avoid this hardcoded list?
-        "collection.json",
-        "openEO_2023-06-01Z.tif",
-        "openEO_2023-06-01Z.tif.json",
-        "openEO_2023-06-04Z.tif",
-        "openEO_2023-06-04Z.tif.json",
-        "openEO_2023-06-06Z.tif",
-        "openEO_2023-06-06Z.tif.json",
-    ]
+    direct_s3_mode = args.get_optional("direct_s3_mode", default=False)
+    return cwl_common(cwl_arguments, env, cwl_source, stac_root="collection.json", direct_s3_mode=direct_s3_mode)
 
-    launcher = CalrissianJobLauncher.from_context()
-    results = launcher.run_cwl_workflow(
-        cwl_source=cwl_source,
-        cwl_arguments=cwl_arguments,
-        output_paths=output_paths,
+
+@non_standard_process(
+    ProcessSpec(
+        id="_cwl_dummy_stac_parallel",
+        description="Proof-of-concept process to run CWL in parallel.",
+    )
+    .param(
+        name="request_dates",
+        description="request_dates. Choose from 2023-06-01, 2023-06-04 and / or 2023-06-04.",
+        schema={
+            "type": "array",
+            "subtype": "temporal-intervals",
+            "minItems": 1,
+            "items": {
+                "anyOf": [
+                    {
+                        "type": "string",
+                        "format": "date-time",
+                        "subtype": "date-time",
+                        "description": "Date and time with a time zone.",
+                    },
+                    {
+                        "type": "string",
+                        "format": "date",
+                        "subtype": "date",
+                        "description": "Date only, formatted as `YYYY-MM-DD`. The time zone is UTC. Missing time components are all 0.",
+                    },
+                    {
+                        "type": "string",
+                        "subtype": "time",
+                        "pattern": "^\\d{2}:\\d{2}:\\d{2}$",
+                        "description": "Time only, formatted as `HH:MM:SS`. The time zone is UTC.",
+                    },
+                    {"type": "null"},
+                ]
+            },
+        },
+        required=True,
+    )
+    .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
+)
+def _cwl_dummy_stac_parallel(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
+    cwl_arguments = []
+    request_dates = args.get_required("request_dates", expected_type=list)
+    for date in request_dates:
+        cwl_arguments.extend(["--request_dates", date])
+    return cwl_common(
+        cwl_arguments,
+        env,
+        # TODO: Put CWL in repository.
+        CwLSource.from_url(
+            "https://emilesonneveld.be/dropbox_proxy/work/VITO/VITO2025/insar_project/cwl/dummy_stac_parallel.cwl"
+        ),
+        stac_root="collection.json",
     )
 
-    # TODO: provide generic helper to log some info about the results
-    for k, v in results.items():
-        log.info(f"_cwl_demo_hello result {k!r}: {v.generate_public_url()=} {v.generate_presigned_url()=}")
 
-    if direct_s3_mode:
-        collection_url = results["collection.json"].s3_uri()
-        load_stac_kwargs = {"stac_io": openeogeotrellis.integrations.stac.S3StacIO()}
-    else:
-        collection_url = results["collection.json"].generate_public_url()
-        load_stac_kwargs = {}
-
-    env = env.push(
-        {
-            # TODO: this is apparently necessary to set explicitly, but shouldn't this be the default?
-            "pyramid_levels": "highest",
-        }
-    )
-    return openeogeotrellis.load_stac.load_stac(
-        url=collection_url,
-        load_params=LoadParameters(),
-        env=env,
-        # TODO: remove these explicit None's once these arguments have proper defaults
-        layer_properties=None,
-        batch_jobs=None,
-        **load_stac_kwargs,
-    )
-
-
-def insar_common(kwargs, env: EvalEnv, cwl_url: str, stac_root: str = "S1_2images_collection.json"):
+def insar_common(
+    kwargs: dict, env: EvalEnv, cwl_url: str, stac_root: str = "S1_2images_collection.json"
+) -> DriverDataCube:
     if "InSAR_pairs" in kwargs:
         primary_dates = [pair[0] for pair in kwargs["InSAR_pairs"]]
         primary_dates_duplicates = set([d for d in primary_dates if primary_dates.count(d) > 1])
@@ -172,68 +237,9 @@ def insar_common(kwargs, env: EvalEnv, cwl_url: str, stac_root: str = "S1_2image
                 f"Duplicate primary date(s) found in InSAR_pairs: {primary_dates_duplicates}. "
                 "You can load multiple primary dates over multiple processes if needed."
             )
-    dry_run_tracer: DryRunDataTracer = env.get(ENV_DRY_RUN_TRACER)
-    if dry_run_tracer:
-        # TODO: use something else than `dry_run_tracer.load_stac`
-        #       to avoid risk on conflict with "regular" load_stac code flows?
-        return dry_run_tracer.load_stac(url="dummy", arguments={})
-
-    _ensure_kubernetes_config()
-
-    log.info(f"Loading CWL from {cwl_url=}")
-    cwl_source = CwLSource.from_url(cwl_url)
-
     input_base64_json = base64.b64encode(json.dumps(kwargs).encode("utf8")).decode("ascii")
     cwl_arguments = ["--input_base64_json", input_base64_json]
-
-    launcher = CalrissianJobLauncher.from_context()
-    results = launcher.run_cwl_workflow(
-        cwl_source=cwl_source,
-        cwl_arguments=cwl_arguments,
-        output_paths=[stac_root],  # TODO: Rename to collection.json?
-        env_vars={
-            "AWS_ACCESS_KEY_ID": os.environ.get("SWIFT_ACCESS_KEY_ID", os.environ.get("AWS_ACCESS_KEY_ID")),
-            "AWS_SECRET_ACCESS_KEY": os.environ.get("SWIFT_SECRET_ACCESS_KEY", os.environ.get("AWS_SECRET_ACCESS_KEY")),
-        },
-    )
-
-    # TODO: provide generic helper to log some info about the results
-    for k, v in results.items():
-        log.info(f"result {k!r}: {v.generate_public_url()=} {v.generate_presigned_url()=}")
-
-    collection_url = results[stac_root].generate_public_url()
-    env = env.push(
-        {
-            # TODO: this is apparently necessary to set explicitly, but shouldn't this be the default?
-            "pyramid_levels": "highest",
-        }
-    )
-    return openeogeotrellis.load_stac.load_stac(
-        url=collection_url,
-        load_params=LoadParameters(),
-        env=env,
-        # TODO: remove these explicit None's once these arguments have proper defaults
-        layer_properties=None,
-        batch_jobs=None,
-    )
-
-
-@non_standard_process(
-    ProcessSpec(
-        id="insar_parallel_dummy_stac",
-        description="Proof-of-concept process to run CWL in parallel.",
-    ).returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
-)
-def insar_parallel_dummy_stac(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
-    kwargs = dict()
-    return insar_common(
-        kwargs,
-        env,
-        # TODO: Put CWL in repository.
-        "https://emilesonneveld.be/dropbox_proxy/work/VITO/VITO2025/insar_project/cwl/dummy_stac_parallel.cwl",
-        stac_root="collection.json",
-    )
-
+    return cwl_common(cwl_arguments, env, CwLSource.from_url(cwl_url), stac_root)
 
 @non_standard_process(
     ProcessSpec(
