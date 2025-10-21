@@ -61,6 +61,8 @@ RUN dnf clean all && \
 
 # Spire is removed because of version mismatch with geotrellis! Spark only has a minimal dependency on it, in a part that we do not use.
 
+# Required for new hadoop cluster because this causes "/var/lib/sss/pubconf/krb5.include.d" to be included twice which throws an error.
+RUN rm /etc/krb5.conf.d/enable_sssd_conf_dir
 
 RUN if [ -n "${SPARK_INSTALL_PREFIX}" ]; then \
         ln -s ${SPARK_INSTALL_PREFIX} /usr/local/spark; \
