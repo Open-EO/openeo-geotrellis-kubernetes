@@ -93,8 +93,7 @@ def _cwl_demo_hello(args: ProcessArgs, env: EvalEnv):
 
 
 def cwl_common(
-    cwl_arguments: list, env: EvalEnv, cwl_source: CwLSource, stac_root: str = "collection.json",
-    direct_s3_mode=False
+    cwl_arguments: list, env: EvalEnv, cwl_source: CwLSource, stac_root: str = "collection.json", direct_s3_mode=False
 ) -> DriverDataCube:
     dry_run_tracer: DryRunDataTracer = env.get(ENV_DRY_RUN_TRACER)
     if dry_run_tracer:
