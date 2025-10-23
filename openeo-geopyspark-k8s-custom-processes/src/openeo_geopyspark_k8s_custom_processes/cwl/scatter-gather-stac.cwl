@@ -5,7 +5,7 @@ $graph:
     class: CommandLineTool
     requirements:
       - class: DockerRequirement
-        dockerPull: vito-docker.artifactory.vgt.vito.be/openeo-geopyspark-driver-example-stac-catalog:1.1
+        dockerPull: vito-docker.artifactory.vgt.vito.be/openeo-geopyspark-driver-example-stac-catalog:1.2
 
     baseCommand: "/data/sub_collection_maker.py"
     inputs:
@@ -49,7 +49,7 @@ $graph:
     class: CommandLineTool
     requirements:
       - class: DockerRequirement
-        dockerPull: vito-docker.artifactory.vgt.vito.be/openeo-geopyspark-driver-example-stac-catalog:1.1
+        dockerPull: vito-docker.artifactory.vgt.vito.be/openeo-geopyspark-driver-example-stac-catalog:1.2
 
     baseCommand: "/data/simple_stac_merge.py"
     inputs:
@@ -66,14 +66,11 @@ $graph:
         outputBinding:
           glob: [ "collection.json", "*.json", "*.tif", "*.tiff" ]
 
-  # Where to add  sbg:maxNumberOfParallelInstances?
-  #- id: gatherer_node
   - id: main
     class: Workflow
     inputs:
       request_dates:
         type: string[]
-        default: [ "2023-06-01", "2023-06-04" ]
 
     requirements:
       - class: SubworkflowFeatureRequirement
