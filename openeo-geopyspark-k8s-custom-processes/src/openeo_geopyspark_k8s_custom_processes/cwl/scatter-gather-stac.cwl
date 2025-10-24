@@ -5,7 +5,7 @@ $graph:
     class: CommandLineTool
     requirements:
       - class: DockerRequirement
-        dockerPull: vito-docker.artifactory.vgt.vito.be/openeo-geopyspark-driver-example-stac-catalog:1.2
+        dockerPull: vito-docker.artifactory.vgt.vito.be/openeo-geopyspark-driver-example-stac-catalog:1.3
 
     baseCommand: "/data/sub_collection_maker.py"
     inputs:
@@ -14,9 +14,9 @@ $graph:
         inputBinding: { }
     outputs:
       sub_collection_maker_out:
-        type: File[]
+        type: Directory
         outputBinding:
-          glob: [ "collection.json", "*.json", "*.tif", "*.tiff" ]
+          glob: .
 
   - id: scatter_node
     class: Workflow
@@ -39,32 +39,24 @@ $graph:
     outputs:
       - id: scatter_node_out
         outputSource: scatter_node_step/sub_collection_maker_out
-        type:
-          type: array
-          items:
-            type: array
-            items: File
+        type: Directory[]
 
   - id: simple_stac_merge
     class: CommandLineTool
     requirements:
       - class: DockerRequirement
-        dockerPull: vito-docker.artifactory.vgt.vito.be/openeo-geopyspark-driver-example-stac-catalog:1.2
+        dockerPull: vito-docker.artifactory.vgt.vito.be/openeo-geopyspark-driver-example-stac-catalog:1.3
 
     baseCommand: "/data/simple_stac_merge.py"
     inputs:
       simple_stac_merge_in1:
-        type:
-          type: array
-          items:
-            type: array
-            items: File
+        type: Directory[]
         inputBinding: { }
     outputs:
       simple_stac_merge_out:
-        type: File[]
+        type: Directory
         outputBinding:
-          glob: [ "collection.json", "*.json", "*.tif", "*.tiff" ]
+          glob: .
 
   - id: main
     class: Workflow
@@ -86,7 +78,19 @@ $graph:
           simple_stac_merge_in1: gatherer_node_step1/scatter_node_out
         out: [ simple_stac_merge_out ]
         run: "#simple_stac_merge"
+      directory_to_file_list:
+        run:
+          class: ExpressionTool
+          requirements: { InlineJavascriptRequirement: { } }
+          inputs:
+            directory_to_file_list_in: Directory
+          expression: '${return {"directory_to_file_list_out": inputs.directory_to_file_list_in.listing};}'
+          outputs:
+            directory_to_file_list_out: File[]
+        in:
+          directory_to_file_list_in: gatherer_node_step2/simple_stac_merge_out
+        out: [ directory_to_file_list_out ]
     outputs:
       - id: gatherer_node_out
-        outputSource: gatherer_node_step2/simple_stac_merge_out
+        outputSource: directory_to_file_list/directory_to_file_list_out
         type: File[]
