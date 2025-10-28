@@ -79,7 +79,7 @@ def _cwl_demo_hello(args: ProcessArgs, env: EvalEnv):
         f"Hello {name}, greetings from {correlation_id}.",
     ]
 
-    launcher = CalrissianJobLauncher.from_context()
+    launcher = CalrissianJobLauncher.from_context(env)
     results = launcher.run_cwl_workflow(
         cwl_source=cwl_source,
         cwl_arguments=cwl_arguments,
@@ -105,7 +105,7 @@ def cwl_common(
 
     log.info(f"Loading CWL from {cwl_source=}")
 
-    launcher = CalrissianJobLauncher.from_context()
+    launcher = CalrissianJobLauncher.from_context(env)
     results = launcher.run_cwl_workflow(
         cwl_source=cwl_source,
         cwl_arguments=cwl_arguments,
