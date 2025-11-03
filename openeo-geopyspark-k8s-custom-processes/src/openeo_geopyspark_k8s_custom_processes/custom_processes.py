@@ -12,6 +12,7 @@ import re
 import textwrap
 from copy import deepcopy
 from pathlib import Path
+from typing import Union, List
 
 import kubernetes.config
 from kubernetes.config.incluster_config import SERVICE_TOKEN_FILENAME
@@ -93,7 +94,11 @@ def _cwl_demo_hello(args: ProcessArgs, env: EvalEnv):
 
 
 def cwl_common(
-    cwl_arguments: list, env: EvalEnv, cwl_source: CwLSource, stac_root: str = "collection.json", direct_s3_mode=False
+    cwl_arguments: Union[List[str], dict],
+    env: EvalEnv,
+    cwl_source: CwLSource,
+    stac_root: str = "collection.json",
+    direct_s3_mode=False,
 ) -> DriverDataCube:
     dry_run_tracer: DryRunDataTracer = env.get(ENV_DRY_RUN_TRACER)
     if dry_run_tracer:
@@ -447,6 +452,23 @@ def insar_preprocessing(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         kwargs,
         env,
         "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/insar_preprocessing.cwl",
+    )
+
+
+@non_standard_process(
+    ProcessSpec(
+        id="sar_coherence",
+        description="Proof-of-concept process to run CWL based inSAR. More info here: https://github.com/cloudinsar/s1-workflows",
+    ).returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
+)
+def sar_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
+    return cwl_common(
+        args,
+        env,
+        CwLSource.from_url(  # TODO: refer to main branch once merged.
+            "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/renaming/cwl/sar_coherence.cwl"
+        ),
+        stac_root="phase_coh_collection.json",
     )
 
 
