@@ -222,10 +222,7 @@ def _cwl_dummy_stac_parallel(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     return cwl_common(
         cwl_arguments,
         env,
-        # TODO: Put CWL in repository.
-        CwLSource.from_url(
-            "https://emilesonneveld.be/dropbox_proxy/work/VITO/VITO2025/insar_project/cwl/dummy_stac_parallel.cwl"
-        ),
+        cwl_source=CwLSource.from_path(CWL_ROOT / "scatter-gather-stac.cwl"),
         stac_root="collection.json",
     )
 
