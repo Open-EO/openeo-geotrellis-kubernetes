@@ -1,11 +1,12 @@
 #!/usr/bin/env cwl-runner
+# Run locally: cwltool --tmpdir-prefix=$HOME/tmp/ --force-docker-pull scatter-gather-stac.cwl --request_dates 2023-06-0
 cwlVersion: v1.0
 $graph:
   - id: sub_collection_maker
     class: CommandLineTool
     requirements:
       - class: DockerRequirement
-        dockerPull: vito-docker.artifactory.vgt.vito.be/openeo-geopyspark-driver-example-stac-catalog:1.3
+        dockerPull: vito-docker.artifactory.vgt.vito.be/openeo-geopyspark-driver-example-stac-catalog:1.4
 
     baseCommand: "/data/sub_collection_maker.py"
     inputs:
@@ -45,7 +46,7 @@ $graph:
     class: CommandLineTool
     requirements:
       - class: DockerRequirement
-        dockerPull: vito-docker.artifactory.vgt.vito.be/openeo-geopyspark-driver-example-stac-catalog:1.3
+        dockerPull: vito-docker.artifactory.vgt.vito.be/openeo-geopyspark-driver-example-stac-catalog:1.4
 
     baseCommand: "/data/simple_stac_merge.py"
     inputs:
