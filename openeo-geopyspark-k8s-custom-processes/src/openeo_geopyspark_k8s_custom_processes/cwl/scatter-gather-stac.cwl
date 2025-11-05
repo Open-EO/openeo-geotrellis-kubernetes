@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
-# Run locally: cwltool --tmpdir-prefix=$HOME/tmp/ --force-docker-pull scatter-gather-stac.cwl --request_dates 2023-06-0
-cwlVersion: v1.0
+# Run locally: cwltool --tmpdir-prefix=$HOME/tmp/ --force-docker-pull scatter-gather-stac.cwl --request_dates 2023-06-01
+cwlVersion: v1.2
 $graph:
   - id: sub_collection_maker
     class: CommandLineTool
@@ -82,7 +82,10 @@ $graph:
       directory_to_file_list:
         run:
           class: ExpressionTool
-          requirements: { InlineJavascriptRequirement: { } }
+          requirements:
+            InlineJavascriptRequirement: { }
+            LoadListingRequirement:
+              loadListing: shallow_listing
           inputs:
             directory_to_file_list_in: Directory
           expression: '${return {"directory_to_file_list_out": inputs.directory_to_file_list_in.listing};}'

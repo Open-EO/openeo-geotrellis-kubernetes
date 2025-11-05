@@ -465,7 +465,7 @@ def sar_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         CwLSource.from_url(  # TODO: refer to main branch once merged.
             "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/renaming/cwl/sar_coherence.cwl"
         ),
-        stac_root="phase_coh_collection.json",
+        stac_root="S1_2images_collection.json",
     )
 
 
