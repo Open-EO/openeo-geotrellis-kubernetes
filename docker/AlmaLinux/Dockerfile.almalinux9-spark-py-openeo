@@ -45,14 +45,12 @@ RUN dnf clean all && \
         fftw-libs-single \
         tinyxml \
         udunits2 \
-        R-core \
         libtiff-tools \
         blosc \
         compat-libgfortran-48 \
         openeo-vito-aux-data \
         && \
     python3.11 -m pip install --upgrade --target /usr/lib64/python3.11/site-packages/ pip setuptools wheel && \
-    python3.11 -m pip install --upgrade --target /usr/lib64/python3.11/site-packages/ 'rpy2==3.5.12' && \
     chmod +x /usr/bin/tini && \
     rm -r /root/.cache && \
     yum clean all && \
