@@ -465,7 +465,41 @@ def sar_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         CwLSource.from_url(  # TODO: refer to main branch once merged.
             "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/renaming/cwl/sar_coherence.cwl"
         ),
-        stac_root="S1_2images_collection.json",
+        stac_root="collection.json",
+    )
+
+
+@non_standard_process(
+    ProcessSpec(
+        id="sar_interferogram",
+        description="Proof-of-concept process to run CWL based inSAR. More info here: https://github.com/cloudinsar/s1-workflows",
+    ).returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
+)
+def sar_interferogram(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
+    return cwl_common(
+        args,
+        env,
+        CwLSource.from_url(  # TODO: refer to main branch once merged.
+            "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/renaming/cwl/sar_interferogram.cwl"
+        ),
+        stac_root="collection.json",
+    )
+
+
+@non_standard_process(
+    ProcessSpec(
+        id="sar_slc_preprocessing",
+        description="Proof-of-concept process to run CWL based inSAR. More info here: https://github.com/cloudinsar/s1-workflows",
+    ).returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
+)
+def sar_slc_preprocessing(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
+    return cwl_common(
+        args,
+        env,
+        CwLSource.from_url(  # TODO: refer to main branch once merged.
+            "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/renaming/cwl/sar_slc_preprocessing.cwl"
+        ),
+        stac_root="collection.json",
     )
 
 
