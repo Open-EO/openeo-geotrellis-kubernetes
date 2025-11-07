@@ -463,7 +463,7 @@ def sar_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         args,
         env,
         CwLSource.from_url(  # TODO: refer to main branch once merged.
-            "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/renaming/cwl/sar_coherence.cwl"
+            "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/sar_coherence.cwl"
         ),
         stac_root="collection.json",
     )
@@ -480,7 +480,7 @@ def sar_interferogram(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         args,
         env,
         CwLSource.from_url(  # TODO: refer to main branch once merged.
-            "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/renaming/cwl/sar_interferogram.cwl"
+            "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/sar_interferogram.cwl"
         ),
         stac_root="collection.json",
     )
@@ -497,7 +497,7 @@ def sar_slc_preprocessing(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         args,
         env,
         CwLSource.from_url(  # TODO: refer to main branch once merged.
-            "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/renaming/cwl/sar_slc_preprocessing.cwl"
+            "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/sar_slc_preprocessing.cwl"
         ),
         stac_root="collection.json",
     )
