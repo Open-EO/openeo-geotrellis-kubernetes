@@ -102,6 +102,10 @@ def cwl_common(
 ) -> DriverDataCube:
     dry_run_tracer: DryRunDataTracer = env.get(ENV_DRY_RUN_TRACER)
     if dry_run_tracer:
+        CalrissianJobLauncher.validate_cwl_workflow(
+            cwl_source=cwl_source,
+            cwl_arguments=cwl_arguments,
+        )
         # TODO: use something else than `dry_run_tracer.load_stac`
         #       to avoid risk on conflict with "regular" load_stac code flows?
         return dry_run_tracer.load_stac(url="dummy", arguments={})
