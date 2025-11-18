@@ -470,7 +470,7 @@ def sar_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     return cwl_common(
         args,
         env,
-        CwLSource.from_url(  # TODO: refer to main branch once merged.
+        CwLSource.from_url(
             "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/sar_coherence.cwl"
         ),
         stac_root="collection.json",
@@ -487,7 +487,7 @@ def sar_coherence_parallel(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     return cwl_common(
         args,
         env,
-        CwLSource.from_url(  # TODO: refer to main branch once merged.
+        CwLSource.from_url(
             "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/sar_coherence_parallel.cwl"
         ),
         stac_root="collection.json",
@@ -504,7 +504,7 @@ def sar_interferogram(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     return cwl_common(
         args,
         env,
-        CwLSource.from_url(  # TODO: refer to main branch once merged.
+        CwLSource.from_url(
             "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/sar_interferogram.cwl"
         ),
         stac_root="collection.json",
@@ -521,7 +521,7 @@ def sar_slc_preprocessing(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     return cwl_common(
         args,
         env,
-        CwLSource.from_url(  # TODO: refer to main branch once merged.
+        CwLSource.from_url(
             "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/sar_slc_preprocessing.cwl"
         ),
         stac_root="collection.json",
@@ -531,14 +531,14 @@ def sar_slc_preprocessing(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
 @non_standard_process(
     ProcessSpec(
         id="force_level2",
-        description="Proof-of-concept process to run CWL. More info here: https://github.com/bcdev/apex-force-openeo",
+        description="Proof-of-concept process. More info here: https://github.com/bcdev/apex-force-openeo",
     ).returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
 )
 def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     return cwl_common(
         args,
         env,
-        CwLSource.from_url(  # TODO: refer to main branch once merged.
+        CwLSource.from_url(
             "https://raw.githubusercontent.com/bcdev/apex-force-openeo/refs/heads/main/material/force-l2.cwl"
         ),
         stac_root="catalogue.json",
