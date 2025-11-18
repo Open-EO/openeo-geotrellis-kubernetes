@@ -528,6 +528,23 @@ def sar_slc_preprocessing(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     )
 
 
+@non_standard_process(
+    ProcessSpec(
+        id="force_level2",
+        description="Proof-of-concept process to run CWL. More info here: https://github.com/bcdev/apex-force-openeo",
+    ).returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
+)
+def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
+    return cwl_common(
+        args,
+        env,
+        CwLSource.from_url(  # TODO: refer to main branch once merged.
+            "https://raw.githubusercontent.com/bcdev/apex-force-openeo/refs/heads/main/material/force-l2.cwl"
+        ),
+        stac_root="catalogue.json",
+    )
+
+
 SAR_BACKSCATTER_COEFFICIENT_DEFAULT = "sigma0-ellipsoid"
 
 
