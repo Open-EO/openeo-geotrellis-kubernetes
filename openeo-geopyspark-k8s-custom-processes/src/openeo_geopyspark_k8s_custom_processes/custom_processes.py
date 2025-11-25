@@ -201,6 +201,28 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
 
 @non_standard_process(
     ProcessSpec(
+        id="_cwl_dummy_stac_to_stac",
+        description="Proof-of-concept process to run CWL based processing, and load the result as data cube.",
+    )
+    .param(name="direct_s3_mode", description="direct_s3_mode", schema={"type": "boolean"}, required=False)
+    .returns(description="data", schema={"type": "object", "subtype": "datacube"})
+)
+def _cwl_dummy_stac_to_stac(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
+    """
+    Proof of concept openEO process to run CWL based processing:
+    CWL produces a local STAC collection,
+    that is then loaded `load_stac`-style as a `GeopysparkDataCube`.
+    """
+    cwl_source = CwLSource.from_path(CWL_ROOT / "dummy_stac.cwl")
+    cwl_arguments = []
+    direct_s3_mode = args.get_optional("direct_s3_mode", default=False)
+    return cwl_common_to_stac(
+        cwl_arguments, env, cwl_source, stac_root="collection.json", direct_s3_mode=direct_s3_mode
+    )
+
+
+@non_standard_process(
+    ProcessSpec(
         id="_cwl_dummy_stac_parallel",
         description="Proof-of-concept process to run CWL in parallel.",
     )
