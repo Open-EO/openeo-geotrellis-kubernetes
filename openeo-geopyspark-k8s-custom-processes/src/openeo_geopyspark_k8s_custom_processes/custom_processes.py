@@ -93,7 +93,7 @@ def _cwl_demo_hello(args: ProcessArgs, env: EvalEnv):
     return results["output.txt"].read(encoding="utf8")
 
 
-def cwl_common(
+def cwl_common_to_stac(
     cwl_arguments: Union[List[str], dict],
     env: EvalEnv,
     cwl_source: CwLSource,
@@ -112,7 +112,7 @@ def cwl_common(
             log.warning(str(e))
         # TODO: use something else than `dry_run_tracer.load_stac`
         #       to avoid risk on conflict with "regular" load_stac code flows?
-        return dry_run_tracer.load_stac(url="dummy", arguments={})
+        return "dummy"
 
     _ensure_kubernetes_config()
 
@@ -134,11 +134,37 @@ def cwl_common(
         log.info(f"result {k!r}: {v.generate_public_url()=} {v.generate_presigned_url()=}")
 
     if direct_s3_mode:
-        collection_url = results["collection.json"].s3_uri()
-        load_stac_kwargs = {"stac_io": openeogeotrellis.integrations.stac.S3StacIO()}
+        collection_url = results[stac_root].s3_uri()
     else:
         collection_url = results[stac_root].generate_public_url()
+    return collection_url
+
+
+def cwl_common(
+    cwl_arguments: Union[List[str], dict],
+    env: EvalEnv,
+    cwl_source: CwLSource,
+    stac_root: str = "collection.json",
+    direct_s3_mode=False,
+) -> DriverDataCube:
+    dry_run_tracer: DryRunDataTracer = env.get(ENV_DRY_RUN_TRACER)
+    if dry_run_tracer:
+        # TODO: use something else than `dry_run_tracer.load_stac`
+        #       to avoid risk on conflict with "regular" load_stac code flows?
+        return dry_run_tracer.load_stac(url="dummy", arguments={})
+
+    collection_url = cwl_common_to_stac(
+        cwl_arguments,
+        env,
+        cwl_source,
+        stac_root,
+        direct_s3_mode,
+    )
+    if direct_s3_mode:
+        load_stac_kwargs = {"stac_io": openeogeotrellis.integrations.stac.S3StacIO()}
+    else:
         load_stac_kwargs = {}
+
     env = env.push(
         {
             # TODO: this is apparently necessary to set explicitly, but shouldn't this be the default?
@@ -167,15 +193,6 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     CWL produces a local STAC collection,
     that is then loaded `load_stac`-style as a `GeopysparkDataCube`.
     """
-
-    dry_run_tracer: DryRunDataTracer = env.get(ENV_DRY_RUN_TRACER)
-    if dry_run_tracer:
-        # TODO: use something else than `dry_run_tracer.load_stac`
-        #       to avoid risk on conflict with "regular" load_stac code flows?
-        return dry_run_tracer.load_stac(url="dummy", arguments={})
-
-    _ensure_kubernetes_config()
-
     cwl_source = CwLSource.from_path(CWL_ROOT / "dummy_stac.cwl")
     cwl_arguments = []
     direct_s3_mode = args.get_optional("direct_s3_mode", default=False)
