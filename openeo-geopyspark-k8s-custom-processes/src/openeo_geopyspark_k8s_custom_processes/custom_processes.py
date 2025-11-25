@@ -147,12 +147,6 @@ def cwl_common(
     stac_root: str = "collection.json",
     direct_s3_mode=False,
 ) -> DriverDataCube:
-    dry_run_tracer: DryRunDataTracer = env.get(ENV_DRY_RUN_TRACER)
-    if dry_run_tracer:
-        # TODO: use something else than `dry_run_tracer.load_stac`
-        #       to avoid risk on conflict with "regular" load_stac code flows?
-        return dry_run_tracer.load_stac(url="dummy", arguments={})
-
     collection_url = cwl_common_to_stac(
         cwl_arguments,
         env,
@@ -160,6 +154,13 @@ def cwl_common(
         stac_root,
         direct_s3_mode,
     )
+
+    dry_run_tracer: DryRunDataTracer = env.get(ENV_DRY_RUN_TRACER)
+    if dry_run_tracer:
+        # TODO: use something else than `dry_run_tracer.load_stac`
+        #       to avoid risk on conflict with "regular" load_stac code flows?
+        return dry_run_tracer.load_stac(url="dummy", arguments={})
+
     if direct_s3_mode:
         load_stac_kwargs = {"stac_io": openeogeotrellis.integrations.stac.S3StacIO()}
     else:
@@ -207,7 +208,7 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     .param(name="direct_s3_mode", description="direct_s3_mode", schema={"type": "boolean"}, required=False)
     .returns(description="data", schema={"type": "object", "subtype": "datacube"})
 )
-def _cwl_dummy_stac_to_stac(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
+def _cwl_dummy_stac_to_stac(args: ProcessArgs, env: EvalEnv) -> str:
     """
     Proof of concept openEO process to run CWL based processing:
     CWL produces a local STAC collection,
