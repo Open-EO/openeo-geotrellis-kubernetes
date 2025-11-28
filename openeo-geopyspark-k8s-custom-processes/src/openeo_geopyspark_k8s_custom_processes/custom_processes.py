@@ -612,12 +612,19 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
 def run_cwl(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     cwl_url = args.get_required("cwl_url", expected_type=str)
     context = args.get_required("context", expected_type=dict)
-    return cwl_common(
-        context,
-        env,
-        CwLSource.from_url(cwl_url),
-        stac_root="catalogue.json",
-    )
+    if (
+        cwl_url.startswith("https://raw.githubusercontent.com/cloudinsar")
+        or cwl_url.startswith("https://raw.githubusercontent.com/bcdev/apex-force-openeo")
+        or cwl_url.startswith("https://raw.githubusercontent.com/EmileSonneveld")
+    ):
+        return cwl_common(
+            context,
+            env,
+            CwLSource.from_url(cwl_url),
+            stac_root="catalogue.json",
+        )
+    else:
+        raise ValueError("CWL not whitelisted: " + str(cwl_url))
 
 
 SAR_BACKSCATTER_COEFFICIENT_DEFAULT = "sigma0-ellipsoid"
