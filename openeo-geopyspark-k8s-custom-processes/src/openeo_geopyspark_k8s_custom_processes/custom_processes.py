@@ -585,6 +585,41 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     )
 
 
+@non_standard_process(
+    ProcessSpec(
+        id="run_cwl",
+        description="Proof-of-concept process.",
+    )
+    .param(
+        name="cwl_url",
+        description="cwl_url",
+        schema={
+            "type": "string",
+            "format": "uri",
+            "subtype": "uri",
+            "pattern": "^https?://",
+        },
+        required=True,
+    )
+    .param(
+        name="context",
+        description="context",
+        schema={"type": "dict"},
+        required=True,
+    )
+    .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
+)
+def run_cwl(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
+    cwl_url = args.get_required("cwl_url", expected_type=str)
+    context = args.get_required("context", expected_type=dict)
+    return cwl_common(
+        context,
+        env,
+        CwLSource.from_url(cwl_url),
+        stac_root="catalogue.json",
+    )
+
+
 SAR_BACKSCATTER_COEFFICIENT_DEFAULT = "sigma0-ellipsoid"
 
 
