@@ -607,11 +607,18 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         schema={"type": "dict"},
         required=True,
     )
+    .param(
+        name="stac_root",
+        description="stac_root",
+        schema={"type": "string"},
+        required=True,
+    )
     .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
 )
 def run_cwl(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     cwl_url = args.get_required("cwl_url", expected_type=str)
     context = args.get_required("context", expected_type=dict)
+    stac_root = args.get_required("stac_root", expected_type=str, default="collection.json")
     if (
         cwl_url.startswith("https://raw.githubusercontent.com/cloudinsar")
         or cwl_url.startswith("https://raw.githubusercontent.com/bcdev/apex-force-openeo")
@@ -621,7 +628,7 @@ def run_cwl(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
             context,
             env,
             CwLSource.from_url(cwl_url),
-            stac_root="catalogue.json",
+            stac_root=stac_root,
         )
     else:
         raise ValueError("CWL not whitelisted: " + str(cwl_url))
