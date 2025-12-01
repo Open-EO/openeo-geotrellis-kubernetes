@@ -618,7 +618,7 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
 def run_cwl(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     cwl_url = args.get_required("cwl_url", expected_type=str)
     context = args.get_required("context", expected_type=dict)
-    stac_root = args.get_required("stac_root", expected_type=str, default="collection.json")
+    stac_root = args.get_optional("stac_root", expected_type=str, default="collection.json")
     if (
         cwl_url.startswith("https://raw.githubusercontent.com/cloudinsar")
         or cwl_url.startswith("https://raw.githubusercontent.com/bcdev/apex-force-openeo")
