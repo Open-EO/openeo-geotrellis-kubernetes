@@ -32,7 +32,7 @@ from openeo_driver.ProcessGraphDeserializer import (
 from openeo_driver.specs import read_spec
 from openeo_driver.utils import EvalEnv
 import openeogeotrellis.integrations.stac
-from openeogeotrellis.integrations.calrissian import CalrissianJobLauncher, CwLSource
+from openeogeotrellis.integrations.calrissian import CalrissianJobLauncher, CwLSource, find_stac_root
 from openeogeotrellis.util.runtime import get_job_id, get_request_id
 import openeogeotrellis.load_stac
 
@@ -132,6 +132,13 @@ def cwl_common_to_stac(
     # TODO: provide generic helper to log some info about the results
     for k, v in results.items():
         log.info(f"result {k!r}: {v.generate_public_url()=} {v.generate_presigned_url()=}")
+
+    try:
+        stac_root_new = find_stac_root(results.keys(), stac_root)
+        if stac_root_new:
+            stac_root = stac_root_new
+    except Exception as e:
+        log.warning(f"Error from find_stac_root {stac_root!r}: {e}")
 
     if direct_s3_mode:
         collection_url = results[stac_root].s3_uri()
