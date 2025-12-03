@@ -9,6 +9,7 @@ import json
 import logging
 import os
 import re
+import sys
 import textwrap
 from copy import deepcopy
 from pathlib import Path
@@ -17,6 +18,7 @@ from typing import Union, List
 import kubernetes.config
 from kubernetes.config.incluster_config import SERVICE_TOKEN_FILENAME
 
+from openeo.rest.stac_resource import StacResource
 from openeo_driver.backend import LoadParameters
 from openeo_driver.datacube import DriverDataCube
 from openeo_driver.datastructs import SarBackscatterArgs
@@ -35,6 +37,11 @@ import openeogeotrellis.integrations.stac
 from openeogeotrellis.integrations.calrissian import CalrissianJobLauncher, CwLSource, find_stac_root
 from openeogeotrellis.util.runtime import get_job_id, get_request_id
 import openeogeotrellis.load_stac
+
+
+containing_folder = Path(__file__).parent
+sys.path.append(str(containing_folder))  # TODO: Find a nicer way
+import ogk_utils
 
 log = logging.getLogger("openeo_geopyspark_k8s_custom_processes")
 log.info(f"Loading custom processes from {__file__}")
@@ -215,7 +222,7 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     .param(name="direct_s3_mode", description="direct_s3_mode", schema={"type": "boolean"}, required=False)
     .returns(description="data", schema={"type": "object", "subtype": "datacube"})
 )
-def _cwl_dummy_stac_to_stac(args: ProcessArgs, env: EvalEnv) -> str:
+def _cwl_dummy_stac_to_stac(args: ProcessArgs, env: EvalEnv) -> ogk_utils.StacSaveResult:
     """
     Proof of concept openEO process to run CWL based processing:
     CWL produces a local STAC collection,
@@ -224,9 +231,10 @@ def _cwl_dummy_stac_to_stac(args: ProcessArgs, env: EvalEnv) -> str:
     cwl_source = CwLSource.from_path(CWL_ROOT / "dummy_stac.cwl")
     cwl_arguments = []
     direct_s3_mode = args.get_optional("direct_s3_mode", default=False)
-    return cwl_common_to_stac(
+    stac_root = cwl_common_to_stac(
         cwl_arguments, env, cwl_source, stac_root="collection.json", direct_s3_mode=direct_s3_mode
     )
+    return ogk_utils.StacSaveResult(stac_root)
 
 
 @non_standard_process(
