@@ -1,3 +1,4 @@
+#!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
 
@@ -15,8 +16,6 @@ baseCommand: ["sh", "-c", "cp /data/* ."]
 inputs: []
 outputs:
   output:
-    type:
-      type: array
-      items: File
+    type: Directory
     outputBinding:
-      glob: ["*.json", "*.tif", "*.tiff"]
+      glob: .
