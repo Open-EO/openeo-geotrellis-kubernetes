@@ -600,6 +600,60 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     )
 
 
+def is_url_whitelisted(cwl_url: str) -> bool:
+    return (
+        cwl_url.startswith("https://raw.githubusercontent.com/cloudinsar/")
+        or cwl_url.startswith("https://raw.githubusercontent.com/Open-EO/")
+        or cwl_url.startswith("https://raw.githubusercontent.com/bcdev/apex-force-openeo/")
+        or cwl_url.startswith("https://raw.githubusercontent.com/EmileSonneveld/")
+    )
+
+
+@non_standard_process(
+    ProcessSpec(
+        id="run_cwl_to_stac",
+        description="Proof-of-concept process. Runs CWL and tries to keep all the stac metadata as is.",
+    )
+    .param(
+        name="cwl_url",
+        description="cwl_url",
+        schema={
+            "type": "string",
+            "format": "uri",
+            "subtype": "uri",
+            "pattern": "^https?://",
+        },
+        required=True,
+    )
+    .param(
+        name="context",
+        description="context",
+        schema={"type": "dict"},
+        required=False,
+    )
+    .param(
+        name="stac_root",
+        description="stac_root",
+        schema={"type": "string"},
+        required=True,
+    )
+    .param(name="direct_s3_mode", description="direct_s3_mode", schema={"type": "boolean"}, required=False)
+    .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
+)
+def run_cwl_to_stac(args: ProcessArgs, env: EvalEnv) -> ogk_utils.StacSaveResult:
+    cwl_url = args.get_required("cwl_url", expected_type=str)
+    context = args.get_optional("context", expected_type=dict, default={})
+    stac_root = args.get_optional("stac_root", expected_type=str, default="collection.json")
+    direct_s3_mode = args.get_optional("direct_s3_mode", default=False)
+    if is_url_whitelisted(cwl_url):
+        stac_root = cwl_common_to_stac(
+            context, env, CwLSource.from_url(cwl_url), stac_root=stac_root, direct_s3_mode=direct_s3_mode
+        )
+        return ogk_utils.StacSaveResult(stac_root)
+    else:
+        raise ValueError("CWL not whitelisted: " + str(cwl_url))
+
+
 @non_standard_process(
     ProcessSpec(
         id="run_cwl",
@@ -620,7 +674,7 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         name="context",
         description="context",
         schema={"type": "dict"},
-        required=True,
+        required=False,
     )
     .param(
         name="stac_root",
@@ -632,13 +686,9 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
 )
 def run_cwl(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     cwl_url = args.get_required("cwl_url", expected_type=str)
-    context = args.get_required("context", expected_type=dict)
+    context = args.get_optional("context", expected_type=dict, default={})
     stac_root = args.get_optional("stac_root", expected_type=str, default="collection.json")
-    if (
-        cwl_url.startswith("https://raw.githubusercontent.com/cloudinsar")
-        or cwl_url.startswith("https://raw.githubusercontent.com/bcdev/apex-force-openeo")
-        or cwl_url.startswith("https://raw.githubusercontent.com/EmileSonneveld")
-    ):
+    if is_url_whitelisted(cwl_url):
         return cwl_common(
             context,
             env,
