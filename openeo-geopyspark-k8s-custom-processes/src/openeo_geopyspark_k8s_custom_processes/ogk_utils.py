@@ -16,8 +16,6 @@ def get_files_from_stac_catalog(catalog_path: Union[str, Path]) -> list:
     Goes through the stac catalog recursively to find all files.
     """
     if isinstance(catalog_path, str) and catalog_path.startswith("http"):
-        import requests
-
         response = requests.get(catalog_path)
         response.raise_for_status()
         catalog_json = response.json()
@@ -47,8 +45,6 @@ def get_files_from_stac_catalog(catalog_path: Union[str, Path]) -> list:
 
 def get_assets_from_stac_catalog(catalog_path: Union[str, Path]) -> Dict[str, StacAsset]:
     if isinstance(catalog_path, str) and catalog_path.startswith("http"):
-        import requests
-
         response = requests.get(catalog_path)
         response.raise_for_status()
         catalog_json = response.json()
@@ -75,6 +71,36 @@ def get_assets_from_stac_catalog(catalog_path: Union[str, Path]) -> Dict[str, St
             if "rel" in link and (link["rel"] == "child" or link["rel"] == "item"):
                 all_assets.update(get_assets_from_stac_catalog(href))
     return all_assets
+
+
+def get_items_from_stac_catalog(catalog_path: Union[str, Path]) -> dict:
+    if isinstance(catalog_path, str) and catalog_path.startswith("http"):
+
+        response = requests.get(catalog_path)
+        response.raise_for_status()
+        catalog_json = response.json()
+    else:
+        catalog_path = str(catalog_path)
+        assert os.path.exists(catalog_path)
+        catalog_json = json.loads(Path(catalog_path).read_text())
+
+    all_items = {}
+    links = []
+    if "links" in catalog_json:
+        links.extend(catalog_json["links"])
+    if "assets" in catalog_json:
+        links.extend(list(catalog_json["assets"].values()))
+        all_items.update({catalog_json["id"]: catalog_json})
+    for link in links:
+        if "href" in link:
+            href = link["href"]
+            if href.startswith("file://"):
+                href = href[7:]
+            href = urljoin(catalog_path, href)
+
+            if "rel" in link and (link["rel"] == "child" or link["rel"] == "item"):
+                all_items.update(get_items_from_stac_catalog(href))
+    return all_items
 
 
 class StacSaveResult(SaveResult):
@@ -120,5 +146,4 @@ class StacSaveResult(SaveResult):
             copy_asset(asset)
 
         stac_root_local = copy_asset(self.stac_root)
-        # stac_root_json = json.loads(Path(stac_root_local).read_text())
-        return get_assets_from_stac_catalog(stac_root_local)
+        return get_items_from_stac_catalog(stac_root_local)

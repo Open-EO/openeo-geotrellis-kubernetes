@@ -32,6 +32,13 @@ def test_get_assets_from_stac_catalog():
     assert len(ret.values()) == 3
 
 
+def test_get_items_from_stac_catalog():
+    stac_root = containing_folder / "example_stac_catalog/collection.json"
+    ret = ogk_utils.get_items_from_stac_catalog(stac_root)
+    print(ret)
+    assert len(ret) == 3
+
+
 def test_stac_save_result():
     tmp_dir = Path("tmp_stac_save_result")
     if tmp_dir.exists():

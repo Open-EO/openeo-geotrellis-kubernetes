@@ -646,10 +646,10 @@ def run_cwl_to_stac(args: ProcessArgs, env: EvalEnv) -> ogk_utils.StacSaveResult
     stac_root = args.get_optional("stac_root", expected_type=str, default="collection.json")
     direct_s3_mode = args.get_optional("direct_s3_mode", default=False)
     if is_url_whitelisted(cwl_url):
-        stac_root = cwl_common_to_stac(
+        stac_root_new = cwl_common_to_stac(
             context, env, CwLSource.from_url(cwl_url), stac_root=stac_root, direct_s3_mode=direct_s3_mode
         )
-        return ogk_utils.StacSaveResult(stac_root)
+        return ogk_utils.StacSaveResult(stac_root_new)
     else:
         raise ValueError("CWL not whitelisted: " + str(cwl_url))
 
