@@ -635,7 +635,7 @@ def is_url_whitelisted(cwl_url: str) -> bool:
         name="stac_root",
         description="stac_root",
         schema={"type": "string"},
-        required=True,
+        required=False,
     )
     .param(name="direct_s3_mode", description="direct_s3_mode", schema={"type": "boolean"}, required=False)
     .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
@@ -680,7 +680,7 @@ def run_cwl_to_stac(args: ProcessArgs, env: EvalEnv) -> ogk_utils.StacSaveResult
         name="stac_root",
         description="stac_root",
         schema={"type": "string"},
-        required=True,
+        required=False,
     )
     .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
 )
