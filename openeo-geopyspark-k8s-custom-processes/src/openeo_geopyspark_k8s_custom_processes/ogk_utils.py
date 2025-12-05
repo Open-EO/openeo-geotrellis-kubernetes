@@ -7,6 +7,7 @@ from urllib.parse import urljoin
 from urllib.parse import urlparse
 
 import requests
+from flask import Response
 from openeo_driver.datastructs import StacAsset
 from openeo_driver.save_result import SaveResult
 
@@ -147,3 +148,6 @@ class StacSaveResult(SaveResult):
 
         stac_root_local = copy_asset(self.stac_root)
         return get_items_from_stac_catalog(stac_root_local)
+
+    def create_flask_response(self) -> Response:
+        return self.flask_response_from_write_assets()
