@@ -23,10 +23,10 @@ RUN dnf clean all && \
         glibc-langpack-en \
         orfeo-toolbox-py311 \
         hdf5 \
-        gdal-3.8.4 \
-        gdal-devel-3.8.4 \
-        gdal-libs-3.8.4 \
-        gdal-python311-3.8.4 \
+        gdal-numpy2-3.11.3 \
+        gdal-numpy2-devel-3.11.3 \
+        gdal-numpy2-libs-3.11.3 \
+        gdal-numpy2-python311-3.11.3 \
         gcc-c++ \
         unzip \
         java-21-openjdk-headless \
