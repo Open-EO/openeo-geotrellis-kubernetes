@@ -22,14 +22,14 @@ from openeo.rest.stac_resource import StacResource
 from openeo_driver.backend import LoadParameters
 from openeo_driver.datacube import DriverDataCube
 from openeo_driver.datastructs import SarBackscatterArgs
-from openeo_driver.dry_run import DryRunDataTracer
+from openeo_driver.dry_run import DryRunDataTracer, DataSource
 from openeo_driver.processes import ProcessArgs
 from openeo_driver.ProcessGraphDeserializer import (
     ENV_DRY_RUN_TRACER,
     ProcessSpec,
     non_standard_process,
     process_registry_2xx,
-    process_registry_100,
+    process_registry_100, _extract_load_parameters,
 )
 from openeo_driver.specs import read_spec
 from openeo_driver.utils import EvalEnv
@@ -169,16 +169,22 @@ def cwl_common(
         direct_s3_mode,
     )
 
+    load_stac_dummy_url = "dummy"
     dry_run_tracer: DryRunDataTracer = env.get(ENV_DRY_RUN_TRACER)
     if dry_run_tracer:
         # TODO: use something else than `dry_run_tracer.load_stac`
         #       to avoid risk on conflict with "regular" load_stac code flows?
-        return dry_run_tracer.load_stac(url="dummy", arguments={})
+        return dry_run_tracer.load_stac(url=load_stac_dummy_url, arguments={})
 
     if direct_s3_mode:
         load_stac_kwargs = {"stac_io": openeogeotrellis.integrations.stac.S3StacIO()}
     else:
         load_stac_kwargs = {}
+
+    source_id = DataSource.load_stac(
+        load_stac_dummy_url, properties={}, bands=[], env=env
+    ).get_source_id()
+    load_params = _extract_load_parameters(env, source_id=source_id)
 
     env = env.push(
         {
@@ -188,7 +194,7 @@ def cwl_common(
     )
     return openeogeotrellis.load_stac.load_stac(
         url=collection_url,
-        load_params=LoadParameters(),
+        load_params=load_params,
         env=env,
         **load_stac_kwargs,
     )
