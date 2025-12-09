@@ -37,11 +37,12 @@ import openeogeotrellis.integrations.stac
 from openeogeotrellis.integrations.calrissian import CalrissianJobLauncher, CwLSource, find_stac_root
 from openeogeotrellis.util.runtime import get_job_id, get_request_id
 import openeogeotrellis.load_stac
-
-
-containing_folder = Path(__file__).parent
-sys.path.append(str(containing_folder))  # TODO: Find a nicer way
-import ogk_utils
+from openeogeotrellis.stac_save_result import (
+    StacSaveResult,
+    get_files_from_stac_catalog,
+    get_assets_from_stac_catalog,
+    get_items_from_stac_catalog,
+)
 
 log = logging.getLogger("openeo_geopyspark_k8s_custom_processes")
 log.info(f"Loading custom processes from {__file__}")
@@ -228,7 +229,7 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     .param(name="direct_s3_mode", description="direct_s3_mode", schema={"type": "boolean"}, required=False)
     .returns(description="data", schema={"type": "object", "subtype": "datacube"})
 )
-def _cwl_dummy_stac_to_stac(args: ProcessArgs, env: EvalEnv) -> ogk_utils.StacSaveResult:
+def _cwl_dummy_stac_to_stac(args: ProcessArgs, env: EvalEnv) -> StacSaveResult:
     """
     Proof of concept openEO process to run CWL based processing:
     CWL produces a local STAC collection,
@@ -240,7 +241,7 @@ def _cwl_dummy_stac_to_stac(args: ProcessArgs, env: EvalEnv) -> ogk_utils.StacSa
     stac_root = cwl_common_to_stac(
         cwl_arguments, env, cwl_source, stac_root="collection.json", direct_s3_mode=direct_s3_mode
     )
-    return ogk_utils.StacSaveResult(stac_root)
+    return StacSaveResult(stac_root)
 
 
 @non_standard_process(
@@ -646,7 +647,7 @@ def is_url_whitelisted(cwl_url: str) -> bool:
     .param(name="direct_s3_mode", description="direct_s3_mode", schema={"type": "boolean"}, required=False)
     .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
 )
-def run_cwl_to_stac(args: ProcessArgs, env: EvalEnv) -> ogk_utils.StacSaveResult:
+def run_cwl_to_stac(args: ProcessArgs, env: EvalEnv) -> StacSaveResult:
     cwl_url = args.get_required("cwl_url", expected_type=str)
     context = args.get_optional("context", expected_type=dict, default={})
     stac_root = args.get_optional("stac_root", expected_type=str, default="collection.json")
@@ -655,7 +656,7 @@ def run_cwl_to_stac(args: ProcessArgs, env: EvalEnv) -> ogk_utils.StacSaveResult
         stac_root_new = cwl_common_to_stac(
             context, env, CwLSource.from_url(cwl_url), stac_root=stac_root, direct_s3_mode=direct_s3_mode
         )
-        return ogk_utils.StacSaveResult(stac_root_new)
+        return StacSaveResult(stac_root_new)
     else:
         raise ValueError("CWL not whitelisted: " + str(cwl_url))
 
