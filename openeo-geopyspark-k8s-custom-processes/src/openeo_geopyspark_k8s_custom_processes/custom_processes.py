@@ -131,10 +131,6 @@ def cwl_common_to_stac(
         cwl_source=cwl_source,
         cwl_arguments=cwl_arguments,
         output_paths=[stac_root],
-        env_vars={
-            "AWS_ACCESS_KEY_ID": os.environ.get("SWIFT_ACCESS_KEY_ID", os.environ.get("AWS_ACCESS_KEY_ID")),
-            "AWS_SECRET_ACCESS_KEY": os.environ.get("SWIFT_SECRET_ACCESS_KEY", os.environ.get("AWS_SECRET_ACCESS_KEY")),
-        },
     )
 
     # TODO: provide generic helper to log some info about the results
