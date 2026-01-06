@@ -7,7 +7,7 @@
 containerImageBuildPipeline {
   build_args           = [
     'PYTHON_PACKAGE=python3.11-devel',
-    'SPARK_PACKAGE=spark-vito-4_0_1',
+    'SPARK_PACKAGE=spark-vito-4_0_1-4.0.1-2025.09.23',
     'SPARK_INSTALL_PREFIX=/opt/spark4_0_1',
     'GEOTRELLIS_DEPENDENCIES_STATIC_JAR_URL=https://artifactory.vgt.vito.be/artifactory/libs-snapshot-public/org/openeo/geotrellis-dependencies/2.6.1_2.13-SNAPSHOT/geotrellis-dependencies-2.6.1_2.13-SNAPSHOT.jar',
   ]
