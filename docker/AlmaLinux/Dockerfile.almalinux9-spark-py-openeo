@@ -21,12 +21,12 @@ RUN dnf clean all && \
     dnf --enablerepo=crb install -y \
         ${SPARK_PACKAGE} \
         glibc-langpack-en \
-        orfeo-toolbox-py311 \
+        orfeo-toolbox-py311-9.0.0 \
         hdf5 \
-        gdal-numpy2-3.11.3 \
-        gdal-numpy2-devel-3.11.3 \
-        gdal-numpy2-libs-3.11.3 \
-        gdal-numpy2-python311-3.11.3 \
+        gdal-3.8.4 \
+        gdal-devel-3.8.4 \
+        gdal-libs-3.8.4 \
+        gdal-python311-3.8.4 \
         gcc-c++ \
         unzip \
         java-21-openjdk-headless \
@@ -50,7 +50,6 @@ RUN dnf clean all && \
         compat-libgfortran-48 \
         openeo-vito-aux-data \
         && \
-    ln -s /usr/lib64/libgdal.so.37 /usr/lib64/libgdal.so.34 && \
     python3.11 -m pip install --upgrade --target /usr/lib64/python3.11/site-packages/ pip setuptools wheel && \
     chmod +x /usr/bin/tini && \
     rm -r /root/.cache && \
