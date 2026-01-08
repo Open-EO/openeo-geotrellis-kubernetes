@@ -298,7 +298,20 @@ def insar_common(
     ProcessSpec(
         id="sar_coherence",
         description="Proof-of-concept process to run CWL based inSAR. More info here: https://github.com/cloudinsar/s1-workflows",
-    ).returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
+    )
+    .param(
+        name="temporal_extent",
+        description="temporal_extent",
+        schema={"type": "array", "items": {"type": "string"}},
+        required=True,
+    )
+    .param(name="temporal_baseline", description="temporal_baseline", schema={"type": "integer"}, required=True)
+    .param(name="burst_id", description="burst_id", schema={"type": "integer"}, required=True)
+    .param(name="coherence_window_az", description="coherence_window_az", schema={"type": "integer"}, required=False)
+    .param(name="coherence_window_rg", description="coherence_window_rg", schema={"type": "integer"}, required=False)
+    .param(name="polarization", description="polarization", schema={"type": "string"}, required=True)
+    .param(name="sub_swath", description="sub_swath", schema={"type": "string"}, required=True)
+    .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
 )
 def sar_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     return cwl_common(
