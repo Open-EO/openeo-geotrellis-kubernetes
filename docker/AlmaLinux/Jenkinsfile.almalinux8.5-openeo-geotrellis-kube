@@ -6,7 +6,8 @@
 
 containerImageBuildPipeline {
   dockerfile            = 'docker/AlmaLinux/Dockerfile.creo'
-  docker_registry_prod  = 'vito-docker.artifactory.vgt.vito.be'
+  docker_registry_prod  = 'swr.eu-nl.otc.t-systems.com/openeo'
+  credentials_id        = 'openeo_swr_otc'
   image_name            = 'openeo-geotrellis-kube'
   promotion_job         = false
   run_tests             = false
