@@ -85,7 +85,6 @@ def _cwl_demo_hello(args: ProcessArgs, env: EvalEnv):
     results = launcher.run_cwl_workflow(
         cwl_source=cwl_source,
         cwl_arguments=cwl_arguments,
-        output_paths=["output.txt"],
     )
 
     for k, v in results.items():
@@ -115,7 +114,6 @@ def cwl_common_to_stac(
     results = launcher.run_cwl_workflow(
         cwl_source=cwl_source,
         cwl_arguments=cwl_arguments,
-        output_paths=[stac_root],
     )
 
     # TODO: provide generic helper to log some info about the results
