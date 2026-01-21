@@ -498,51 +498,6 @@ def run_cwl_to_stac(args: ProcessArgs, env: EvalEnv) -> StacSaveResult:
         raise ValueError("CWL not whitelisted: " + str(cwl_url))
 
 
-@non_standard_process(
-    ProcessSpec(
-        id="run_cwl",
-        description="Proof-of-concept process.",
-    )
-    .param(
-        name="cwl_url",
-        description="cwl_url",
-        schema={
-            "type": "string",
-            "format": "uri",
-            "subtype": "uri",
-            "pattern": "^https?://",
-        },
-        required=True,
-    )
-    .param(
-        name="context",
-        description="context",
-        schema={"type": "dict"},
-        required=False,
-    )
-    .param(
-        name="stac_root",
-        description="stac_root",
-        schema={"type": "string"},
-        required=False,
-    )
-    .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
-)
-def run_cwl(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
-    cwl_url = args.get_required("cwl_url", expected_type=str)
-    context = args.get_optional("context", expected_type=dict, default={})
-    stac_root = args.get_optional("stac_root", expected_type=str, default="collection.json")
-    if is_url_whitelisted(cwl_url):
-        return cwl_common(
-            context,
-            env,
-            CwLSource.from_url(cwl_url),
-            stac_root=stac_root,
-        )
-    else:
-        raise ValueError("CWL not whitelisted: " + str(cwl_url))
-
-
 SAR_BACKSCATTER_COEFFICIENT_DEFAULT = "sigma0-ellipsoid"
 
 
