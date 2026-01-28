@@ -316,7 +316,7 @@ def sar_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         args,
         env,
         CwLSource.from_url(
-            "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/sar_coherence.cwl"
+            "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/sar_coherence_parallel_temporal_extent.cwl"
         ),
         stac_root="collection.json",
     )
