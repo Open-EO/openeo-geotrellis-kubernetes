@@ -197,7 +197,7 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     cwl_source = CwLSource.from_path(CWL_ROOT / "dummy_stac.cwl")
     cwl_arguments = []
     direct_s3_mode = args.get_optional("direct_s3_mode", default=False)
-    return cwl_common(cwl_arguments, env, cwl_source, stac_root="collection.json", direct_s3_mode=direct_s3_mode)
+    return cwl_common(cwl_arguments, env, cwl_source, direct_s3_mode=direct_s3_mode)
 
 
 @non_standard_process(
@@ -217,9 +217,7 @@ def _cwl_dummy_stac_to_stac(args: ProcessArgs, env: EvalEnv) -> StacSaveResult:
     cwl_source = CwLSource.from_path(CWL_ROOT / "dummy_stac.cwl")
     cwl_arguments = []
     direct_s3_mode = args.get_optional("direct_s3_mode", default=False)
-    stac_root = cwl_common_to_stac(
-        cwl_arguments, env, cwl_source, stac_root="collection.json", direct_s3_mode=direct_s3_mode
-    )
+    stac_root = cwl_common_to_stac(cwl_arguments, env, cwl_source, direct_s3_mode=direct_s3_mode)
     return StacSaveResult(stac_root)
 
 
@@ -272,7 +270,6 @@ def _cwl_dummy_stac_parallel(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         cwl_arguments,
         env,
         cwl_source=CwLSource.from_path(CWL_ROOT / "scatter-gather-stac.cwl"),
-        stac_root="collection.json",
     )
 
 
@@ -318,7 +315,6 @@ def sar_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         CwLSource.from_url(
             "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/sar_coherence_parallel_temporal_extent.cwl"
         ),
-        stac_root="collection.json",
     )
 
 
@@ -353,7 +349,6 @@ def sar_coherence_parallel(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         CwLSource.from_url(
             "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/sar_coherence_parallel.cwl"
         ),
-        stac_root="collection.json",
     )
 
 
@@ -390,7 +385,6 @@ def sar_interferogram(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         CwLSource.from_url(
             "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/sar_interferogram.cwl"
         ),
-        stac_root="collection.json",
     )
 
 
@@ -423,7 +417,6 @@ def sar_slc_preprocessing(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         CwLSource.from_url(
             "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/sar_slc_preprocessing.cwl"
         ),
-        stac_root="collection.json",
     )
 
 
@@ -440,7 +433,6 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         CwLSource.from_url(
             "https://raw.githubusercontent.com/bcdev/apex-force-openeo/refs/heads/main/material/force-l2.cwl"
         ),
-        stac_root="catalogue.json",
     )
 
 
