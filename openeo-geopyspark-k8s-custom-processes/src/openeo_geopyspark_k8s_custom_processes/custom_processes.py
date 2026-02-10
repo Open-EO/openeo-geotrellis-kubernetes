@@ -195,7 +195,7 @@ def _cwl_dummy_stac(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     that is then loaded `load_stac`-style as a `GeopysparkDataCube`.
     """
     cwl_source = CwLSource.from_path(CWL_ROOT / "dummy_stac.cwl")
-    cwl_arguments = []
+    cwl_arguments: List[str] = []
     direct_s3_mode = args.get_optional("direct_s3_mode", default=False)
     return cwl_common(cwl_arguments, env, cwl_source, direct_s3_mode=direct_s3_mode)
 
@@ -215,7 +215,7 @@ def _cwl_dummy_stac_to_stac(args: ProcessArgs, env: EvalEnv) -> StacSaveResult:
     that is then loaded `load_stac`-style as a `GeopysparkDataCube`.
     """
     cwl_source = CwLSource.from_path(CWL_ROOT / "dummy_stac.cwl")
-    cwl_arguments = []
+    cwl_arguments: List[str] = []
     direct_s3_mode = args.get_optional("direct_s3_mode", default=False)
     stac_root = cwl_common_to_stac(cwl_arguments, env, cwl_source, direct_s3_mode=direct_s3_mode)
     return StacSaveResult(stac_root)
