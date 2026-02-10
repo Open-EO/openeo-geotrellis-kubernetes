@@ -440,15 +440,6 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     )
 
 
-def is_url_whitelisted(cwl_url: str) -> bool:
-    return (
-        cwl_url.startswith("https://raw.githubusercontent.com/cloudinsar/")
-        or cwl_url.startswith("https://raw.githubusercontent.com/Open-EO/")
-        or cwl_url.startswith("https://raw.githubusercontent.com/bcdev/apex-force-openeo/")
-        or cwl_url.startswith("https://raw.githubusercontent.com/EmileSonneveld/")
-    )
-
-
 @non_standard_process(
     ProcessSpec(
         id="run_cwl_to_stac",
@@ -463,6 +454,12 @@ def is_url_whitelisted(cwl_url: str) -> bool:
             "subtype": "uri",
             "pattern": "^https?://",
         },
+        required=True,
+    )
+    .param(
+        name="cwl",
+        description="cwl_url",
+        schema={"type": "string"},
         required=True,
     )
     .param(
@@ -481,17 +478,16 @@ def is_url_whitelisted(cwl_url: str) -> bool:
     .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
 )
 def run_cwl_to_stac(args: ProcessArgs, env: EvalEnv) -> StacSaveResult:
-    cwl_url = args.get_required("cwl_url", expected_type=str)
+    cwl = args.get_optional("cwl_url", expected_type=str)
+    if not cwl:
+        cwl = args.get_required("cwl", expected_type=str)
     context = args.get_optional("context", expected_type=dict, default={})
     stac_root = args.get_optional("stac_root", expected_type=str, default="collection.json")
     direct_s3_mode = args.get_optional("direct_s3_mode", default=False)
-    if is_url_whitelisted(cwl_url):
-        stac_root_new = cwl_common_to_stac(
-            context, env, CwLSource.from_url(cwl_url), stac_root=stac_root, direct_s3_mode=direct_s3_mode
-        )
-        return StacSaveResult(stac_root_new)
-    else:
-        raise ValueError("CWL not whitelisted: " + str(cwl_url))
+    stac_root_new = cwl_common_to_stac(
+        context, env, CwLSource.from_any(cwl), stac_root=stac_root, direct_s3_mode=direct_s3_mode
+    )
+    return StacSaveResult(stac_root_new)
 
 
 SAR_BACKSCATTER_COEFFICIENT_DEFAULT = "sigma0-ellipsoid"
