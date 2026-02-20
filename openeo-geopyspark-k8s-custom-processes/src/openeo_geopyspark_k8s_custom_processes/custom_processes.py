@@ -293,10 +293,31 @@ def insar_common(
     ProcessSpec(
         id="sar_coherence",
         description=textwrap.dedent(
-            """This process computes the Interferometric Coherence for a series of Sentinel-1 bursts, allowing to specify custom sizes of the multi-look by setting the coherence_window_ax and coherence_window_rg parameters. It requires you to provide the temporal_extent for the period of interest, the temporal_baseline (6, 12 or more days), the burst_id and sub_swath to select the Sentinel-1 burst of interest.
+            """
+        This process computes the Interferometric Coherence for a series of Sentinel-1 bursts, allowing to specify custom sizes of the multi-look by setting the coherence_window_ax and coherence_window_rg parameters. It requires you to provide the temporal_extent for the period of interest, the temporal_baseline (6, 12 or more days), the burst_id and sub_swath to select the Sentinel-1 burst of interest.
         The implementation is based on SNAP and defined as a CWL (Common Workflow Language) available here: https://github.com/cloudinsar/s1-workflows/blob/main/cwl/sar_coherence_parallel_temporal_extent.cwl
-        https://www.eurac.edu/en/projects/cloudinsar."""
-        ),
+        https://www.eurac.edu/en/projects/cloudinsar.
+
+        An example on how to use it:
+
+        ```python
+        datacube = connection.datacube_from_process(
+            process_id="sar_coherence",
+            temporal_extent=["2018-01-28", "2018-02-03"],
+            temporal_baseline=6,
+            burst_id=329488,
+            polarization="vh",
+            sub_swath="IW2",
+        )
+        datacube = datacube.filter_bbox(west=-6.15702, south=37.07256, east=-6.01368, north=37.17057)
+        datacube = datacube.save_result(format="GTiff")
+
+        job = datacube.create_job(title="sar_coherence test")
+        job.start_and_wait()
+        job.get_results().download_files()
+        ```
+        """
+        ).strip(),
     )
     .param(
         name="temporal_extent",
