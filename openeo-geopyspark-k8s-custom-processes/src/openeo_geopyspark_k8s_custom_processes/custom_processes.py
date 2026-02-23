@@ -322,15 +322,51 @@ def insar_common(
     .param(
         name="temporal_extent",
         description="temporal_extent",
-        schema={"type": "array", "items": {"type": "string"}},
+        schema={
+            "type": "array",
+            "subtype": "temporal-interval",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+                "type": "string",
+                "format": "date",
+                "subtype": "date",
+                "description": "Date only, formatted as `YYYY-MM-DD`. The time zone is UTC.",
+            },
+        },
         required=True,
     )
-    .param(name="temporal_baseline", description="temporal_baseline", schema={"type": "integer"}, required=True)
-    .param(name="burst_id", description="burst_id", schema={"type": "integer"}, required=True)
-    .param(name="coherence_window_az", description="coherence_window_az", schema={"type": "integer"}, required=False)
-    .param(name="coherence_window_rg", description="coherence_window_rg", schema={"type": "integer"}, required=False)
-    .param(name="polarization", description="polarization", schema={"type": "string"}, required=True)
-    .param(name="sub_swath", description="sub_swath", schema={"type": "string"}, required=True)
+    .param(
+        name="temporal_baseline",
+        description="Should be a multiple of 6",
+        schema={"type": "integer", "minimum": 6},
+        required=True,
+    )
+    .param(name="burst_id", description="burst_id", schema={"type": "integer", "minimum": 0}, required=True)
+    .param(
+        name="coherence_window_az",
+        description="coherence_window_az",
+        schema={"type": "integer", "minimum": 0},
+        required=False,
+    )
+    .param(
+        name="coherence_window_rg",
+        description="coherence_window_rg",
+        schema={"type": "integer", "minimum": 0},
+        required=False,
+    )
+    .param(
+        name="polarization",
+        description="polarization",
+        schema={"type": "string", "enum": ["VV", "VH", "HH", "HV"]},
+        required=True,
+    )
+    .param(
+        name="sub_swath",
+        description="sub_swath",
+        schema={"type": "string", "enum": ["IW1", "IW2", "IW3", "EW1", "EW2", "EW3"]},
+        required=True,
+    )
     .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
 )
 def sar_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
