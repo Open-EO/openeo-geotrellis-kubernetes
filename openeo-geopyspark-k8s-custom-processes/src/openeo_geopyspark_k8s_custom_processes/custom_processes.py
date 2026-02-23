@@ -295,8 +295,8 @@ def insar_common(
         description=textwrap.dedent(
             """
         This process computes the Interferometric Coherence for a series of Sentinel-1 bursts, allowing to specify custom sizes of the multi-look by setting the coherence_window_ax and coherence_window_rg parameters. It requires you to provide the temporal_extent for the period of interest, the temporal_baseline (6, 12 or more days), the burst_id and sub_swath to select the Sentinel-1 burst of interest.
-        The implementation is based on SNAP and defined as a CWL (Common Workflow Language) available here: https://github.com/cloudinsar/s1-workflows/blob/main/cwl/sar_coherence_parallel_temporal_extent.cwl
-        https://www.eurac.edu/en/projects/cloudinsar.
+        The implementation is based on SNAP and defined as a CWL (Common Workflow Language) available here: [sar_coherence_parallel_temporal_extent.cwl](https://github.com/cloudinsar/s1-workflows/blob/main/cwl/sar_coherence_parallel_temporal_extent.cwl)
+        <https://www.eurac.edu/en/projects/cloudinsar>.
 
         An example on how to use it:
 
