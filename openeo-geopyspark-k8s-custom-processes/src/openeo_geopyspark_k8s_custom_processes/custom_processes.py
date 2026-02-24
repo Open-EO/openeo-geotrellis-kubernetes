@@ -517,7 +517,7 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         name="cwl",
         description="cwl_url",
         schema={"type": "string"},
-        required=True,
+        required=False,
     )
     .param(
         name="context",
