@@ -338,11 +338,21 @@ def insar_common(
     )
     .param(
         name="temporal_baseline",
-        description="Should be a multiple of 6",
+        description="Should be a multiple of 6. This is used to select how many days the secondary date will be after the primary for each date pair.",
         schema={"type": "integer", "minimum": 6},
         required=True,
     )
-    .param(name="burst_id", description="burst_id", schema={"type": "integer", "minimum": 0}, required=True)
+    .param(
+        name="burst_id",
+        description=(
+            """
+            A temporal extent could have multiple bursts per day. Use [this notebook](https://github.com/cloudinsar/s1-workflows/blob/main/notebooks/LPS_DEMO/Input_selection.ipynb) to find a fitting `burst_id`.
+            Alternatively, the burst id map can be downloaded here: [Burst ID Maps 2022-05-30](https://sar-mpc.eu/files/S1_burstid_20220530.zip).
+            """
+        ).strip(),
+        schema={"type": "integer", "minimum": 0},
+        required=True,
+    )
     .param(
         name="coherence_window_az",
         description="coherence_window_az",
