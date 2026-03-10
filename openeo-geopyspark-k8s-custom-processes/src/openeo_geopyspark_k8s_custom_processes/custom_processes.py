@@ -306,7 +306,7 @@ def insar_common(
             temporal_extent=["2018-01-28", "2018-02-03"],
             temporal_baseline=6,
             burst_id=329488,
-            polarization="vh",
+            polarization="VH",
             sub_swath="IW2",
         )
         datacube = datacube.filter_bbox(west=-6.15702, south=37.07256, east=-6.01368, north=37.17057)
@@ -526,7 +526,10 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     .param(
         name="cwl",
         description="cwl",
-        schema={"type": "string"},
+        schema={
+            "type": "string",
+            "subtype": "udf-code",
+        },
         required=False,
     )
     .param(
