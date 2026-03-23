@@ -337,6 +337,23 @@ def insar_common(
         required=True,
     )
     .param(
+        name="temporal_extent",
+        description="Specifies area where to search for bursts. If multiple bursts are found, the one with the lowest id number will be selected. This parameter can be used instead of `burst_id`.",
+        schema={
+            "title": "Bounding Box",
+            "type": "object",
+            "subtype": "bounding-box",
+            "required": ["west", "south", "east", "north"],
+            "properties": {
+                "west": {"description": "West (lower left corner, coordinate axis 1).", "type": "number"},
+                "south": {"description": "South (lower left corner, coordinate axis 2).", "type": "number"},
+                "east": {"description": "East (upper right corner, coordinate axis 1).", "type": "number"},
+                "north": {"description": "North (upper right corner, coordinate axis 2).", "type": "number"},
+            },
+        },
+        required=False,
+    )
+    .param(
         name="temporal_baseline",
         description="Should be a multiple of 6. This is used to select how many days the secondary date will be after the primary for each date pair.",
         schema={"type": "integer", "minimum": 6},
@@ -348,10 +365,11 @@ def insar_common(
             """
             A temporal extent could have multiple bursts per day. Use [this notebook](https://github.com/cloudinsar/s1-workflows/blob/main/notebooks/LPS_DEMO/Input_selection.ipynb) to find a fitting `burst_id`.
             Alternatively, the burst id map can be downloaded here: [Burst ID Maps 2022-05-30](https://sar-mpc.eu/files/S1_burstid_20220530.zip).
+            You can also specify `temporal_extent` instead, so that a `burst_id` gets automatically selected.
             """
         ).strip(),
         schema={"type": "integer", "minimum": 0},
-        required=True,
+        required=False,
     )
     .param(
         name="coherence_window_az",
@@ -374,7 +392,7 @@ def insar_common(
     .param(
         name="sub_swath",
         description="sub_swath",
-        schema={"type": "string", "enum": ["IW1", "IW2", "IW3", "EW1", "EW2", "EW3"]},
+        schema={"type": "string", "enum": ["IW1", "IW2", "IW3", "EW1", "EW2", "EW3", "EW4", "EW5"]},
         required=True,
     )
     .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
@@ -521,15 +539,32 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
             "subtype": "uri",
             "pattern": "^https?://",
         },
-        required=True,
+        required=False,
     )
     .param(
         name="cwl",
-        description="cwl",
-        schema={
-            "type": "string",
-            "subtype": "udf-code",
-        },
+        description="Either source code, an absolute URL or a path to a UDF/CWL script.",
+        schema=[
+            {
+                "description": "Absolute URL to a UDF/CWL",
+                "type": "string",
+                "format": "uri",
+                "subtype": "uri",
+                "pattern": "^https?://",
+            },
+            {
+                "description": "Path to a UDF/CWL uploaded to the server.",
+                "type": "string",
+                "subtype": "file-path",
+                "pattern": "^[^\r\n\\:'\"]+$",
+            },
+            {
+                "description": "The multi-line source code of a UDF/CWL, must contain a newline/line-break.",
+                "type": "string",
+                "subtype": "udf-code",
+                "pattern": "(\r\n|\r|\n)",
+            },
+        ],
         required=False,
     )
     .param(
