@@ -512,8 +512,191 @@ def sar_slc_preprocessing(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
 @non_standard_process(
     ProcessSpec(
         id="force_level2",
-        description="Proof-of-concept process. More info here: https://github.com/bcdev/apex-force-openeo",
-    ).returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
+        description="FORCE Level 2 ARD generation process. "
+                    "More info here: https://github.com/bcdev/apex-force-openeo . "
+                    "Parameter documentation in https://force-eo.readthedocs.io/en/latest/howto/l2-ard.html#tut-ard "
+                    "and https://force-eo.readthedocs.io/en/latest/howto/datacube.html#tut-datacube",
+    )
+    .param(name="name",
+           description="Name of the datacube. Example: bologna . Default: cube-<timestamp>",
+           schema={"type": "string"},
+           required=False)
+    .param(name="aoi",
+           description='Area of interest as geojson feature, extent of the resulting cube. Example: '
+                       '{ "type": "Feature", "geometry": { "type": "Polygon", '
+                       '"coordinates": [[[10.5,44.0],[10.5,45.0],[11.5,45.0],[11.5,44.0],[10.5,44.0]]] }, '
+                       '"properties": { "name": "Bologna" }, "id": "08" } . Default: not set, '
+                       'extent determined by inputs',
+           schema={"type": "string"},
+           required=False)
+    .param(name="resolution",
+           description="Spatial resolution in meters of the FORCE data cube. Example: 10 . Default: 20",
+           schema={"type": "integer"},
+           required=False)
+    .param(name="projection",
+           description="Defines the target coordinate system. This projection should ideally be valid for a large "
+                       "geographic extent. Two default projection / grid systems are predefined in FORCE. They can "
+                       "be specified via the PROJECTION parameter instead of giving a WKT string. The predefined "
+                       "options have their own settings for ORIGIN_LAT, ORIGIN_LON, TILE_SIZE, and BLOCK_SIZE, thus "
+                       "the values given in the parameterfile will be ignored. EQUI7 consists of 7 Equi-Distant, "
+                       "continental projections with a tile size of 100km. GLANCE7 consists of 7 Equal-Area, "
+                       "continental projections, with a tile size of 150km. One datacube will be generated for "
+                       "each continent. Else, the projection must be given as WKT string. You can verify your "
+                       "projection (and convert to WKT from another format) using gdalsrsinfo. Default: GLANCE7",
+           schema={ "anyOf": [{"type": "string", "enum": ["GLANCE7", "EQUI7"]}, {"type": "string", "description": "WKT"}]},
+           required=False)
+    .param(name="resampling",
+           description="The resampling option for the reprojection; you can choose between Nearest Neighbor (NN), "
+                       "Bilinear (BL), Cubic Convolution (CC), Cubic Spline (CSP), Lanczos (LZ), Average (AVG), "
+                       "Mode (MODE), Max (MAX), Min (MIN), Median (MED), Q1 (Q1), Q3 (Q3), Sum (SUM), and "
+                       "RMS (RMS). Example: NN . Default: CC",
+           schema={"type": "string", "enum": ["NN", "BL", "CC", "CSP", "LZ", "AVG", "MODE", "MAX", "MIN",
+                                              "MED", "Q1", "Q3", "SUM", "RMS"]},
+           required=False)
+    .param(name="dem",
+           description="Name of digital elevation model (Copernicus_30m supported on CDSE). Default: Copernicus_30m",
+           schema={"type": "string", "enum": ["Copernicus_30m"]},
+           required=False)
+    .param(name="do_atmo",
+           description="Indicates if atmospheric correction shall be performed. If True, Bottom-of-Atmosphere "
+                       "reflectance is computed. If False, only Top-of-Atmosphere reflectance is computed. "
+                       "Default: True",
+           schema={"type": "boolean"},
+           required=False)
+    .param(name="do_topo",
+           description="Indicates if topographic correction shall be performed. If True, a DEM need to be named. "
+                       "Default: True",
+           schema={"type": "boolean"},
+           required=False)
+    .param(name="do_brdf",
+           description="Indicates if BRDF correction shall be performed. If True, output is nadir BRDF adjusted "
+                       "reflectance instead of BOA reflectance (the output is named BOA nonetheless). "
+                       "Default: True",
+           schema={"type": "boolean"},
+           required=False)
+    .param(name="do_adjacency",
+           description="Indicates if adjacency effect correction shall be performed. "
+                       "Default: True",
+           schema={"type": "boolean"},
+           required=False)
+    .param(name="do_multi_scattering",
+           description="Indicates if multiple scattering (True) or the single scattering approximation (False) shall "
+                       "be used in the radiative transfer calculations. Default: True",
+           schema={"type": "boolean"},
+           required=False)
+    .param(name="do_aod",
+           description="Indicates whether the internal AOD estimation (True) or externally generated AOD values shall "
+                       "be used (False). Only True is supported on CDSE. Default: True",
+           schema={"type": "boolean"},
+           required=False)
+    .param(name="erase_clouds",
+           description="Indicates whether confident cloud detections will be erased in the reflectance product, "
+                       "i.e. pixels are set to nodata. The cloud flag in the QAI product will still mark these pixels "
+                       "as clouds. Use this option if disk space is of concern. Default: False",
+           schema={"type": "boolean"},
+           required=False)
+    .param(name="max_cloud_cover_frame",
+           description="indicates whether to cancel processing of images that exceed the given threshold. The "
+                       "processing will be canceled after cloud detection. Example: 99 . Default: 99",
+           schema={"type": "float"},
+           required=False)
+    .param(name="max_cloud_cover_tile",
+           description="This parameter works on a tile basis. It suppresses the output for chips (tiled image) that "
+                       "exceed the given threshold. Example: 99 . Default: 99",
+           schema={"type": "float"},
+           required=False)
+    .param(name="cloud_buffer",
+           description="Buffer sizes (radius in meters) for cloud masks. Default: 300",
+           schema={"type": "integer"},
+           required=False)
+    .param(name="cirrus_buffer",
+           description="Buffer sizes (radius in meters) for cirrus masks. Default: 0",
+           schema={"type": "integer"},
+           required=False)
+    .param(name="shadow_buffer",
+           description="Buffer sizes (radius in meters) for cloud shadow masks. Default: 90",
+           schema={"type": "integer"},
+           required=False)
+    .param(name="snow_buffer",
+           description="Buffer sizes (radius in meters) for snow masks. default: 30",
+           schema={"type": "integer"},
+           required=False)
+    .param(name="cloud_threshold",
+           description="Threshold of the Fmask algorithm. Default: 0.225",
+           schema={"type": "float"},
+           required=False)
+    .param(name="shadow_threshold",
+           description="Threshold of the Fmask algorithm. Default: 0.02",
+           schema={"type": "float"},
+           required=False)
+    .param(naem="res_merge",
+           description="Defines the method used for improving the spatial reso lution of Sentinel-2’s 20 m bands "
+                       "to 10 m. Pixels flagged as cloud or shadow will be skipped. Following methods are "
+                       "available: IMPROPHE uses the ImproPhe code in a spectral-only setup; REGRESSION "
+                       "uses a multi- parameter regression (results are expected to be best, but processing "
+                       "time is significant); STARFM uses a spectral-only setup of the Spatial and Temporal "
+                       "Adaptive Reflectance Fusion Model (prediction artifacts may occur between land cover "
+                       "boundaries); NONE disables resolution merge; in this case, 20m bands are quadrupled. "
+                       "Default: IMPROPHE",
+           schema={"type": "string", "enum": ["IMPROPHE", "REGRESSION", "STARFM", "NONE"]},
+           required=False)
+    .param(name="impulse_noise",
+           description="Defines whether impulse noise should be removed. Only applies to 8bit input data. "
+                       "Default: True",
+           schema={"type": "boolean"},
+           required=False)
+    .param(name="buffer_nodata",
+           description="Defines whether nodata pixels should be buffered by 1 pixel. Default: False",
+           schema={"type": "boolean"},
+           required=False)
+    .param(naem="output_format",
+           description="Output format, which is either uncompressed flat binary image format aka ENVI Standard, "
+                       "GeoTiff, or COG. GeoTiff images are compressed with LZW and horizontal differencing; "
+                       "BigTiff support is enabled; the Tiff is structured with striped blocks according to the "
+                       "TILE_SIZE (X) and BLOCK_SIZE (Y) specifications. Metadata are written to the ENVI "
+                       "header or directly into the Tiff to the FORCE domain. If the size of the metadata "
+                       "exceeds the Tiff's limit, an external .aux.xml file is additionally generated. Valid "
+                       "values on CDSE: {GTiff,COG}",
+           schema={"type": "string", "enum": ["GTiff", "COG"]},
+           required=False)
+    .param(name="output_dst",
+           description="Indicates whether to output the cloud/cloud shadow/snow distance output? Note that this "
+                       "is NOT the cloud mask (which is sitting in the mandatory QAI product). This product can "
+                       "be used in force-level3; no other higher-level FORCE module is using this. "
+                       "Default: False",
+           schema={"type": "boolean"},
+           required=False)
+    .param(name="output_aod",
+           description="Indicates whether to output Aerosol Optical Depth map for the green band? No "
+                       "higher-level FORCE module is using this. Default: False",
+           schema={"type": "boolean"},
+           required=False)
+    .param(name="output_wvp",
+           description="Indicates whether to output the Water Vapor map? No higher-level FORCE module is using "
+                       "this. Default: False",
+           schema={"type": "boolean"},
+           required=False)
+    .param(name="output_vzn",
+           description="Indicates whether to output the View Zenith map? This product can be used in force-level3; "
+                       "no other higher-level FORCE module is using this. Default: False",
+           schema={"type": "boolean"},
+           required=False)
+    .param(name="output_hot",
+           description="Indicates whether to output the Haze Optimzed Transformation output? This product "
+                       "can be used in force-level3; no other higher-level FORCE module is using this. "
+                       "Default: False",
+           schema={"type": "boolean"},
+           required=False)
+    .param(name="output_ovv",
+           description="Indicates whether to output overview thumbnails? These are jpegs at reduced spatial "
+                       "resolution, which feature an RGB overview + quality information overlayed (pink: cloud, "
+                       "red: cirrus, cyan: cloud shadow, yellow: snow, orange: saturated, green: subzero "
+                       "reflectance). No higher-level FORCE module is using this. Default: False",
+           schema={"type": "boolean"},
+           required=False)
+    .returns(description="the data as a FORCE data cube",
+             schema={"type": "object", "subtype": "datacube"},
+             required=False)
 )
 def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     return cwl_common(
