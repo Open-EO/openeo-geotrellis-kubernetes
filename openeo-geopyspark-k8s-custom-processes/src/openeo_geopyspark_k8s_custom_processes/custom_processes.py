@@ -337,7 +337,7 @@ def insar_common(
         required=True,
     )
     .param(
-        name="temporal_extent",
+        name="spatial_extent",
         description="Specifies area where to search for bursts. If multiple bursts are found, the one with the lowest id number will be selected. This parameter can be used instead of `burst_id`.",
         schema={
             "title": "Bounding Box",
