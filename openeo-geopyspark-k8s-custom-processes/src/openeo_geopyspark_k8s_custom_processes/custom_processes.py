@@ -525,9 +525,34 @@ def sar_slc_preprocessing(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
            description='Area of interest as geojson feature, extent of the resulting cube. Example: '
                        '{ "type": "Feature", "geometry": { "type": "Polygon", '
                        '"coordinates": [[[10.5,44.0],[10.5,45.0],[11.5,45.0],[11.5,44.0],[10.5,44.0]]] }, '
-                       '"properties": { "name": "Bologna" }, "id": "08" } . Default: not set, '
+                       '"properties": { "name": "Bologna" } } . Default: not set, '
                        'extent determined by inputs',
            schema={"type": "string"},
+           required=False)
+    .param(name="tile_size",
+           description="Tile size (in target units, commonly in meters) of the gridded output. tiles are square. "
+                       "Not used if projection is one of the predefined projections. Default: 30000",
+           schema={"type": "integer"},
+           required=False)
+    .param(name="block_size",
+           description="Block size (in target units, commonly in meters) of the image chips. Blocks are stripes, "
+                       "i.e. they are as wide as the tile and as high as specified here. "
+                       "Not used if projection is one of the predefined projections. Default: 3000",
+           schema={"type": "integer"},
+           required=False)
+    .param(name="origin_lon",
+           description="Origin coordinate of the grid system in decimal degree (negative values for West/South). "
+                       "The upper left corner of tile X0000_Y0000 represents this point. It is a good choice "
+                       "to use a coordinate that is North-West of your study area – to avoid negative tile numbers. "
+                       "Not used if projection is one of the predefined projections. Default: -25.0",
+           schema={"type": "float"},
+           required=False)
+    .param(name="origin_lat",
+           description="Origin coordinate of the grid system in decimal degree (negative values for West/South). "
+                       "The upper left corner of tile X0000_Y0000 represents this point. It is a good choice "
+                       "to use a coordinate that is North-West of your study area – to avoid negative tile numbers. "
+                       "Not used if projection is one of the predefined projections. Default: 60.0",
+           schema={"type": "float"},
            required=False)
     .param(name="resolution",
            description="Spatial resolution in meters of the FORCE data cube. Example: 10 . Default: 20",
@@ -535,10 +560,10 @@ def sar_slc_preprocessing(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
            required=False)
     .param(name="projection",
            description="Defines the target coordinate system. This projection should ideally be valid for a large "
-                       "geographic extent. Two default projection / grid systems are predefined in FORCE. They can "
-                       "be specified via the PROJECTION parameter instead of giving a WKT string. The predefined "
-                       "options have their own settings for ORIGIN_LAT, ORIGIN_LON, TILE_SIZE, and BLOCK_SIZE, thus "
-                       "the values given in the parameterfile will be ignored. EQUI7 consists of 7 Equi-Distant, "
+                       "geographic extent. Two default projection / grid systems are predefined in FORCE: GLANCE7 and "
+                       "EQUI7. They can be specified via the projection parameter instead of giving a WKT string. The "
+                       "predefined options have their own settings for origin_lat, origin_lon, tile_size, block_size, "
+                       "thus values given as parameters will be ignored. EQUI7 consists of 7 Equi-Distant, "
                        "continental projections with a tile size of 100km. GLANCE7 consists of 7 Equal-Area, "
                        "continental projections, with a tile size of 150km. One datacube will be generated for "
                        "each continent. Else, the projection must be given as WKT string. You can verify your "
@@ -558,29 +583,29 @@ def sar_slc_preprocessing(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
            schema={"type": "string", "enum": ["Copernicus_30m"]},
            required=False)
     .param(name="do_atmo",
-           description="Indicates if atmospheric correction shall be performed. If True, Bottom-of-Atmosphere "
+           description="Indicates whether atmospheric correction shall be performed. If True, Bottom-of-Atmosphere "
                        "reflectance is computed. If False, only Top-of-Atmosphere reflectance is computed. "
                        "Default: True",
            schema={"type": "boolean"},
            required=False)
     .param(name="do_topo",
-           description="Indicates if topographic correction shall be performed. If True, a DEM need to be named. "
+           description="Indicates whether topographic correction shall be performed. If True, a DEM need to be named. "
                        "Default: True",
            schema={"type": "boolean"},
            required=False)
     .param(name="do_brdf",
-           description="Indicates if BRDF correction shall be performed. If True, output is nadir BRDF adjusted "
+           description="Indicates whether BRDF correction shall be performed. If True, output is nadir BRDF adjusted "
                        "reflectance instead of BOA reflectance (the output is named BOA nonetheless). "
                        "Default: True",
            schema={"type": "boolean"},
            required=False)
     .param(name="do_adjacency",
-           description="Indicates if adjacency effect correction shall be performed. "
+           description="Indicates whether adjacency effect correction shall be performed. "
                        "Default: True",
            schema={"type": "boolean"},
            required=False)
     .param(name="do_multi_scattering",
-           description="Indicates if multiple scattering (True) or the single scattering approximation (False) shall "
+           description="Indicates whether multiple scattering (True) or the single scattering approximation (False) shall "
                        "be used in the radiative transfer calculations. Default: True",
            schema={"type": "boolean"},
            required=False)
@@ -630,10 +655,10 @@ def sar_slc_preprocessing(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
            schema={"type": "float"},
            required=False)
     .param(naem="res_merge",
-           description="Defines the method used for improving the spatial reso lution of Sentinel-2’s 20 m bands "
+           description="Defines the method used for improving the spatial resolution of Sentinel-2’s 20 m bands "
                        "to 10 m. Pixels flagged as cloud or shadow will be skipped. Following methods are "
                        "available: IMPROPHE uses the ImproPhe code in a spectral-only setup; REGRESSION "
-                       "uses a multi- parameter regression (results are expected to be best, but processing "
+                       "uses a multi-parameter regression (results are expected to be best, but processing "
                        "time is significant); STARFM uses a spectral-only setup of the Spatial and Temporal "
                        "Adaptive Reflectance Fusion Model (prediction artifacts may occur between land cover "
                        "boundaries); NONE disables resolution merge; in this case, 20m bands are quadrupled. "
@@ -649,46 +674,46 @@ def sar_slc_preprocessing(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
            description="Defines whether nodata pixels should be buffered by 1 pixel. Default: False",
            schema={"type": "boolean"},
            required=False)
-    .param(naem="output_format",
+    .param(name="output_format",
            description="Output format, which is either uncompressed flat binary image format aka ENVI Standard, "
                        "GeoTiff, or COG. GeoTiff images are compressed with LZW and horizontal differencing; "
                        "BigTiff support is enabled; the Tiff is structured with striped blocks according to the "
                        "TILE_SIZE (X) and BLOCK_SIZE (Y) specifications. Metadata are written to the ENVI "
                        "header or directly into the Tiff to the FORCE domain. If the size of the metadata "
                        "exceeds the Tiff's limit, an external .aux.xml file is additionally generated. Valid "
-                       "values on CDSE: {GTiff,COG}",
+                       "values on CDSE: {GTiff, COG}",
            schema={"type": "string", "enum": ["GTiff", "COG"]},
            required=False)
     .param(name="output_dst",
-           description="Indicates whether to output the cloud/cloud shadow/snow distance output? Note that this "
+           description="Indicates whether to output the cloud/cloud shadow/snow distance output. Note that this "
                        "is NOT the cloud mask (which is sitting in the mandatory QAI product). This product can "
                        "be used in force-level3; no other higher-level FORCE module is using this. "
                        "Default: False",
            schema={"type": "boolean"},
            required=False)
     .param(name="output_aod",
-           description="Indicates whether to output Aerosol Optical Depth map for the green band? No "
+           description="Indicates whether to output Aerosol Optical Depth map for the green band. No "
                        "higher-level FORCE module is using this. Default: False",
            schema={"type": "boolean"},
            required=False)
     .param(name="output_wvp",
-           description="Indicates whether to output the Water Vapor map? No higher-level FORCE module is using "
+           description="Indicates whether to output the Water Vapor map. No higher-level FORCE module is using "
                        "this. Default: False",
            schema={"type": "boolean"},
            required=False)
     .param(name="output_vzn",
-           description="Indicates whether to output the View Zenith map? This product can be used in force-level3; "
+           description="Indicates whether to output the View Zenith map. This product can be used in force-level3; "
                        "no other higher-level FORCE module is using this. Default: False",
            schema={"type": "boolean"},
            required=False)
     .param(name="output_hot",
-           description="Indicates whether to output the Haze Optimzed Transformation output? This product "
+           description="Indicates whether to output the Haze Optimzed Transformation output. This product "
                        "can be used in force-level3; no other higher-level FORCE module is using this. "
                        "Default: False",
            schema={"type": "boolean"},
            required=False)
     .param(name="output_ovv",
-           description="Indicates whether to output overview thumbnails? These are jpegs at reduced spatial "
+           description="Indicates whether to output overview thumbnails? These are JPEGs at reduced spatial "
                        "resolution, which feature an RGB overview + quality information overlayed (pink: cloud, "
                        "red: cirrus, cyan: cloud shadow, yellow: snow, orange: saturated, green: subzero "
                        "reflectance). No higher-level FORCE module is using this. Default: False",
