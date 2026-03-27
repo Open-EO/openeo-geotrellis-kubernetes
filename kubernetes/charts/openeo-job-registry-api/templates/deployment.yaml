@@ -48,6 +48,15 @@ spec:
           env:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- with .Values.secretEnvVars.vars }}
+            {{- range $envVarName, $envVarSource := . }}
+            - name: {{ $envVarName }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $.Values.secretEnvVars.secretName }}
+                  key: {{ $envVarSource.keyInSecret }}
+            {{- end}}
+          {{- end }}
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}

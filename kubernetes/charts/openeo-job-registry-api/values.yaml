@@ -117,3 +117,16 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+envVars: []
+
+# Additonal env vars which are secret if provided they are
+# stored in a secret but exposed as env vars
+secretEnvVars:
+  secretName: openeo-job-registry-api-env-vars
+  # If envVars values are provided the secret is created otherwise the
+  # secret is assumed pre-provided and the env vars are just
+  vars: {}
+    # MY_SECRET: # The keys are the environment variable names
+    #   keyInSecret: mySecret   # The name of the field within the secret
+    #   value:       "hushhush" # The actual value should not be in source control but come from secret storage
