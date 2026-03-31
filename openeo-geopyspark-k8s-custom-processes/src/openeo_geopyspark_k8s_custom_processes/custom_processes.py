@@ -409,40 +409,6 @@ def sar_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
 
 @non_standard_process(
     ProcessSpec(
-        id="sar_coherence_parallel",
-        description="Proof-of-concept process to run CWL based inSAR. More info here: https://github.com/cloudinsar/s1-workflows",
-    )
-    .param(
-        name="InSAR_pairs",
-        description="InSAR_pairs",
-        schema={
-            "type": "array",
-            "items": {
-                "type": "array",
-                "items": {"type": "string"},
-            },
-        },
-        required=True,
-    )
-    .param(name="burst_id", description="burst_id", schema={"type": "integer"}, required=True)
-    .param(name="coherence_window_az", description="coherence_window_az", schema={"type": "integer"}, required=False)
-    .param(name="coherence_window_rg", description="coherence_window_rg", schema={"type": "integer"}, required=False)
-    .param(name="polarization", description="polarization", schema={"type": "string"}, required=True)
-    .param(name="sub_swath", description="sub_swath", schema={"type": "string"}, required=True)
-    .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
-)
-def sar_coherence_parallel(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
-    return cwl_common(
-        args,
-        env,
-        CwLSource.from_url(
-            "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/sar_coherence_parallel.cwl"
-        ),
-    )
-
-
-@non_standard_process(
-    ProcessSpec(
         id="sar_interferogram",
         description="Proof-of-concept process to run CWL based inSAR. More info here: https://github.com/cloudinsar/s1-workflows",
     )
