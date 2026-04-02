@@ -18,8 +18,12 @@ spec:
   imagePullPolicy: {{ .Values.imagePullPolicy }}
   mainApplicationFile: {{ required "Please provide a main application file." .Values.mainApplicationFile | quote }}
   sparkVersion: {{ .Values.sparkVersion | quote }}
-  batchScheduler: {{ .Values.batchScheduler.name }}
-  {{- if or (ne .Values.batchScheduler.name "default-scheduler") .Values.priorityClassName }}
+  {{- with .Values.batchScheduler.name }}
+    {{- if ne . "default-scheduler" }}
+  batchScheduler: {{ . }}
+    {{- end }}
+  {{- end }}
+  {{- if and (ne .Values.batchScheduler.name "default-scheduler") .Values.batchScheduler.name }}
   batchSchedulerOptions:
     {{- if eq .Values.batchScheduler.name "yunikorn"}}
     queue: {{ .Values.batchScheduler.queue }}
@@ -105,8 +109,8 @@ spec:
     maxExecutors: {{ .Values.dynamicAllocation.maxExecutors }}
   {{- end }}
   driver:
-    {{- if .Values.driver.priorityClassName }}
-    priorityClassName: {{ .Values.driver.priorityClassName }}
+    {{- if .Values.driver.priorityClassName | default .Values.priorityClassName }}
+    priorityClassName: {{ .Values.driver.priorityClassName | default .Values.priorityClassName }}
     {{- end }}
     {{- if .Values.driver.affinity }}
     affinity:
