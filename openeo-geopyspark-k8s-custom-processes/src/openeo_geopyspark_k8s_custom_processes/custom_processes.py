@@ -33,6 +33,7 @@ from openeo_driver.specs import read_spec
 from openeo_driver.utils import EvalEnv
 import openeogeotrellis.integrations.stac
 from openeogeotrellis.integrations.calrissian import CalrissianJobLauncher, CwLSource, find_stac_root
+from openeogeotrellis.integrations.kubernetes import ensure_kubernetes_config
 from openeogeotrellis.util.runtime import get_job_id, get_request_id
 import openeogeotrellis.load_stac
 from openeogeotrellis.stac_save_result import StacSaveResult
@@ -42,14 +43,6 @@ log.info(f"Loading custom processes from {__file__}")
 
 
 CWL_ROOT = Path(__file__).parent / "cwl"
-
-
-def _ensure_kubernetes_config():
-    # TODO: better place to load this config?
-    if os.path.exists(SERVICE_TOKEN_FILENAME):
-        kubernetes.config.load_incluster_config()
-    else:
-        kubernetes.config.load_kube_config()
 
 
 @non_standard_process(
@@ -72,7 +65,7 @@ def _cwl_demo_hello(args: ProcessArgs, env: EvalEnv):
     if env.get(ENV_DRY_RUN_TRACER):
         return "dummy"
 
-    _ensure_kubernetes_config()
+    ensure_kubernetes_config()
 
     cwl_source = CwLSource.from_path(CWL_ROOT / "hello.cwl")
     correlation_id = get_job_id(default=None) or get_request_id(default=None)
@@ -106,7 +99,7 @@ def cwl_common_to_stac(
         #       to avoid risk on conflict with "regular" load_stac code flows?
         return "dummy"
 
-    _ensure_kubernetes_config()
+    ensure_kubernetes_config()
 
     log.info(f"Loading CWL from {cwl_source=}")
 
