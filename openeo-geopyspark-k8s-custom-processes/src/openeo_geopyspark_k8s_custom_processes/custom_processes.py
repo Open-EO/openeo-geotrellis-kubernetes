@@ -32,7 +32,7 @@ from openeo_driver.ProcessGraphDeserializer import (
 from openeo_driver.specs import read_spec
 from openeo_driver.utils import EvalEnv
 import openeogeotrellis.integrations.stac
-from openeogeotrellis.integrations.calrissian import CalrissianJobLauncher, CwLSource, find_stac_root
+from openeogeotrellis.integrations.calrissian import CalrissianJobLauncher, CwLSource, find_stac_root, cwl_to_stac
 from openeogeotrellis.integrations.kubernetes import ensure_kubernetes_config
 from openeogeotrellis.util.runtime import get_job_id, get_request_id
 import openeogeotrellis.load_stac
@@ -131,14 +131,16 @@ def cwl_common(
     cwl_arguments: Union[List[str], dict],
     env: EvalEnv,
     cwl_source: CwLSource,
-    stac_root: str = "collection.json",
+    stac_root=None,
     direct_s3_mode=False,
 ) -> DriverDataCube:
-    collection_url = cwl_common_to_stac(
+    assert (
+        stac_root is None
+    ), "stac_root deprecated here. It should follow standard naming conventions instead of being specified by the user."
+    collection_url = cwl_to_stac(
         cwl_arguments,
         env,
         cwl_source,
-        stac_root,
         direct_s3_mode,
     )
 
@@ -210,7 +212,7 @@ def _cwl_dummy_stac_to_stac(args: ProcessArgs, env: EvalEnv) -> StacSaveResult:
     cwl_source = CwLSource.from_path(CWL_ROOT / "dummy_stac.cwl")
     cwl_arguments: List[str] = []
     direct_s3_mode = args.get_optional("direct_s3_mode", default=False)
-    stac_root = cwl_common_to_stac(cwl_arguments, env, cwl_source, direct_s3_mode=direct_s3_mode)
+    stac_root = cwl_to_stac(cwl_arguments, env, cwl_source, direct_s3_mode=direct_s3_mode)
     return StacSaveResult(stac_root)
 
 
@@ -264,22 +266,6 @@ def _cwl_dummy_stac_parallel(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         env,
         cwl_source=CwLSource.from_path(CWL_ROOT / "scatter-gather-stac.cwl"),
     )
-
-
-def insar_common(
-    kwargs: dict, env: EvalEnv, cwl_url: str, stac_root: str = "S1_2images_collection.json"
-) -> DriverDataCube:
-    if "InSAR_pairs" in kwargs:
-        primary_dates = [pair[0] for pair in kwargs["InSAR_pairs"]]
-        primary_dates_duplicates = set([d for d in primary_dates if primary_dates.count(d) > 1])
-        if primary_dates_duplicates:
-            raise ValueError(
-                f"Duplicate primary date(s) found in InSAR_pairs: {primary_dates_duplicates}. "
-                "You can load multiple primary dates over multiple processes if needed."
-            )
-    input_base64_json = base64.b64encode(json.dumps(kwargs).encode("utf8")).decode("ascii")
-    cwl_arguments = ["--input_base64_json", input_base64_json]
-    return cwl_common(cwl_arguments, env, CwLSource.from_url(cwl_url), stac_root)
 
 
 @non_standard_process(
