@@ -654,7 +654,7 @@ def sar_slc_preprocessing(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
            description="Threshold of the Fmask algorithm. Default: 0.02",
            schema={"type": "float"},
            required=False)
-    .param(naem="res_merge",
+    .param(name="res_merge",
            description="Defines the method used for improving the spatial resolution of Sentinel-2’s 20 m bands "
                        "to 10 m. Pixels flagged as cloud or shadow will be skipped. Following methods are "
                        "available: IMPROPHE uses the ImproPhe code in a spectral-only setup; REGRESSION "
@@ -767,6 +767,14 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         required=False,
     )
     .param(
+        name="y_tile_range",
+        description="Analysis extent, given in tile numbers (see tile naming). Each existing tile "
+                    "falling into this square extent will be processed. A shapefile of the tiles "
+                    "can be generated with force-tabulate-grid. Default: -999 9999",
+        schema={"type": "array", "items": {"type": "integer"}},
+        required=False,
+    )
+    .param(
         name="file_tile",
         description="Allow-list of tiles. Can be used to further limit the analysis "
                     "extent to non-square extents. The allow-list is intersected with "
@@ -827,7 +835,7 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     )
     .param(
         name="target_sensors",
-        description=" Target sensor that represents the combination of input sensors. A sensor "
+        description="Target sensor that represents the combination of input sensors. A sensor "
                     "definition for this target sensor needs to exist to make sure that "
                     "processing those outputs will be possible. For example, if you combine "
                     "Landsat 8 and Sentinel-2, the target sensor containing the overlapping "
@@ -877,7 +885,7 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
 
     .param(
         name="screen_qai",
-        description=" Type: Character list. Valid values: {NODATA,CLOUD_OPAQUE,"
+        description="Type: Character list. Valid values: {NODATA,CLOUD_OPAQUE,"
                     "CLOUD_BUFFER,CLOUD_CIRRUS,CLOUD_SHADOW,SNOW,WATER,AOD_FILL,"
                     "AOD_HIGH,AOD_INT,SUBZERO, SATURATION,SUN_LOW,ILLUMIN_NONE,"
                     "ILLUMIN_POOR,ILLUMIN_LOW,SLOPED,WVP_NONE}. Default: "
@@ -985,7 +993,7 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     )
     .param(
         name="rbf_cutoff",
-        description=" Cutoff density for the RBF filter. The Gaussian kernels have infinite "
+        description="Cutoff density for the RBF filter. The Gaussian kernels have infinite "
                     "width, which is computationally slow, and doesn't make much sense as "
                     "observations that are way too distant (in terms of time) are considered. "
                     "Thus, the tails of the kernel are cut off. This parameter specifies, "
@@ -1005,6 +1013,15 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         description="Definition of how many modes per season are used for harmonic interpolation, "
                     "i.e. uni-modal (1), bi-modal (2), or tri-modal (3). Default: 3",
         schema={"type": "integer"},
+        required=False,
+    )
+    .param(
+        name="harmonic_fit_range",
+        description="Subset of the time period to which the harmonic should be fitted."
+                    "For example, if the analysis timeframe is DATE_RANGE = 2015-01-01 2022-06-20,"
+                    "all data from 2015-2022 will be considered. If HARMONIC_FIT_RANGE = 2015-01-01 2017-12-31,"
+                    "the harmonic will only be fitted to the first 3 years of data.",
+        schema={"type": "array", "item": { "type": "string" }},
         required=False,
     )
     .param(
@@ -1053,20 +1070,27 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
                     "interquartile range. Note that median is Q50. "
                     "Default: NONE",
         schema={"type": "array", "item": {"type": "string", "enum": [
-            "MIN", "Q01", "Q99", "MAX", "AVG", "STD", "RNG", "IQR", "SKW", "KRT", "NUM"]}},
+            "MIN", "Q01", "Q05", "Q10", "Q20", "Q25", "Q30", "Q40", "Q50", "Q60", "Q70", "Q75", "Q80", "Q90", "Q95", "Q99", "MAX", "AVG", "STD", "RNG", "IQR", "SKW", "KRT", "NUM"]}},
         required=False
     )
 
     .param(
         name="fold_type",
-        description=" Which statistic should be used for folding the time series? This "
+        description="Which statistic should be used for folding the time series? This "
                     "parameter is only evaluated if one of the following outputs in "
                     "this block is requested. Currently available statistics are the "
                     "average, standard deviation, mini- mum, maximum, range, skewness, "
-                    "kurtosis, median, 10/25/75/90% quantiles, and interquartile range ",
+                    "kurtosis, median, 10/25/75/90% quantiles, and interquartile range. "
+                    "Default: AVG",
         schema={"type": "array", "item": {"type": "string", "enum": [
             "MIN", "Q10", "Q25", "Q50", "Q75", "Q90", "MAX", "AVG", "STD", "RNG", "IQR", "SKW", "KRT", "NUM"]}},
         required=False
+    )
+    .param(
+        name="standardize_fold",
+        description="Standardize the FB* time series with pixel mean and/or standard deviation. Default: NONE",
+        schema={"type": "string", "enum": [ "NONE", "NORMALIZE", "CENTER" ]},
+        required=False,
     )
     .param(
         name="output_fby",
@@ -1105,35 +1129,35 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     )
     .param(
         name="output_try",
-        description=" Compute and output a linear trend analysis on any of the folded time "
+        description="Compute and output a linear trend analysis on any of the folded time "
                     "series? Note that the OUTPUT_FBX parameters don't need to be TRUE to do this.",
         schema={"type": "boolean"},
         required=False
     )
     .param(
         name="output_trq",
-        description=" Compute and output a linear trend analysis on any of the folded time "
+        description="Compute and output a linear trend analysis on any of the folded time "
                     "series? Note that the OUTPUT_FBX parameters don't need to be TRUE to do this.",
         schema={"type": "boolean"},
         required=False
     )
     .param(
         name="output_trm",
-        description=" Compute and output a linear trend analysis on any of the folded time "
+        description="Compute and output a linear trend analysis on any of the folded time "
                     "series? Note that the OUTPUT_FBX parameters don't need to be TRUE to do this.",
         schema={"type": "boolean"},
         required=False
     )
     .param(
         name="output_trw",
-        description=" Compute and output a linear trend analysis on any of the folded time "
+        description="Compute and output a linear trend analysis on any of the folded time "
                     "series? Note that the OUTPUT_FBX parameters don't need to be TRUE to do this.",
         schema={"type": "boolean"},
         required=False
     )
     .param(
         name="output_trd",
-        description=" Compute and output a linear trend analysis on any of the folded time "
+        description="Compute and output a linear trend analysis on any of the folded time "
                     "series? Note that the OUTPUT_FBX parameters don't need to be TRUE to do this.",
         schema={"type": "boolean"},
         required=False
@@ -1255,7 +1279,7 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     )
     .param(
         name="output_tro",
-        description=" Compute and output a linear trend analysis on the requested "
+        description="Compute and output a linear trend analysis on the requested "
                     "Polarmetric time series? Note that the OUTPUT_POL parameters "
                     "don't need to be TRUE to do this. See also the TREND PARAMETERS "
                     "block below",
@@ -1264,7 +1288,7 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     )
     .param(
         name="output_cao",
-        description=" Compute and output an extended Change, Aftereffect, Trend (CAT) "
+        description="Compute and output an extended Change, Aftereffect, Trend (CAT) "
                     "analysis on the requested Polarmetric time series? Note that the "
                     "OUTPUT_POL parameters don't need to be TRUE to do this. See also "
                     "the TREND PARAMETERS block below.",
