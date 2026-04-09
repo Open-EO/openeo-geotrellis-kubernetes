@@ -92,3 +92,44 @@ def test_sar_backscatter(processes_listing):
             ),
         }
     )
+
+
+def test_force_level2(processes_listing):
+    spec = processes_listing.get_spec(process_id="force_level2")
+    parameters = [p["name"] for p in spec["parameters"]]
+    assert "name" in parameters
+    assert "aoi" in parameters
+    assert "resolution" in parameters
+    assert "projection" in parameters
+    assert "resampling" in parameters
+    assert "dem" in parameters
+    assert "do_atmo" in parameters
+    assert "cloud_buffer" in parameters
+    assert "res_merge" in parameters
+    assert "output_format" in parameters
+    assert all(["name" in p for p in spec["parameters"]])
+    assert all(["description" in p for p in spec["parameters"]])
+    assert all(["schema" in p for p in spec["parameters"]])
+    assert all([p["schema"]["type"] == "boolean" for p in spec["parameters"] if p["name"].startswith("do_")])
+    assert all([p["optional"] for p in spec["parameters"] if "Default" in p["description"]])
+
+def test_force_tsa(processes_listing):
+    spec = processes_listing.get_spec(process_id="force_tsa")
+    parameters = [p["name"] for p in spec["parameters"]]
+    assert "name" in parameters
+    assert "date_range" in parameters
+    assert "chunk_size" in parameters
+    assert "resolution" in parameters
+    assert "sensors" in parameters
+    assert "index" in parameters
+    assert "standardize_tss" in parameters
+    assert "interpolate" in parameters
+    assert "int_days" in parameters
+    assert "output_stm" in parameters
+    assert "stm" in parameters
+    assert all(["name" in p for p in spec["parameters"]])
+    assert all(["description" in p for p in spec["parameters"]])
+    assert all(["schema" in p for p in spec["parameters"]])
+    assert all(["NORMALIZE" in p["schema"]["enum"] for p in spec["parameters"] if p["name"].startswith("standardize_")])
+    assert all([p["optional"] for p in spec["parameters"] if "Default" in p["description"]])
+
