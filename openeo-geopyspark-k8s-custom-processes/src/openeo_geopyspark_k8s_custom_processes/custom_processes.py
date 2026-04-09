@@ -720,8 +720,7 @@ def sar_slc_preprocessing(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
            schema={"type": "boolean"},
            required=False)
     .returns(description="the data as a FORCE data cube",
-             schema={"type": "object", "subtype": "datacube"},
-             required=False)
+             schema={"type": "object", "subtype": "datacube"})
 )
 def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     return cwl_common(
@@ -740,8 +739,12 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
                     "More info here: https://github.com/bcdev/apex-force-openeo . "
                     "Parameter documentation in https://force-eo.readthedocs.io/en/latest/howto/tsi.html",
     )
+    .param(name="name",
+           description="Name of the datacube. Example: bologna . Default: cube-<timestamp>",
+           schema={"type": "string"},
+           required=False)
     .param(
-        name="time_range",
+        name="date_range",
         description="Time extent for the analysis. All data between these dates will be used in the analysis. Format YYYY-MM-DD",
         schema={"type": "array", "items": {"type": "string"}},
         required=True,
@@ -1350,8 +1353,7 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     )
     .returns(
         description="the data as a FORCE higher level data cube",
-        schema={"type": "object", "subtype": "datacube"},
-        required=False
+        schema={"type": "object", "subtype": "datacube"}
     )
 )
 def force_tsa(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
