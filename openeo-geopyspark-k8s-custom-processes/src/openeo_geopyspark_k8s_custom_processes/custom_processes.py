@@ -727,7 +727,7 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         args,
         env,
         CwLSource.from_url(
-            "https://raw.githubusercontent.com/bcdev/apex-force-openeo/refs/heads/main/material/force-l2.cwl"
+            "https://raw.githubusercontent.com/bcdev/apex-force-openeo/refs/heads/main/cwl/force-l2.cwl"
         ),
     )
 
@@ -1361,7 +1361,7 @@ def force_tsa(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         args,
         env,
         CwLSource.from_url(
-            "https://raw.githubusercontent.com/bcdev/apex-force-openeo/refs/heads/main/material/force-tsa.cwl"
+            "https://raw.githubusercontent.com/bcdev/apex-force-openeo/refs/heads/main/cwl/force-tsa.cwl"
         ),
     )
 
