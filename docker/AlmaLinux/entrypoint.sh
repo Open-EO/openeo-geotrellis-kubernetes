@@ -86,6 +86,7 @@ case "$1" in
       "${SPARK_EXECUTOR_JAVA_OPTS[@]}"
       -Xms$SPARK_EXECUTOR_MEMORY
       -Xmx$SPARK_EXECUTOR_MEMORY
+      -Xss${EXECUTOR_JVM_STACK_SIZE:-4m}
       -cp "$SPARK_CLASSPATH:$SPARK_DIST_CLASSPATH"
       org.apache.spark.executor.CoarseGrainedExecutorBackend
       --driver-url $SPARK_DRIVER_URL

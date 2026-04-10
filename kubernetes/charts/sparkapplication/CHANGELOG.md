@@ -1,5 +1,9 @@
 # sparkapplication chart changelog
 
+## 1.2.0
+
+feature: add default `-Xss4m` JVM stack size option for executor to avoid stack overflow errors (exit code 50).
+
 ## 1.1.0
 
 feature: make `pythonMinorVersion` configurable via value but default to 8 to be backwards compatible.

@@ -269,6 +269,8 @@ spec:
         valueFrom:
           fieldRef:
             fieldPath: metadata.namespace
+      - name: EXECUTOR_JVM_STACK_SIZE
+        value: {{ .Values.executor.jvmStackSize | quote }}
     {{- if .Values.executor.env }}
       {{- range $key, $value :=  .Values.executor.env }}
       - name: {{ $key }}
