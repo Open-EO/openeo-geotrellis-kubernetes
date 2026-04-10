@@ -41,6 +41,9 @@ executor:
   # Extra environment variable to be added to executors as per envvar-v1-core spec
   # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#envvar-v1-core
   extraEnv: []
+  # Java options to pass to the executor JVM. The -Xss flag increases the thread stack size
+  # to avoid StackOverflowError / exit code 50 on executors with deep call stacks.
+  javaOptions: "-Xss4m"
 existingConfigMaps: true
 global:
   # Extra environment variable to be added to drivers and executors as per envvar-v1-core spec
