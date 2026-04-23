@@ -14,9 +14,6 @@ from copy import deepcopy
 from pathlib import Path
 from typing import Union, List
 
-import kubernetes.config
-from kubernetes.config.incluster_config import SERVICE_TOKEN_FILENAME
-
 from openeo_driver.backend import LoadParameters
 from openeo_driver.datacube import DriverDataCube
 from openeo_driver.datastructs import SarBackscatterArgs
@@ -381,7 +378,7 @@ def sar_coherence(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         args,
         env,
         CwLSource.from_url(
-            "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/sar_coherence_parallel_temporal_extent.cwl"
+            "https://raw.githubusercontent.com/cloudinsar/s1-workflows/refs/heads/main/cwl/sar_coherence.cwl"
         ),
     )
 
