@@ -1,5 +1,14 @@
 # sparkapplication chart changelog
 
+## 1.3.0
+
+- feature: deployment of openeo-lite
+- fix: default Values.rbac.clusterRoleBinding.subjects should be array
+
+## 1.2.0
+
+- fix: do not set batchScheduler when using default scheduler
+
 ## 1.1.0
 
 feature: make `pythonMinorVersion` configurable via value but default to 8 to be backwards compatible.
