@@ -81,7 +81,7 @@ rbac:
         verbs:
           - 'use'
   clusterRoleBinding:
-    subjects: {}
+    subjects: []
 restartPolicy:
   type: "OnFailure"
   onFailureRetries: 3
@@ -100,3 +100,11 @@ timeToLiveSeconds: 172800
 monitoring:
   podMonitor:
     enabled: false
+
+replicaCount: 0
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
