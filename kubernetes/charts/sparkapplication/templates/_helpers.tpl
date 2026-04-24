@@ -23,6 +23,19 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 {{- end }}
 
+{{- define "sparkapplicationlite.fullname" -}}
+{{- if .Values.liteFullnameOverride }}
+{{- .Values.liteFullnameOverride | trunc 63 | trimSuffix "-" }}
+{{- else }}
+{{- $name := default "lite" .Values.liteNameOverride }}
+{{- if contains $name .Release.Name }}
+{{- .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- else }}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+{{- end }}
+{{- end }}
+
 {{/*
 Create chart name and version as used by the chart label.
 */}}
@@ -51,6 +64,24 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+labels for lite components
+*/}}
+{{- define "sparkapplication.liteLabels" -}}
+helm.sh/chart: {{ include "sparkapplication.chart" . }}
+{{ include "sparkapplication.liteSelectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
+
+{{- define "sparkapplication.liteSelectorLabels" -}}
+app.kubernetes.io/name: {{ include "sparkapplication.name" . }}-lite
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{/*
 Create the name of the service account to use
 */}}
 {{- define "sparkapplication.serviceAccountDriver" -}}
@@ -68,4 +99,4 @@ Create the name of the service account to use
 
 {{- define "sparkapplication.clusterRoleBindingName" -}}
 {{- .Values.rbac.clusterRoleBindingName | default (printf "%s-cluster-role-%s" .Values.rbac.serviceAccountDriver .Release.Namespace) | trunc 63 | trimSuffix "-" }}
-{{- end }} 
+{{- end }}

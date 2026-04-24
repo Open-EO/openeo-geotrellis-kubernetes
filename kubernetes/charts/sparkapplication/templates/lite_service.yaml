@@ -1,0 +1,19 @@
+{{- if .Values.replicaCount -}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "sparkapplicationlite.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+{{ include "sparkapplication.liteLabels" . | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
+      protocol: TCP
+      name: http
+  selector:
+    {{include "sparkapplication.liteSelectorLabels" . | nindent 4 }}
+{{- end }}
