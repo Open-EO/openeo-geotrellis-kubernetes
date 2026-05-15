@@ -837,7 +837,7 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         required=False
     )
     .param(
-        name="target_sensors",
+        name="target_sensor",
         description="Target sensor that represents the combination of input sensors. A sensor "
                     "definition for this target sensor needs to exist to make sure that "
                     "processing those outputs will be possible. For example, if you combine "
@@ -991,7 +991,7 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
                     "sizes. The kernels are weighted according to the data density within each "
                     "kernel. "
                     "Default: 8 16 32",
-        schema={"type": "array", "item": {"type": "integer"}},
+        schema={"type": "array", "items": {"type": "integer"}},
         required=False,
     )
     .param(
@@ -1037,7 +1037,7 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         required=False,
     )
     .param(
-        name="int_days",
+        name="int_day",
         description="This parameter gives the interpolation step in days. Default: 16",
         schema={"type": "integer"},
         required=False,
