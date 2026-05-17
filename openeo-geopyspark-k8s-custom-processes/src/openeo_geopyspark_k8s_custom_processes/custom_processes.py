@@ -335,7 +335,7 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         required=False,
     )
     .param(name="direct_s3_mode", description="direct_s3_mode", schema={"type": "boolean"}, required=False)
-    .returns(description="the data as a data cube", schema={"type": "object", "subtype": "datacube"})
+    .returns(description="the STAC metadata describing the CWL result", schema={"type": "object", "subtype": "stac"})
 )
 def run_cwl_to_stac(args: ProcessArgs, env: EvalEnv) -> StacSaveResult:
     cwl = args.get_optional("cwl_url", expected_type=str)
