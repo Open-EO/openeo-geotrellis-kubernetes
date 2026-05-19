@@ -10,7 +10,7 @@ class: CommandLineTool
 
 requirements:
   - class: DockerRequirement
-    dockerPull: vito-docker.artifactory.vgt.vito.be/openeo-geopyspark-driver-example-stac-catalog:1.8
+    dockerPull: vito-docker.artifactory.vgt.vito.be/openeo-geopyspark-driver-example-stac-catalog:1.9
 
 baseCommand: ["sh", "-c", "cp /data/* ."]
 inputs: []
