@@ -485,7 +485,6 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         args,
         env,
         cwl_source,
-        stac_root="catalog.json",
         direct_s3_mode=False,
     )
 
@@ -1122,7 +1121,6 @@ def force_tsa(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         args,
         env,
         cwl_source,
-        stac_root="catalog.json",
         direct_s3_mode=False,
     )
 
