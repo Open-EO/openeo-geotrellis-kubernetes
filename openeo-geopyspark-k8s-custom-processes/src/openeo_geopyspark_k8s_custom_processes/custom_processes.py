@@ -12,12 +12,13 @@ import re
 import textwrap
 from copy import deepcopy
 from pathlib import Path
-from typing import Union, List
+from typing import Union, List, Optional, Tuple
 
 from openeo_driver.backend import LoadParameters
 from openeo_driver.datacube import DriverDataCube
 from openeo_driver.datastructs import SarBackscatterArgs
 from openeo_driver.dry_run import DryRunDataTracer, DataSource
+from openeo_driver.processgraph.process_implementations.io import _extract_temporal_extent
 from openeo_driver.processes import ProcessArgs
 from openeo_driver.ProcessGraphDeserializer import (
     ENV_DRY_RUN_TRACER,
@@ -89,12 +90,18 @@ def cwl_common_to_stac(
     cwl_source: CwLSource,
     stac_root: str = "collection.json",
     direct_s3_mode=False,
+    temporal_extent: Optional[Tuple] = None,
 ) -> str:
+    load_stac_dummy_url = "dummy"
     dry_run_tracer: DryRunDataTracer = env.get(ENV_DRY_RUN_TRACER)
     if dry_run_tracer:
         # TODO: use something else than `dry_run_tracer.load_stac`
         #       to avoid risk on conflict with "regular" load_stac code flows?
-        return "dummy"
+
+        arguments = {}
+        if temporal_extent:
+            arguments["temporal_extent"] = temporal_extent
+        return dry_run_tracer.load_stac(url=load_stac_dummy_url, arguments=arguments)
 
     ensure_kubernetes_config()
 
@@ -1180,6 +1187,26 @@ def force_tsa(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         required=False,
     )
     .param(name="direct_s3_mode", description="direct_s3_mode", schema={"type": "boolean"}, required=False)
+    .param(
+        name="temporal_extent",
+        description="Used to specify datetime in stac metadata output.",
+        schema={
+            "type": "array",
+            "subtype": "temporal-interval",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+                "anyOf": [
+                    {"type": "string", "format": "date-time", "subtype": "date-time"},
+                    {"type": "string", "format": "date", "subtype": "date"},
+                    {"type": "string", "subtype": "year", "minLength": 4, "maxLength": 4, "pattern": "^\\d{4}$"},
+                    {"type": "null"},
+                ]
+            },
+            "examples": [["2015-01-01T00:00:00Z", "2016-01-01T00:00:00Z"], ["2015-01-01", "2016-01-01"]],
+        },
+        required=False,
+    )
     .returns(description="the STAC metadata describing the CWL result", schema={"type": "object", "subtype": "stac"})
 )
 def run_cwl_to_stac(args: ProcessArgs, env: EvalEnv) -> StacSaveResult:
@@ -1189,8 +1216,16 @@ def run_cwl_to_stac(args: ProcessArgs, env: EvalEnv) -> StacSaveResult:
     context = args.get_optional("context", expected_type=dict, default={})
     stac_root = args.get_optional("stac_root", expected_type=str, default="collection.json")
     direct_s3_mode = args.get_optional("direct_s3_mode", default=False)
+    temporal_extent: Optional[Tuple] = None
+    if "temporal_extent" in args:
+        temporal_extent = _extract_temporal_extent(args, field="temporal_extent", process_id="run_cwl_to_stac")
     stac_root_new = cwl_common_to_stac(
-        context, env, CwLSource.from_any(cwl), stac_root=stac_root, direct_s3_mode=direct_s3_mode
+        context,
+        env,
+        CwLSource.from_any(cwl),
+        stac_root=stac_root,
+        direct_s3_mode=direct_s3_mode,
+        temporal_extent=temporal_extent,
     )
     return StacSaveResult(stac_root_new)
 
