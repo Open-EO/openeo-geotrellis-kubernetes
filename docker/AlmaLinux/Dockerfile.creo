@@ -13,7 +13,6 @@ USER root
 # Copy entrypoints and helper scripts
 COPY docker/AlmaLinux/entrypoint.sh /opt/entrypoint.sh
 COPY docker/AlmaLinux/decom.sh /opt/decom.sh
-COPY --chmod=700 docker/AlmaLinux/addlocalnodeip /bin/addlocalnodeip
 
 # Add S3 dependencies
 ADD https://artifactory.vgt.vito.be/artifactory/libs-release/org/apache/hadoop/hadoop-aws/${HADOOP_VERSION}/hadoop-aws-${HADOOP_VERSION}.jar $SPARK_HOME/jars
@@ -57,8 +56,8 @@ RUN adduser -u 18585 -d /opt/spark/work-dir spark && \
     mkdir /opt/tmp /batch_jobs /spark_tmp && \
     touch /opt/openeo_python.log && \
     ln -s /opt/venv /opt/openeo && \
-    chown -R 18585:18585 /opt/openeo /opt/tmp /batch_jobs /spark_tmp /opt/openeo_python.log && \
-    echo "spark   ALL=(root) NOPASSWD:SETENV: /bin/addlocalnodeip" > /etc/sudoers.d/spark
+    chown -R 18585:18585 /opt/openeo /opt/tmp /batch_jobs /spark_tmp /opt/openeo_python.log
+
 
 # install openjpeg here, to avoid a conflict with gdal. Better option is to clean up dependency chain downstream
 # this openjpeg contains important bugfix for reading JPEG2000 files
