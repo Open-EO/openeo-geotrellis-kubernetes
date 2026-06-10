@@ -13,6 +13,7 @@ USER root
 # Copy entrypoints and helper scripts
 COPY docker/AlmaLinux/entrypoint.sh /opt/entrypoint.sh
 COPY docker/AlmaLinux/decom.sh /opt/decom.sh
+COPY --chmod=755 docker/AlmaLinux/assume_role.sh /bin/assume_role.sh
 
 # Add S3 dependencies
 ADD https://artifactory.vgt.vito.be/artifactory/libs-release/org/apache/hadoop/hadoop-aws/${HADOOP_VERSION}/hadoop-aws-${HADOOP_VERSION}.jar $SPARK_HOME/jars

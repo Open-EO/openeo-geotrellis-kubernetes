@@ -61,6 +61,12 @@ if ! [ -z ${HADOOP_CONF_DIR+x} ]; then
   SPARK_CLASSPATH="$HADOOP_CONF_DIR:$SPARK_CLASSPATH";
 fi
 
+if [ -f /bin/assume_role.sh ]; then
+  set +x
+  . /bin/assume_role.sh
+  set -x
+fi
+
 export PYARROW_IGNORE_TIMEZONE=1
 
 echo "My start command is $1"
