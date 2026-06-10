@@ -56,14 +56,6 @@ _ar_main() {
   fi
 
   # -------------------------------------------------------------------------
-  # 1b. Early exit if no exchange configuration is present (non-AWS deployments).
-  # -------------------------------------------------------------------------
-  if [[ -z "${AWS_STS_ENDPOINT:-}" && -z "${AWS_ROLE_ARN:-}" && -z "${AWS_WEB_IDENTITY_TOKEN_FILE:-}" ]]; then
-    _ar_debug "No AWS exchange configuration present; skipping role assumption."
-    return 0
-  fi
-
-  # -------------------------------------------------------------------------
   # 2. Validate required environment variables.
   # -------------------------------------------------------------------------
   local missing=()
