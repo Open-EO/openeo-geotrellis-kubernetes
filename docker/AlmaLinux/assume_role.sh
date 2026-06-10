@@ -34,7 +34,7 @@ _ar_error()   { _ar_log "ERROR"   "$*"; }
 
 # ---------------------------------------------------------------------------
 # URL-encode a string (RFC 3986 — encodes everything except A-Z a-z 0-9 - _ . ~)
-# Uses a Python one-liner if available, otherwise a pure-bash fallback.
+# Requires python3 to be available.
 # ---------------------------------------------------------------------------
 _ar_urlencode() {
   local raw="$1"
@@ -52,6 +52,14 @@ _ar_main() {
   # -------------------------------------------------------------------------
   if [[ -n "${AWS_ACCESS_KEY_ID:-}" && -n "${AWS_SECRET_ACCESS_KEY:-}" ]]; then
     _ar_debug "AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY already set; skipping role assumption."
+    return 0
+  fi
+
+  # -------------------------------------------------------------------------
+  # 1b. Early exit if no exchange configuration is present (non-AWS deployments).
+  # -------------------------------------------------------------------------
+  if [[ -z "${AWS_STS_ENDPOINT:-}" && -z "${AWS_ROLE_ARN:-}" && -z "${AWS_WEB_IDENTITY_TOKEN_FILE:-}" ]]; then
+    _ar_debug "No AWS exchange configuration present; skipping role assumption."
     return 0
   fi
 
