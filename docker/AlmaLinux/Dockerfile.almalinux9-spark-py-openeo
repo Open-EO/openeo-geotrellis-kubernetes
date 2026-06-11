@@ -21,12 +21,12 @@ RUN dnf clean all && \
     dnf --enablerepo=crb install -y \
         ${SPARK_PACKAGE} \
         glibc-langpack-en \
-        orfeo-toolbox-py311-9.0.0 \
+        orfeo-toolbox-py311-9.0.1 \
         hdf5 \
-        gdal-3.8.4 \
-        gdal-devel-3.8.4 \
-        gdal-libs-3.8.4 \
-        gdal-python311-3.8.4 \
+        gdal-3.12.4 \
+        gdal-devel-3.12.4 \
+        gdal-libs-3.12.4 \
+        gdal-python311-3.12.4 \
         gcc-c++ \
         unzip \
         java-21-openjdk-headless \
