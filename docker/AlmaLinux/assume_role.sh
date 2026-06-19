@@ -120,6 +120,9 @@ _ar_main() {
 
     # curl writes the body to stdout and the HTTP status code to the last line.
     # We capture both by appending the status code via -w.
+    # Because we likely run with -e we should avoid failing on curl errors so we use || to never fail
+    # and we track the exit code if there is a failure
+    local curl_exit=0
     response="$(
       curl \
         --silent \
@@ -131,8 +134,7 @@ _ar_main() {
         --data "${post_body}" \
         --write-out "\n%{http_code}" \
         "${AWS_STS_ENDPOINT}" 2>&1
-    )"
-    local curl_exit=$?
+    )" || curl_exit=$?
 
     # Split body and status code (last line).
     http_code="$(printf '%s' "$response" | tail -n1)"
