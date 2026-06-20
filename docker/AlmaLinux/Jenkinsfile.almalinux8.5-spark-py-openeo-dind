@@ -1,0 +1,15 @@
+#!/usr/bin/env groovy
+
+// This Jenkinsfile uses the internal VITO shared library
+
+@Library('lib')_
+
+containerImageBuildPipeline {
+  build_args           = ['SPARK_VERSION=3_5_3','PYTHON_PACKAGE=python38-devel']
+  dockerfile           = 'docker/AlmaLinux/Dockerfile.almalinux8.5-spark-py-openeo-dind'
+  docker_registry_prod = 'vito-docker.artifactory.vgt.vito.be'
+  image_name           = 'almalinux8.5-spark-py-openeo-dind'
+  image_tag            = '3.5.4'
+  promotion_job        = false
+  run_tests            = false
+}
