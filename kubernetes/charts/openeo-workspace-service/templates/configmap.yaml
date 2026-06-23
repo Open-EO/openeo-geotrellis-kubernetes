@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "openeo-workspaces-api.fullname" . }}-config
+  labels:
+    {{- include "openeo-workspaces-api.labels" . | nindent 4 }}
+data:
+  DEBUG: "{{ .Values.config.debug }}"
+  API_VERSION: "{{ .Values.config.apiVersion }}"
+  DEFAULT_WORKSPACE_PROVIDER: "{{ .Values.config.defaultWorkspaceProvider }}"
+  MAX_WORKSPACE_QUOTA: "{{ .Values.config.maxWorkspaceQuota }}"
+  SUPPORTED_PROVIDERS: "{{ join "," .Values.config.supportedProviders }}"
+
+  KEYCLOAK_SERVER_URL: "{{ .Values.keycloak.external.serverUrl }}"
+  KEYCLOAK_REALM: "{{ .Values.keycloak.external.realm }}"
+  KEYCLOAK_CLIENT_ID: "{{ .Values.keycloak.external.clientId }}"
+
+  ELASTICSEARCH_HOST: "{{ .Values.elasticsearch.external.host }}"
+  ELASTICSEARCH_PORT: "{{ .Values.elasticsearch.external.port }}"
+  ELASTICSEARCH_SCHEME: "{{ .Values.elasticsearch.external.scheme }}"
+  ELASTICSEARCH_USER: "{{ .Values.elasticsearch.external.username }}"
+

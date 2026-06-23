@@ -1,0 +1,11 @@
+apiVersion: v2
+name: openeo-workspaces-api
+description: OpenEO Workspaces API - A FastAPI implementation for managing workspaces
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+
+keywords:
+  - openeo
+  - workspaces
+  - api
