@@ -488,12 +488,13 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     cwl_source = CwLSource.from_url(
         "https://github.com/bcdev/apex-force-openeo/releases/latest/download/force-level2.cwl"
     )
-    return cwl_common_to_stac(
+    stac_root_new = cwl_common_to_stac(
         args,
         env,
         cwl_source,
         direct_s3_mode=False,
     )
+    return StacSaveResult(stac_root_new)
 
 
 @non_standard_process(
@@ -1124,12 +1125,13 @@ def force_tsa(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     cwl_source = CwLSource.from_url(
         "https://github.com/bcdev/apex-force-openeo/releases/latest/download/force-tsa.cwl"
     )
-    return cwl_common_to_stac(
+    stac_root_new = cwl_common_to_stac(
         args,
         env,
         cwl_source,
         direct_s3_mode=False,
     )
+    return StacSaveResult(stac_root_new)
 
 
 @non_standard_process(
