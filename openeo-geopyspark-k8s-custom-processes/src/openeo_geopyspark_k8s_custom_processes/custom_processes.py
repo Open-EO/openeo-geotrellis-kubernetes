@@ -484,7 +484,7 @@ def _cwl_dummy_stac_parallel(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     .returns(description="the data as a FORCE data cube",
              schema={"type": "object", "subtype": "datacube"})
 )
-def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
+def force_level2(args: ProcessArgs, env: EvalEnv) -> StacSaveResult:
     cwl_source = CwLSource.from_url(
         "https://github.com/bcdev/apex-force-openeo/releases/latest/download/force-level2.cwl"
     )
@@ -1121,7 +1121,7 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
         schema={"type": "object", "subtype": "datacube"}
     )
 )
-def force_tsa(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
+def force_tsa(args: ProcessArgs, env: EvalEnv) -> StacSaveResult:
     cwl_source = CwLSource.from_url(
         "https://github.com/bcdev/apex-force-openeo/releases/latest/download/force-tsa.cwl"
     )
