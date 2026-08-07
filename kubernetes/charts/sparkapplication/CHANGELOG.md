@@ -1,5 +1,8 @@
 # sparkapplication chart changelog
 
+## 1.4.0
+- feature: allow staging of layercatalog files by an initContainer
+
 ## 1.3.1
 - fix: make sure securityContext of the pod is passed on if provided under `driver.podSecurityContext`
 
