@@ -1,5 +1,9 @@
 # sparkapplication chart changelog
 
+## 1.4.1
+
+- fix: make sure lite deployment also supports staging of layercatalog files by an initContainer
+
 ## 1.4.0
 - feature: allow staging of layercatalog files by an initContainer
 
