@@ -132,6 +132,7 @@ That way the container image is ran as an initContainer. It will get an environm
 - The init container puts the files in `$TARGET_DIR`
 - [You configure the geopyspark-driver to use the proper layercatalog JSON files](https://github.com/Open-EO/openeo-geopyspark-driver/blob/6793adc498bdd1433191a83248cda8ec3e3f34f8/openeogeotrellis/config/config.py#L88)
 - Container image tags are immutable or you must make sure to AlwaysPull and not have any caching in image sources
+- If you support batch jobs support must be present in geopyspark-driver (e.g. https://github.com/Open-EO/openeo-geopyspark-driver/pull/1764)
 
 
 ### HA mode
