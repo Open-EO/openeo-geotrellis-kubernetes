@@ -45,8 +45,14 @@ spec:
   {{- end }}
   {{- end }}
   timeToLiveSeconds: {{ .Values.timeToLiveSeconds }}
-  {{- if or .Values.volumes (not .Values.existingConfigMaps) }}
+  {{- if or .Values.volumes (not .Values.existingConfigMaps) (.Values.layerCatalog.viaInitContainer.enabled) }}
   volumes:
+  {{- with .Values.layerCatalog.viaInitContainer }}
+    {{- if .enabled }}
+    - name: layercatalogs
+      emptyDir: {}
+    {{- end }}
+  {{- end }}
   {{- with .Values.volumes }}
   {{- toYaml . | nindent 4 }}
   {{- end }}
@@ -149,6 +155,16 @@ spec:
         valueFrom:
           fieldRef:
             fieldPath: metadata.namespace
+    {{- with .Values.layerCatalog.viaInitContainer }}
+      {{- if .enabled }}
+      - name: LAYER_CATALOG_INIT_DIR
+        value: {{ .targetDir }}
+      - name: LAYER_CATALOG_INIT_IMAGE
+        value: {{ .image.repository }}:{{ .image.tag }}
+      - name: LAYER_CATALOG_INIT_IMAGE_PULL_POLICY
+        value: {{ .pullPolicy }}
+      {{- end}}
+    {{- end}}
     {{- if .Values.driver.env }}
       {{- range $key, $value :=  .Values.driver.env }}
       - name: {{ $key }}
@@ -208,6 +224,12 @@ spec:
       {{- with .Values.driver.volumeMounts }}
       {{- toYaml . | nindent 6 }}
       {{- end }}
+      {{- with .Values.layerCatalog.viaInitContainer }}
+        {{- if .enabled }}
+      - mountPath: {{ .targetDir }}
+        name: layercatalogs
+        {{- end }}
+      {{- end }}
     {{- if not .Values.existingConfigMaps }}
     {{- if .Values.configMaps.backendConfig }}
       - mountPath: /opt/backend_config/backendconfig.py
@@ -246,9 +268,26 @@ spec:
     {{- end }}
     {{- end }}
   {{- end }}
-    {{- if .Values.initContainers }}
+    {{- if or .Values.initContainers .Values.layerCatalog.viaInitContainer.enabled }}
     initContainers:
+      {{- with .Values.initContainers}}
 {{ toYaml .Values.initContainers | nindent 6 }}
+      {{- end }}
+      {{- with .Values.layerCatalog.viaInitContainer }}
+        {{- if .enabled }}
+      - name: init-layercatalog
+        image: "{{ .image.repository }}:{{ .image.tag }}"
+        imagePullPolicy: {{ .pullPolicy }}
+        env:
+        - name: TARGET_DIR
+          value: {{ .targetDir }}
+        volumeMounts:
+        - name: layercatalogs
+          mountPath: {{ .targetDir }}
+        resources:
+          {{ toYaml .resources | nindent 10 }}
+        {{- end }}
+      {{- end }}
     {{- end }}
     {{- if .Values.driver.lifecycle}}
     lifecycle:
@@ -320,6 +359,12 @@ spec:
       {{- with .Values.executor.volumeMounts }}
       {{- toYaml . | nindent 6 }}
       {{- end }}
+      {{- with .Values.layerCatalog.viaInitContainer }}
+        {{- if .enabled }}
+      - mountPath: {{ .targetDir }}
+        name: layercatalogs
+        {{- end }}
+      {{- end }}
     {{- if not .Values.existingConfigMaps }}
     {{- if .Values.configMaps.backendConfig }}
       - mountPath: /opt/backend_config/backendconfig.py
@@ -348,9 +393,26 @@ spec:
     {{- end }}
     {{- end }}
   {{- end }}
-    {{- if .Values.initContainers }}
+    {{- if or .Values.initContainers .Values.layerCatalog.viaInitContainer.enabled }}
     initContainers:
-{{ toYaml .Values.initContainers | indent 6 }}
+      {{- with .Values.initContainers}}
+{{ toYaml .Values.initContainers | nindent 6 }}
+      {{- end }}
+      {{- with .Values.layerCatalog.viaInitContainer }}
+        {{- if .enabled }}
+      - name: init-layercatalog
+        image: "{{ .image.repository }}:{{ .image.tag }}"
+        imagePullPolicy: {{ .pullPolicy }}
+        env:
+        - name: TARGET_DIR
+          value: {{ .targetDir }}
+        volumeMounts:
+        - name: layercatalogs
+          mountPath: {{ .targetDir }}
+        resources:
+          {{ toYaml .resources | nindent 10 }}
+        {{- end }}
+      {{- end }}
     {{- end }}
     {{- if .Values.executor.lifecycle}}
     lifecycle:
