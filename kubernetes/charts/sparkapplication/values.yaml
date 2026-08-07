@@ -3,6 +3,22 @@ batchScheduler:
   name: 'default-scheduler'
   queue: 'root.default'
 configMaps: {}
+
+layerCatalog:
+  viaInitContainer:
+    enabled: false
+    image:
+      repository: "example.localhost/layer-catalog-init"
+      tag: "v0.0.0"
+    pullPolicy: IfNotPresent
+    targetDir: "/opt/layercatalogs"
+    resources:
+      requests:
+        cpu: "50m"
+        memory: "64Mi"
+      limits:
+        cpu: "200m"
+        memory: "64Mi"
 # Driver parameters
 driver:
   # Number of cores allocated to driver

@@ -120,6 +120,20 @@ fileDependencies:
 
 This should give a working webapp driver that can be accessed on port 50001 via port-forwarding. The chart has the possibility to create an Ingress as well.
 
+### LayerCatalog
+
+#### Stage via initContainer
+
+If you want to stage a LayerCatalog using an initContainer you must specify it in the Values by updating layerCatalog.viaInitContainer
+- Set enabled to true
+- Provide image repository and tag
+
+That way the container image is ran as an initContainer. It will get an environment variable `TARGET_DIR` which will point to `.Values.layerCatalog.viaInitContainer.targetDir` which defaults to `/opt/layercatalogs` so you must make sure that:
+- The init container puts the files in `$TARGET_DIR`
+- [You configure the geopyspark-driver to use the proper layercatalog JSON files](https://github.com/Open-EO/openeo-geopyspark-driver/blob/6793adc498bdd1433191a83248cda8ec3e3f34f8/openeogeotrellis/config/config.py#L88)
+- Container image tags are immutable or you must make sure to AlwaysPull and not have any caching in image sources
+
+
 ### HA mode
 
 As the `SparkApplication` CRD doesn't provide the ability to run in HA, the chart was developed to create multiple separate SparkApplications when HA mode is activated. The `Service` has a `Selector` that matches both drivers and thus an `Ingress` can be created to expose a HA Spark driver.
