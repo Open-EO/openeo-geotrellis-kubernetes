@@ -1,3 +1,4 @@
+{{- include "sparkapplication.validateInitdata" . }}
 {{- if .Values.replicaCount }}
 apiVersion: apps/v1
 kind: Deployment
@@ -68,8 +69,8 @@ spec:
           - name: TARGET_DIR
             value: {{ .targetDir }}
           volumeMounts:
-          - name: layercatalogs
-            mountPath: {{ .targetDir }}
+          - name: initdata
+            mountPath: {{ $.Values.initdata.targetDir }}
           resources:
             {{ toYaml .resources | nindent 12 }}
           {{- end }}
@@ -85,6 +86,10 @@ spec:
           command: ["/opt/openeo/bin/python3", "/opt/openeo/bin/openeo_kube_lite.py"]
           imagePullPolicy: {{ .Values.imagePullPolicy }}
           env:
+            {{- if or .Values.initdata.enabled .Values.layerCatalog.viaInitContainer.enabled }}
+              - name: INITDATA_DIR
+                value: {{ .Values.initdata.targetDir }}
+            {{- end }}
             {{- with .Values.layerCatalog.viaInitContainer }}
               {{- if .enabled }}
               - name: LAYER_CATALOG_INIT_DIR
@@ -136,8 +141,8 @@ spec:
           {{- end }}
             {{- with .Values.layerCatalog.viaInitContainer }}
               {{- if .enabled }}
-            - mountPath: {{ .targetDir }}
-              name: layercatalogs
+            - mountPath: {{ $.Values.initdata.targetDir }}
+              name: initdata
               {{- end }}
             {{- end }}
           {{- if not .Values.existingConfigMaps }}
@@ -179,13 +184,11 @@ spec:
           {{- end }}
 
 
-      {{- if or .Values.volumes (not .Values.existingConfigMaps) (.Values.layerCatalog.viaInitContainer.enabled) }}
+      {{- if or .Values.volumes (not .Values.existingConfigMaps) (.Values.layerCatalog.viaInitContainer.enabled) .Values.initdata.enabled }}
       volumes:
-      {{- with .Values.layerCatalog.viaInitContainer }}
-        {{- if .enabled }}
-        - name: layercatalogs
+      {{- if or .Values.initdata.enabled .Values.layerCatalog.viaInitContainer.enabled }}
+        - name: initdata
           emptyDir: {}
-        {{- end }}
       {{- end }}
       {{- with .Values.volumes }}
       {{- toYaml . | nindent 8 }}

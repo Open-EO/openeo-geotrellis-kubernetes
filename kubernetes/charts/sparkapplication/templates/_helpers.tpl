@@ -100,3 +100,17 @@ Create the name of the service account to use
 {{- define "sparkapplication.clusterRoleBindingName" -}}
 {{- .Values.rbac.clusterRoleBindingName | default (printf "%s-cluster-role-%s" .Values.rbac.serviceAccountDriver .Release.Namespace) | trunc 63 | trimSuffix "-" }}
 {{- end }}
+
+{{/*
+Validate that layerCatalog.viaInitContainer.targetDir is a subdirectory of initdata.targetDir.
+Call this template at the top of any template that uses these values.
+*/}}
+{{- define "sparkapplication.validateInitdata" -}}
+  {{- if .Values.layerCatalog.viaInitContainer.enabled }}
+    {{- $initdataDir := .Values.initdata.targetDir }}
+    {{- $layerCatalogDir := .Values.layerCatalog.viaInitContainer.targetDir }}
+    {{- if not (hasPrefix $initdataDir $layerCatalogDir) }}
+      {{- fail (printf "layerCatalog.viaInitContainer.targetDir (%q) must start with initdata.targetDir (%q)" $layerCatalogDir $initdataDir) }}
+    {{- end }}
+  {{- end }}
+{{- end }}

@@ -4,6 +4,12 @@ batchScheduler:
   queue: 'root.default'
 configMaps: {}
 
+# Configuration of a volume that can be shared with initcontainers
+# for staging static files that can exceed 1MB
+initdata:
+  enabled: false
+  targetDir: "/initdata"
+
 layerCatalog:
   viaInitContainer:
     enabled: false
@@ -11,7 +17,7 @@ layerCatalog:
       repository: "example.localhost/layer-catalog-init"
       tag: "v0.0.0"
     pullPolicy: IfNotPresent
-    targetDir: "/opt/layercatalogs"
+    targetDir: "/initdata/layercatalogs"
     resources:
       requests:
         cpu: "50m"
