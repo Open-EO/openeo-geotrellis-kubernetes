@@ -1,5 +1,12 @@
 # sparkapplication chart changelog
 
+## 1.5.0
+
+- fix: BREAKING CHANGE: have initdata sit on a volume that can be shared and that makes
+  it clear that it comes from initcontainers. Keep this as a minor as it is very recent
+  opt-in functionality.
+- allow for a shared volume for data from initcontainers.
+
 ## 1.4.1
 
 - fix: make sure lite deployment also supports staging of layercatalog files by an initContainer
