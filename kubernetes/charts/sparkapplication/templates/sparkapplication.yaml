@@ -271,10 +271,13 @@ spec:
     {{- end }}
     {{- end }}
   {{- end }}
-    {{- if or .Values.initContainers .Values.layerCatalog.viaInitContainer.enabled }}
+    {{- if or .Values.initContainers .Values.layerCatalog.viaInitContainer.enabled .Values.driver.initContainers }}
     initContainers:
       {{- with .Values.initContainers}}
-{{ toYaml .Values.initContainers | nindent 6 }}
+{{ toYaml . | nindent 6 }}
+      {{- end }}
+      {{- with .Values.driver.initContainers}}
+{{ toYaml . | nindent 6 }}
       {{- end }}
       {{- with .Values.layerCatalog.viaInitContainer }}
         {{- if .enabled }}
@@ -399,7 +402,7 @@ spec:
     {{- if or .Values.initContainers .Values.layerCatalog.viaInitContainer.enabled }}
     initContainers:
       {{- with .Values.initContainers}}
-{{ toYaml .Values.initContainers | nindent 6 }}
+{{ toYaml . | nindent 6 }}
       {{- end }}
       {{- with .Values.layerCatalog.viaInitContainer }}
         {{- if .enabled }}
