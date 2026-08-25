@@ -55,10 +55,13 @@ spec:
       securityContext:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if or .Values.initContainers .Values.layerCatalog.viaInitContainer.enabled }}
+      {{- if or .Values.initContainers .Values.layerCatalog.viaInitContainer.enabled .Values.driver.initContainers }}
       initContainers:
         {{- with .Values.initContainers}}
-{{ toYaml .Values.initContainers | nindent 8 }}
+{{ toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.driver.initContainers}}
+{{ toYaml . | nindent 8 }}
         {{- end }}
         {{- with .Values.layerCatalog.viaInitContainer }}
           {{- if .enabled }}
