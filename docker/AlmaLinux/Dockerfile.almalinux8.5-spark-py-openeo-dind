@@ -1,0 +1,133 @@
+FROM vito-docker-private.artifactory.vgt.vito.be/almalinux8.5
+
+ARG TINI_VERSION=v0.19.0
+ARG SPARK_VERSION
+ARG PYTHON_PACKAGE
+
+COPY docker/AlmaLinux/vito.repo /etc/yum.repos.d/vito.repo
+
+WORKDIR /opt/spark/work-dir
+
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
+
+RUN dnf clean all && dnf install -y epel-release && \
+    dnf --enablerepo=powertools install -y spark-vito-${SPARK_VERSION} \
+    hdf5-1.10.5-5.el8.x86_64 \
+    gdal-3.8.4 \
+    gdal-devel-3.8.4 \
+    python3-gdal-3.8.4 \
+    gdal-libs-3.8.4 \
+    unzip \
+    java-11-openjdk-headless \
+    krb5-workstation \
+    krb5-libs \
+    sssd-client \
+    ipa-client \
+    nss \
+    orfeo-toolbox-py38-8.1.2 \
+    boost-filesystem \
+    boost-serialization \
+    procps-ng \
+    ${PYTHON_PACKAGE} \
+    python38-pytz  \
+    python38-Cython \
+    fftw-libs-double \
+    fftw-libs-single \
+    openeo-vito-aux-data \
+    tinyxml \
+    udunits2 \
+    R-minimal \
+    Rlib-sf \
+    Rlib-s2 \
+    Rlib-wk \
+    Rlib-curl \
+    Rlib-lubridate \
+    Rlib-units \
+    Rlib-rlang \
+    Rlib-classInt \
+    Rlib-magrittr \
+    Rlib-abind \
+    Rlib-stars \
+    Rlib-jsonlite \
+    Rlib-caret \
+    Rlib-ggplot2 \
+    Rlib-scales \
+    Rlib-vctrs \
+    Rlib-tibble \
+    Rlib-pillar \
+    Rlib-pkgconfig \
+    Rlib-withr \
+    Rlib-plyr \
+    Rlib-recipes \
+    Rlib-bfast \
+    Rlib-fansi \
+    Rlib-utf8 \
+    Rlib-timeDate \
+    Rlib-dplyr \
+    Rlib-tidyselect \
+    Rlib-gower \
+    Rlib-hardhat \
+    Rlib-ipred \
+    Rlib-prodlim \
+    Rlib-lava \
+    Rlib-future.apply \
+    Rlib-digest \
+    Rlib-globals \
+    Rlib-listenv \
+    Rlib-parallelly \
+    Rlib-timechange \
+    Rlib-purrr \
+    Rlib-reshape2 \
+    Rlib-stringr \
+    Rlib-stringi \
+    Rlib-pROC \
+    Rlib-zoo \
+    Rlib-strucchangeRcpp \
+    Rlib-sandwich \
+    Rlib-fracdiff \
+    Rlib-lmtest \
+    Rlib-quantmod \
+    Rlib-quadprog \
+    Rlib-xts \
+    Rlib-TTR \
+    Rlib-urca \
+    Rlib-Rdpack \
+    Rlib-rbibutils \
+    Rlib-DBI \
+    Rlib-Rcpp \
+    Rlib-e1071 \
+    Rlib-proxy \
+    libtiff-tools \
+    blosc \
+    compat-libgfortran-48-4.8.5-36.1.el8.x86_64 && \
+    ln -s /usr/lib64/libgdal.so.34 /usr/lib64/libgdal.so.27 && \
+    python3.8 -m pip install --upgrade --target /usr/lib64/python3.8/site-packages/ pip setuptools wheel && \
+    python3.8 -m pip install --upgrade --target /usr/lib64/python3.8/site-packages/ 'rpy2==3.5.12' && \
+    chmod +x /usr/bin/tini && \
+    rm -r /root/.cache && \
+    yum clean all && \
+    rm -rf /var/cache/yum/*
+
+RUN ln -s /opt/spark3_5_3 /usr/local/spark-3.5.3 && ln -s /opt/spark3_5_3 /usr/local/spark
+
+ENV SPARK_HOME /usr/local/spark
+ENV JAVA_HOME /usr/lib/jvm/jre
+ENV PYSPARK_PYTHON=python3
+ENV PYTHONPLATLIBDIR=lib64
+ENV HADOOP_HOME=/usr/hdp/current/hadoop-client
+ENV HADOOP_CONF_DIR=/etc/hadoop/conf
+ENV YARN_CONF_DIR=/etc/hadoop/conf
+ENV ACCUMULO_CLIENT_CONF_PATH=client.conf
+ENV OTB_HOME=/usr
+ENV OTB_APPLICATION_PATH=/usr/lib/otb/applications
+
+ADD --chmod=755 https://artifactory.vgt.vito.be/artifactory/libs-snapshot-public/org/openeo/geotrellis-dependencies/2.5.0_2.12-SNAPSHOT/geotrellis-dependencies-2.5.0_2.12-SNAPSHOT.jar /opt/geotrellis-dependencies-static.jar
+
+RUN dnf install -y maven git java-11-openjdk-devel gdal-3.8.4"
+RUN dnf -y install dnf-plugins-core"
+RUN dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo"
+RUN dnf -y install docker-ce docker-ce-cli containerd.io"
+RUN usermod -aG docker jenkins
+RUN newgrp docker
+
+USER jenkins
