@@ -282,14 +282,14 @@ def _cwl_dummy_stac_parallel(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     )
     .param(name="stac_url",
            description=(
-               "URL pointing to a STAC catalog, ItemCollection or Item containing the input products to be used for the analysis."
+               "URL pointing to a STAC catalog, ItemCollection or Item containing the input products to be used for the analysis. "
                "Exactly one of stac_url or stac_document must be provided. "
             ),
            schema={"type": "string"},
            required=False)
     .param(name="stac_document",
            description=(
-               "STAC catalog, ItemCollection or Item (as a dictionary) containing the input products to be used for the analysis."
+               "STAC catalog, ItemCollection or Item (as a dictionary) containing the input products to be used for the analysis. "
                "Exactly one of stac_url or stac_document must be provided."
             ),
            schema={"type": "Any"},
@@ -520,6 +520,13 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> StacSaveResult:
                     "Source code repository: https://github.com/bcdev/apex-force-openeo . "
                     "Parameter documentation in https://force-eo.readthedocs.io/en/latest/howto/tsi.html",
     )
+    .param(name="stac_url",
+           description=(
+               "URL pointing to a STAC catalog or item describing a FORCE level 2 data cube "
+               "that should be used as input for the TSA processing."
+            ),
+           schema={"type": "string"},
+           required=True)
     .param(name="name",
            description="Name of the datacube. Example: bologna . Default: cube-<timestamp>",
            schema={"type": "string"},
