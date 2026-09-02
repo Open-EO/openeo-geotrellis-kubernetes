@@ -553,7 +553,7 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> StacSaveResult:
         name="x_tile_range",
         description="Analysis extent, given in tile numbers (see tile naming). Each existing tile "
                     "falling into this square extent will be processed. A shapefile of the tiles "
-                    "can be generated with force-tabulate-grid. Default: -999 9999",
+                    "can be generated with force-tabulate-grid.",
         schema={"type": "array", "items": {"type": "integer"}},
         required=False,
     )
@@ -561,7 +561,7 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> StacSaveResult:
         name="y_tile_range",
         description="Analysis extent, given in tile numbers (see tile naming). Each existing tile "
                     "falling into this square extent will be processed. A shapefile of the tiles "
-                    "can be generated with force-tabulate-grid. Default: -999 9999",
+                    "can be generated with force-tabulate-grid.",
         schema={"type": "array", "items": {"type": "integer"}},
         required=False,
     )
