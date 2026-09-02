@@ -11,9 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # Check out the actual head commit (not the PR's synthetic merge
-          # commit) so the working tree matches --to-ref exactly; darker
-          # refuses to write reformatted files otherwise.
+          # Check out the actual PR head commit rather than the synthetic
+          # merge commit, so hooks lint/format the real proposed changes.
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
       - uses: actions/setup-python@v5
@@ -21,4 +20,9 @@ jobs:
           python-version: "3.x"
       - uses: pre-commit/action@v3.0.1
         with:
-          extra_args: --from-ref ${{ github.event.pull_request.base.sha || github.event.before }} --to-ref ${{ github.event.pull_request.head.sha || github.sha }}
+          # darker (invoked via :PRE-COMMIT:) only allows writing reformatted
+          # files back when PRE_COMMIT_TO_REF is the literal string "HEAD" -
+          # any actual commit SHA is rejected even if it matches the checked
+          # out commit. See darker's darker/__main__.py write_modified_files
+          # check.
+          extra_args: --from-ref ${{ github.event.pull_request.base.sha || github.event.before }} --to-ref HEAD
