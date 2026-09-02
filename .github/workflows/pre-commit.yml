@@ -11,6 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          # Check out the actual head commit (not the PR's synthetic merge
+          # commit) so the working tree matches --to-ref exactly; darker
+          # refuses to write reformatted files otherwise.
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
