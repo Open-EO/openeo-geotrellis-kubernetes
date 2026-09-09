@@ -89,7 +89,7 @@ An example of a layercatalog:
 https://github.com/Open-EO/openeo-geotrellis-kubernetes/blob/master/docker/creo_layercatalog.json
 
 
-See: 
+See:
 https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#define-the-key-to-use-when-creating-a-configmap-from-a-file
 
 For reference, this Python code actually works with the configuration in the layer catalog:
@@ -97,7 +97,7 @@ https://github.com/Open-EO/openeo-geopyspark-driver/blob/master/openeogeotrellis
 
 ### STAC based collection
 
-Custom config for STAC collection. Note that 'opensearch_XX' properties are used, but the backend tries to determine automatically what to use. 
+Custom config for STAC collection. Note that 'opensearch_XX' properties are used, but the backend tries to determine automatically what to use.
 
 ```
  "_vito": {
@@ -193,6 +193,12 @@ The new metrics should now be appearing in your Prometheus instance.
 | Filebeat             | Log aggregation                             |
 | RKE Pushprox         | Helper for metrics of RKE components        |
 | Cinder CSI           | Dynamic OpenStack Cinder volumes            |
+
+## How to contribute
+
+Make developments in a fork of this repository, and submit a pull request.
+
+Enable the pre-commit hook that checks code before committing: [pre-commit hook](.pre-commit-config.yaml).
 
 [1]: https://creodias.eu/
 [2]: https://creodias.eu/faq-other/-/asset_publisher/SIs09LQL6Gct/content/how-to-configure-kubernetes
