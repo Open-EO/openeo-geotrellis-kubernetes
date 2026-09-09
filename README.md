@@ -118,7 +118,7 @@ Now that we have the Spark operator running, it's time to deploy our application
 As we are using the Spark operator, we can now define our Spark job as a Kubernetes resource, rather than a `spark-submit` script.
 To have a fully functional application, we need more than a `SparkApplication` Kubernetes resource. We also need an Ingress, ServiceAccounts, RBAC, ... A [Helm chart][9] was written to help with all the parts we need. Instructions on how to use this chart, can be found in the `README.md` file.
 
-After creating a `values.yam` file with your necessary values, you can then invoke a regular `helm install` command to deploy your instance of openEO to your Kubernetes cluster.
+After creating a `values.yaml` file with your necessary values, you can then invoke a regular `helm install` command to deploy your instance of openEO to your Kubernetes cluster.
 
 ### Relevant config properties
 
