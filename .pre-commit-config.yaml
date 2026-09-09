@@ -1,4 +1,7 @@
 # See https://pre-commit.com for more information
+# To use, run:
+# pip install pre-commit
+# pre-commit install
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
