@@ -280,6 +280,20 @@ def _cwl_dummy_stac_parallel(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
                     "FORCE level 2 Parameter documentation in https://force-eo.readthedocs.io/en/latest/howto/l2-ard.html#tut-ard "
                     "and https://force-eo.readthedocs.io/en/latest/howto/datacube.html#tut-datacube",
     )
+    .param(name="stac_url",
+           description=(
+               "URL pointing to a STAC catalog, ItemCollection or Item containing the input products to be used for the analysis. "
+               "Exactly one of stac_url or stac_document must be provided. "
+            ),
+           schema={"type": "string"},
+           required=False)
+    .param(name="stac_document",
+           description=(
+               "STAC catalog, ItemCollection or Item (as a dictionary) containing the input products to be used for the analysis. "
+               "Exactly one of stac_url or stac_document must be provided."
+            ),
+           schema={"type": "Any"},
+           required=False)
     .param(name="name",
            description="Name of the datacube. Example: bologna . Default: cube-<timestamp>",
            schema={"type": "string"},
@@ -506,6 +520,13 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> StacSaveResult:
                     "Source code repository: https://github.com/bcdev/apex-force-openeo . "
                     "Parameter documentation in https://force-eo.readthedocs.io/en/latest/howto/tsi.html",
     )
+    .param(name="stac_url",
+           description=(
+               "URL pointing to a STAC catalog or item describing a FORCE level 2 data cube "
+               "that should be used as input for the TSA processing."
+            ),
+           schema={"type": "string"},
+           required=True)
     .param(name="name",
            description="Name of the datacube. Example: bologna . Default: cube-<timestamp>",
            schema={"type": "string"},
@@ -532,7 +553,7 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> StacSaveResult:
         name="x_tile_range",
         description="Analysis extent, given in tile numbers (see tile naming). Each existing tile "
                     "falling into this square extent will be processed. A shapefile of the tiles "
-                    "can be generated with force-tabulate-grid. Default: -999 9999",
+                    "can be generated with force-tabulate-grid.",
         schema={"type": "array", "items": {"type": "integer"}},
         required=False,
     )
@@ -540,7 +561,7 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> StacSaveResult:
         name="y_tile_range",
         description="Analysis extent, given in tile numbers (see tile naming). Each existing tile "
                     "falling into this square extent will be processed. A shapefile of the tiles "
-                    "can be generated with force-tabulate-grid. Default: -999 9999",
+                    "can be generated with force-tabulate-grid.",
         schema={"type": "array", "items": {"type": "integer"}},
         required=False,
     )
