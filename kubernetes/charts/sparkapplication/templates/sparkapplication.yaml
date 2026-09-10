@@ -166,6 +166,8 @@ spec:
         value: {{ .image.repository }}:{{ .image.tag }}
       - name: LAYER_CATALOG_INIT_IMAGE_PULL_POLICY
         value: {{ .pullPolicy }}
+      - name: OPENEO_LAYER_CATALOG_VERSION
+        value: {{ .image.tag }}
       {{- end}}
     {{- end}}
     {{- if .Values.driver.env }}

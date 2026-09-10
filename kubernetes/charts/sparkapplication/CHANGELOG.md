@@ -1,5 +1,10 @@
 # sparkapplication chart changelog
 
+
+## 1.6.0
+
+- Expose layercatalog version as `OPENEO_LAYER_CATALOG_VERSION` environment variable.
+
 ## 1.5.1
 
 - fix: initContainers templating bug
