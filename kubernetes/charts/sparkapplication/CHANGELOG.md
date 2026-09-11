@@ -1,5 +1,11 @@
 # sparkapplication chart changelog
 
+## 1.5.1
+
+- fix: initContainers templating bug
+
+  The templates did not consider the context of the with block. This change fixes it and adds support for specifying it for only the drivers.
+
 ## 1.5.0
 
 - fix: BREAKING CHANGE: have initdata sit on a volume that can be shared and that makes
