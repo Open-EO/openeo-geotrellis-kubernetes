@@ -275,10 +275,10 @@ def _cwl_dummy_stac_parallel(args: ProcessArgs, env: EvalEnv) -> DriverDataCube:
     ProcessSpec(
         id="force_level2",
         description="FORCE Level 2 ARD generation process. "
-                    "Documentation: https://esa-apex.github.io/apex_toolbox_documentation/docs/force/. "
-                    "Source code repository: https://github.com/bcdev/apex-force-openeo . "
-                    "FORCE level 2 Parameter documentation in https://force-eo.readthedocs.io/en/latest/howto/l2-ard.html#tut-ard "
-                    "and https://force-eo.readthedocs.io/en/latest/howto/datacube.html#tut-datacube",
+                    "Documentation: <https://esa-apex.github.io/apex_toolbox_documentation/docs/force/>. "
+                    "Source code repository: <https://github.com/bcdev/apex-force-openeo>. "
+                    "FORCE level 2 Parameter documentation in <https://force-eo.readthedocs.io/en/latest/howto/l2-ard.html#tut-ard> "
+                    "and <https://force-eo.readthedocs.io/en/latest/howto/datacube.html#tut-datacube>",
     )
     .param(name="stac_url",
            description=(
@@ -516,9 +516,9 @@ def force_level2(args: ProcessArgs, env: EvalEnv) -> StacSaveResult:
     ProcessSpec(
         id="force_tsa",
         description="FORCE Time Series Analysis higher level process. "
-                    "Documentation: https://esa-apex.github.io/apex_toolbox_documentation/docs/force/ . "
-                    "Source code repository: https://github.com/bcdev/apex-force-openeo . "
-                    "Parameter documentation in https://force-eo.readthedocs.io/en/latest/howto/tsi.html",
+                    "Documentation: <https://esa-apex.github.io/apex_toolbox_documentation/docs/force/>. "
+                    "Source code repository: <https://github.com/bcdev/apex-force-openeo>. "
+                    "Parameter documentation in <https://force-eo.readthedocs.io/en/latest/howto/tsi.html>",
     )
     .param(name="stac_url",
            description=(

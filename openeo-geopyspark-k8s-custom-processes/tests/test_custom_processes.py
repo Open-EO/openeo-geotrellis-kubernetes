@@ -113,6 +113,34 @@ def test_force_level2(processes_listing):
     assert all([p["schema"]["type"] == "boolean" for p in spec["parameters"] if p["name"].startswith("do_")])
     assert all([p["optional"] for p in spec["parameters"] if "Default" in p["description"]])
 
+
+def _find_raw_urls(text: str) -> list:
+    raw_urls = []
+    for match in re.finditer(r"https?://\S+", text):
+        url = match.group(0).rstrip(".,;:)")
+        start, end = match.start(), match.end()
+        preceded_by_angle_bracket = start > 0 and text[start - 1] == "<"
+        preceded_by_markdown_link = start > 0 and text[start - 1] == "("
+        if preceded_by_angle_bracket or preceded_by_markdown_link:
+            continue
+        raw_urls.append(url)
+    return raw_urls
+
+
+def test_no_raw_urls_in_process_descriptions(processes_listing):
+    offenders = {}
+    for process in processes_listing.raw["processes"]:
+        import logging
+        logging.warning(process["id"])
+        raw_urls = _find_raw_urls(process.get("description", ""))
+        for parameter in process.get("parameters", []):
+            raw_urls += _find_raw_urls(parameter.get("description", ""))
+        if raw_urls:
+            offenders[process["id"]] = raw_urls
+
+    assert offenders == {}
+
+
 def test_force_tsa(processes_listing):
     spec = processes_listing.get_spec(process_id="force_tsa")
     parameters = [p["name"] for p in spec["parameters"]]
@@ -124,7 +152,7 @@ def test_force_tsa(processes_listing):
     assert "index" in parameters
     assert "standardize_tss" in parameters
     assert "interpolate" in parameters
-    assert "int_days" in parameters
+    assert "int_day" in parameters
     assert "output_stm" in parameters
     assert "stm" in parameters
     assert all(["name" in p for p in spec["parameters"]])
