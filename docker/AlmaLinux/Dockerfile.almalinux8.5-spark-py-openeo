@@ -100,10 +100,11 @@ RUN dnf clean all && dnf install -y epel-release && \
     Rlib-proxy \
     libtiff-tools \
     blosc \
-    compat-libgfortran-48-4.8.5-36.1.el8.x86_64 && \
+    compat-libgfortran-48-4.8.5-36.1.el8.x86_64 \
+    gcc-c++ && \
     ln -s /usr/lib64/libgdal.so.34 /usr/lib64/libgdal.so.27 && \
-    python3.8 -m pip install --upgrade --target /usr/lib64/python3.8/site-packages/ pip setuptools wheel && \
-    python3.8 -m pip install --upgrade --target /usr/lib64/python3.8/site-packages/ 'rpy2==3.5.12' && \
+    python3.8 -m pip install --upgrade --target /usr/lib64/python3.8/site-packages/ pip setuptools wheel rpy2==3.5.12 numpy==1.22.4 && \
+    python3.8 -m pip install --upgrade --target /usr/lib64/python3.8/site-packages/ --no-cache --force-reinstall GDAL[numpy]=="$(gdal-config --version).*" && \
     chmod +x /usr/bin/tini && \
     rm -r /root/.cache && \
     yum clean all && \
