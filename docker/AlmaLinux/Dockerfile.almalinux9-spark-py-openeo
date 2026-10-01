@@ -19,7 +19,7 @@ RUN dnf clean all && \
     dnf --enablerepo=crb install -y \
         ${SPARK_PACKAGE} \
         glibc-langpack-en \
-        orfeo-toolbox-py311-9.1.1-2026.06.11 \
+        orfeo-toolbox-py311-9.1.1-2026.09.15 \
         hdf5 \
         gdal-3.12.4 \
         gdal-devel-3.12.4 \
