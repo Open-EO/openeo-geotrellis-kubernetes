@@ -1,10 +1,10 @@
-[vito-public-alma9.3]
-name=vito-yum-almalinux9.3-public
+[team-rise-rpm-custom-alma-local-prod-9.3]
+name=team-rise-rpm-custom-alma-local-prod-9.3
 baseurl=https://repo.vito.be/artifactory/team-rise-rpm-custom-alma-local-prod/9.3/
 gpgcheck=0
 
-[team-rise-rpm-custom-alma-local-prod/9]
-name=team-rise-rpm-custom-alma-local-prod/9
+[team-rise-rpm-custom-alma-local-prod-9]
+name=team-rise-rpm-custom-alma-local-prod-9
 baseurl=https://repo.vito.be/artifactory/team-rise-rpm-custom-alma-local-prod/9
 gpgcheck=0
 
@@ -13,7 +13,7 @@ name=openeo-rpm-custom-alma-local
 baseurl=https://repo.vito.be/artifactory/openeo-rpm-custom-alma-local
 gpgcheck=0
 
-[team-rise-rpm-alma9-local]
-name=team-rise-rpm-alma9-local
+[team-rise-rpm-alma9-local-epel]
+name=team-rise-rpm-alma9-local-epel
 baseurl=https://repo.vito.be/artifactory/team-rise-rpm-alma9-local/epel
 gpgcheck=0
