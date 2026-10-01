@@ -1,4 +1,4 @@
-FROM vito-docker-private.artifactory.vgt.vito.be/almalinux9.4
+FROM team-rise-docker-local-prod.repo.vito.be/almalinux9.4
 
 ARG TINI_VERSION=v0.19.0
 ARG SPARK_PACKAGE
@@ -7,8 +7,6 @@ ARG SPARK_INSTALL_PREFIX
 ARG PYTHON_PACKAGE
 ARG GEOTRELLIS_DEPENDENCIES_STATIC_JAR_URL
 
-
-RUN sed -i '/^\[appstream\]/a module_hotfixes=1' /etc/yum.repos.d/alma_9.4.repo
 
 COPY docker/AlmaLinux/vito_almalinux9.repo /etc/yum.repos.d/vito.repo
 

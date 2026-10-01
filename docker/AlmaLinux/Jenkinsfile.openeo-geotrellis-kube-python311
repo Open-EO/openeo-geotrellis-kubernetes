@@ -5,7 +5,7 @@
 @Library('lib')_
 
 containerImageBuildPipeline {
-  dockerfile            = 'docker/AlmaLinux/Dockerfile.creo'
+  dockerfile            = 'docker/AlmaLinux/Dockerfile.openeo-geotrellis-kube-python311'
   docker_registry_prod  = 'swr.eu-nl.otc.t-systems.com/openeo'
   credentials_id        = 'openeo_swr_otc'
   downstream_jobs       = ['openEO/openeo-deploy-cdse']
