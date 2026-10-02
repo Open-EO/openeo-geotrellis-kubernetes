@@ -2,16 +2,15 @@
 cwlVersion: v1.2
 class: CommandLineTool
 
-# Same as dummy_stac.cwl, but deliberately allocates more memory than allowed
+# Deliberately allocates more memory than allowed
 # by the ResourceRequirement (100 MiB), to trigger an OOM kill.
-# Useful to test OOM handling/reporting of CWL jobs.
 
 requirements:
   - class: DockerRequirement
     dockerPull: alpine
   - class: InitialWorkDirRequirement
     listing:
-      - entryname: empty-stac-collection.json
+      - entryname: collection.json
         entry: |
           {
             "stac_version": "1.1.0",
@@ -43,4 +42,4 @@ outputs:
   output:
     type: File
     outputBinding:
-      glob: empty-stac-collection.json
+      glob: collection.json
