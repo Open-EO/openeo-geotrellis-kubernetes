@@ -1,4 +1,4 @@
-ARG OPENEO_IMAGE=vito-docker.artifactory.vgt.vito.be/almalinux8.5-spark-py-openeo:3.5.6
+ARG OPENEO_IMAGE=openeo-docker-local-prod.repo.vito.be/almalinux9-spark4-py311-openeo:1.0.45
 
 FROM ${OPENEO_IMAGE} as build_stage
 ARG OPENEO_ZIP
@@ -16,8 +16,8 @@ LABEL maintainer="VITO Remote Sensing"
 USER root
 WORKDIR /opt
 
-ARG GEOTRELLIS_EXTENSIONS_URL=https://artifactory.vgt.vito.be/artifactory/libs-snapshot-public/org/openeo/geotrellis-extensions/2.6.3_2.13-SNAPSHOT/geotrellis-extensions-2.6.3_2.13-SNAPSHOT.jar
-ARG GEOTRELLIS_LOGGING_URL=https://artifactory.vgt.vito.be/artifactory/libs-snapshot-public/org/openeo/openeo-logging/2.6.3_2.13-SNAPSHOT/openeo-logging-2.6.3_2.13-SNAPSHOT.jar
+ARG GEOTRELLIS_EXTENSIONS_URL=https://repo.vito.be/artifactory/openeo-maven-snapshot-local/org/openeo/geotrellis-extensions/2.6.3_2.13-SNAPSHOT/geotrellis-extensions-2.6.3_2.13-SNAPSHOT.jar
+ARG GEOTRELLIS_LOGGING_URL=https://repo.vito.be/artifactory/openeo-maven-snapshot-local/org/openeo/openeo-logging/2.6.3_2.13-SNAPSHOT/openeo-logging-2.6.3_2.13-SNAPSHOT.jar
 
 RUN curl -v --fail -JO "${GEOTRELLIS_EXTENSIONS_URL}" && \
     curl -v --fail -o openeo-logging-static.jar "${GEOTRELLIS_LOGGING_URL}" && \
