@@ -3,7 +3,10 @@
 @Library('lib')_
 
 helmchartPipeline{
-  chart_path       = './kubernetes/charts/sparkapplication'
-  chart_repository = 'helm-public'
-  chart_version    = '1.6.0'  // Should from now on be aligned with CHANGELOG.md
+  chart_path         = './kubernetes/charts/sparkapplication'
+  chart_repository   = 'openeo-helm-local'
+  chart_version      = '1.6.0'  // Should from now on be aligned with CHANGELOG.md
+  oci                = true
+  credentials_id     = 'svc_openeo_jenkins'
+  artifactory_server = 'sas'
 }
