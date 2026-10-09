@@ -11,13 +11,15 @@ COPY docker/AlmaLinux/vito_almalinux9.repo /etc/yum.repos.d/vito.repo
 
 RUN dnf install -y epel-release && \
     dnf --enablerepo=crb install -y \
-        gcc-toolset-13 cmake ninja-build git curl \
-        proj-devel geos-devel sqlite-devel libtiff-devel libcurl-devel \
+        gcc-toolset-13 cmake ninja-build git  \
+        geos-devel sqlite-devel libtiff-devel libcurl-devel \
         libpng-devel libjpeg-turbo-devel libwebp-devel libzstd-devel \
         hdf5-devel netcdf-devel expat-devel xerces-c-devel openjpeg2-devel \
-        lcms2-devel
+        lcms2-devel sqlite
 
 SHELL ["scl", "enable", "gcc-toolset-13", "--", "bash", "-c"]
+
+
 
 # Grok
 RUN git clone --depth 1 --branch ${GROK_VERSION} \
@@ -28,6 +30,15 @@ RUN git clone --depth 1 --branch ${GROK_VERSION} \
         -DBUILD_SHARED_LIBS=ON \
         -DGRK_BUILD_CODEC=OFF -DBUILD_TESTING=OFF && \
     cmake --build /src/grok/build && cmake --install /src/grok/build
+
+ARG PROJ_VERSION=9.9.0
+RUN curl -L https://download.osgeo.org/proj/proj-${PROJ_VERSION}.tar.gz | tar xz -C /src && \
+    cmake -S /src/proj-${PROJ_VERSION} -B /src/proj-build -G Ninja \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/opt/gdal \
+        -DBUILD_TESTING=OFF -DBUILD_APPS=ON \
+        -DENABLE_CURL=ON -DENABLE_TIFF=ON && \
+    cmake --build /src/proj-build && cmake --install /src/proj-build
 
 # GDAL (C/C++ only; the Python bindings get built later against the venv)
 RUN curl -L https://github.com/OSGeo/gdal/releases/download/v${GDAL_VERSION}/gdal-${GDAL_VERSION}.tar.gz \
@@ -54,7 +65,7 @@ RUN echo /opt/gdal/lib64 > /etc/ld.so.conf.d/gdal.conf && \
     echo /opt/gdal/lib  >> /etc/ld.so.conf.d/gdal.conf && ldconfig
 ENV PATH=/opt/gdal/bin:$PATH \
     GDAL_DATA=/opt/gdal/share/gdal \
-    PROJ_DATA=/usr/share/proj
+    PROJ_DATA=/opt/gdal/share/proj
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
 ENV UV_PYTHON_INSTALL_DIR=/opt/python VIRTUAL_ENV=/opt/venv
