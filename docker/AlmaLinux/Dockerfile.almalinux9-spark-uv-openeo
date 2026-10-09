@@ -23,16 +23,6 @@ ENV CC=/opt/rh/gcc-toolset-13/root/usr/bin/gcc \
     LD_LIBRARY_PATH=/opt/rh/gcc-toolset-13/root/usr/lib64:${LD_LIBRARY_PATH}
 
 
-# Grok
-RUN git clone --depth 1 --branch ${GROK_VERSION} \
-        https://github.com/GrokImageCompression/grok.git /src/grok && \
-    cmake -S /src/grok -B /src/grok/build -G Ninja \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_INSTALL_PREFIX=/opt/gdal \
-        -DBUILD_SHARED_LIBS=ON \
-        -DGRK_BUILD_CODEC=OFF -DBUILD_TESTING=OFF && \
-    cmake --build /src/grok/build && cmake --install /src/grok/build
-
 ARG PROJ_VERSION=9.9.0
 RUN curl -L https://download.osgeo.org/proj/proj-${PROJ_VERSION}.tar.gz | tar xz -C /src && \
     cmake -S /src/proj-${PROJ_VERSION} -B /src/proj-build -G Ninja \
@@ -49,7 +39,7 @@ RUN curl -L https://github.com/OSGeo/gdal/releases/download/v${GDAL_VERSION}/gda
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX=/opt/gdal \
         -DCMAKE_PREFIX_PATH=/opt/gdal \
-        -DGDAL_USE_GROK=ON \
+        -DGDAL_USE_GROK=OFF \
         -DGDAL_USE_OPENJPEG=ON \
         -DBUILD_PYTHON_BINDINGS=OFF \
         -DBUILD_TESTING=OFF && \
