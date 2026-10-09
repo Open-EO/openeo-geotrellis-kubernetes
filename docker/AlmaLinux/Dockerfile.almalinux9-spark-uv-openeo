@@ -7,6 +7,8 @@ FROM team-rise-docker-local-prod.repo.vito.be/almalinux9.4 AS gdal-build
 ARG GDAL_VERSION
 ARG GROK_VERSION
 
+COPY docker/AlmaLinux/vito_almalinux9.repo /etc/yum.repos.d/vito.repo
+
 RUN dnf install -y epel-release && \
     dnf --enablerepo=crb install -y \
         gcc-toolset-13 cmake ninja-build git curl \
@@ -69,6 +71,7 @@ ARG GEOTRELLIS_DEPENDENCIES_STATIC_JAR_URL
 
 WORKDIR /opt/spark/work-dir
 
+COPY docker/AlmaLinux/vito_almalinux9.repo /etc/yum.repos.d/vito.repo
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
 
 RUN dnf clean all && \
