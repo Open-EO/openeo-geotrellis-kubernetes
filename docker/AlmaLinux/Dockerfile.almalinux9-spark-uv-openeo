@@ -1,17 +1,15 @@
 ARG PYTHON_VERSION=3.14
 ARG GDAL_VERSION=3.13.3
-ARG GROK_VERSION=v20.4.16
 
 ########## builder ##########
 FROM team-rise-docker-local-prod.repo.vito.be/almalinux9.4 AS gdal-build
 ARG GDAL_VERSION
-ARG GROK_VERSION
 
 COPY docker/AlmaLinux/vito_almalinux9.repo /etc/yum.repos.d/vito.repo
 
 RUN dnf install -y epel-release && \
     dnf --enablerepo=crb install -y \
-        gcc-toolset-13 gcc-toolset-13-gcc-c++ cmake ninja-build git  \
+        gcc-toolset-13 gcc-toolset-13-gcc-c++ cmake ninja-build git \
         geos-devel sqlite-devel libtiff-devel libcurl-devel \
         libpng-devel libjpeg-turbo-devel libwebp-devel libzstd-devel \
         hdf5-devel netcdf-devel expat-devel xerces-c-devel openjpeg2-devel \
@@ -22,7 +20,7 @@ ENV CC=/opt/rh/gcc-toolset-13/root/usr/bin/gcc \
     PATH=/opt/rh/gcc-toolset-13/root/usr/bin:$PATH \
     LD_LIBRARY_PATH=/opt/rh/gcc-toolset-13/root/usr/lib64:${LD_LIBRARY_PATH}
 
-
+RUN mkdir -p /src
 ARG PROJ_VERSION=9.9.0
 RUN curl -L https://download.osgeo.org/proj/proj-${PROJ_VERSION}.tar.gz | tar xz -C /src && \
     cmake -S /src/proj-${PROJ_VERSION} -B /src/proj-build -G Ninja \
@@ -57,7 +55,9 @@ RUN echo /opt/gdal/lib64 > /etc/ld.so.conf.d/gdal.conf && \
     echo /opt/gdal/lib  >> /etc/ld.so.conf.d/gdal.conf && ldconfig
 ENV PATH=/opt/gdal/bin:$PATH \
     GDAL_DATA=/opt/gdal/share/gdal \
-    PROJ_DATA=/opt/gdal/share/proj
+    PROJ_DATA=/opt/gdal/share/proj \
+    LIBRARY_PATH=/opt/gdal/lib64:/opt/gdal/lib \
+    CPATH=/opt/gdal/include
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
 ENV UV_PYTHON_INSTALL_DIR=/opt/python VIRTUAL_ENV=/opt/venv
@@ -102,6 +102,9 @@ RUN dnf clean all && \
         blosc \
         compat-libgfortran-48 \
         openeo-vito-aux-data \
+        geos netcdf libtiff libpng \
+        libjpeg-turbo libwebp libzstd expat xerces-c \
+        openjpeg2 lcms2 sqlite-libs \
         && \
     chmod +x /usr/bin/tini && \
     rm -r /root/.cache && \
@@ -115,7 +118,7 @@ RUN dnf clean all && \
 # gcc-c++ is needed in this stage (it's already in your dnf list).
 RUN uv pip install numpy setuptools wheel cython && \
     uv pip install --no-build-isolation --no-binary GDAL "GDAL==${GDAL_VERSION}" && \
-    python -c "from osgeo import gdal; print(gdal.__version__, gdal.GetDriverByName('JP2Grok'))"
+    python -c "from osgeo import gdal; print(gdal.__version__)"
 
 # Required for new hadoop cluster because this causes "/var/lib/sss/pubconf/krb5.include.d" to be included twice which throws an error.
 RUN rm /etc/krb5.conf.d/enable_sssd_conf_dir
@@ -132,4 +135,5 @@ ENV YARN_CONF_DIR=/etc/hadoop/conf
 ENV OTB_HOME=/usr
 ENV OTB_APPLICATION_PATH=/usr/lib/otb/applications
 
-ADD --chmod=755 $GEOTRELLIS_DEPENDENCIES_STATIC_JAR_URL /opt/geotrellis-dependencies-static.jar
+ADD $GEOTRELLIS_DEPENDENCIES_STATIC_JAR_URL /opt/geotrellis-dependencies-static.jar
+RUN chmod 755 /opt/geotrellis-dependencies-static.jar
