@@ -1,0 +1,129 @@
+ARG PYTHON_VERSION=3.14
+ARG GDAL_VERSION=3.13.3
+ARG GROK_VERSION=v20.4.16
+
+########## builder ##########
+FROM team-rise-docker-local-prod.repo.vito.be/almalinux9.4 AS gdal-build
+ARG GDAL_VERSION
+ARG GROK_VERSION
+
+RUN dnf install -y epel-release && \
+    dnf --enablerepo=crb install -y \
+        gcc-toolset-13 cmake ninja-build git curl \
+        proj-devel geos-devel sqlite-devel libtiff-devel libcurl-devel \
+        libpng-devel libjpeg-turbo-devel libwebp-devel libzstd-devel \
+        hdf5-devel netcdf-devel expat-devel xerces-c-devel openjpeg2-devel \
+        lcms2-devel
+
+SHELL ["scl", "enable", "gcc-toolset-13", "--", "bash", "-c"]
+
+# Grok
+RUN git clone --depth 1 --branch ${GROK_VERSION} \
+        https://github.com/GrokImageCompression/grok.git /src/grok && \
+    cmake -S /src/grok -B /src/grok/build -G Ninja \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/opt/gdal \
+        -DBUILD_SHARED_LIBS=ON \
+        -DGRK_BUILD_CODEC=OFF -DBUILD_TESTING=OFF && \
+    cmake --build /src/grok/build && cmake --install /src/grok/build
+
+# GDAL (C/C++ only; the Python bindings get built later against the venv)
+RUN curl -L https://github.com/OSGeo/gdal/releases/download/v${GDAL_VERSION}/gdal-${GDAL_VERSION}.tar.gz \
+        | tar xz -C /src && \
+    cmake -S /src/gdal-${GDAL_VERSION} -B /src/gdal-build -G Ninja \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/opt/gdal \
+        -DCMAKE_PREFIX_PATH=/opt/gdal \
+        -DGDAL_USE_GROK=ON \
+        -DGDAL_USE_OPENJPEG=ON \
+        -DBUILD_PYTHON_BINDINGS=OFF \
+        -DBUILD_TESTING=OFF && \
+    cmake --build /src/gdal-build && cmake --install /src/gdal-build
+
+########## runtime ##########
+FROM team-rise-docker-local-prod.repo.vito.be/almalinux9.4
+ARG PYTHON_VERSION
+ARG GDAL_VERSION
+# ... existing ARGs / dnf install, without the gdal* and python3.11* packages,
+#     plus the runtime libs: proj geos hdf5 netcdf libtiff libwebp xerces-c openjpeg2 ...
+
+COPY --from=gdal-build /opt/gdal /opt/gdal
+RUN echo /opt/gdal/lib64 > /etc/ld.so.conf.d/gdal.conf && \
+    echo /opt/gdal/lib  >> /etc/ld.so.conf.d/gdal.conf && ldconfig
+ENV PATH=/opt/gdal/bin:$PATH \
+    GDAL_DATA=/opt/gdal/share/gdal \
+    PROJ_DATA=/usr/share/proj
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
+ENV UV_PYTHON_INSTALL_DIR=/opt/python VIRTUAL_ENV=/opt/venv
+RUN uv python install ${PYTHON_VERSION} && \
+    uv venv --python ${PYTHON_VERSION} ${VIRTUAL_ENV}
+ENV PATH=${VIRTUAL_ENV}/bin:$PATH PYSPARK_PYTHON=${VIRTUAL_ENV}/bin/python
+
+
+ARG TINI_VERSION=v0.19.0
+ARG SPARK_PACKAGE
+# Location where the spark package is installed to and to be symlinked to `/usr/local/spark`
+ARG SPARK_INSTALL_PREFIX
+ARG GEOTRELLIS_DEPENDENCIES_STATIC_JAR_URL
+
+WORKDIR /opt/spark/work-dir
+
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
+
+RUN dnf clean all && \
+    dnf install -y epel-release && \
+    dnf --enablerepo=crb install -y \
+        ${SPARK_PACKAGE} \
+        glibc-langpack-en \
+        hdf5 \
+        gcc-c++ \
+        unzip \
+        java-21-openjdk-headless \
+        krb5-workstation \
+        krb5-libs \
+        sssd-client \
+        ipa-client \
+        nss \
+        boost-filesystem \
+        boost-serialization \
+        procps-ng \
+        fftw-libs-double \
+        fftw-libs-single \
+        tinyxml \
+        udunits2 \
+        libtiff-tools \
+        blosc \
+        compat-libgfortran-48 \
+        openeo-vito-aux-data \
+        && \
+    chmod +x /usr/bin/tini && \
+    rm -r /root/.cache && \
+    yum clean all && \
+    rm -rf /var/cache/yum/* && \
+    rm -rf ${SPARK_INSTALL_PREFIX}/jars/spire*
+
+# Spire is removed because of version mismatch with geotrellis! Spark only has a minimal dependency on it, in a part that we do not use.
+
+# Bindings: numpy must be installed first so gdal_array gets built.
+# gcc-c++ is needed in this stage (it's already in your dnf list).
+RUN uv pip install numpy setuptools wheel cython && \
+    uv pip install --no-build-isolation --no-binary GDAL "GDAL==${GDAL_VERSION}" && \
+    python -c "from osgeo import gdal; print(gdal.__version__, gdal.GetDriverByName('JP2Grok'))"
+
+# Required for new hadoop cluster because this causes "/var/lib/sss/pubconf/krb5.include.d" to be included twice which throws an error.
+RUN rm /etc/krb5.conf.d/enable_sssd_conf_dir
+
+RUN if [ -n "${SPARK_INSTALL_PREFIX}" ]; then \
+        ln -s ${SPARK_INSTALL_PREFIX} /usr/local/spark; \
+    fi
+
+ENV SPARK_HOME /usr/local/spark
+ENV JAVA_HOME /usr/lib/jvm/jre
+ENV HADOOP_HOME=/usr/hdp/current/hadoop-client
+ENV HADOOP_CONF_DIR=/etc/hadoop/conf
+ENV YARN_CONF_DIR=/etc/hadoop/conf
+ENV OTB_HOME=/usr
+ENV OTB_APPLICATION_PATH=/usr/lib/otb/applications
+
+ADD --chmod=755 $GEOTRELLIS_DEPENDENCIES_STATIC_JAR_URL /opt/geotrellis-dependencies-static.jar
