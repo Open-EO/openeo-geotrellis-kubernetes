@@ -17,8 +17,10 @@ RUN dnf install -y epel-release && \
         hdf5-devel netcdf-devel expat-devel xerces-c-devel openjpeg2-devel \
         lcms2-devel sqlite
 
-SHELL ["scl", "enable", "gcc-toolset-13", "--", "bash", "-c"]
-
+ENV CC=/opt/rh/gcc-toolset-13/root/usr/bin/gcc \
+    CXX=/opt/rh/gcc-toolset-13/root/usr/bin/g++ \
+    PATH=/opt/rh/gcc-toolset-13/root/usr/bin:$PATH \
+    LD_LIBRARY_PATH=/opt/rh/gcc-toolset-13/root/usr/lib64:${LD_LIBRARY_PATH}
 
 
 # Grok
