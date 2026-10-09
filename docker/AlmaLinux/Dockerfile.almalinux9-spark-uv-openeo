@@ -11,7 +11,7 @@ COPY docker/AlmaLinux/vito_almalinux9.repo /etc/yum.repos.d/vito.repo
 
 RUN dnf install -y epel-release && \
     dnf --enablerepo=crb install -y \
-        gcc-toolset-13 cmake ninja-build git  \
+        gcc-toolset-13 gcc-toolset-13-gcc-c++ cmake ninja-build git  \
         geos-devel sqlite-devel libtiff-devel libcurl-devel \
         libpng-devel libjpeg-turbo-devel libwebp-devel libzstd-devel \
         hdf5-devel netcdf-devel expat-devel xerces-c-devel openjpeg2-devel \
