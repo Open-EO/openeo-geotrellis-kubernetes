@@ -32,10 +32,12 @@ baseCommand:
   - "sh"
   - "-c"
   - |
-    # Two explicit allocations (50 MiB then 1 GiB)
-    # This should trigger an OOM kill.
+    echo "Allocating 50 MiB..."
     chunk1=$(head -c 52428800 /dev/zero | tr "\0" "a")
+    echo "Allocated 50 MiB."
+    echo "Now allocating 1 GiB..."
     chunk2=$(head -c 1073741824 /dev/zero | tr "\0" "a")
+    echo "Allocated 1 GiB. This should be avoided by an OOM kill."
     set -- "$@" "$chunk1" "$chunk2"
 inputs: []
 outputs:
