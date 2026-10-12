@@ -105,5 +105,30 @@ case "$1" in
     ;;
 esac
 
-# Execute the container CMD under tini for better hygiene
-exec /usr/bin/tini -s -- "${CMD[@]}"
+# preStop hook output (decom.sh) is discarded by kubelet; relay it to container stdout.
+# tini (-s) will reap this tailer on shutdown since it becomes a child of PID 1.
+DECOM_LOG=/opt/spark/work-dir/decom.log
+rm -f /opt/spark/work-dir/decom.started /opt/spark/work-dir/decom.done
+touch "$DECOM_LOG" && tail -F "$DECOM_LOG" &
+
+# Execute the container CMD under tini for better hygiene.
+# The CMD runs under a small bash wrapper: when the JVM exits after a decommission
+# (decom.sh created decom.started), tini would exit immediately and kill the still
+# running preStop hook (exit 137 -> FailedPreStopHook warning). So the wrapper waits
+# (max 10s) for decom.sh to signal completion via decom.done before exiting, and exits
+# with the JVM exit code (not 143) when kubelet's SIGTERM arrives after the hook returned.
+# tini -g forwards signals (e.g. SIGTERM) to the whole process group, so the JVM
+# still receives them although it is no longer tini's direct child.
+exec /usr/bin/tini -s -g -- /bin/bash -c '
+  "$@"; rc=$?
+  if [ -f /opt/spark/work-dir/decom.started ]; then
+    # kubelet sends SIGTERM once the hook returns: exit with the JVM exit code
+    trap "exit $rc" TERM
+    for i in $(seq 1 100); do
+      [ -f /opt/spark/work-dir/decom.done ] && break
+      sleep 0.1 & wait $!
+    done
+    # safety cap in case SIGTERM never arrives
+    sleep 5 & wait $!
+  fi
+  exit $rc' -- "${CMD[@]}"
