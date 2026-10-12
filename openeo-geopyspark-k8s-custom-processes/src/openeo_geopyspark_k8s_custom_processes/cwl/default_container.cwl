@@ -1,9 +1,10 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
-requirements:
-  - class: DockerRequirement
-    dockerPull: alpine:3.17.0  # We have this as a system image
+# Before the backend fix, DockerRequirement was needed in calrissian
+#requirements:
+#  - class: DockerRequirement
+#    dockerPull: alpine:3.17.0  # We have this as a system image
 baseCommand:
   - sh
   - -c
