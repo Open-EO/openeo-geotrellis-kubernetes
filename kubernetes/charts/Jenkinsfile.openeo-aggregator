@@ -3,6 +3,10 @@
 @Library('lib')_
 
 helmchartPipeline{
-  chart_path       = './kubernetes/charts/openeo-aggregator'
-  chart_repository = 'helm-public'
+  chart_path         = './kubernetes/charts/openeo-aggregator'
+  chart_repository   = 'openeo-helm-local'
+  oci                = true
+  artifactory_server = 'sas'
+  chart_version      = '0.1.5'
+  credentials_id     = 'svc_openeo_jenkins'
 }
