@@ -5,6 +5,8 @@ image:
   repository: vito-docker.artifactory.vgt.vito.be/spark-history-server
   pullPolicy: Always
   tag: ""
+  #pullSecrets:
+  #- name: <secret-name>
 
 serviceAccount:
   create: true

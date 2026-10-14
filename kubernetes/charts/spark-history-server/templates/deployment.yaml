@@ -40,7 +40,11 @@ spec:
           envFrom:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+    {{- if .Values.image.pullSecrets }}
+      imagePullSecrets:
+{{ toYaml .Values.image.pullSecrets| indent 8 }}
     {{- if .Values.nodeSelector }}
+    {{- end }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}
     {{- end }}
