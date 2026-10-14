@@ -3,6 +3,9 @@
 @Library('lib')_
 
 helmchartPipeline{
-  chart_path       = './kubernetes/charts/openeo-web-editor'
-  chart_repository = 'helm-public'
+  chart_path         = './kubernetes/charts/openeo-web-editor'
+  chart_repository   = 'openeo-helm-local'
+  oci                = true
+  credentials_id     = 'svc_openeo_jenkins'
+  artifactory_server = 'sas'
 }
