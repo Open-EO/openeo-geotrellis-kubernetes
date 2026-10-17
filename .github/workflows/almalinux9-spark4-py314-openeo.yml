@@ -1,0 +1,141 @@
+name: almalinux9-spark4-py314-openeo image
+
+# GitHub Actions counterpart of docker/AlmaLinux/Jenkinsfile.almalinux9-spark4-py314-openeo
+# Builds docker/AlmaLinux/Dockerfile.almalinux9-spark-uv-openeo and publishes it to
+# GitHub Container Registry (ghcr.io) so it can be used by other workflows, e.g.:
+#
+#   jobs:
+#     test:
+#       runs-on: ubuntu-latest
+#       container:
+#         image: ghcr.io/open-eo/almalinux9-spark4-py314-openeo:latest
+#
+# or by calling this workflow as a reusable workflow and using its `image` output.
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - "docker/AlmaLinux/Dockerfile.almalinux9-spark-uv-openeo"
+      - "docker/AlmaLinux/vito_almalinux9.repo"
+      - ".github/workflows/almalinux9-spark4-py314-openeo.yml"
+  pull_request:
+    paths:
+      - "docker/AlmaLinux/Dockerfile.almalinux9-spark-uv-openeo"
+      - "docker/AlmaLinux/vito_almalinux9.repo"
+      - ".github/workflows/almalinux9-spark4-py314-openeo.yml"
+  workflow_dispatch:
+    inputs:
+      push:
+        description: "Push the image to ghcr.io"
+        type: boolean
+        default: true
+  workflow_call:
+    inputs:
+      push:
+        description: "Push the image to ghcr.io"
+        type: boolean
+        default: true
+    outputs:
+      image:
+        description: "Fully qualified image reference (pinned by digest)"
+        value: ${{ jobs.build.outputs.image }}
+      version:
+        description: "Version tag of the built image"
+        value: ${{ jobs.build.outputs.version }}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: almalinux9-spark4-py314-openeo
+  DOCKERFILE: docker/AlmaLinux/Dockerfile.almalinux9-spark-uv-openeo
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image: ${{ steps.result.outputs.image }}
+      version: ${{ steps.result.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Determine image name and whether to push
+        id: vars
+        run: |
+          owner="${GITHUB_REPOSITORY_OWNER,,}"
+          echo "image=${REGISTRY}/${owner}/${IMAGE_NAME}" >> "$GITHUB_OUTPUT"
+          echo "version=1.0.${GITHUB_RUN_NUMBER}" >> "$GITHUB_OUTPUT"
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            push=false
+          elif [[ "${{ github.event_name }}" == "push" ]]; then
+            push=true
+          else
+            push="${{ inputs.push }}"
+          fi
+          echo "push=${push}" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        if: steps.vars.outputs.push == 'true'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ steps.vars.outputs.image }}
+          tags: |
+            type=raw,value=${{ steps.vars.outputs.version }}
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=sha
+            type=ref,event=pr
+
+      - name: Build and push
+        id: build
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ${{ env.DOCKERFILE }}
+          push: ${{ steps.vars.outputs.push == 'true' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            PYTHON_VERSION=3.14
+            SPARK_PACKAGE=spark-vito-with-hadoop-4_0_1-4.0.1-2026.10.02
+            SPARK_INSTALL_PREFIX=/opt/spark4_0_1
+            GEOTRELLIS_DEPENDENCIES_STATIC_JAR_URL=https://repo.vito.be/artifactory/openeo-maven-snapshot-local/org/openeo/geotrellis-dependencies/2.6.3_2.13-SNAPSHOT/geotrellis-dependencies-2.6.3_2.13-SNAPSHOT.jar
+            PYTHON_RUNTIME=python3.14
+          # Cache layers (notably the expensive PROJ/GDAL builder stage) between runs.
+          cache-from: type=gha,scope=${{ env.IMAGE_NAME }}
+          cache-to: type=gha,mode=max,scope=${{ env.IMAGE_NAME }}
+
+      - name: Smoke test
+        if: steps.vars.outputs.push == 'true'
+        run: |
+          docker run --rm "${{ steps.vars.outputs.image }}@${{ steps.build.outputs.digest }}" \
+            python -c "from osgeo import gdal; import sys; print(sys.version, gdal.__version__)"
+
+      - name: Set outputs
+        id: result
+        run: |
+          echo "image=${{ steps.vars.outputs.image }}@${{ steps.build.outputs.digest }}" >> "$GITHUB_OUTPUT"
+          echo "version=${{ steps.vars.outputs.version }}" >> "$GITHUB_OUTPUT"
+          {
+            echo "### Image"
+            echo '```'
+            echo "${{ steps.meta.outputs.tags }}"
+            echo "digest: ${{ steps.build.outputs.digest }}"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

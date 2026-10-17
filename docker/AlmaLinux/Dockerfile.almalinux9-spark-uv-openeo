@@ -1,8 +1,9 @@
 ARG PYTHON_VERSION=3.14
 ARG GDAL_VERSION=3.13.3
+ARG BASE_IMAGE= team-rise-docker-local-prod.repo.vito.be/almalinux9.4
 
 ########## builder ##########
-FROM team-rise-docker-local-prod.repo.vito.be/almalinux9.4 AS gdal-build
+FROM ${BASE_IMAGE} AS gdal-build
 ARG GDAL_VERSION
 
 COPY docker/AlmaLinux/vito_almalinux9.repo /etc/yum.repos.d/vito.repo
@@ -44,7 +45,7 @@ RUN curl -L https://github.com/OSGeo/gdal/releases/download/v${GDAL_VERSION}/gda
     cmake --build /src/gdal-build && cmake --install /src/gdal-build
 
 ########## runtime ##########
-FROM team-rise-docker-local-prod.repo.vito.be/almalinux9.4
+FROM ${BASE_IMAGE}
 ARG PYTHON_VERSION
 ARG GDAL_VERSION
 # ... existing ARGs / dnf install, without the gdal* and python3.11* packages,
