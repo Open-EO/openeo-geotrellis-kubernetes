@@ -117,6 +117,7 @@ jobs:
             SPARK_INSTALL_PREFIX=/opt/spark4_0_1
             GEOTRELLIS_DEPENDENCIES_STATIC_JAR_URL=https://repo.vito.be/artifactory/openeo-maven-snapshot-local/org/openeo/geotrellis-dependencies/2.6.3_2.13-SNAPSHOT/geotrellis-dependencies-2.6.3_2.13-SNAPSHOT.jar
             PYTHON_RUNTIME=python3.14
+            BASE_IMAGE=docker.io/library/almalinux:9.4
           # Cache layers (notably the expensive PROJ/GDAL builder stage) between runs.
           cache-from: type=gha,scope=${{ env.IMAGE_NAME }}
           cache-to: type=gha,mode=max,scope=${{ env.IMAGE_NAME }}
