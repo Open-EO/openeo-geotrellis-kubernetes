@@ -25,4 +25,9 @@ RUN curl -v --fail -JO "${GEOTRELLIS_EXTENSIONS_URL}" && \
 
 COPY --from=build_stage /opt/venv /opt/venv
 
+# Make libjep.so loadable from the JVM's default java.library.path
+# https://github.com/Open-EO/openeo-geopyspark-driver/issues/1899
+RUN ln -sf "$(ls /opt/venv/lib/python3.*/site-packages/jep/libjep.so)" /usr/lib64/libjep.so && \
+    test -e /usr/lib64/libjep.so
+
 ENV PYSPARK_PYTHON=/opt/venv/bin/python3
