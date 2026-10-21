@@ -18,7 +18,12 @@ on:
 
   push:
     tags:
-      - "chart-*-v*"
+      - "chart-openeo-aggregator-*"
+      - "chart-openeo-job-registry-api-*"
+      - "chart-openeo-web-editor-*"
+      - "chart-openeo-workspace-service-*"
+      - "chart-sparkapplication-*"
+      - "chart-spark-history-server-*"
 
 permissions:
   contents: read
