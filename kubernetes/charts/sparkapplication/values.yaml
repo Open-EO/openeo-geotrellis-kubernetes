@@ -1,4 +1,6 @@
 ---
+image: sparkapplication
+imageVersion: 0.0.1
 batchScheduler:
   name: 'default-scheduler'
   queue: 'root.default'

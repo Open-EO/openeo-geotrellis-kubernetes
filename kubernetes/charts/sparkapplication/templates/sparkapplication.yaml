@@ -15,7 +15,7 @@ spec:
   type: "Python"
   pythonVersion: {{ .Values.pythonVersion | quote }}
   mode: "cluster"
-  image: {{ required "Please provide an image" .Values.image }}:{{ required "Please provide an image version" .Values.imageVersion }}
+  image: {{ printf "%s:%s" (required "Please provide an image" .Values.image) (required "Please provide an image version" .Values.imageVersion) | quote }}
   imagePullPolicy: {{ .Values.imagePullPolicy }}
   mainApplicationFile: {{ required "Please provide a main application file." .Values.mainApplicationFile | quote }}
   sparkVersion: {{ .Values.sparkVersion | quote }}
