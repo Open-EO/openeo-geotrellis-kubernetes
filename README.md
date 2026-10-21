@@ -12,6 +12,27 @@ The goal is to have a working OpenEO deployment, running as a Spark job, on Kube
   * Some Kubernetes knowledge
   * A working Kubernetes cluster (see [Setup the Kubernetes environment](#setup-the-kubernetes-environment))
 
+## Publishing Helm charts
+
+The **Publish Helm chart** workflow publishes charts to
+`ghcr.io/open-eo/charts/<chart-name>`. Run it manually with a chart directory
+name, or push a tag such as `chart-sparkapplication-v1.6.0` matching the version
+in the chart's `Chart.yaml`.
+
+By default, publishing uses the workflow's `GITHUB_TOKEN` with `packages: write`.
+For an existing GHCR package, grant this repository **Write** access under the
+package's **Settings → Manage Actions access**. Successful registry login alone
+does not establish package access: a `403 Forbidden` during `helm push`,
+including a blob `HEAD` request, indicates that publishing access must be checked.
+Also check the organization's package creation policy when publishing a new package.
+
+If organization policy requires a separate publishing identity, set the repository
+secret `GHCR_TOKEN` to a personal access token (classic) with `write:packages`,
+and the repository variable `GHCR_USERNAME` to the token owner's GitHub username.
+That account must have write access to the package and, where required, the token
+must be authorized for the organization's SSO. The workflow uses this token when
+configured, otherwise it continues to use `GITHUB_TOKEN`.
+
 ## Setup the Kubernetes environment
 
 To deploy a Kubernetes cluster on the CreoDIAS OpenStack, we make use of [RKE][3], Rancher Kubernetes Engine. This tool allows you to deploy a cluster that runs in containers in a fast and reliable way. Rancher also provides a [Terraform provider for RKE][16], which we use to keep all of our infrastructure provisioning within Terraform.

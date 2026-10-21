@@ -106,10 +106,11 @@ jobs:
 
       - name: Log in to GHCR
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GHCR_TOKEN || secrets.GITHUB_TOKEN }}
+          GHCR_USERNAME: ${{ vars.GHCR_USERNAME || github.actor }}
         run: |
           echo "$GH_TOKEN" | helm registry login ghcr.io \
-            --username "${GITHUB_ACTOR}" \
+            --username "$GHCR_USERNAME" \
             --password-stdin
 
       - name: Push chart
