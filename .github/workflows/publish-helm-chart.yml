@@ -1,0 +1,121 @@
+
+name: Publish Helm chart
+
+on:
+  workflow_dispatch:
+    inputs:
+      chart:
+        description: Chart directory name under kubernetes/charts
+        required: true
+        type: choice
+        options:
+          - openeo-aggregator
+          - openeo-job-registry-api
+          - openeo-web-editor
+          - openeo-workspace-service
+          - sparkapplication
+          - spark-history-server
+
+  push:
+    tags:
+      - "chart-*-v*"
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+
+      - name: Select chart
+        id: chart
+        shell: bash
+        env:
+          INPUT_CHART: ${{ inputs.chart }}
+          RELEASE_TAG: ${{ github.ref_name }}
+          REF_TYPE: ${{ github.ref_type }}
+        run: |
+          if [ "$REF_TYPE" = "tag" ]; then
+            # Example: chart-sparkapplication-v1.2.0
+            if [[ "$RELEASE_TAG" =~ ^chart-([a-zA-Z0-9_-]+)-v(.+)$ ]]; then
+              CHART="${BASH_REMATCH[1]}"
+              TAG_VERSION="${BASH_REMATCH[2]}"
+            else
+              echo "Invalid chart tag: $RELEASE_TAG"
+              exit 1
+            fi
+          else
+            CHART="$INPUT_CHART"
+            TAG_VERSION=""
+          fi
+
+          case "$CHART" in
+            openeo-aggregator|openeo-job-registry-api|openeo-web-editor|openeo-workspace-service|sparkapplication|spark-history-server) ;;
+            *)
+              echo "Unsupported chart: $CHART"
+              exit 1
+              ;;
+          esac
+
+          CHART_DIR="kubernetes/charts/$CHART"
+          test -f "$CHART_DIR/Chart.yaml" || {
+            echo "Missing $CHART_DIR/Chart.yaml"
+            exit 1
+          }
+
+          NAME=$(helm show chart "$CHART_DIR" |
+            sed -n 's/^name: //p' | head -n1)
+          VERSION=$(helm show chart "$CHART_DIR" |
+            sed -n 's/^version: //p' | head -n1)
+
+          if [ -z "$NAME" ] || [ -z "$VERSION" ]; then
+            echo "Cannot read chart metadata"
+            exit 1
+          fi
+
+          if [ -n "$TAG_VERSION" ] &&
+             [ "$TAG_VERSION" != "$VERSION" ]; then
+            echo "Tag version $TAG_VERSION != chart version $VERSION"
+            exit 1
+          fi
+
+          echo "name=$NAME" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "dir=$CHART_DIR" >> "$GITHUB_OUTPUT"
+
+      - name: Validate chart
+        run: |
+          helm lint "${{ steps.chart.outputs.dir }}"
+          helm dependency build "${{ steps.chart.outputs.dir }}"
+
+      - name: Package chart
+        run: |
+          mkdir -p dist
+          helm package "${{ steps.chart.outputs.dir }}" \
+            --destination dist
+
+      - name: Log in to GHCR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "$GH_TOKEN" | helm registry login ghcr.io \
+            --username "${GITHUB_ACTOR}" \
+            --password-stdin
+
+      - name: Push chart
+        env:
+          CHART_NAME: ${{ steps.chart.outputs.name }}
+          CHART_VERSION: ${{ steps.chart.outputs.version }}
+        run: |
+          helm push "dist/${CHART_NAME}-${CHART_VERSION}.tgz" \
+            "oci://ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/charts"
