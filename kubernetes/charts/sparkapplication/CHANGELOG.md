@@ -1,5 +1,8 @@
 # sparkapplication chart changelog
 
+## 1.6.1
+
+- Minor linting fixes
 
 ## 1.6.0
 
