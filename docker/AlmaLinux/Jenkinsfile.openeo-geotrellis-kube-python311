@@ -14,4 +14,6 @@ containerImageBuildPipeline {
   promotion_job         = false
   run_tests             = false
   oci_format            = true
+  extra_index_repo      = 'openeo-pypi'
+  pip_index_server      = 'sas'
 }
