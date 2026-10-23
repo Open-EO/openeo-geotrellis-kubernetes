@@ -25,9 +25,10 @@ RUN curl -v --fail -JO "${GEOTRELLIS_EXTENSIONS_URL}" && \
 
 COPY --from=build_stage /opt/venv /opt/venv
 
-# Make libjep.so loadable from the JVM's default java.library.path
+# Activate the venv for every process in the container, so the Python interpreter that jep embeds
+# in the JVM uses it too: CPython derives sys.prefix from the first python3 on PATH (pyvenv.cfg),
+# and jep's LibraryLocator finds libjep.so under $VIRTUAL_ENV. Same as PATH on YARN executors.
 # https://github.com/Open-EO/openeo-geopyspark-driver/issues/1899
-RUN ln -sf "$(ls /opt/venv/lib/python3.*/site-packages/jep/libjep.so)" /usr/lib64/libjep.so && \
-    test -e /usr/lib64/libjep.so
+ENV VIRTUAL_ENV=/opt/venv PATH=/opt/venv/bin:$PATH
 
 ENV PYSPARK_PYTHON=/opt/venv/bin/python3
