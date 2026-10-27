@@ -102,6 +102,7 @@ RUN dnf clean all && \
         libtiff-tools \
         blosc \
         compat-libgfortran-48 \
+        jemalloc \
         openeo-vito-aux-data \
         geos netcdf libtiff libpng \
         libjpeg-turbo libwebp libzstd expat xerces-c \

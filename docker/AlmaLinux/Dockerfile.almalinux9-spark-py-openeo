@@ -47,6 +47,7 @@ RUN dnf clean all && \
         libtiff-tools \
         blosc \
         compat-libgfortran-48 \
+        jemalloc \
         openeo-vito-aux-data \
         && \
     ${PYTHON_RUNTIME} -m pip install --upgrade --target /usr/lib64/${PYTHON_RUNTIME}/site-packages/ pip setuptools wheel && \
