@@ -6,4 +6,8 @@ metadata:
 data:
   prometheus_config.yaml: |
 {{- tpl .Values.configMaps.prometheusConfig . | nindent 4 }}
+{{- if .Values.podTemplates.enabled }}
+  metrics.properties: |
+{{- .Values.monitoring.metricsProperties | nindent 4 }}
+{{- end }}
 {{- end }}

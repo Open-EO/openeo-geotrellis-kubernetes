@@ -135,6 +135,24 @@ That way the container image is ran as an initContainer. It will get an environm
 - If you support batch jobs support must be present in geopyspark-driver (e.g. https://github.com/Open-EO/openeo-geopyspark-driver/pull/1764)
 
 
+### Pod templates
+
+By default the driver and executor pods are configured by the mutating webhook of the Spark Operator
+(env, volumes, init containers, affinity, ...). Set `podTemplates.enabled: true` to render these settings
+into `spec.driver.template` and `spec.executor.template` instead, so pod creation no longer depends on the
+webhook to configure the pods. The webhook is still called for Spark pods, but it has nothing left to add.
+
+Requirements:
+- `sparkVersion` >= 3.0.0
+- Spark Operator >= 2.4.0 (older versions only set the ownerReference of the driver pod from the webhook)
+- when `jmxExporterJar` is set: `monitoring.prometheus.configFile`, `existingConfigMaps: false` and
+  `configMaps.prometheusConfig`. The chart's prometheus configmap then also provides
+  `metrics.properties` (content: `monitoring.metricsProperties`), which replaces the configmap the
+  operator would otherwise create and mount.
+
+Only in this mode, the driver container can get probes via `driver.livenessProbe`, `driver.readinessProbe`
+and `driver.startupProbe`.
+
 ### HA mode
 
 As the `SparkApplication` CRD doesn't provide the ability to run in HA, the chart was developed to create multiple separate SparkApplications when HA mode is activated. The `Service` has a `Selector` that matches both drivers and thus an `Ingress` can be created to expose a HA Spark driver.
