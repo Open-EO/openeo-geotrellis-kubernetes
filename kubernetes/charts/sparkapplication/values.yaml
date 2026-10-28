@@ -49,6 +49,10 @@ driver:
   podSecurityContext: {}
   # initContainers exclusively mounted on the driver pods
   initContainers: []
+  # Probes for the driver container, only used when podTemplates.enabled
+  livenessProbe: {}
+  readinessProbe: {}
+  startupProbe: {}
 # Executor parameters
 executor:
   # Number of cores allocated to executor
@@ -119,6 +123,11 @@ spark_ui:
   port: 4040
   ingress:
     enabled: false
+# Configure the driver and executor pods through pod templates instead of the spark-operator's
+# mutating webhook. Requires sparkVersion >= 3.0.0 and spark-operator >= 2.4.0 (which sets the
+# ownerReference of the driver pod when a template is used).
+podTemplates:
+  enabled: false
 # Run in privileged mode
 privileged: false
 # TimeToLiveSeconds defines the Time-To-Live (TTL) duration in seconds for this SparkApplication after its termination
@@ -127,6 +136,13 @@ timeToLiveSeconds: 172800
 monitoring:
   podMonitor:
     enabled: false
+  # Content of metrics.properties (spark.metrics.conf), only used when podTemplates.enabled.
+  # It is served from the chart's prometheus configmap instead of the configmap created by the
+  # spark-operator. Default is the spark-operator default.
+  metricsProperties: |
+    *.sink.jmx.class=org.apache.spark.metrics.sink.JmxSink
+    driver.source.jvm.class=org.apache.spark.metrics.source.JvmSource
+    executor.source.jvm.class=org.apache.spark.metrics.source.JvmSource
 
 replicaCount: 0
 

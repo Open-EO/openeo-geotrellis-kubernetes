@@ -1,5 +1,17 @@
 # sparkapplication chart changelog
 
+## 1.7.0
+
+- feature: opt-in `podTemplates.enabled` to configure the driver and executor pods through pod templates
+  instead of the spark-operator's mutating webhook. Requires spark-operator >= 2.4.0. With `jmxExporterJar`,
+  `metrics.properties` is served from the chart's prometheus configmap (`monitoring.metricsProperties`).
+- feature: `driver.livenessProbe`, `driver.readinessProbe` and `driver.startupProbe` (pod templates only).
+- With pod templates the executor pods use `executor.terminationGracePeriodSeconds`, the webhook mode keeps using
+  the driver value.
+- fix: the shared initdata volume is mounted in the driver/executor containers when `initdata.enabled` is set,
+  not only when the layercatalog initContainer is enabled. Apart from that (and the chart version) the rendered
+  SparkApplication is unchanged without `podTemplates.enabled`.
+
 ## 1.6.1
 
 - Minor linting fixes
