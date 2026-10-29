@@ -14,11 +14,10 @@ containerImageBuildPipeline {
     'BASE_IMAGE=team-rise-docker-local-prod.repo.vito.be/almalinux9.4',
   ]
   dockerfile               = 'docker/AlmaLinux/Dockerfile.almalinux9-spark-uv-openeo'
-  docker_registry_prod     = 'vito-docker.artifactory.vgt.vito.be'
-  docker_registry_prod_sas = 'openeo-docker-local-prod.repo.vito.be'
+  docker_registry_prod     = 'openeo-docker-local-prod.repo.vito.be'
   image_name               = 'almalinux9-spark4-py314-openeo'
   image_tag                = { env -> "1.0.${env.BUILD_NUMBER}" }
   promotion_job            = false
   run_tests                = false
-  artifactory_server       = ['sas', 'rss']
+  artifactory_server       = 'sas'
 }
