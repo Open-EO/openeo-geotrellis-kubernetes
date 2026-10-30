@@ -18,8 +18,6 @@ COPY --chmod=755 docker/AlmaLinux/assume_role.sh /bin/assume_role.sh
 # Add S3 dependencies
 ADD https://repo.vito.be/artifactory/maven/org/apache/hadoop/hadoop-aws/${HADOOP_VERSION}/hadoop-aws-${HADOOP_VERSION}.jar $SPARK_HOME/jars
 
-DIR /opt/venv
-
 # Conditionally override jars provided by Spark itself,
 # to fix https://github.com/Open-EO/openeo-geopyspark-driver/issues/1144
 #
