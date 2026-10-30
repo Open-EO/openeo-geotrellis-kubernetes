@@ -15,6 +15,9 @@ def pythonVersion    = params.python_version ?: '3.14'
 def pythonVersionNoDot = pythonVersion.replace('.', '')
 
 containerImageBuildPipeline {
+  build_args               = [
+    "OPENEO_BASE_IMAGE=openeo-docker-local-prod.repo.vito.be/openeo-base-python${pythonVersionNoDot}:latest",
+  ]
   dockerfile            = "docker/AlmaLinux/Dockerfile.openeo-geotrellis-kube-python311"
   docker_registry_prod  = 'swr.eu-nl.otc.t-systems.com/openeo'
   credentials_id        = 'openeo_swr_otc'
