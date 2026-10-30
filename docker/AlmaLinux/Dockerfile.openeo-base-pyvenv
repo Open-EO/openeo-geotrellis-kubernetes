@@ -25,6 +25,9 @@ ARG UV_FIND_LINKS=https://github.com/Open-EO/geopyspark/releases
 
 COPY requirements.txt requirements-no-deps-py${PYTHON_VERSION_NO_DOT}.txt /opt/
 
+# krb5-devel is needed for gssapi, specifically for yarn with kerberos
+RUN dnf install -y krb5-devel
+
 # ARGs are only visible during build and not persisted in ENV.
 # unsafe-best-match: consider all indexes for the best version (pip-like behavior).
 RUN uv pip install --python /opt/venv/bin/python --index-strategy unsafe-best-match -r /opt/requirements.txt && \
