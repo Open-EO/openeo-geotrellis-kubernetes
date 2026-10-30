@@ -18,7 +18,7 @@ containerImageBuildPipeline {
   build_args               = [
     "OPENEO_BASE_IMAGE=openeo-docker-local-prod.repo.vito.be/openeo-base-python${pythonVersionNoDot}:latest",
   ]
-  dockerfile            = "docker/AlmaLinux/Dockerfile.openeo-geotrellis-kube-python311"
+  dockerfile            = "docker/AlmaLinux/Dockerfile.openeo-geotrellis-kube-uv"
   docker_registry_prod  = 'swr.eu-nl.otc.t-systems.com/openeo'
   credentials_id        = 'openeo_swr_otc'
   downstream_jobs       = ['openEO/openeo-deploy-cdse']
