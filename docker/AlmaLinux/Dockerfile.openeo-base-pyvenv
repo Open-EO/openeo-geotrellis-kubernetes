@@ -1,0 +1,43 @@
+# Variant of Dockerfile.openeo-base that builds the venv inside the image build,
+# instead of extracting a pre-built venv zip. Intended for Python >= 3.14.
+# Build context: the `mep` directory (contains requirements*.txt).
+ARG OPENEO_IMAGE=openeo-docker-local-prod.repo.vito.be/almalinux9-spark4-py314-openeo:latest
+
+FROM ${OPENEO_IMAGE}
+
+LABEL maintainer="VITO Remote Sensing"
+
+USER root
+WORKDIR /opt
+
+ARG GEOTRELLIS_EXTENSIONS_URL=https://repo.vito.be/artifactory/openeo-maven-snapshot-local/org/openeo/geotrellis-extensions/2.6.3_2.13-SNAPSHOT/geotrellis-extensions-2.6.3_2.13-SNAPSHOT.jar
+ARG GEOTRELLIS_LOGGING_URL=https://repo.vito.be/artifactory/openeo-maven-snapshot-local/org/openeo/openeo-logging/2.6.3_2.13-SNAPSHOT/openeo-logging-2.6.3_2.13-SNAPSHOT.jar
+
+RUN curl -v --fail -JO "${GEOTRELLIS_EXTENSIONS_URL}" && \
+    curl -v --fail -o openeo-logging-static.jar "${GEOTRELLIS_LOGGING_URL}" && \
+    ln -s geotrellis-extensions*jar geotrellis-extensions-static.jar
+
+# Install requirements with uv into the existing venv at /opt/venv (created by uv in the base image).
+ARG PYTHON_VERSION_NO_DOT=314
+ARG UV_INDEX_URL=https://repo.vito.be/artifactory/api/pypi/pypi/simple
+ARG UV_EXTRA_INDEX_URL
+ARG UV_FIND_LINKS=https://github.com/Open-EO/geopyspark/releases
+
+COPY requirements.txt requirements-no-deps-py${PYTHON_VERSION_NO_DOT}.txt /opt/
+
+# ARGs are only visible during build and not persisted in ENV.
+# unsafe-best-match: consider all indexes for the best version (pip-like behavior).
+RUN uv pip install --python /opt/venv/bin/python --index-strategy unsafe-best-match -r /opt/requirements.txt && \
+    uv pip install --python /opt/venv/bin/python --no-deps \
+        -r /opt/requirements-no-deps-py${PYTHON_VERSION_NO_DOT}.txt && \
+    rm -f /opt/requirements.txt /opt/requirements-no-deps-py${PYTHON_VERSION_NO_DOT}.txt
+
+# Activate the venv for every process in the container, so the Python interpreter that jep embeds
+# in the JVM uses it too: CPython derives sys.prefix from the first python3 on PATH (pyvenv.cfg),
+# and jep's LibraryLocator finds libjep.so under $VIRTUAL_ENV. Same as PATH on YARN executors.
+# https://github.com/Open-EO/openeo-geopyspark-driver/issues/1899
+ENV VIRTUAL_ENV=/opt/venv PATH=/opt/venv/bin:$PATH
+
+ENV PYSPARK_PYTHON=/opt/venv/bin/python3
+
+
