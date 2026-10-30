@@ -118,9 +118,13 @@ RUN dnf clean all && \
 
 # Bindings: numpy must be installed first so gdal_array gets built.
 # gcc-c++ is needed in this stage (it's already in your dnf list).
-RUN uv pip install numpy setuptools wheel cython && \
+RUN uv pip install pip numpy setuptools wheel cython && \
     uv pip install --no-build-isolation --no-binary GDAL "GDAL==${GDAL_VERSION}" && \
     python -c "from osgeo import gdal; print(gdal.__version__)"
+
+#gdalwarp is compiled against libgdal.so.38,
+RUN ln -s /opt/gdal/lib64/libgdal.so /usr/lib64/libgdal.so.38
+
 
 # Required for new hadoop cluster because this causes "/var/lib/sss/pubconf/krb5.include.d" to be included twice which throws an error.
 RUN rm /etc/krb5.conf.d/enable_sssd_conf_dir
