@@ -1,25 +1,43 @@
 ARG PYTHON_VERSION=3.14
 ARG GDAL_VERSION=3.13.3
-ARG BASE_IMAGE=terrascope-docker-local-prod.repo.vito.be/almalinux9.4
+ARG GROK_VERSION=20.4.24
+ARG BASE_IMAGE=docker.io/library/almalinux:10.2
+
+########## grok ##########
+FROM ${BASE_IMAGE} AS grok-build
+ARG GROK_VERSION
+
+RUN dnf install -y epel-release && \
+    dnf --enablerepo=crb install -y \
+        gcc gcc-c++ cmake ninja-build git \
+        libtiff-devel libpng-devel libjpeg-turbo-devel lcms2-devel zlib-devel
+
+RUN mkdir -p /src/grok && \
+    curl -L https://github.com/GrokImageCompression/grok/releases/download/v${GROK_VERSION}/source-full.tar.gz \
+        | tar xz --strip-components=1 -C /src/grok && \
+    cmake -S /src/grok -B /src/grok-build -G Ninja \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DBUILD_SHARED_LIBS=ON \
+        -DGRK_BUILD_JPEG=OFF -DGRK_BUILD_LIBPNG=OFF -DGRK_BUILD_LIBTIFF=OFF -DGRK_BUILD_LCMS2=OFF \
+        -DGRK_BUILD_CORE_SWIG_BINDINGS=OFF -DGRK_BUILD_CORE_EXAMPLES=OFF \
+        -DBUILD_TESTING=OFF && \
+    cmake --build /src/grok-build && \
+    DESTDIR=/grok-install cmake --install /src/grok-build
 
 ########## builder ##########
 FROM ${BASE_IMAGE} AS gdal-build
 ARG GDAL_VERSION
 
-COPY docker/AlmaLinux/vito_almalinux9.repo /etc/yum.repos.d/vito.repo
+COPY --from=grok-build /grok-install/usr/ /usr/
 
 RUN dnf install -y epel-release && \
     dnf --enablerepo=crb install -y \
-        gcc-toolset-13 gcc-toolset-13-gcc-c++ cmake ninja-build git \
+        gcc gcc-c++ cmake ninja-build git \
         geos-devel sqlite-devel libtiff-devel libcurl-devel \
         libpng-devel libjpeg-turbo-devel libwebp-devel libzstd-devel \
         hdf5-devel netcdf-devel expat-devel xerces-c-devel openjpeg2-devel \
         lcms2-devel sqlite
-
-ENV CC=/opt/rh/gcc-toolset-13/root/usr/bin/gcc \
-    CXX=/opt/rh/gcc-toolset-13/root/usr/bin/g++ \
-    PATH=/opt/rh/gcc-toolset-13/root/usr/bin:$PATH \
-    LD_LIBRARY_PATH=/opt/rh/gcc-toolset-13/root/usr/lib64:${LD_LIBRARY_PATH}
 
 RUN mkdir -p /src
 ARG PROJ_VERSION=9.9.0
@@ -38,7 +56,7 @@ RUN curl -L https://github.com/OSGeo/gdal/releases/download/v${GDAL_VERSION}/gda
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX=/opt/gdal \
         -DCMAKE_PREFIX_PATH=/opt/gdal \
-        -DGDAL_USE_GROK=OFF \
+        -DGDAL_USE_GROK=ON \
         -DGDAL_USE_OPENJPEG=ON \
         -DBUILD_PYTHON_BINDINGS=OFF \
         -DBUILD_TESTING=OFF && \
@@ -52,6 +70,7 @@ ARG GDAL_VERSION
 #     plus the runtime libs: proj geos hdf5 netcdf libtiff libwebp xerces-c openjpeg2 ...
 
 COPY --from=gdal-build /opt/gdal /opt/gdal
+COPY --from=grok-build /grok-install/usr/ /usr/
 RUN echo /opt/gdal/lib64 > /etc/ld.so.conf.d/gdal.conf && \
     echo /opt/gdal/lib  >> /etc/ld.so.conf.d/gdal.conf && ldconfig
 ENV PATH=/opt/gdal/bin:$PATH \
@@ -86,7 +105,7 @@ RUN dnf clean all && \
         hdf5 \
         gcc-c++ \
         unzip \
-        java-21-openjdk-headless \
+        java-25-openjdk-headless \
         krb5-workstation \
         krb5-libs \
         sssd-client \
@@ -101,7 +120,7 @@ RUN dnf clean all && \
         udunits2 \
         libtiff-tools \
         blosc \
-        compat-libgfortran-48 \
+        libgfortran \
         jemalloc \
         openeo-vito-aux-data \
         geos netcdf libtiff libpng \
