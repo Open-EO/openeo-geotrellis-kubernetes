@@ -1,6 +1,7 @@
 ARG PYTHON_VERSION=3.14
 ARG GDAL_VERSION=3.13.3
 ARG GROK_VERSION=20.4.24
+ARG SPARK_VERSION=4.3.0
 ARG BASE_IMAGE=docker.io/library/almalinux:10.2
 
 ########## grok ##########
@@ -87,9 +88,8 @@ ENV PATH=${VIRTUAL_ENV}/bin:$PATH PYSPARK_PYTHON=${VIRTUAL_ENV}/bin/python
 
 
 ARG TINI_VERSION=v0.19.0
-ARG SPARK_PACKAGE
-# Location where the spark package is installed to and to be symlinked to `/usr/local/spark`
-ARG SPARK_INSTALL_PREFIX
+ARG SPARK_VERSION
+ARG SPARK_DOWNLOAD_URL=https://dlcdn.apache.org/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop3.tgz
 ARG GEOTRELLIS_DEPENDENCIES_STATIC_JAR_URL
 
 WORKDIR /opt/spark/work-dir
@@ -100,7 +100,6 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/
 RUN dnf clean all && \
     dnf install -y epel-release && \
     dnf --enablerepo=crb install -y \
-        ${SPARK_PACKAGE} \
         glibc-langpack-en \
         hdf5 \
         gcc-c++ \
@@ -130,10 +129,13 @@ RUN dnf clean all && \
     chmod +x /usr/bin/tini && \
     rm -r /root/.cache && \
     yum clean all && \
-    rm -rf /var/cache/yum/* && \
-    rm -rf ${SPARK_INSTALL_PREFIX}/jars/spire*
+    rm -rf /var/cache/yum/*
 
 # Spire is removed because of version mismatch with geotrellis! Spark only has a minimal dependency on it, in a part that we do not use.
+# yarn and R are removed to save space.
+RUN mkdir -p /usr/local/spark && \
+    curl -fL ${SPARK_DOWNLOAD_URL} | tar xz --strip-components=1 -C /usr/local/spark && \
+    rm -rf /usr/local/spark/jars/spire* /usr/local/spark/yarn /usr/local/spark/R
 
 # Bindings: numpy must be installed first so gdal_array gets built.
 # gcc-c++ is needed in this stage (it's already in your dnf list).
@@ -148,9 +150,6 @@ RUN ln -s /opt/gdal/lib64/libgdal.so /usr/lib64/libgdal.so.38
 # Required for new hadoop cluster because this causes "/var/lib/sss/pubconf/krb5.include.d" to be included twice which throws an error.
 RUN rm /etc/krb5.conf.d/enable_sssd_conf_dir
 
-RUN if [ -n "${SPARK_INSTALL_PREFIX}" ]; then \
-        ln -s ${SPARK_INSTALL_PREFIX} /usr/local/spark; \
-    fi
 
 ENV SPARK_HOME /usr/local/spark
 ENV JAVA_HOME /usr/lib/jvm/jre
