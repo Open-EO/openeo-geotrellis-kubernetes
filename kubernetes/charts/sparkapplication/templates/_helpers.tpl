@@ -316,6 +316,24 @@ Environment variables of the executor container (YAML list).
 {{- end }}
 
 {{/*
+envFrom sources of the driver container (YAML list, empty if none).
+*/}}
+{{- define "sparkapplication.driverEnvFrom" -}}
+{{- with concat (.Values.driver.envFrom | default list) (.Values.global.envFrom | default list) }}
+{{ toYaml . }}
+{{- end }}
+{{- end }}
+
+{{/*
+envFrom sources of the executor container (YAML list, empty if none).
+*/}}
+{{- define "sparkapplication.executorEnvFrom" -}}
+{{- with concat (.Values.executor.envFrom | default list) (.Values.global.envFrom | default list) }}
+{{ toYaml . }}
+{{- end }}
+{{- end }}
+
+{{/*
 Init container that stages the layercatalog files (YAML list).
 */}}
 {{- define "sparkapplication.layerCatalogInitContainer" -}}
@@ -484,6 +502,10 @@ spec:
     - name: spark-kubernetes-driver
       env:
         {{- include "sparkapplication.driverEnv" . | nindent 8 }}
+      {{- with include "sparkapplication.driverEnvFrom" . | trim }}
+      envFrom:
+        {{- . | nindent 8 }}
+      {{- end }}
       {{- with $mounts }}
       volumeMounts:
         {{- toYaml . | nindent 8 }}
@@ -533,6 +555,10 @@ spec:
     - name: spark-kubernetes-executor
       env:
         {{- include "sparkapplication.executorEnv" . | nindent 8 }}
+      {{- with include "sparkapplication.executorEnvFrom" . | trim }}
+      envFrom:
+        {{- . | nindent 8 }}
+      {{- end }}
       {{- with $mounts }}
       volumeMounts:
         {{- toYaml . | nindent 8 }}

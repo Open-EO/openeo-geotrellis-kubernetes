@@ -1,5 +1,11 @@
 # sparkapplication chart changelog
 
+## 1.8.0
+
+- feature: `driver.envFrom`, `executor.envFrom` and `global.envFrom` (envfromsource-v1-core) to load environment
+  variables from secrets/configmaps instead of putting sensitive values in the pod spec. Applied to the
+  SparkApplication driver/executor, the pod templates and the lite deployment.
+
 ## 1.7.0
 
 - feature: opt-in `podTemplates.enabled` to configure the driver and executor pods through pod templates

@@ -121,6 +121,10 @@ spec:
               - name: OPENEO_BACKEND_CONFIG
                 value: "/opt/backend_config/backendconfig.py"
             {{- end }}
+          {{- with concat (.Values.driver.envFrom | default list) (.Values.global.envFrom | default list) }}
+          envFrom:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}

@@ -44,6 +44,9 @@ driver:
   # Extra environment variable to be added to drivers as per envvar-v1-core spec
   # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#envvar-v1-core
   extraEnv: []
+  # Extra envFrom sources (e.g. secretRef) as per envfromsource-v1-core spec, to avoid sensitive values in the pod spec
+  # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#envfromsource-v1-core
+  envFrom: []
   # A priority class that can be used for the driver of the deployed spark application.
   # priorityClassName: <value>
   podSecurityContext: {}
@@ -72,11 +75,17 @@ executor:
   # Extra environment variable to be added to executors as per envvar-v1-core spec
   # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#envvar-v1-core
   extraEnv: []
+  # Extra envFrom sources (e.g. secretRef) as per envfromsource-v1-core spec, to avoid sensitive values in the pod spec
+  # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#envfromsource-v1-core
+  envFrom: []
 existingConfigMaps: true
 global:
   # Extra environment variable to be added to drivers and executors as per envvar-v1-core spec
   # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#envvar-v1-core
   extraEnv: []
+  # Extra envFrom sources (e.g. secretRef) as per envfromsource-v1-core spec, to avoid sensitive values in the pod spec
+  # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#envfromsource-v1-core
+  envFrom: []
 imagePullPolicy: "IfNotPresent"
 ingress:
   enabled: false

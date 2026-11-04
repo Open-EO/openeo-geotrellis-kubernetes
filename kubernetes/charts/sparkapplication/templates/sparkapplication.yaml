@@ -88,6 +88,10 @@ spec:
     {{- end }}
     env:
       {{- include "sparkapplication.driverEnv" . | nindent 6 }}
+    {{- with include "sparkapplication.driverEnvFrom" . | trim }}
+    envFrom:
+      {{- . | nindent 6 }}
+    {{- end }}
     {{- if .Values.driver.podSecurityContext }}
     podSecurityContext:
       {{- toYaml .Values.driver.podSecurityContext | nindent 6 }}
@@ -170,6 +174,10 @@ spec:
     {{- end }}
     env:
       {{- include "sparkapplication.executorEnv" . | nindent 6 }}
+    {{- with include "sparkapplication.executorEnvFrom" . | trim }}
+    envFrom:
+      {{- . | nindent 6 }}
+    {{- end }}
     {{- if .Values.executor.podSecurityContext }}
     podSecurityContext:
       {{- toYaml .Values.executor.podSecurityContext | nindent 6 }}
