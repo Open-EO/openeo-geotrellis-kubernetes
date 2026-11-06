@@ -1,0 +1,99 @@
+name: Calrissian default image Docker Build Test Publish
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - "docker/calrissian-default/**"
+      - ".github/workflows/calrissian-default-docker-build-test-publish.yml"
+  pull_request:
+    paths:
+      - "docker/calrissian-default/**"
+      - ".github/workflows/calrissian-default-docker-build-test-publish.yml"
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: openeo-calrissian-default
+
+jobs:
+  build-and-publish-job:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      TIME_TAG: ${{ steps.time-tag-step.outputs.TIME_TAG }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: docker/calrissian-default
+          file: docker/calrissian-default/Dockerfile
+          load: true
+          tags: ${{ env.IMAGE_NAME }}
+          labels: runnumber=${{ github.run_id }}
+          cache-from: type=gha,scope=${{ env.IMAGE_NAME }}
+          cache-to: type=gha,mode=max,scope=${{ env.IMAGE_NAME }}
+
+      - name: Push image
+        id: time-tag-step
+        run: |
+          set -euxo pipefail
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          # run_number makes the tag unique, regardless of build duration.
+          TIME_TAG=$(date +'%Y%m%d').${{ github.run_number }}
+          if [[ "${GITHUB_REF##*/}" != "main" && "${GITHUB_REF##*/}" != "master" ]]; then
+            TIME_TAG="${TIME_TAG}-${GITHUB_REF##*/}"
+          fi
+          echo "TIME_TAG=$TIME_TAG" >> $GITHUB_OUTPUT
+          docker tag $IMAGE_NAME $IMAGE_ID:$TIME_TAG
+          docker push $IMAGE_ID:$TIME_TAG
+
+  test-job:
+    runs-on: ubuntu-latest
+    needs: build-and-publish-job
+    permissions:
+      contents: read
+      packages: read
+    env:
+      TIME_TAG: ${{ needs.build-and-publish-job.outputs.TIME_TAG }}
+    steps:
+      - name: Log in to registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Smoke test tools
+        run: |
+          set -euxo pipefail
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          docker run --rm $IMAGE_ID:$TIME_TAG bash -c '
+            set -euxo pipefail
+            id
+            sh -c "echo sh ok"
+            curl --version
+            wget --version
+            echo "{\"a\": 1}" | jq -e ".a == 1"
+            find --version
+            tar --version
+            gzip --version
+            unzip -v | head -1
+            touch "$HOME/writable"
+          '
