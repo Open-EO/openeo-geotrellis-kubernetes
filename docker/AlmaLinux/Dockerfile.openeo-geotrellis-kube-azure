@@ -1,0 +1,47 @@
+# Supply a base with the complete openEO Python environment, Spark and GeoTrellis JARs.
+ARG OPENEO_BASE_IMAGE
+ARG UV_IMAGE=ghcr.io/astral-sh/uv:0.13.7
+FROM ${UV_IMAGE} AS uv
+FROM ${OPENEO_BASE_IMAGE}
+
+USER root
+
+COPY --from=uv /uv /usr/local/bin/uv
+COPY --chmod=755 docker/AlmaLinux/entrypoint-azure.sh /opt/entrypoint.sh
+COPY --chmod=755 docker/AlmaLinux/decom.sh /opt/decom.sh
+
+ENV VIRTUAL_ENV=/opt/venv \
+    PATH=/opt/venv/bin:$PATH \
+    PYSPARK_PYTHON=/opt/venv/bin/python \
+    LANG=en_US.UTF-8
+
+# Select an immutable backend commit containing the Azure job-storage integration.
+ARG OPENEO_DRIVER_REF
+RUN test -n "${OPENEO_DRIVER_REF}" && \
+    test "${#OPENEO_DRIVER_REF}" -eq 40 && \
+    test -z "$(printf '%s' "${OPENEO_DRIVER_REF}" | tr -d '0-9a-f')" && \
+    uv pip install --python /opt/venv/bin/python --no-cache --no-deps \
+        "openeo-geopyspark @ https://github.com/Open-EO/openeo-geopyspark-driver/archive/${OPENEO_DRIVER_REF}.tar.gz" && \
+    uv pip install --python /opt/venv/bin/python --no-cache \
+        "kubernetes==12.0.1" "PyYAML==5.3.1" && \
+    uv pip check --python /opt/venv/bin/python
+
+RUN test -x "${SPARK_HOME}/bin/spark-submit" && \
+    test -x "${JAVA_HOME}/bin/java" && \
+    test -x /usr/bin/tini && \
+    test -f /opt/geotrellis-dependencies-static.jar && \
+    test -f /opt/geotrellis-extensions-static.jar && \
+    test -f /opt/openeo-logging-static.jar && \
+    test "$(id -u spark)" -eq 18585 && \
+    mkdir -p /opt/tmp /batch_jobs /spark_tmp /opt/spark/work-dir && \
+    touch /opt/openeo_python.log && \
+    ln -sfn /opt/venv /opt/openeo && \
+    chown -R 18585:18585 /opt/tmp /batch_jobs /spark_tmp /opt/spark/work-dir /opt/openeo_python.log
+
+# Clear a possible inherited custom-process hook; no custom processes are copied.
+ENV OPENEO_CUSTOM_PROCESSES=""
+LABEL org.opencontainers.image.revision="${OPENEO_DRIVER_REF}"
+
+WORKDIR /opt/spark/work-dir
+USER 18585
+ENTRYPOINT ["/opt/entrypoint.sh"]
