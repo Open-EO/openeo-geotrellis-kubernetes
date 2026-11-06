@@ -66,6 +66,7 @@ jobs:
           echo "TIME_TAG=$TIME_TAG" >> $GITHUB_OUTPUT
           docker tag $IMAGE_NAME $IMAGE_ID:$TIME_TAG
           docker push $IMAGE_ID:$TIME_TAG
+          # No :latest tag is pushed.
 
   test-job:
     runs-on: ubuntu-latest
