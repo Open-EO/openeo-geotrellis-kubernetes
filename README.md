@@ -8,6 +8,8 @@ The goal is to have a working OpenEO deployment, running as a Spark job, on Kube
 
 ## Prerequisites
 
+For the Azure-specific uv-based image, see [Azure image build and validation](docker/AlmaLinux/README.azure.md).
+
   * CreoDIAS account with credits to provision Openstack resources
   * Some Kubernetes knowledge
   * A working Kubernetes cluster (see [Setup the Kubernetes environment](#setup-the-kubernetes-environment))

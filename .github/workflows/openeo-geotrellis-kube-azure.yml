@@ -1,0 +1,184 @@
+name: Azure openEO image
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/openeo-geotrellis-kube-azure.yml"
+      - "docker/AlmaLinux/Dockerfile.openeo-geotrellis-kube-azure"
+      - "docker/AlmaLinux/entrypoint-azure.sh"
+      - "docker/AlmaLinux/decom.sh"
+  workflow_dispatch:
+    inputs:
+      base_image:
+        description: "Complete openEO base image (tag or digest)"
+        required: true
+        default: openeo-docker-local-prod.repo.vito.be/openeo-base-python311:latest
+        type: string
+      driver_ref:
+        description: "Backend ref: master or a full commit SHA containing Azure job storage"
+        required: true
+        default: master
+        type: string
+      runner:
+        description: "Runner label with network access to the base registry"
+        required: true
+        default: ubuntu-latest
+        type: string
+      publish:
+        description: "Publish the tested image to GHCR"
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ${{ github.event_name == 'workflow_dispatch' && inputs.runner || 'ubuntu-latest' }}
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      packages: write
+    env:
+      BASE_IMAGE: ${{ inputs.base_image || 'openeo-docker-local-prod.repo.vito.be/openeo-base-python311:latest' }}
+      DRIVER_REF: ${{ inputs.driver_ref || 'master' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check entrypoint shell syntax
+        run: bash -n docker/AlmaLinux/entrypoint-azure.sh docker/AlmaLinux/decom.sh
+
+      - name: Validate inputs and determine image name
+        id: config
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ ! "$BASE_IMAGE" =~ ^[a-z0-9][a-z0-9.:-]*/[a-z0-9/_-]+(:[a-zA-Z0-9_.-]+|@sha256:[0-9a-f]{64})$ ]]; then
+            echo "::error::base_image must include a registry, repository and tag or SHA256 digest"
+            exit 1
+          fi
+          if [[ "$DRIVER_REF" == master ]]; then
+            DRIVER_REF=$(git ls-remote --exit-code \
+              https://github.com/Open-EO/openeo-geopyspark-driver.git \
+              refs/heads/master | awk '{print $1}')
+          fi
+          if [[ ! "$DRIVER_REF" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "::error::driver_ref must be master or a full lowercase Git commit SHA"
+            exit 1
+          fi
+          owner="${GITHUB_REPOSITORY_OWNER,,}"
+          {
+            echo "driver_ref=$DRIVER_REF"
+            echo "registry=${BASE_IMAGE%%/*}"
+            echo "image=ghcr.io/${owner}/openeo-geotrellis-kube-azure"
+            echo "tag=build-${GITHUB_RUN_NUMBER}-${GITHUB_RUN_ATTEMPT}"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Check optional base-registry credentials
+        id: credentials
+        env:
+          USERNAME: ${{ secrets.AZURE_IMAGE_BASE_REGISTRY_USERNAME }}
+          PASSWORD: ${{ secrets.AZURE_IMAGE_BASE_REGISTRY_PASSWORD }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -n "$USERNAME" && -n "$PASSWORD" ]]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          elif [[ -n "$USERNAME" || -n "$PASSWORD" ]]; then
+            echo "::error::Both base-registry credential secrets must be set"
+            exit 1
+          fi
+
+      - name: Log in to base registry
+        if: steps.credentials.outputs.available == 'true'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ steps.config.outputs.registry }}
+          username: ${{ secrets.AZURE_IMAGE_BASE_REGISTRY_USERNAME }}
+          password: ${{ secrets.AZURE_IMAGE_BASE_REGISTRY_PASSWORD }}
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Resolve base image to immutable digest
+        id: base
+        shell: bash
+        run: |
+          set -euo pipefail
+          digest=$(docker buildx imagetools inspect "$BASE_IMAGE" --format '{{.Manifest.Digest}}')
+          if [[ ! "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]; then
+            echo "::error::Unable to resolve base image to a SHA256 digest"
+            exit 1
+          fi
+          repository="${BASE_IMAGE%@*}"
+          name="${repository##*/}"
+          repository="${repository%/*}/${name%%:*}"
+          echo "image=${repository}@${digest}" >> "$GITHUB_OUTPUT"
+
+      - name: Build image locally for validation
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/AlmaLinux/Dockerfile.openeo-geotrellis-kube-azure
+          platforms: linux/amd64
+          load: true
+          push: false
+          tags: ${{ steps.config.outputs.image }}:${{ steps.config.outputs.tag }}
+          build-args: |
+            OPENEO_BASE_IMAGE=${{ steps.base.outputs.image }}
+            OPENEO_DRIVER_REF=${{ steps.config.outputs.driver_ref }}
+          cache-from: type=gha,scope=openeo-geotrellis-kube-azure
+          cache-to: type=gha,mode=max,scope=openeo-geotrellis-kube-azure
+
+      - name: Smoke test normal entrypoint without AWS credentials
+        env:
+          IMAGE: ${{ steps.config.outputs.image }}:${{ steps.config.outputs.tag }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run --rm "$IMAGE" python -c \
+            'from azure.identity import DefaultAzureCredential; from azure.storage.blob import ContainerClient; from openeogeotrellis.integrations.job_storage import AzureBlobJobStorage'
+          docker run --rm -e SPARK_DRIVER_BIND_ADDRESS=127.0.0.1 \
+            "$IMAGE" driver --version
+          docker run --rm "$IMAGE" bash -c \
+            'test "$(id -u)" -eq 18585 && test -z "${OPENEO_CUSTOM_PROCESSES:-}"'
+          set +e
+          docker run --rm "$IMAGE" bash -c 'exit 42'
+          status=$?
+          set -e
+          test "$status" -eq 42
+
+      - name: Log in to GHCR for publication
+        if: github.event_name == 'workflow_dispatch' && inputs.publish
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish tested image and record digest
+        if: github.event_name == 'workflow_dispatch' && inputs.publish
+        env:
+          IMAGE: ${{ steps.config.outputs.image }}:${{ steps.config.outputs.tag }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker push "$IMAGE"
+          reference=$(docker image inspect "$IMAGE" --format '{{index .RepoDigests 0}}')
+          echo "### Published Azure image" >> "$GITHUB_STEP_SUMMARY"
+          # shellcheck disable=SC2016
+          printf '`%s`\n' "$reference" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Record build inputs and validation scope
+        env:
+          BASE_IMAGE: ${{ steps.base.outputs.image }}
+          DRIVER_REF: ${{ steps.config.outputs.driver_ref }}
+          PUBLISH: ${{ github.event_name == 'workflow_dispatch' && inputs.publish || false }}
+        shell: bash
+        run: |
+          {
+            echo "### Build inputs"
+            # shellcheck disable=SC2016
+            printf 'Base: `%s`\n\nBackend commit: `%s`\n\nPublished: `%s`\n\n' \
+              "$BASE_IMAGE" "$DRIVER_REF" "$PUBLISH"
+            echo "Smoke tests cover imports and Spark startup, not Azure access or full processing."
+          } >> "$GITHUB_STEP_SUMMARY"
