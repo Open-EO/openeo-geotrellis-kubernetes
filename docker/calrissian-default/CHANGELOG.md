@@ -1,7 +1,7 @@
 # openeo-calrissian-default image changelog
 
-To release: add a `## <version>` section at the top, merge it, then push the git tag
-`image-openeo-calrissian-default-v<version>` (or run the workflow manually on master).
+To release: add a `## <version>` section at the top, merge it, then push the git tag:
+`V=image-openeo-calrissian-default-v$(sed -n 's/^## \([0-9][0-9.]*\)[[:space:]]*$/\1/p' CHANGELOG.md | head -n1) && git tag -a "$V" -m "$V" && git push origin "$V"`
 
 Missing something? Open an issue with the use case: https://github.com/Open-EO/openeo-geotrellis-kubernetes/issues
 
