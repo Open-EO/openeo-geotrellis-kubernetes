@@ -1,7 +1,7 @@
 ARG PYTHON_VERSION=3.14
 ARG GDAL_VERSION=3.13.3
 ARG GROK_VERSION=20.4.24
-ARG SPARK_VERSION=4.0.5
+ARG SPARK_VERSION=4.3.0
 ARG BASE_IMAGE=docker.io/library/almalinux:10.2
 
 ########## grok ##########
@@ -104,7 +104,7 @@ RUN dnf clean all && \
         hdf5 \
         gcc-c++ \
         unzip \
-        java-21-openjdk-headless \
+        java-25-openjdk-headless \
         krb5-workstation \
         krb5-libs \
         sssd-client \
