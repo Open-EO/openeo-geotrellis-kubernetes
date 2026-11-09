@@ -16,4 +16,5 @@ containerImageBuildPipeline {
   oci_format            = true
   extra_index_repo      = 'openeo-pypi'
   pip_index_server      = 'sas'
+  artifactory_server = 'sas'
 }
