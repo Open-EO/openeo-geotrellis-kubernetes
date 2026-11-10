@@ -21,4 +21,14 @@ RUN apk add --no-cache \
         unzip \
         wget
 
+# Run as non-root (numeric UID so `runAsNonRoot` can be verified), in the root group (GID 0)
+# with group-writable home, so arbitrary UIDs (e.g. OpenShift, pod securityContext) also work.
+ENV HOME=/home/calrissian
+# 1001, taken from the example here: https://git.vito.be/projects/TPT/repos/mirror-calrissian/browse/Dockerfile?lines=24
+RUN adduser -D -u 1001 -G root -h "${HOME}" -s /sbin/nologin -g "Default Calrissian User" calrissian && \
+    chmod g+rwx "${HOME}"
+
+USER 1001
+WORKDIR ${HOME}
+
 CMD ["/bin/sh"]

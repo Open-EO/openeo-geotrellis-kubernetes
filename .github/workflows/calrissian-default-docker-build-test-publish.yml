@@ -113,6 +113,8 @@ jobs:
           set -euxo pipefail
           docker run --rm "${{ steps.vars.outputs.image_id }}:${{ steps.vars.outputs.image_tag }}" bash -c '
             set -euxo pipefail
+            test "$(id -u)" = 1001
+            touch "$HOME/write-test"
             sh -c "echo sh ok"
             curl --version
             wget --version
