@@ -4,7 +4,7 @@ class: CommandLineTool
 # Before the backend fix, DockerRequirement was needed in calrissian
 #requirements:
 #  - class: DockerRequirement
-#    dockerPull: alpine:3.17.0  # We have this as a system image
+#    dockerPull: ghcr.io/open-eo/openeo-calrissian-default:1.1.0
 baseCommand:
   - sh
   - -c
