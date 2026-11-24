@@ -1265,22 +1265,14 @@ def _update_sar_backscatter_spec(spec: dict) -> dict:
         """
         \n\n
         ## Backend notes
-        The implementation in this backend is based on Orfeo Toolbox.
+        The implementation in this backend is based on Orfeo Toolbox.\n\n
+        For gamma0-terrain or when implementation-version is set to '3', a native implementation is used.
         """
     )
 
     (coefficient_param,) = (p for p in spec["parameters"] if p["name"] == "coefficient")
 
-    coefficient_param["description"] = textwrap.dedent(
-        f"""\
-        The radiometric correction coefficient.
-        On this backend, only the following option is available:
-
-        * `{SAR_BACKSCATTER_COEFFICIENT_DEFAULT}`: ground area computed with ellipsoid earth model
-        """
-    )
     coefficient_param["default"] = SAR_BACKSCATTER_COEFFICIENT_DEFAULT
-    coefficient_param["schema"] = {"type": "string", "enum": [SAR_BACKSCATTER_COEFFICIENT_DEFAULT]}
 
     spec["links"].append(
         {
