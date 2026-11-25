@@ -1,4 +1,4 @@
-#!/usr/bin/env cwl-runner
+#!/usr/bin/env cwltool
 cwlVersion: v1.0
 class: CommandLineTool
 # https://github.com/Open-EO/openeo-geopyspark-driver/issues/1919

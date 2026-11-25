@@ -1,4 +1,4 @@
-#!/usr/bin/env cwl-runner
+#!/usr/bin/env cwltool
 cwlVersion: v1.0
 class: CommandLineTool
 # Before the backend fix, DockerRequirement was needed in calrissian

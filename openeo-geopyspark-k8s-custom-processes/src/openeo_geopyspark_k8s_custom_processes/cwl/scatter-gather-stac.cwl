@@ -1,5 +1,5 @@
-#!/usr/bin/env cwl-runner
-# Run locally: cwltool --tmpdir-prefix=$HOME/tmp/ --force-docker-pull scatter-gather-stac.cwl --request_dates 2023-06-01
+#!/usr/bin/env -S cwltool
+# Run locally: cwltool --tmpdir-prefix=$HOME/tmp/ scatter-gather-stac.cwl --request_dates 2023-06-01
 cwlVersion: v1.2
 $graph:
   - id: sub_collection_maker
