@@ -1,3 +1,4 @@
+#!/usr/bin/env -S cwltool --preserve-environment AWS_ACCESS_KEY_ID --preserve-environment AWS_SECRET_ACCESS_KEY --preserve-environment AWS_ENDPOINT_URL_S3 --preserve-environment AWS_REGION
 cwlVersion: v1.2
 class: CommandLineTool
 requirements:
