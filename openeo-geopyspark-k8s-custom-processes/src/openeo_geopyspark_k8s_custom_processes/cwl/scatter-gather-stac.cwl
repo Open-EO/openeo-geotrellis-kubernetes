@@ -64,6 +64,7 @@ $graph:
     inputs:
       request_dates:
         type: string[]
+        default: [ "2023-06-01", "2023-06-04", "2023-06-06" ]
 
     requirements:
       - class: SubworkflowFeatureRequirement
@@ -79,22 +80,7 @@ $graph:
           simple_stac_merge_in1: gatherer_node_step1/scatter_node_out
         out: [ simple_stac_merge_out ]
         run: "#simple_stac_merge"
-      directory_to_file_list:
-        run:
-          class: ExpressionTool
-          requirements:
-            InlineJavascriptRequirement: { }
-            LoadListingRequirement:
-              loadListing: shallow_listing
-          inputs:
-            directory_to_file_list_in: Directory
-          expression: '${return {"directory_to_file_list_out": inputs.directory_to_file_list_in.listing};}'
-          outputs:
-            directory_to_file_list_out: File[]
-        in:
-          directory_to_file_list_in: gatherer_node_step2/simple_stac_merge_out
-        out: [ directory_to_file_list_out ]
     outputs:
       - id: gatherer_node_out
-        outputSource: directory_to_file_list/directory_to_file_list_out
-        type: File[]
+        outputSource: gatherer_node_step2/simple_stac_merge_out
+        type: Directory
