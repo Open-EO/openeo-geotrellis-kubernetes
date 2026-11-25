@@ -20,7 +20,9 @@ requirements:
           from botocore.config import Config
 
           # On the cluster: credentials/endpoint are injected in the pod, region must match (e.g. "eodata").
+          # Remove after https://github.com/eu-cdse/openeo-cdse-infra/issues/1464 is deployed
           region_name = os.environ.get("AWS_REGION", "eodata")
+
           print(f"{region_name=} endpoint={os.environ['AWS_ENDPOINT_URL_S3']}")
           eodata_path = "/eodata/Sentinel-2/MSI/L2A_N0500/2020/03/22/S2B_MSIL2A_20200322T074609_N0500_R135_T36NYH_20230612T214223.SAFE/GRANULE/L2A_T36NYH_A015891_20200322T075811/IMG_DATA/R20m/T36NYH_20200322T074609_SCL_20m.jp2"
 
