@@ -72,6 +72,7 @@ ARG GDAL_VERSION
 
 # Reuse the GDAL and PROJ installation built in the previous stage.
 COPY --from=gdal-build /opt/gdal /opt/gdal
+COPY --from=grok-build /grok-install/usr/ /usr/
 
 ENV PATH=/opt/gdal/bin:$PATH \
     LD_LIBRARY_PATH=/opt/gdal/lib:/opt/gdal/lib64 \
@@ -107,7 +108,15 @@ RUN dnf install -y epel-release && \
         libgeotiff-devel \
         openjpeg2-devel \
         zlib-devel \
-        unzip
+        unzip \
+        xerces-c \
+        xerces-c-devel \
+        libaec \
+        libaec-devel \
+        netcdf \
+        netcdf-devel \
+        hdf5 \
+        hdf5-devel
 
 RUN uv pip install --no-cache-dir numpy
 
