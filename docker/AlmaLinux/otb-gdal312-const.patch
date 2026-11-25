@@ -1,0 +1,168 @@
+diff --git a/Modules/Core/Adapters/GdalAdapters/include/otbOGRFieldWrapper.h b/Modules/Core/Adapters/GdalAdapters/include/otbOGRFieldWrapper.h
+index 45e4257..3fb67ba 100644
+--- a/Modules/Core/Adapters/GdalAdapters/include/otbOGRFieldWrapper.h
++++ b/Modules/Core/Adapters/GdalAdapters/include/otbOGRFieldWrapper.h
+@@ -63,6 +63,9 @@ public:
+   FieldDefn(OGRFieldDefn& definition) : m_Definition(&definition)
+   {
+   }
++  FieldDefn(OGRFieldDefn const& definition) : m_Definition(const_cast<OGRFieldDefn*>(&definition))
++  {
++  }
+   std::string  GetName() const; //!< Field name accessor.
+   OGRFieldType GetType() const; //!< Field type accessor.
+
+diff --git a/Modules/Core/Adapters/GdalAdapters/src/otbOGRFeatureWrapper.cxx b/Modules/Core/Adapters/GdalAdapters/src/otbOGRFeatureWrapper.cxx
+index 205f7cb..ce62750 100644
+--- a/Modules/Core/Adapters/GdalAdapters/src/otbOGRFeatureWrapper.cxx
++++ b/Modules/Core/Adapters/GdalAdapters/src/otbOGRFeatureWrapper.cxx
+@@ -174,7 +174,7 @@ void otb::ogr::Feature::UncheckedSetFID(long fid)
+
+ OGRFeatureDefn& otb::ogr::Feature::UncheckedGetDefn() const
+ {
+-  return *m_Feature->GetDefnRef();
++  return const_cast<OGRFeatureDefn&>(*m_Feature->GetDefnRef());
+ }
+
+ /*===========================================================================*/
+diff --git a/Modules/Core/IO/IOGDAL/src/otbOGRIOHelper.cxx b/Modules/Core/IO/IOGDAL/src/otbOGRIOHelper.cxx
+index fb40411..4c310cf 100644
+--- a/Modules/Core/IO/IOGDAL/src/otbOGRIOHelper.cxx
++++ b/Modules/Core/IO/IOGDAL/src/otbOGRIOHelper.cxx
+@@ -213,7 +213,7 @@ void OGRIOHelper::ConvertOGRLayerToDataTreeNode(OGRLayer* layer, InternalTreeNod
+     {
+       if (ogr::IsFieldSetAndNotNull(feature, fieldNum))
+       {
+-        kwl.AddField(feature->GetFieldDefnRef(fieldNum), feature->GetRawFieldRef(fieldNum));
++        kwl.AddField(const_cast<OGRFieldDefn*>(feature->GetFieldDefnRef(fieldNum)), feature->GetRawFieldRef(fieldNum));
+       }
+     }
+
+@@ -895,7 +895,7 @@ unsigned int OGRIOHelper::ProcessNodeWrite(InternalTreeNodeType* source, GDALDat
+
+       ogrFeature = OGRFeature::CreateFeature(ogrCurrentLayer->GetLayerDefn());
+       //      ogrFeature->SetField("Name", dataNode->GetNodeId());
+-      ogrFeature->GetDefnRef()->SetGeomType(wkbMultiPoint);
++      const_cast<OGRFeatureDefn*>(ogrFeature->GetDefnRef())->SetGeomType(wkbMultiPoint);
+       ogrFeature->SetGeometry(ogrMultiPoint);
+
+       if (ogrCurrentLayer->CreateFeature(ogrFeature) != OGRERR_NONE)
+@@ -916,7 +916,7 @@ unsigned int OGRIOHelper::ProcessNodeWrite(InternalTreeNodeType* source, GDALDat
+
+       ogrFeature = OGRFeature::CreateFeature(ogrCurrentLayer->GetLayerDefn());
+       //      ogrFeature->SetField("Name", dataNode->GetNodeId());
+-      ogrFeature->GetDefnRef()->SetGeomType(wkbMultiLineString);
++      const_cast<OGRFeatureDefn*>(ogrFeature->GetDefnRef())->SetGeomType(wkbMultiLineString);
+       ogrFeature->SetGeometry(ogrMultiLineString);
+
+       if (ogrCurrentLayer->CreateFeature(ogrFeature) != OGRERR_NONE)
+@@ -937,12 +937,12 @@ unsigned int OGRIOHelper::ProcessNodeWrite(InternalTreeNodeType* source, GDALDat
+       ogrFeature = OGRFeature::CreateFeature(ogrCurrentLayer->GetLayerDefn());
+       //      ogrFeature->SetField("Name", dataNode->GetNodeId());
+       #if GDAL_VERSION_NUM >= GDAL_COMPUTE_VERSION(3,9,0)
+-        ogrFeature->GetDefnRef()->Unseal(true);
++        const_cast<OGRFeatureDefn*>(ogrFeature->GetDefnRef())->Unseal(true);
+       #endif
+-      ogrFeature->GetDefnRef()->SetGeomType(wkbMultiPolygon);
++      const_cast<OGRFeatureDefn*>(ogrFeature->GetDefnRef())->SetGeomType(wkbMultiPolygon);
+       ogrFeature->SetGeometry(ogrMultiPolygon);
+       #if GDAL_VERSION_NUM >= GDAL_COMPUTE_VERSION(3,9,0)
+-        ogrFeature->GetDefnRef()->Seal(true);
++        const_cast<OGRFeatureDefn*>(ogrFeature->GetDefnRef())->Seal(true);
+       #endif
+       if (ogrCurrentLayer->CreateFeature(ogrFeature) != OGRERR_NONE)
+       {
+@@ -962,7 +962,7 @@ unsigned int OGRIOHelper::ProcessNodeWrite(InternalTreeNodeType* source, GDALDat
+
+       ogrFeature = OGRFeature::CreateFeature(ogrCurrentLayer->GetLayerDefn());
+       //      ogrFeature->SetField("Name", dataNode->GetNodeId());
+-      ogrFeature->GetDefnRef()->SetGeomType(wkbGeometryCollection);
++      const_cast<OGRFeatureDefn*>(ogrFeature->GetDefnRef())->SetGeomType(wkbGeometryCollection);
+       ogrFeature->SetGeometry(ogrCollectionGeometry);
+
+       if (ogrCurrentLayer->CreateFeature(ogrFeature) != OGRERR_NONE)
+@@ -1226,7 +1226,7 @@ std::vector<OGRLayer*> OGRIOHelper::ConvertDataTreeNodeToOGRLayers(InternalTreeN
+       OGRFeature*    ogrFeature;
+
+       ogrFeature = OGRFeature::CreateFeature(ogrCurrentLayer->GetLayerDefn());
+-      ogrFeature->GetDefnRef()->SetGeomType(wkbMultiPoint);
++      const_cast<OGRFeatureDefn*>(ogrFeature->GetDefnRef())->SetGeomType(wkbMultiPoint);
+       ogrFeature->SetGeometry(ogrMultiPoint);
+
+       if (ogrCurrentLayer->CreateFeature(ogrFeature) != OGRERR_NONE)
+@@ -1244,7 +1244,7 @@ std::vector<OGRLayer*> OGRIOHelper::ConvertDataTreeNodeToOGRLayers(InternalTreeN
+       OGRFeature* ogrFeature;
+
+       ogrFeature = OGRFeature::CreateFeature(ogrCurrentLayer->GetLayerDefn());
+-      ogrFeature->GetDefnRef()->SetGeomType(wkbMultiLineString);
++      const_cast<OGRFeatureDefn*>(ogrFeature->GetDefnRef())->SetGeomType(wkbMultiLineString);
+       ogrFeature->SetGeometry(ogrMultiLineString);
+
+       if (ogrCurrentLayer->CreateFeature(ogrFeature) != OGRERR_NONE)
+@@ -1261,7 +1261,7 @@ std::vector<OGRLayer*> OGRIOHelper::ConvertDataTreeNodeToOGRLayers(InternalTreeN
+       OGRFeature*      ogrFeature;
+
+       ogrFeature = OGRFeature::CreateFeature(ogrCurrentLayer->GetLayerDefn());
+-      ogrFeature->GetDefnRef()->SetGeomType(wkbMultiPolygon);
++      const_cast<OGRFeatureDefn*>(ogrFeature->GetDefnRef())->SetGeomType(wkbMultiPolygon);
+       ogrFeature->SetGeometry(ogrMultiPolygon);
+
+       if (ogrCurrentLayer->CreateFeature(ogrFeature) != OGRERR_NONE)
+@@ -1278,7 +1278,7 @@ std::vector<OGRLayer*> OGRIOHelper::ConvertDataTreeNodeToOGRLayers(InternalTreeN
+       OGRFeature* ogrFeature;
+
+       ogrFeature = OGRFeature::CreateFeature(ogrCurrentLayer->GetLayerDefn());
+-      ogrFeature->GetDefnRef()->SetGeomType(wkbGeometryCollection);
++      const_cast<OGRFeatureDefn*>(ogrFeature->GetDefnRef())->SetGeomType(wkbGeometryCollection);
+       ogrFeature->SetGeometry(ogrCollectionGeometry);
+
+       if (ogrCurrentLayer->CreateFeature(ogrFeature) != OGRERR_NONE)
+diff --git a/Modules/Core/IO/IOGDAL/src/otbOGRVectorDataIO.cxx b/Modules/Core/IO/IOGDAL/src/otbOGRVectorDataIO.cxx
+index e3177c8..713ab03 100644
+--- a/Modules/Core/IO/IOGDAL/src/otbOGRVectorDataIO.cxx
++++ b/Modules/Core/IO/IOGDAL/src/otbOGRVectorDataIO.cxx
+@@ -104,7 +104,7 @@ void OGRVectorDataIO::Read(itk::DataObject* datag)
+
+   OGRSpatialReference* oSRS = nullptr;
+   // We take the assumption that the spatial reference is common to all layers
+-  oSRS = m_DataSource->GetLayer(0)->GetSpatialRef();
++  oSRS = const_cast<OGRSpatialReference*>(m_DataSource->GetLayer(0)->GetSpatialRef());
+
+   if (oSRS != nullptr)
+   {
+diff --git a/Modules/Core/IO/TestKernel/src/otbTestHelper.cxx b/Modules/Core/IO/TestKernel/src/otbTestHelper.cxx
+index beb7ce8..9f31b98 100644
+--- a/Modules/Core/IO/TestKernel/src/otbTestHelper.cxx
++++ b/Modules/Core/IO/TestKernel/src/otbTestHelper.cxx
+@@ -2002,7 +2002,7 @@ void TestHelper::DumpOGRFeature(FILE* fpOut, OGRFeature* feature, char** papszOp
+   {
+     for (int iField = 0; iField < feature->GetFieldCount(); iField++)
+     {
+-      OGRFieldDefn* poFDefn = feature->GetDefnRef()->GetFieldDefn(iField);
++      const OGRFieldDefn* poFDefn = feature->GetDefnRef()->GetFieldDefn(iField);
+
+       fprintf(fpOut, "  %s (%s) = ", poFDefn->GetNameRef(), OGRFieldDefn::GetFieldTypeName(poFDefn->GetType()));
+
+@@ -2676,8 +2676,8 @@ void TestHelper::ogrReportOnLayer(OGRLayer* ref_poLayer, const char* ref_pszWHER
+   {
+     for (int iAttr = 0; iAttr < ref_poDefn->GetFieldCount(); ++iAttr)
+     {
+-      OGRFieldDefn* ref_poField  = ref_poDefn->GetFieldDefn(iAttr);
+-      OGRFieldDefn* test_poField = test_poDefn->GetFieldDefn(iAttr);
++      const OGRFieldDefn* ref_poField  = ref_poDefn->GetFieldDefn(iAttr);
++      const OGRFieldDefn* test_poField = test_poDefn->GetFieldDefn(iAttr);
+
+       otbCheckStringValue("Field GetName", ref_poField->GetNameRef(), test_poField->GetNameRef(), nbdiff, m_ReportErrors);
+       otbCheckStringValue("Field GetFieldTypeName", ref_poField->GetFieldTypeName(ref_poField->GetType()),
+diff --git a/Modules/ThirdParty/GDAL/gdalCreateTest.cxx b/Modules/ThirdParty/GDAL/gdalCreateTest.cxx
+index 797261b..c8fe5b6 100644
+--- a/Modules/ThirdParty/GDAL/gdalCreateTest.cxx
++++ b/Modules/ThirdParty/GDAL/gdalCreateTest.cxx
+@@ -28,7 +28,7 @@
+ int main(int argc, char * argv[])
+ {
+   const char *pszFormat = argv[1];
+-  char **papszMetadata;
++  CSLConstList papszMetadata;
+
+        GDALAllRegister();
