@@ -3,6 +3,8 @@ ARG GDAL_VERSION=3.13.3
 ARG GROK_VERSION=20.4.24
 ARG SPARK_VERSION=4.3.0
 ARG BASE_IMAGE=docker.io/library/almalinux:10.2
+ARG OTB_VERSION=9.1.1
+ARG SPARK_DOWNLOAD_URL=https://dlcdn.apache.org/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop3.tgz
 
 ########## grok ##########
 FROM ${BASE_IMAGE} AS grok-build
@@ -63,6 +65,94 @@ RUN curl -L https://github.com/OSGeo/gdal/releases/download/v${GDAL_VERSION}/gda
         -DBUILD_TESTING=OFF && \
     cmake --build /src/gdal-build && cmake --install /src/gdal-build
 
+FROM ${BASE_IMAGE} AS otb-build
+
+ARG PYTHON_VERSION
+ARG GDAL_VERSION
+
+# Reuse the GDAL and PROJ installation built in the previous stage.
+COPY --from=gdal-build /opt/gdal /opt/gdal
+
+ENV PATH=/opt/gdal/bin:$PATH \
+    LD_LIBRARY_PATH=/opt/gdal/lib:/opt/gdal/lib64 \
+    GDAL_DATA=/opt/gdal/share/gdal \
+    PROJ_DATA=/opt/gdal/share/proj \
+    CMAKE_PREFIX_PATH=/opt/gdal
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
+ENV UV_PYTHON_INSTALL_DIR=/opt/python VIRTUAL_ENV=/opt/venv
+RUN uv python install ${PYTHON_VERSION} && \
+    uv venv --python ${PYTHON_VERSION} ${VIRTUAL_ENV}
+ENV PATH=${VIRTUAL_ENV}/bin:$PATH PYSPARK_PYTHON=${VIRTUAL_ENV}/bin/python
+
+RUN dnf install -y epel-release && \
+    dnf --enablerepo=crb install -y \
+        automake \
+        autoconf \
+        gcc gcc-c++ make cmake ninja-build git patch \
+        swig \
+        gsl-devel \
+        boost-devel \
+        geos-devel \
+        glfw-devel glew-devel freeglut-devel \
+        libtiff-devel libjpeg-turbo-devel \
+        freetype-devel \
+        fftw-devel \
+        tinyxml-devel \
+        sqlite-devel \
+        libkml-devel \
+        libcurl-devel \
+        pkgconf-pkg-config \
+        libpng-devel \
+        libgeotiff-devel \
+        openjpeg2-devel \
+        zlib-devel \
+        unzip
+
+RUN uv pip install --no-cache-dir numpy
+
+ARG OTB_VERSION
+
+RUN mkdir -p /src/otb && git clone --depth 1 --branch ${OTB_VERSION} https://gitlab.orfeo-toolbox.org/orfeotoolbox/otb.git /src/otb
+
+RUN mkdir -p /src/otb-build /opt/otb && \
+    cmake -S /src/otb/SuperBuild -B /src/otb-build \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/opt/otb \
+        -DPython_EXECUTABLE=/root/.local/bin/python3.11 \
+        -DOTB_WRAP_PYTHON=ON \
+        -DOTB_BUILD_Core=ON \
+        -DOTB_BUILD_FeaturesExtraction=ON \
+        -DOTB_BUILD_Learning=ON \
+        -DOTB_BUILD_StereoProcessing=ON \
+        -DOTB_BUILD_SAR=ON \
+        -DOTB_BUILD_Hyperspectral=ON \
+        -DModule_OTBQGIS:BOOL=OFF \
+        -DOTBQGIS_IS_TEST:BOOL=ON \
+        -DUSE_SYSTEM_GDAL=ON \
+        -DUSE_SYSTEM_GEOS=ON \
+        -DUSE_SYSTEM_GSL=ON \
+        -DUSE_SYSTEM_FREETYPE=ON \
+        -DUSE_SYSTEM_BOOST=ON \
+        -DUSE_SYSTEM_GLFW=ON \
+        -DUSE_SYSTEM_GLEW=ON \
+        -DUSE_SYSTEM_GLUT=ON \
+        -DUSE_SYSTEM_TIFF=ON \
+        -DUSE_SYSTEM_JPEG=ON \
+        -DUSE_SYSTEM_LIBSVM=ON \
+        -DUSE_SYSTEM_LIBKML=ON \
+        -DUSE_SYSTEM_TINYXML=ON \
+        -DUSE_SYSTEM_SQLITE=ON \
+        -DUSE_SYSTEM_ZLIB=ON \
+        -DUSE_SYSTEM_CURL=ON \
+        -DUSE_SYSTEM_PNG=ON \
+        -DUSE_SYSTEM_GEOTIFF=ON \
+        -DUSE_SYSTEM_OPENJPEG=ON \
+        -DOTB_USE_QT=OFF \
+        -DOTB_USE_OPENGL=OFF
+
+RUN cmake --build /src/otb-build -j 2
+
 ########## runtime ##########
 FROM ${BASE_IMAGE}
 ARG PYTHON_VERSION
@@ -72,6 +162,8 @@ ARG GDAL_VERSION
 
 COPY --from=gdal-build /opt/gdal /opt/gdal
 COPY --from=grok-build /grok-install/usr/ /usr/
+COPY --from=otb-build /opt/otb /opt/otb
+
 RUN echo /opt/gdal/lib64 > /etc/ld.so.conf.d/gdal.conf && \
     echo /opt/gdal/lib  >> /etc/ld.so.conf.d/gdal.conf && ldconfig
 ENV PATH=/opt/gdal/bin:$PATH \
@@ -89,12 +181,11 @@ ENV PATH=${VIRTUAL_ENV}/bin:$PATH PYSPARK_PYTHON=${VIRTUAL_ENV}/bin/python
 
 ARG TINI_VERSION=v0.19.0
 ARG SPARK_VERSION
-ARG SPARK_DOWNLOAD_URL=https://dlcdn.apache.org/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop3.tgz
 ARG GEOTRELLIS_DEPENDENCIES_STATIC_JAR_URL
+ARG SPARK_DOWNLOAD_URL
 
 WORKDIR /opt/spark/work-dir
 
-COPY docker/AlmaLinux/vito_almalinux9.repo /etc/yum.repos.d/vito.repo
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
 
 RUN dnf clean all && \
@@ -150,14 +241,15 @@ RUN ln -s /opt/gdal/lib64/libgdal.so /usr/lib64/libgdal.so.38
 # Required for new hadoop cluster because this causes "/var/lib/sss/pubconf/krb5.include.d" to be included twice which throws an error.
 RUN rm /etc/krb5.conf.d/enable_sssd_conf_dir
 
-
 ENV SPARK_HOME /usr/local/spark
 ENV JAVA_HOME /usr/lib/jvm/jre
 ENV HADOOP_HOME=/usr/hdp/current/hadoop-client
 ENV HADOOP_CONF_DIR=/etc/hadoop/conf
 ENV YARN_CONF_DIR=/etc/hadoop/conf
-ENV OTB_HOME=/usr
-ENV OTB_APPLICATION_PATH=/usr/lib/otb/applications
+ENV OTB_HOME=/opt/otb
+ENV OTB_APPLICATION_PATH=/opt/otb/lib/otb/applications
 
-ADD $GEOTRELLIS_DEPENDENCIES_STATIC_JAR_URL /opt/geotrellis-dependencies-static.jar
-RUN chmod 755 /opt/geotrellis-dependencies-static.jar
+ADD --chmod=755 https://auxdata.terrascope.be/openeo/OTB/egm96.grd /opt/openeo-vito-aux-data
+ADD --chmod=755 https://auxdata.terrascope.be/openeo/OTB/egm96.grd.hdr /opt/openeo-vito-aux-data
+ADD --chmod=755 https://auxdata.terrascope.be/openeo/OTB/egm96.tif /opt/openeo-vito-aux-data
+ADD --chmod=755 $GEOTRELLIS_DEPENDENCIES_STATIC_JAR_URL /opt/geotrellis-dependencies-static.jar
