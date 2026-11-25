@@ -6,12 +6,13 @@
 
 containerImageBuildPipeline {
   build_args               = [
-    'PYTHON_PACKAGE=python3.11-devel',
-    'SPARK_PACKAGE=spark-vito-with-hadoop-4_0_1-4.0.1-2026.10.02',
+    'PYTHON_VERSION=3.11',
+    'SPARK_VERSION=4.0.1',
     'SPARK_INSTALL_PREFIX=/opt/spark4_0_1',
+    'SPARK_DOWNLOAD_URL=https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop3.tgz'
     'GEOTRELLIS_DEPENDENCIES_STATIC_JAR_URL=https://repo.vito.be/artifactory/openeo-maven-snapshot-local/org/openeo/geotrellis-dependencies/2.6.4_2.13-SNAPSHOT/geotrellis-dependencies-2.6.4_2.13-SNAPSHOT.jar',
   ]
-  dockerfile               = 'docker/AlmaLinux/Dockerfile.almalinux9-spark-py-openeo'
+  dockerfile               = 'docker/AlmaLinux/Dockerfile.almalinux9-spark-uv-openeo'
   docker_registry_prod     = 'openeo-docker-local-prod.repo.vito.be'
   image_name               = 'almalinux9-spark4-py311-openeo'
   image_tag                = { env -> "1.0.${env.BUILD_NUMBER}" }
