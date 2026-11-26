@@ -233,7 +233,6 @@ RUN dnf clean all && \
         blosc \
         libgfortran \
         jemalloc \
-        openeo-vito-aux-data \
         geos netcdf libtiff libpng \
         libjpeg-turbo libwebp libzstd expat xerces-c \
         openjpeg2 lcms2 sqlite-libs \
