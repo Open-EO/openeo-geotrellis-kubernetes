@@ -122,13 +122,25 @@ RUN uv pip install --no-cache-dir numpy
 
 ARG OTB_VERSION
 
-RUN mkdir -p /src/otb && git clone --depth 1 --branch ${OTB_VERSION} https://gitlab.orfeo-toolbox.org/orfeotoolbox/otb.git /src/otb
+RUN mkdir -p /src/otb && git clone --depth 1 --branch ${OTB_VERSION} https://gitlab.orfeo-toolbox.org/orfeotoolbox/otb.git /src/otb && git clone --branch v337 https://github.com/cjlin1/libsvm.git /src/libsvm
+
+COPY otb-gdal313.patch /tmp/otb-gdal313.patch
+RUN cd /src/otb && git apply /tmp/otb-gdal313.patch
+
+RUN cd /src/libsvm && \
+    make lib && \
+    install -D -m 755 libsvm.so.4 /usr/local/lib/libsvm.so.4 && \
+    ln -sf /usr/local/lib/libsvm.so.4 /usr/local/lib/libsvm.so && \
+    install -D -m 644 svm.h /usr/local/include/svm.h
 
 RUN mkdir -p /src/otb-build /opt/otb && \
     cmake -S /src/otb/SuperBuild -B /src/otb-build \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX=/opt/otb \
         -DPython_EXECUTABLE=/root/.local/bin/python3.11 \
+        -DLIBSVM_ROOT_DIR=/usr/local \
+        -DLIBSVM_INCLUDE_DIR=/usr/local/include \
+        -DLIBSVM_LIBRARY=/usr/local/lib/libsvm.so \
         -DOTB_WRAP_PYTHON=ON \
         -DOTB_BUILD_Core=ON \
         -DOTB_BUILD_FeaturesExtraction=ON \
