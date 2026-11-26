@@ -124,7 +124,7 @@ ARG OTB_VERSION
 
 RUN mkdir -p /src/otb && git clone --depth 1 --branch ${OTB_VERSION} https://gitlab.orfeo-toolbox.org/orfeotoolbox/otb.git /src/otb && git clone --branch v337 https://github.com/cjlin1/libsvm.git /src/libsvm
 
-COPY otb-gdal313.patch /tmp/otb-gdal313.patch
+COPY docker/AlmaLinux/otb-gdal313.patch /tmp/otb-gdal313.patch
 RUN cd /src/otb && git apply /tmp/otb-gdal313.patch
 
 RUN cd /src/libsvm && \
