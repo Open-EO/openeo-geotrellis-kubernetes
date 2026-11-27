@@ -137,7 +137,7 @@ RUN mkdir -p /src/otb-build /opt/otb && \
     cmake -S /src/otb/SuperBuild -B /src/otb-build \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX=/opt/otb \
-        -DPython_EXECUTABLE=/root/.local/bin/python3.11 \
+        -DPython_EXECUTABLE=/root/.local/bin/python${PYTHON_VERSION} \
         -DLIBSVM_ROOT_DIR=/usr/local \
         -DLIBSVM_INCLUDE_DIR=/usr/local/include \
         -DLIBSVM_LIBRARY=/usr/local/lib/libsvm.so \
