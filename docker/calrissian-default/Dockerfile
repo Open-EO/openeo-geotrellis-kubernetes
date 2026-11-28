@@ -10,6 +10,8 @@ LABEL maintainer="VITO Remote Sensing" \
       org.opencontainers.image.url="https://github.com/Open-EO/openeo-geotrellis-kubernetes/tree/master/docker/calrissian-default"
 
 # busybox already provides `sh` and minimal applets; install the full-featured variants too.
+# Unpinned on purpose: get the latest (security) releases from the pinned Alpine version.
+# hadolint ignore=DL3018
 RUN apk add --no-cache \
         bash \
         ca-certificates \

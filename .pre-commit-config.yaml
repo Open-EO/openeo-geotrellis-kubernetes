@@ -17,3 +17,9 @@ repos:
     rev: v2.1.1
     hooks:
       - id: darker
+  - repo: https://github.com/AleksaC/hadolint-py
+    rev: v2.15.1
+    hooks:
+      - id: hadolint
+        # Config in .hadolint.yaml. Only enabled for these images for now.
+        files: ^docker/(example-stac-catalog|calrissian-default)/

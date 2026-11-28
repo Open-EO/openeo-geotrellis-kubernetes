@@ -113,11 +113,16 @@ jobs:
           set -euxo pipefail
           docker run --rm "${{ steps.vars.outputs.image_id }}:${{ steps.vars.outputs.image_tag }}" bash -c '
             set -euxo pipefail
-            for script in /data/*.py; do
+            test "$(id -u)" = 1001
+            touch "$HOME/write-test"
+            for name in simple_stac_merge.py sub_collection_maker.py; do
+              script=$(command -v "$name")
               test -x "$script"
               # Exact match also catches CRLF line endings, which break the shebang.
               test "$(head -n1 "$script")" = "#!/usr/bin/env python3"
             done
+            # /data should only contain the STAC collection.
+            ! ls /data/*.py
             /usr/bin/env python3 -c "import pystac, jsonschema"
           '
 
