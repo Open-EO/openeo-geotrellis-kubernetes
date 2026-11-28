@@ -4,7 +4,7 @@ class: CommandLineTool
 # Before the backend fix, DockerRequirement was needed in calrissian
 #requirements:
 #  - class: DockerRequirement
-#    dockerPull: ghcr.io/open-eo/openeo-calrissian-default:1.1.0
+#    dockerPull: ghcr.io/open-eo/example-stac-catalog:1.1.0
 baseCommand:
   - sh
   - -c
